@@ -1,0 +1,11 @@
+language: java
+
+install:
+  - sh .travis-init.sh
+
+jdk: oraclejdk8
+
+addons:
+  apt:
+    packages:
+      - python3
