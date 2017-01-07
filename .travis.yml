@@ -3,6 +3,9 @@ language: java
 install:
   - sh .travis-init.sh
 
+script:
+  - ant compile
+
 jdk: oraclejdk8
 
 addons:
