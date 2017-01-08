@@ -21,6 +21,22 @@
 
   <!-- Any other property in build.properties can also be overridden. -->
 
+  <!-- 4761 -->
+  <target name="make-jar-directory">
+    <mkdir dir="./lib/jar"></mkdir>
+  </target>
+
+  <target name="build-gyro-lib" depends="make-jar-directory">
+    <!-- TODO: Only run if JAR file doesn't already exist -->
+    <exec dir="./lib/L3GD20HGyroLib" executable="mvn">
+      <arg line="package" />
+    </exec>
+    <copy file="./lib/L3GD20HGyroLib/target/L3GD20H-lib-1.0.jar" todir="./lib/jar"></copy>
+  </target>
+
+  <target name="compile" description="Compile source code" depends="build-gyro-lib, athena-project-build.compile"></target>
+
+  <!-- WPILib -->
   <property file="${user.home}/wpilib/wpilib.properties"/>
   <property file="build.properties"/>
   <property file="${user.home}/wpilib/java/${version}/ant/build.properties"/>
