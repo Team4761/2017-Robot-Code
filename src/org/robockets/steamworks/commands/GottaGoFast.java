@@ -2,6 +2,7 @@ package org.robockets.steamworks.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import org.robockets.steamworks.OI;
+import org.robockets.steamworks.PortNumbers;
 import org.robockets.steamworks.Robot;
 
 /**
@@ -29,8 +30,8 @@ public class GottaGoFast extends Command {
     }
 
     protected void execute() {
-        translate = OI.joystick.getRawAxis(1);
-        rotate = OI.joystick.getRawAxis(4);
+        translate = OI.joystick.getRawAxis(PortNumbers.JOYSTICK_TRANSLATE_AXIS);
+        rotate = OI.joystick.getRawAxis(PortNumbers.JOYSTICK_ROTATE_AXIS);
 
         Robot.drivetrain.driveArcade(translate*speed, rotate*speed);
     }

@@ -34,7 +34,7 @@ public class Drive extends Command {
 
     protected void execute() {
         if (direction == YAxisRelativeDirection.FORWARD) {
-            Robot.drivetrain.driveArcade(0.5*speed, offset*0.5*speed);
+            Robot.drivetrain.driveArcade(0.5*speed, offset*0.5*speed); // 0.5 is the default speed. This is subject to change
         } else {
             Robot.drivetrain.driveArcade(-0.5*speed, offset*-0.5*speed);
         }

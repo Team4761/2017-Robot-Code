@@ -25,7 +25,7 @@ public class Robot extends IterativeRobot {
 
 	Command autonomousCommand;
 	Command drive;
-	SendableChooser<Command> chooser = new SendableChooser<>();
+	SendableChooser chooser = new SendableChooser();
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -38,7 +38,7 @@ public class Robot extends IterativeRobot {
 		// chooser.addObject("My Auto", new MyAutoCommand());
 		SmartDashboard.putData("Auto mode", chooser);
 
-		drive = new GottaGoFast();
+		drive = new GottaGoFast(0.5);
 	}
 
 	/**
@@ -69,7 +69,7 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void autonomousInit() {
-		autonomousCommand = chooser.getSelected();
+		//autonomousCommand = chooser.getSelected(); // This is not working
 
 		/*
 		 * String autoSelected = SmartDashboard.getString("Auto Selector",

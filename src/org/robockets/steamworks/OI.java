@@ -7,5 +7,5 @@ import edu.wpi.first.wpilibj.Joystick;
  * interface to the commands and command groups that allow control of the robot.
  */
 public class OI {
-    public static Joystick joystick = new Joystick(0);
+    public static Joystick joystick = new Joystick(PortNumbers.JOYSTICK_PORT_NUMBER);
 }
