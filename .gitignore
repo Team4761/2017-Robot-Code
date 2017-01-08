@@ -1,9 +1,10 @@
 # Java binaries
 
 *.class
-
 *.jar
 
+
 # Intellij Stuff
+
 *.iml
 .idea/
