@@ -30,8 +30,8 @@ public class GottaGoFast extends Command {
     }
 
     protected void execute() {
-        translate = OI.joystick.getRawAxis(PortNumbers.JOYSTICK_TRANSLATE_AXIS);
-        rotate = OI.joystick.getRawAxis(PortNumbers.JOYSTICK_ROTATE_AXIS);
+        translate = OI.joystick.getRawAxis(PortNumbers.JOYSTICK_LEFT_STICK);
+        rotate = OI.joystick.getRawAxis(PortNumbers.JOYSTICK_RIGHT_STICK);
 
         Robot.drivetrain.driveArcade(translate*speed, rotate*speed);
     }
