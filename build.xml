@@ -29,7 +29,7 @@
   <target name="build-gyro-lib" depends="make-jar-directory">
     <!-- TODO: Only run if JAR file doesn't already exist -->
     <exec dir="./lib/L3GD20HGyroLib" executable="mvn">
-      <arg line="package" />
+      <arg line="package -B" />
     </exec>
     <copy file="./lib/L3GD20HGyroLib/target/L3GD20H-lib-1.0.jar" todir="./lib/jar"></copy>
   </target>
