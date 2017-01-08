@@ -33,9 +33,19 @@
         <echo>Gyro library already built, not recompiling</echo>
       </then>
       <else>
-        <exec dir="./lib/L3GD20HGyroLib" executable="mvn">
-          <arg line="package -B" />
-        </exec>
+        <if>
+          <os family="windows" />
+          <then>
+            <exec dir="./lib/L3GD20HGyroLib" executable="cmd">
+              <arg line="/c mvn package -B" />
+            </exec>
+          </then>
+          <else>
+            <exec dir="./lib/L3GD20HGyroLib" executable="mvn">
+              <arg line="package -B" />
+            </exec>
+          </else>
+        </if>
         <copy file="./lib/L3GD20HGyroLib/target/L3GD20H-lib-1.0.jar" todir="./lib/jar"></copy>
       </else>
     </if>
