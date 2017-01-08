@@ -27,11 +27,18 @@
   </target>
 
   <target name="build-gyro-lib" depends="make-jar-directory">
-    <!-- TODO: Only run if JAR file doesn't already exist -->
-    <exec dir="./lib/L3GD20HGyroLib" executable="mvn">
-      <arg line="package -B" />
-    </exec>
-    <copy file="./lib/L3GD20HGyroLib/target/L3GD20H-lib-1.0.jar" todir="./lib/jar"></copy>
+    <if>
+      <available file="./lib/jar/L3GD20H-lib-1.0.jar" />
+      <then>
+        <echo>Gyro library already built, not recompiling</echo>
+      </then>
+      <else>
+        <exec dir="./lib/L3GD20HGyroLib" executable="mvn">
+          <arg line="package -B" />
+        </exec>
+        <copy file="./lib/L3GD20HGyroLib/target/L3GD20H-lib-1.0.jar" todir="./lib/jar"></copy>
+      </else>
+    </if>
   </target>
 
   <target name="compile" description="Compile source code" depends="build-gyro-lib, athena-project-build.compile"></target>
