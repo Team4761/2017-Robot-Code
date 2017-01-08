@@ -7,6 +7,8 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import org.robockets.steamworks.commands.GottaGoFast;
+import org.robockets.steamworks.subsystems.Drivetrain;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -19,8 +21,11 @@ public class Robot extends IterativeRobot {
 
 	public static OI oi;
 
+	public static Drivetrain drivetrain;
+
 	Command autonomousCommand;
-	SendableChooser<Command> chooser = new SendableChooser<>();
+	Command drive;
+	SendableChooser chooser = new SendableChooser();
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -29,8 +34,11 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void robotInit() {
 		oi = new OI();
+		drivetrain = new Drivetrain();
 		// chooser.addObject("My Auto", new MyAutoCommand());
 		SmartDashboard.putData("Auto mode", chooser);
+
+		drive = new GottaGoFast(0.5);
 	}
 
 	/**
@@ -61,7 +69,7 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void autonomousInit() {
-		autonomousCommand = chooser.getSelected();
+		//autonomousCommand = chooser.getSelected(); // This is not working
 
 		/*
 		 * String autoSelected = SmartDashboard.getString("Auto Selector",
@@ -91,6 +99,8 @@ public class Robot extends IterativeRobot {
 		// this line or comment it out.
 		if (autonomousCommand != null)
 			autonomousCommand.cancel();
+
+		drive.start();
 	}
 
 	/**
