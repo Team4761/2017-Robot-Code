@@ -3,6 +3,7 @@ language: java
 install:
   - sh .travis-init.sh
   - ant build-gyro-lib
+  - ant build-commons-lib
 
 script: ant compile
 

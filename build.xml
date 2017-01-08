@@ -51,7 +51,33 @@
     </if>
   </target>
 
-  <target name="compile" description="Compile source code" depends="build-gyro-lib, athena-project-build.compile"></target>
+  <target name="build-commons-lib" depends="make-jar-directory">
+    <if>
+      <available file="./lib/jar/Robockets-Commons.jar" />
+      <then>
+        <echo>Gyro library already built, not recompiling</echo>
+      </then>
+      <else>
+        <if>
+          <os family="windows" />
+          <then>
+            <exec dir="./lib/Robockets-Commons" executable="cmd">
+              <arg line="/c gradlew.bat jar" />
+            </exec>
+          </then>
+          <else>
+            <exec dir="./lib/Robockets-Commons" executable="./gradlew">
+              <arg line="jar" />
+            </exec>
+          </else>
+        </if>
+        <copy file="./lib/Robockets-Commons/build/libs/Robockets-Commons.jar" todir="./lib/jar"></copy>
+      </else>
+    </if>
+  </target>
+
+
+  <target name="compile" description="Compile source code" depends="build-gyro-lib, build-commons-lib, athena-project-build.compile"></target>
 
   <!-- WPILib -->
   <property file="${user.home}/wpilib/wpilib.properties"/>
