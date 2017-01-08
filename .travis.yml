@@ -1,12 +1,8 @@
 language: java
 
-install:
-  - sh .travis-init.sh
-  - git submodule init
-  - git submodule update
+install: sh .travis-init.sh
 
-script:
-  - ant compile
+script: ant compile
 
 jdk: oraclejdk8
 
