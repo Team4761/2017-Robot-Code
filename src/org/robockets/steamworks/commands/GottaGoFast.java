@@ -5,6 +5,7 @@ import org.robockets.steamworks.OI;
 import org.robockets.steamworks.Robot;
 
 /**
+ * Controlled teleop drive command
  * @author Jake Backer
  */
 public class GottaGoFast extends Command {
@@ -12,8 +13,14 @@ public class GottaGoFast extends Command {
     double translate;
     double rotate;
 
-    public GottaGoFast() {
+    double speed;
+    /**
+     *
+     * @param speed Speed multiplier
+     */
+    public GottaGoFast(double speed) {
         requires(Robot.drivetrain);
+        this.speed = speed;
     }
 
     protected void initialize() {
@@ -25,7 +32,7 @@ public class GottaGoFast extends Command {
         translate = OI.joystick.getRawAxis(1);
         rotate = OI.joystick.getRawAxis(4);
 
-        Robot.drivetrain.driveArcade(translate, rotate);
+        Robot.drivetrain.driveArcade(translate*speed, rotate*speed);
     }
 
     protected boolean isFinished() {
