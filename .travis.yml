@@ -2,9 +2,9 @@ language: java
 
 install:
   - sh .travis-init.sh
+  - ant build-gyro-lib
 
-script:
-  - ant compile
+script: ant compile
 
 jdk: oraclejdk8
 

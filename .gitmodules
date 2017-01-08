@@ -1,0 +1,3 @@
+[submodule "lib/L3GD20HGyroLib"]
+	path = lib/L3GD20HGyroLib
+	url = https://github.com/Team4761/L3GD20HGyroLib
