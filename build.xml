@@ -55,7 +55,7 @@
     <if>
       <available file="./lib/jar/Robockets-Commons.jar" />
       <then>
-        <echo>Gyro library already built, not recompiling</echo>
+        <echo>Commons library already built, not recompiling</echo>
       </then>
       <else>
         <if>
