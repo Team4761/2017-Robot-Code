@@ -11,10 +11,8 @@ import edu.wpi.first.wpilibj.TalonSRX;
  */
 public class RobotMap {
 
-    public static TalonSRX frontLeft = new TalonSRX(PortNumbers.DRIVETRAIN_FRONT_LEFT_PORT);
-    public static TalonSRX frontRight = new TalonSRX(PortNumbers.DRIVETRAIN_FRONT_RIGHT_PORT);
-    public static TalonSRX backLeft = new TalonSRX(PortNumbers.DRIVETRAIN_BACK_LEFT_PORT);
-    public static TalonSRX backRight = new TalonSRX(PortNumbers.DRIVETRAIN_BACK_RIGHT_PORT);
+    public static TalonSRX drivetrainLeftSpeedController = new TalonSRX(PortNumbers.DRIVETRAIN_LEFT_SC_PORT);
+    public static TalonSRX rightSideSpeedController = new TalonSRX(PortNumbers.DRIVETRAIN_RIGHT_SC_PORT);
 
-    public static RobotDrive robotDrive = new RobotDrive(frontLeft, backLeft, frontRight, backRight);
+    public static RobotDrive robotDrive = new RobotDrive(drivetrainLeftSpeedController, rightSideSpeedController);
 }
