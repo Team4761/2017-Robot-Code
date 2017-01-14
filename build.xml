@@ -78,6 +78,13 @@
 
 
   <target name="compile" description="Compile source code" depends="build-gyro-lib, build-commons-lib, athena-project-build.compile"></target>
+  <target name="clean" description="Deletes binaries" depends="athena-project-build.clean">
+    <delete>
+      <fileset dir="lib/jar">
+        <include name="*" />
+      </fileset>
+    </delete>
+  </target>
 
   <!-- WPILib -->
   <property file="${user.home}/wpilib/wpilib.properties"/>
