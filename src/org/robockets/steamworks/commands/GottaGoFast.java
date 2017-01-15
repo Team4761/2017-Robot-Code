@@ -11,12 +11,12 @@ import org.robockets.steamworks.Robot;
  */
 public class GottaGoFast extends Command {
 
-    double translate;
-    double rotate;
+    private double translate;
+    private double rotate;
 
-    double speed;
+    private double speed;
+
     /**
-     *
      * @param speed Speed multiplier
      */
     public GottaGoFast(double speed) {
