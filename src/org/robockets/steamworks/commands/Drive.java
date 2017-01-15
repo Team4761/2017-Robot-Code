@@ -1,10 +1,8 @@
 package org.robockets.steamworks.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
-import org.robockets.commons.XAxisRelativeDirection;
 import org.robockets.commons.YAxisRelativeDirection;
 import org.robockets.steamworks.Robot;
-import org.robockets.steamworks.RobotMap;
 
 /**
  * General drive command
@@ -12,9 +10,9 @@ import org.robockets.steamworks.RobotMap;
  */
 public class Drive extends Command {
 
-    int offset;
-    YAxisRelativeDirection direction;
-    double speed;
+    private int offset;
+    private YAxisRelativeDirection direction;
+    private double speed;
 
     /**
      * Setup drive

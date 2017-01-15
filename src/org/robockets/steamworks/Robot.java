@@ -23,9 +23,9 @@ public class Robot extends IterativeRobot {
 
 	public static Drivetrain drivetrain;
 
-	Command autonomousCommand;
-	Command drive;
-	SendableChooser chooser = new SendableChooser();
+	private Command autonomousCommand;
+	private Command drive;
+	private SendableChooser chooser = new SendableChooser();
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -78,7 +78,7 @@ public class Robot extends IterativeRobot {
 		 * autonomousCommand = new ExampleCommand(); break; }
 		 */
 
-		// schedule the autonomous command (example)
+		// Schedule the autonomous command (example)
 		if (autonomousCommand != null)
 			autonomousCommand.start();
 	}
