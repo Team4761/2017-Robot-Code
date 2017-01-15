@@ -1,5 +1,6 @@
 package org.robockets.steamworks;
 
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.TalonSRX;
 
@@ -15,6 +16,11 @@ public class RobotMap {
     public static TalonSRX frontRightSpeedController = new TalonSRX(PortNumbers.DRIVETRAIN_FRONT_RIGHT_SC_PORT);
     public static TalonSRX backLeftSpeedController = new TalonSRX(PortNumbers.DRIVETRAIN_BACK_LEFT_SC_PORT);
     public static TalonSRX backRightSpeedController = new TalonSRX(PortNumbers.DRIVETRAIN_BACK_RIGHT_SC_PORT);
+
+    public static Encoder frontLeftEncoder = new Encoder(PortNumbers.DRIVETRAIN_FRONT_LEFT_ENCODER_PORT_ONE, PortNumbers.DRIVETRAIN_FRONT_LEFT_ENCODER_PORT_TWO);
+    public static Encoder backLeftEncoder = new Encoder(PortNumbers.DRIVETRAIN_BACK_LEFT_ENCODER_PORT_ONE, PortNumbers.DRIVETRAIN_BACK_LEFT_ENCODER_PORT_TWO);
+    public static Encoder frontRightEncoder = new Encoder(PortNumbers.DRIVETRAIN_FRONT_RIGHT_ENCODER_PORT_ONE, PortNumbers.DRIVETRAIN_FRONT_RIGHT_ENCODER_PORT_TWO);
+    public static Encoder backRightEncoder = new Encoder(PortNumbers.DRIVETRAIN_BACK_RIGHT_ENCODER_PORT_ONE, PortNumbers.DRIVETRAIN_BACK_RIGHT_ENCODER_PORT_TWO);
 
     public static RobotDrive robotDrive = new RobotDrive(frontLeftSpeedController, backLeftSpeedController, frontRightSpeedController, backRightSpeedController);
 }
