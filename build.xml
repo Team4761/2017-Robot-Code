@@ -78,7 +78,7 @@
 
   <target name="build-gson" depends="make-jar-directory">
     <if>
-      <available file="./lib/jar/gson-2.8.1-SNAPSHOT.jar" />
+      <available file="./lib/jar/gson-2.8.0.jar" />
       <then>
         <echo>GSON already built, not recompiling</echo>
       </then>
@@ -96,7 +96,7 @@
             </exec>
           </else>
         </if>
-        <copy file="./lib/gson/gson/target/gson-2.8.1-SNAPSHOT.jar" todir="./lib/jar"></copy>
+        <copy file="./lib/gson/gson/target/gson-2.8.0.jar" todir="./lib/jar"></copy>
       </else>
     </if>
   </target>
