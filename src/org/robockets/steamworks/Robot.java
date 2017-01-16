@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.robockets.steamworks.commands.GottaGoFast;
 import org.robockets.steamworks.subsystems.Drivetrain;
+import org.robockets.steamworks.subsystems.Shooter;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -22,6 +23,7 @@ public class Robot extends IterativeRobot {
 	public static OI oi;
 
 	public static Drivetrain drivetrain;
+	public static Shooter shooter;
 
 	private Command autonomousCommand;
 	private Command drive;
@@ -35,6 +37,7 @@ public class Robot extends IterativeRobot {
 	public void robotInit() {
 		oi = new OI();
 		drivetrain = new Drivetrain();
+		shooter = new Shooter();
 		// chooser.addObject("My Auto", new MyAutoCommand());
 		SmartDashboard.putData("Auto mode", chooser);
 
