@@ -1,5 +1,9 @@
 package org.robockets.steamworks.subsystems;
 
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
+import com.google.gson.JsonSyntaxException;
+import com.google.gson.stream.MalformedJsonException;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import org.robockets.steamworks.RobotMap;
 
@@ -8,6 +12,15 @@ import org.robockets.steamworks.RobotMap;
  * Drivetrain subsystem
  */
 public class Drivetrain extends Subsystem {
+
+    private StringBuilder sb;
+
+    private JsonParser jparser;
+
+    public Drivetrain() {
+        sb = new StringBuilder();
+        jparser = new JsonParser();
+    }
 
     public void initDefaultCommand() {
 
@@ -19,7 +32,8 @@ public class Drivetrain extends Subsystem {
      * @param rotate Rotation speed: -1 to 1
      */
     public void driveArcade(double translate, double rotate) {
-        RobotMap.robotDrive.arcadeDrive(translate, rotate);
+        updateGyro();
+        //RobotMap.robotDrive.arcadeDrive(translate, rotate);
     }
 
     /**
@@ -29,6 +43,31 @@ public class Drivetrain extends Subsystem {
      */
     public void driveTank(double leftValue, double rightValue) {
         RobotMap.robotDrive.tankDrive(leftValue, rightValue);
+    }
+
+    public void updateGyro() {
+        String buffer = RobotMap.serial.readString();
+
+        //System.out.print(buffer);
+
+        //sb.append(buffer);
+        //System.out.println(sb.toString());
+
+        if (buffer.contains("\n")) {
+            sb.append(buffer);
+            System.out.println(sb.toString() + "#####");
+            // Parse
+            /*try {
+                JsonElement jElement = jparser.parse(sb.toString());
+                System.out.println(jElement.getAsJsonObject().get("gyro").getAsJsonObject().get("x").getAsString());
+            } catch (JsonSyntaxException e) {
+                System.out.println("Invalid JSON!");
+            }*/
+
+            sb = new StringBuilder();
+        } else {
+            sb.append(buffer);
+        }
     }
     
     /**
