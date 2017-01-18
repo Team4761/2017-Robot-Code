@@ -1,5 +1,6 @@
 # Java binaries
 
+bin/
 *.class
 *.jar
 
@@ -8,3 +9,6 @@
 
 *.iml
 .idea/
+
+.gradle/
+sysProps.xml
