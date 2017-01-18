@@ -32,4 +32,6 @@ public class PortNumbers {
     public static final int JOYSTICK_LEFT_STICK = 1;
     public static final int JOYSTICK_RIGHT_STICK = 4;
 
+    public static final int CLIMBER_SC_PORT = 7;
+    public static final int CLIMBER_PDP_PORT = 1; // On the PDP what channel is the climber motor (this is separate from PWM channels).
 }
