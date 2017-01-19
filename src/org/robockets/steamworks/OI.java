@@ -1,6 +1,7 @@
 package org.robockets.steamworks;
 
 import edu.wpi.first.wpilibj.Joystick;
+import org.robockets.steamworks.reference.PortNumbers;
 
 /**
  * This class is the glue that binds the controls on the physical operator

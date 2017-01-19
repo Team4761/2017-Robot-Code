@@ -2,7 +2,7 @@ package org.robockets.steamworks.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import org.robockets.steamworks.OI;
-import org.robockets.steamworks.PortNumbers;
+import org.robockets.steamworks.reference.PortNumbers;
 import org.robockets.steamworks.Robot;
 
 /**

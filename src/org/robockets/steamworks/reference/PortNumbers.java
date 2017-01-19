@@ -1,4 +1,4 @@
-package org.robockets.steamworks;
+package org.robockets.steamworks.reference;
 
 /**
  * A reference class full of port and button numbers
