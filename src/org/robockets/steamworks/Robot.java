@@ -42,6 +42,8 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putData("Auto mode", chooser);
 
 		drive = new GottaGoFast(0.5);
+
+		RobotMap.gyro.calibrate();
 	}
 
 	/**
