@@ -46,12 +46,17 @@ public class Drivetrain extends Subsystem {
     public void driveTank(double leftValue, double rightValue) {
         RobotMap.robotDrive.tankDrive(leftValue, rightValue);
     }
+
+    public void pidGo() {
+        RobotMap.robotDrive.arcadeDrive(0, gyroPID.get());
+    }
     
     /**
      * A method to stop the drivetrain.
      */
     public void stop() {
         driveArcade(0,0);
+        gyroPID.disable();
     }
 
 }
