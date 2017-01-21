@@ -17,5 +17,9 @@ public class Shooter extends Subsystem {
     public void spinUp() {
         // Spin up motors
     }
+
+    public void stop() {
+
+    }
 }
 

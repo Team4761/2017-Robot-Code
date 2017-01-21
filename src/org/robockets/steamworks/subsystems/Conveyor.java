@@ -19,5 +19,9 @@ public class Conveyor extends Subsystem {
     public void moveConveyor(YAxisRelativeDirection direction) {
 
     }
+
+    public void stop() {
+
+    }
 }
 
