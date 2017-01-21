@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.robockets.steamworks.commands.GottaGoFast;
+import org.robockets.steamworks.commands.TunePID;
 import org.robockets.steamworks.subsystems.Drivetrain;
 import org.robockets.steamworks.subsystems.Shooter;
 
@@ -42,6 +43,8 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putData("Auto mode", chooser);
 
 		drive = new GottaGoFast(0.5);
+
+		RobotMap.gyro.calibrate();
 	}
 
 	/**
@@ -104,6 +107,13 @@ public class Robot extends IterativeRobot {
 			autonomousCommand.cancel();
 
 		drive.start();
+
+		SmartDashboard.putNumber("GyroP", drivetrain.gyroPID.getP());
+		SmartDashboard.putNumber("GyroI", drivetrain.gyroPID.getI());
+		SmartDashboard.putNumber("GyroD", drivetrain.gyroPID.getD());
+		SmartDashboard.putNumber("GyroSetpoint", drivetrain.gyroPID.getSetpoint());
+
+		SmartDashboard.putData(new TunePID());
 	}
 
 	/**
@@ -112,6 +122,8 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
+		drivetrain.gyroPID.setPID(SmartDashboard.getNumber("GyroP"),SmartDashboard.getNumber("GyroI"),SmartDashboard.getNumber("GyroD"));
+		drivetrain.gyroPID.setSetpoint(SmartDashboard.getNumber("GyroSetpoint"));
 	}
 
 	/**
