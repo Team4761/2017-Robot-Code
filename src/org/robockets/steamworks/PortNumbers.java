@@ -1,5 +1,7 @@
 package org.robockets.steamworks;
 
+import edu.wpi.first.wpilibj.SPI;
+
 /**
  * A reference class full of port and button numbers
  * @author Jake Backer
@@ -31,5 +33,7 @@ public class PortNumbers {
 
     public static final int JOYSTICK_LEFT_STICK = 1;
     public static final int JOYSTICK_RIGHT_STICK = 4;
+
+    public static final SPI.Port gyroPort = SPI.Port.kOnboardCS0;
 
 }
