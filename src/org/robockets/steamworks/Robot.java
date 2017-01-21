@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.robockets.steamworks.commands.GottaGoFast;
 import org.robockets.steamworks.commands.TunePID;
+import org.robockets.steamworks.subsystems.BallIntake;
 import org.robockets.steamworks.subsystems.Conveyor;
 import org.robockets.steamworks.subsystems.Drivetrain;
 import org.robockets.steamworks.subsystems.Shooter;
@@ -25,6 +26,7 @@ public class Robot extends IterativeRobot {
 
 	public static OI oi;
 
+	public static BallIntake ballIntake;
 	public static Drivetrain drivetrain;
 	public static Shooter shooter;
 	public static Conveyor conveyor;
@@ -41,9 +43,10 @@ public class Robot extends IterativeRobot {
 	public void robotInit() {
 		oi = new OI();
 
+		ballIntake = new BallIntake();
+    conveyor = new Conveyor();
 		drivetrain = new Drivetrain();
 		shooter = new Shooter();
-		conveyor = new Conveyor();
 
 		// chooser.addObject("My Auto", new MyAutoCommand());
 		SmartDashboard.putData("Auto mode", chooser);

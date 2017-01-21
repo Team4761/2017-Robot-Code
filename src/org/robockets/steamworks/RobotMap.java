@@ -19,6 +19,8 @@ public class RobotMap {
 
     public static TalonSRX conveyorSpeedControllerOne = new TalonSRX(PortNumbers.SHOOTER_CONVEYOR_SC_ONE);
     public static TalonSRX conveyorSpeedControllerTwo = new TalonSRX(PortNumbers.SHOOTER_CONVEYOR_SC_TWO);
+    
+    public static TalonSRX ballIntakeRoller = new TalonSRX(PortNumbers.BALL_INTAKE_ROLLER_SC_PORT);
 
     public static ADXRS450_Gyro gyro = new ADXRS450_Gyro(PortNumbers.gyroPort);
 
