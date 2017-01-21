@@ -47,6 +47,14 @@ public class Drivetrain extends Subsystem {
         RobotMap.robotDrive.tankDrive(leftValue, rightValue);
     }
 
+    public void absoluteTurn(double angle) {
+        
+    }
+
+    public void relativeTurn(double angle) {
+
+    }
+
     /**
      * Turn on PID turning (THIS IS ONLY FOR TESTING!!!)
      */
