@@ -3,35 +3,31 @@ package org.robockets.steamworks.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import org.robockets.commons.YAxisRelativeDirection;
 import org.robockets.steamworks.Robot;
-import org.robockets.steamworks.subsystems.Conveyor;
 
 /**
  * @author Jake Backer
  */
-public class MoveConveyorTime extends Command {
+public class Shoot extends Command {
 
-    double time;
-    boolean forever;
+    public Shoot() {
 
-    public MoveConveyorTime(double time) {
-        requires(Robot.conveyor);
-        this.time = time;
-        forever = false;
     }
 
     protected void initialize() {
-        setTimeout(time);
+
     }
 
     protected void execute() {
+        Robot.shooter.spinUp();
         Robot.conveyor.moveConveyor(YAxisRelativeDirection.FORWARD);
     }
 
     protected boolean isFinished() {
-        return isTimedOut();
+        return false;
     }
 
     protected void end() {
+        Robot.shooter.stop();
         Robot.conveyor.stop();
     }
 
