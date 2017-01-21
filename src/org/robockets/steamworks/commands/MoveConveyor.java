@@ -8,19 +8,33 @@ import org.robockets.steamworks.subsystems.Conveyor;
 /**
  * @author Jake Backer
  */
-public class MoveConveyorTime extends Command {
+public class MoveConveyor extends Command {
 
     double time;
     boolean forever;
 
-    public MoveConveyorTime(double time) {
+    /**
+     * Move conveyor for a certain amount of time
+     * @param time Time in seconds
+     */
+    public MoveConveyor(double time) {
         requires(Robot.conveyor);
         this.time = time;
         forever = false;
     }
 
+    /**
+     * Move conveyor forever
+     */
+    public MoveConveyor() {
+        requires(Robot.conveyor);
+        forever = true;
+    }
+
     protected void initialize() {
-        setTimeout(time);
+        if (!forever) {
+            setTimeout(time);
+        }
     }
 
     protected void execute() {
@@ -28,7 +42,11 @@ public class MoveConveyorTime extends Command {
     }
 
     protected boolean isFinished() {
-        return isTimedOut();
+        if (!forever) {
+            return isTimedOut();
+        } else {
+            return false;
+        }
     }
 
     protected void end() {
