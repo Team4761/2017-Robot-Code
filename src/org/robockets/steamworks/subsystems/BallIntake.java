@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
  * Rollers for taking in balls.
+ * @author Simon Andrews
  */
 public class BallIntake extends Subsystem {
 	private boolean isEnabled = false;
@@ -18,12 +19,14 @@ public class BallIntake extends Subsystem {
     public void spinRollers(double speed) {
     	if(isEnabled == false) {
     		RobotMap.ballIntakeRoller.set(speed);
+    		isEnabled = true;
     	}
     }
     
     public void stopRollers() {
     	if(isEnabled == true) {
     		RobotMap.ballIntakeRoller.stopMotor();
+    		isEnabled = false;
     	}
     }
     
