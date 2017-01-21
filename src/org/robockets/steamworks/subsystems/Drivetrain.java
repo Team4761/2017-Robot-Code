@@ -49,11 +49,14 @@ public class Drivetrain extends Subsystem {
     }
 
     public void absoluteTurn(double angle) {
-
+        gyroPID.setSetpoint(angle);
+        gyroPID.enable();
     }
 
     public void relativeTurn(double angle) {
-
+        double newAngle = gyroPIDSource.pidGet() + angle;
+        gyroPID.setSetpoint(newAngle);
+        gyroPID.enable();
     }
 
     /**
