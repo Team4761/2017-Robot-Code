@@ -110,6 +110,7 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("GyroP", drivetrain.gyroPID.getP());
 		SmartDashboard.putNumber("GyroI", drivetrain.gyroPID.getI());
 		SmartDashboard.putNumber("GyroD", drivetrain.gyroPID.getD());
+		SmartDashboard.putNumber("GyroSetpoint", drivetrain.gyroPID.getSetpoint());
 	}
 
 	/**
@@ -119,6 +120,7 @@ public class Robot extends IterativeRobot {
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
 		drivetrain.gyroPID.setPID(SmartDashboard.getNumber("GyroP"),SmartDashboard.getNumber("GyroI"),SmartDashboard.getNumber("GyroD"));
+		drivetrain.gyroPID.setSetpoint(SmartDashboard.getNumber("GyroSetpoint"));
 	}
 
 	/**

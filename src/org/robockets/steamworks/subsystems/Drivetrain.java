@@ -23,6 +23,7 @@ public class Drivetrain extends Subsystem {
         gyroPID.disable();
         gyroPID.setOutputRange(-1.0, 1.0); // Set turning speed range
         gyroPID.setPercentTolerance(5.0); // Set tolerance of 5%
+        gyroPID.setSetpoint(0);
     }
 
     public void initDefaultCommand() {
@@ -48,7 +49,7 @@ public class Drivetrain extends Subsystem {
     }
 
     public void absoluteTurn(double angle) {
-        
+
     }
 
     public void relativeTurn(double angle) {
