@@ -12,7 +12,7 @@ import org.robockets.steamworks.pidsources.GyroPIDSource;
  */
 public class Drivetrain extends Subsystem {
 
-    private final GyroPIDSource gyroPIDSource;
+    private final GyroPIDSource gyroPIDSource; // ?
 
     public final PIDController gyroPID;
 
@@ -47,12 +47,15 @@ public class Drivetrain extends Subsystem {
         RobotMap.robotDrive.tankDrive(leftValue, rightValue);
     }
 
+    /**
+     * Turn on PID turning (THIS IS ONLY FOR TESTING!!!)
+     */
     public void pidGo() {
         RobotMap.robotDrive.arcadeDrive(0, gyroPID.get());
     }
     
     /**
-     * A method to stop the drivetrain.
+     * A method to stop the drivetrain
      */
     public void stop() {
         driveArcade(0,0);
