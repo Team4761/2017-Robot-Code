@@ -11,5 +11,5 @@ python3 dl_wpilibjars.py --dest ~/wpilib/java/current --members ant/ant-classloa
 	ant/robotDebugCommand \
 	lib/WPILib.jar \
 	lib/NetworkTables.jar \
-	lib/cscore.jar \
+	lib/cscore.jar
 rm dl_wpilibjars.py
