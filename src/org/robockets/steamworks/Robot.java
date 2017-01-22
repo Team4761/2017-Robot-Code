@@ -44,7 +44,7 @@ public class Robot extends IterativeRobot {
 		oi = new OI();
 
 		ballIntake = new BallIntake();
-    conveyor = new Conveyor();
+		conveyor = new Conveyor();
 		drivetrain = new Drivetrain();
 		shooter = new Shooter();
 
