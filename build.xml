@@ -76,32 +76,19 @@
     </if>
   </target>
 
-  <target name="build-gson" depends="make-jar-directory">
+  <target name="get-gson" depends="make-jar-directory">
     <if>
       <available file="./lib/jar/gson-2.8.0.jar" />
       <then>
-        <echo>GSON already built, not recompiling</echo>
+        <echo>GSON already built, not redownloading</echo>
       </then>
       <else>
-        <if>
-          <os family="windows" />
-          <then>
-            <exec dir="./lib/gson" executable="cmd">
-              <arg line="/c mvn package -B -DskipTests=true" />
-            </exec>
-          </then>
-          <else>
-            <exec dir="./lib/gson" executable="mvn">
-              <arg line="package -B -DskipTests=true" />
-            </exec>
-          </else>
-        </if>
-        <copy file="./lib/gson/gson/target/gson-2.8.0.jar" todir="./lib/jar"></copy>
+          <get src="http://jcenter.bintray.com/com/google/code/gson/gson/2.8.0/gson-2.8.0.jar" dest="./lib/jar" />
       </else>
     </if>
   </target>
 
-  <target name="compile" description="Compile source code" depends="build-gyro-lib, build-commons-lib, build-gson, athena-project-build.compile"></target>
+  <target name="compile" description="Compile source code" depends="build-gyro-lib, build-commons-lib, get-gson, athena-project-build.compile"></target>
   <target name="clean" description="Deletes binaries" depends="athena-project-build.clean">
     <delete>
       <fileset dir="lib/jar">

@@ -4,6 +4,3 @@
 [submodule "lib/Robockets-Commons"]
 	path = lib/Robockets-Commons
 	url = https://github.com/Team4761/Robockets-Commons
-[submodule "lib/gson"]
-	path = lib/gson
-	url = https://github.com/google/gson
