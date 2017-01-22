@@ -26,70 +26,31 @@
     <mkdir dir="./lib/jar"></mkdir>
   </target>
 
-  <target name="build-gyro-lib" depends="make-jar-directory">
-    <if>
-      <available file="./lib/jar/L3GD20H-lib-1.0.jar" />
-      <then>
-        <echo>Gyro library already built, not recompiling</echo>
-      </then>
-      <else>
-        <if>
-          <os family="windows" />
-          <then>
-            <exec dir="./lib/L3GD20HGyroLib" executable="cmd">
-              <arg line="/c mvn package -B" />
-            </exec>
-          </then>
-          <else>
-            <exec dir="./lib/L3GD20HGyroLib" executable="mvn">
-              <arg line="package -B" />
-            </exec>
-          </else>
-        </if>
-        <copy file="./lib/L3GD20HGyroLib/target/L3GD20H-lib-1.0.jar" todir="./lib/jar"></copy>
-      </else>
-    </if>
+  <macrodef name="getjar">
+    <attribute name="url" />
+    <attribute name="jarname" />
+    <sequential>
+      <if>
+        <not>
+          <available file="./lib/jar/@{jarname}" />
+        </not>
+        <then>
+          <get src="@{url}" dest="./lib/jar/@{jarname}" />
+        </then>
+        <else>
+          <echo message="JAR already downloaded. Not redownloading." />
+        </else>
+      </if>
+    </sequential>
+  </macrodef>
+
+  <target name="get-dependencies" description="Download JAR files for dependencies from the Internet" depends="make-jar-directory">
+    <getjar url="https://github.com/Team4761/Robockets-Commons/releases/download/v2.0.0/Robockets-Commons-2.0.0.jar" jarname="Robockets-Commons-2.0.0.jar" />
+    <getjar url="http://jcenter.bintray.com/com/google/code/gson/gson/2.8.0/gson-2.8.0.jar" jarname="gson-2.8.0.jar" />
   </target>
 
-  <target name="build-commons-lib" depends="make-jar-directory">
-    <if>
-      <available file="./lib/jar/Robockets-Commons.jar" />
-      <then>
-        <echo>Commons library already built, not recompiling</echo>
-      </then>
-      <else>
-        <if>
-          <os family="windows" />
-          <then>
-            <exec dir="./lib/Robockets-Commons" executable="cmd">
-              <arg line="/c gradlew.bat jar" />
-            </exec>
-          </then>
-          <else>
-            <exec dir="./lib/Robockets-Commons" executable="./gradlew">
-              <arg line="jar" />
-            </exec>
-          </else>
-        </if>
-        <copy file="./lib/Robockets-Commons/build/libs/Robockets-Commons.jar" todir="./lib/jar"></copy>
-      </else>
-    </if>
-  </target>
-
-  <target name="get-gson" depends="make-jar-directory">
-    <if>
-      <available file="./lib/jar/gson-2.8.0.jar" />
-      <then>
-        <echo>GSON already built, not redownloading</echo>
-      </then>
-      <else>
-          <get src="http://jcenter.bintray.com/com/google/code/gson/gson/2.8.0/gson-2.8.0.jar" dest="./lib/jar" />
-      </else>
-    </if>
-  </target>
-
-  <target name="compile" description="Compile source code" depends="build-gyro-lib, build-commons-lib, get-gson, athena-project-build.compile"></target>
-  <target name="clean" description="Deletes binaries" depends="athena-project-build.clean">
+  <target name="compile" description="Compile source code" depends="get-dependencies, athena-project-build.compile"></target>
+  <target name="clean-dependencies" description="Deletes JAR files for dependencies">
     <delete>
       <fileset dir="lib/jar">
         <include name="*" />
