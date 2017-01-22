@@ -32,10 +32,8 @@ public class RobotMap {
     public static Talon backLeftSpeedController = new Talon(PortNumbers.DRIVETRAIN_BACK_LEFT_SC_PORT);
     public static Talon backRightSpeedController = new Talon(PortNumbers.DRIVETRAIN_BACK_RIGHT_SC_PORT);
 
-    public static Encoder frontLeftEncoder = new Encoder(PortNumbers.DRIVETRAIN_FRONT_LEFT_ENCODER_PORT_ONE, PortNumbers.DRIVETRAIN_FRONT_LEFT_ENCODER_PORT_TWO);
-    public static Encoder backLeftEncoder = new Encoder(PortNumbers.DRIVETRAIN_BACK_LEFT_ENCODER_PORT_ONE, PortNumbers.DRIVETRAIN_BACK_LEFT_ENCODER_PORT_TWO);
-    public static Encoder frontRightEncoder = new Encoder(PortNumbers.DRIVETRAIN_FRONT_RIGHT_ENCODER_PORT_ONE, PortNumbers.DRIVETRAIN_FRONT_RIGHT_ENCODER_PORT_TWO);
-    public static Encoder backRightEncoder = new Encoder(PortNumbers.DRIVETRAIN_BACK_RIGHT_ENCODER_PORT_ONE, PortNumbers.DRIVETRAIN_BACK_RIGHT_ENCODER_PORT_TWO);
+    public static Encoder leftEncoder = new Encoder(PortNumbers.DRIVETRAIN_LEFT_ENCODER_PORT_ONE, PortNumbers.DRIVETRAIN_LEFT_ENCODER_PORT_TWO);
+    public static Encoder rightEncoder = new Encoder(PortNumbers.DRIVETRAIN_RIGHT_ENCODER_PORT_ONE, PortNumbers.DRIVETRAIN_RIGHT_ENCODER_PORT_TWO);
 
     public static RobotDrive robotDrive = new RobotDrive(frontLeftSpeedController, backLeftSpeedController, frontRightSpeedController, backRightSpeedController);
 }

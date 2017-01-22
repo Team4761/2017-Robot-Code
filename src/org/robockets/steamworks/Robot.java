@@ -1,6 +1,7 @@
 
 package org.robockets.steamworks;
 
+import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -8,6 +9,7 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
+import javafx.scene.Camera;
 import org.robockets.steamworks.commands.Joyride;
 import org.robockets.steamworks.commands.TunePID;
 import org.robockets.steamworks.subsystems.BallIntake;
@@ -35,6 +37,8 @@ public class Robot extends IterativeRobot {
 	private Command drive;
 	private SendableChooser chooser = new SendableChooser();
 
+	private CameraServer cameraServer;
+
 	/**
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
@@ -54,6 +58,11 @@ public class Robot extends IterativeRobot {
 		drive = new Joyride(0.5);
 
 		RobotMap.gyro.calibrate();
+
+		cameraServer = CameraServer.getInstance();
+
+		cameraServer.startAutomaticCapture();
+
 	}
 
 	/**
@@ -69,6 +78,12 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void disabledPeriodic() {
 		Scheduler.getInstance().run();
+		SmartDashboard.putNumber("GyroData", RobotMap.gyro.getAngle());
+		//System.out.println(RobotMap.gyro.getAngle());
+		SmartDashboard.putNumber("LeftEncoder", RobotMap.leftEncoder.get());
+		SmartDashboard.putNumber("RightEncoder", RobotMap.rightEncoder.get());
+		System.out.println(RobotMap.leftEncoder.get());
+		System.out.println(RobotMap.rightEncoder.get());
 	}
 
 	/**
@@ -133,6 +148,7 @@ public class Robot extends IterativeRobot {
 		Scheduler.getInstance().run();
 		drivetrain.gyroPID.setPID(SmartDashboard.getNumber("GyroP"),SmartDashboard.getNumber("GyroI"),SmartDashboard.getNumber("GyroD"));
 		drivetrain.gyroPID.setSetpoint(SmartDashboard.getNumber("GyroSetpoint"));
+		System.out.println(RobotMap.gyro.getAngle());
 	}
 
 	/**

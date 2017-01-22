@@ -24,14 +24,10 @@ public class PortNumbers {
     
     public static final int BALL_INTAKE_ROLLER_SC_PORT = 7;
     
-    public static final int DRIVETRAIN_FRONT_LEFT_ENCODER_PORT_ONE = 0;
-    public static final int DRIVETRAIN_FRONT_LEFT_ENCODER_PORT_TWO = 1;
-    public static final int DRIVETRAIN_BACK_LEFT_ENCODER_PORT_ONE = 2;
-    public static final int DRIVETRAIN_BACK_LEFT_ENCODER_PORT_TWO = 3;
-    public static final int DRIVETRAIN_FRONT_RIGHT_ENCODER_PORT_ONE = 4;
-    public static final int DRIVETRAIN_FRONT_RIGHT_ENCODER_PORT_TWO = 5;
-    public static final int DRIVETRAIN_BACK_RIGHT_ENCODER_PORT_ONE = 6;
-    public static final int DRIVETRAIN_BACK_RIGHT_ENCODER_PORT_TWO = 7;
+    public static final int DRIVETRAIN_LEFT_ENCODER_PORT_ONE = 1;
+    public static final int DRIVETRAIN_LEFT_ENCODER_PORT_TWO = 0;
+    public static final int DRIVETRAIN_RIGHT_ENCODER_PORT_ONE = 2;
+    public static final int DRIVETRAIN_RIGHT_ENCODER_PORT_TWO = 3;
 
     public static final int JOYSTICK_LEFT_STICK = 1;
     public static final int JOYSTICK_RIGHT_STICK = 4;
