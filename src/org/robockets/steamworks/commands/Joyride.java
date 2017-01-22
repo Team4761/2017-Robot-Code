@@ -10,14 +10,14 @@ import org.robockets.steamworks.RobotMap;
  * Controlled teleop drive command
  * @author Jake Backer
  */
-public class GottaGoFast extends Command {
+public class Joyride extends Command {
 
     private double speed;
 
     /**
      * @param speed Speed multiplier
      */
-    public GottaGoFast(double speed) {
+    public Joyride(double speed) {
         requires(Robot.drivetrain);
         this.speed = speed;
     }
