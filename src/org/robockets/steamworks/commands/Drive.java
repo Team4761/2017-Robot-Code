@@ -3,17 +3,15 @@ package org.robockets.steamworks.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import org.robockets.commons.RelativeDirection;
 import org.robockets.steamworks.Robot;
-import org.robockets.steamworks.RobotMap;
 
 /**
  * General drive command
  * @author Jake Backer
  */
 public class Drive extends Command {
-
-    int offset;
-    RelativeDirection.YAxis direction;
-    double speed;
+    private int offset;
+    private RelativeDirection.YAxis direction;
+    private double speed;
 
     /**
      * Setup drive

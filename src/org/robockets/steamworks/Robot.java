@@ -7,8 +7,13 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 import org.robockets.steamworks.commands.GottaGoFast;
+import org.robockets.steamworks.commands.TunePID;
+import org.robockets.steamworks.subsystems.BallIntake;
+import org.robockets.steamworks.subsystems.Conveyor;
 import org.robockets.steamworks.subsystems.Drivetrain;
+import org.robockets.steamworks.subsystems.Shooter;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -21,11 +26,14 @@ public class Robot extends IterativeRobot {
 
 	public static OI oi;
 
+	public static BallIntake ballIntake;
 	public static Drivetrain drivetrain;
+	public static Shooter shooter;
+	public static Conveyor conveyor;
 
-	Command autonomousCommand;
-	Command drive;
-	SendableChooser chooser = new SendableChooser();
+	private Command autonomousCommand;
+	private Command drive;
+	private SendableChooser chooser = new SendableChooser();
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -34,11 +42,18 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void robotInit() {
 		oi = new OI();
+
+		ballIntake = new BallIntake();
+    conveyor = new Conveyor();
 		drivetrain = new Drivetrain();
+		shooter = new Shooter();
+
 		// chooser.addObject("My Auto", new MyAutoCommand());
 		SmartDashboard.putData("Auto mode", chooser);
 
 		drive = new GottaGoFast(0.5);
+
+		RobotMap.gyro.calibrate();
 	}
 
 	/**
@@ -78,7 +93,7 @@ public class Robot extends IterativeRobot {
 		 * autonomousCommand = new ExampleCommand(); break; }
 		 */
 
-		// schedule the autonomous command (example)
+		// Schedule the autonomous command (example)
 		if (autonomousCommand != null)
 			autonomousCommand.start();
 	}
@@ -101,6 +116,13 @@ public class Robot extends IterativeRobot {
 			autonomousCommand.cancel();
 
 		drive.start();
+
+		SmartDashboard.putNumber("GyroP", drivetrain.gyroPID.getP());
+		SmartDashboard.putNumber("GyroI", drivetrain.gyroPID.getI());
+		SmartDashboard.putNumber("GyroD", drivetrain.gyroPID.getD());
+		SmartDashboard.putNumber("GyroSetpoint", drivetrain.gyroPID.getSetpoint());
+
+		SmartDashboard.putData(new TunePID());
 	}
 
 	/**
@@ -109,6 +131,8 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
+		drivetrain.gyroPID.setPID(SmartDashboard.getNumber("GyroP"),SmartDashboard.getNumber("GyroI"),SmartDashboard.getNumber("GyroD"));
+		drivetrain.gyroPID.setSetpoint(SmartDashboard.getNumber("GyroSetpoint"));
 	}
 
 	/**
