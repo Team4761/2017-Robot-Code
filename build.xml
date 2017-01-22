@@ -38,7 +38,7 @@
           <get src="@{url}" dest="./lib/jar/@{jarname}" />
         </then>
         <else>
-          <echo message="JAR already downloaded. Not redownloading." />
+          <echo message="JAR @{jarname} already downloaded. Not redownloading." />
         </else>
       </if>
     </sequential>
