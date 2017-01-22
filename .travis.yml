@@ -4,7 +4,7 @@ install:
   - sh .travis-init.sh
   - ant build-gyro-lib
   - ant build-commons-lib
-  - ant build-gson
+  - ant get-gson
 
 script: ant compile
 
