@@ -1,8 +1,7 @@
 package org.robockets.steamworks.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
-import org.robockets.commons.XAxisRelativeDirection;
-import org.robockets.commons.YAxisRelativeDirection;
+import org.robockets.commons.RelativeDirection;
 import org.robockets.steamworks.Robot;
 import org.robockets.steamworks.RobotMap;
 
@@ -13,7 +12,7 @@ import org.robockets.steamworks.RobotMap;
 public class Drive extends Command {
 
     int offset;
-    YAxisRelativeDirection direction;
+    RelativeDirection.YAxis direction;
     double speed;
 
     /**
@@ -22,7 +21,7 @@ public class Drive extends Command {
      * @param direction Forwards or Backwards
      * @param speed Speed multiplier
      */
-    public Drive(int offset, YAxisRelativeDirection direction, double speed) {
+    public Drive(int offset, RelativeDirection.YAxis direction, double speed) {
         this.offset = offset;
         this.direction = direction;
         this.speed = speed;
@@ -33,7 +32,7 @@ public class Drive extends Command {
     }
 
     protected void execute() {
-        if (direction == YAxisRelativeDirection.FORWARD) {
+        if (direction == RelativeDirection.YAxis.FORWARD) {
             Robot.drivetrain.driveArcade(0.5*speed, offset*0.5*speed); // 0.5 is the default speed. This is subject to change
         } else {
             Robot.drivetrain.driveArcade(-0.5*speed, offset*-0.5*speed);
