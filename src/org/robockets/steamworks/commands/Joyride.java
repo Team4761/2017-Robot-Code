@@ -3,19 +3,16 @@ package org.robockets.steamworks.commands;
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.command.Command;
 import org.robockets.steamworks.OI;
-import org.robockets.steamworks.PortNumbers;
 import org.robockets.steamworks.Robot;
 import org.robockets.steamworks.RobotMap;
 
 /**
  * Controlled teleop drive command
- * @author Jake Backer
+ * @author Jake Backer & a little bit of Brian Shin
  */
 public class Joyride extends Command {
 
-    private double speed;
-    private boolean tanking;
-    private boolean tanking2;
+    public double speed;
 
     /**
      * @param speed Speed multiplier
@@ -26,7 +23,6 @@ public class Joyride extends Command {
     }
 
     protected void initialize() {
-    	tanking = true; // Default to tank drive, even though it is WRONG
     }
 
     protected void execute() {

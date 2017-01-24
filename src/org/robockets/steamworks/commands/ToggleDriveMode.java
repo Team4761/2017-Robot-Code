@@ -3,14 +3,14 @@ package org.robockets.steamworks.commands;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- *
+ * A command to toggle a boolean used in Joyride.java for switching drive mode.
+ * @author Simon Andrews & Brian Shin
  */
 public class ToggleDriveMode extends Command {
 
 	public static boolean isArcade;
+	
     public ToggleDriveMode() {
-        // Use requires() here to declare subsystem dependencies
-        // eg. requires(chassis);
     	isArcade = true;
     }
 
