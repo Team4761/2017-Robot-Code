@@ -15,6 +15,7 @@ public class Joyride extends Command {
 
     private double speed;
     private boolean tanking;
+    private boolean tanking2;
 
     /**
      * @param speed Speed multiplier
@@ -29,22 +30,15 @@ public class Joyride extends Command {
     }
 
     protected void execute() {
-        //double left = OI.joystick.getRawAxis(PortNumbers.JOYSTICK_LEFT_STICK);
-        //double right = OI.joystick.getRawAxis(PortNumbers.JOYSTICK_RIGHT_STICK);
-
-        RobotMap.robotDrive.tankDrive(OI.joystick, 1, OI.joystick, 5);
-        
-        if (OI.joystick.getRawButton(1) && tanking) { // Bind this to one of the 4 colored buttons
-        	OI.joystick.setRumble(RumbleType.kLeftRumble, 0.75);
-        	OI.joystick.setRumble(RumbleType.kLeftRumble, 0);
-        	RobotMap.robotDrive.tankDrive(OI.joystick, 1, OI.joystick, 5);
-        } else if (OI.joystick.getRawButton(1) && !tanking) {
-        	OI.joystick.setRumble(RumbleType.kLeftRumble, 0.75);
-        	OI.joystick.setRumble(RumbleType.kLeftRumble, 0);
-        	OI.joystick.setRumble(RumbleType.kLeftRumble, 0.75);
-        	OI.joystick.setRumble(RumbleType.kLeftRumble, 0);
-        	RobotMap.robotDrive.arcadeDrive(OI.joystick, 1, OI.joystick, 5);
-        }
+    	if(ToggleDriveMode.isArcade) {
+    		//RobotMap.robotDrive.arcadeDrive(OI.joystick, 1, OI.joystick, 4);
+    		RobotMap.robotDrive.arcadeDrive(OI.joystick.getRawAxis(1), OI.joystick.getRawAxis(4));
+    		OI.joystick.setRumble(RumbleType.kRightRumble, 0.0);
+    	}
+    	else {
+    		RobotMap.robotDrive.tankDrive(OI.joystick, 1, OI.joystick, 5);
+    		OI.joystick.setRumble(RumbleType.kRightRumble, 0.25);
+    	}
     }
 
     protected boolean isFinished() {
