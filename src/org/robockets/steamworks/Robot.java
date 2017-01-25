@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.robockets.steamworks.commands.GottaGoFast;
+import org.robockets.steamworks.commands.Shoot;
 import org.robockets.steamworks.commands.SpinSpinners;
 import org.robockets.steamworks.commands.TunePID;
 import org.robockets.steamworks.subsystems.BallIntake;
@@ -55,6 +56,7 @@ public class Robot extends IterativeRobot {
 		// chooser.addObject("My Auto", new MyAutoCommand());
 		SmartDashboard.putData("Auto mode", chooser);
 		SmartDashboard.putData(new SpinSpinners());
+		SmartDashboard.putData(new Shoot());
 
 		drive = new GottaGoFast(0.5);
 
