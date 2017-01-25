@@ -9,10 +9,11 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-import javafx.scene.Camera;
+import org.robockets.steamworks.commands.Climb;
 import org.robockets.steamworks.commands.Joyride;
 import org.robockets.steamworks.commands.TunePID;
 import org.robockets.steamworks.subsystems.BallIntake;
+import org.robockets.steamworks.subsystems.Climber;
 import org.robockets.steamworks.subsystems.Conveyor;
 import org.robockets.steamworks.subsystems.Drivetrain;
 import org.robockets.steamworks.subsystems.Shooter;
@@ -29,12 +30,14 @@ public class Robot extends IterativeRobot {
 	public static OI oi;
 
 	public static BallIntake ballIntake;
+  public static Climber climber;
+	public static Conveyor conveyor;
 	public static Drivetrain drivetrain;
 	public static Shooter shooter;
-	public static Conveyor conveyor;
 
 	private Command autonomousCommand;
 	private Command drive;
+	private Command climb;
 	private SendableChooser chooser = new SendableChooser();
 
 	private CameraServer cameraServer;
@@ -49,13 +52,16 @@ public class Robot extends IterativeRobot {
 
 		ballIntake = new BallIntake();
 		conveyor = new Conveyor();
+    climber = new Climber();
 		drivetrain = new Drivetrain();
 		shooter = new Shooter();
 
 		// chooser.addObject("My Auto", new MyAutoCommand());
+		climb = new Climb(0.5);
+    drive = new Joyride(0.5);
+    
 		SmartDashboard.putData("Auto mode", chooser);
-
-		drive = new Joyride(0.5);
+		SmartDashboard.putData(new Climb(0.5));
 
 		RobotMap.gyro.calibrate();
 

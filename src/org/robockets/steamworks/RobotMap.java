@@ -2,9 +2,11 @@ package org.robockets.steamworks;
 
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.TalonSRX;
+import edu.wpi.first.wpilibj.Victor;
 
 /**
  * The RobotMap is a mapping from the ports sensors and actuators are wired into
@@ -36,4 +38,10 @@ public class RobotMap {
     public static Encoder rightEncoder = new Encoder(PortNumbers.DRIVETRAIN_RIGHT_ENCODER_PORT_ONE, PortNumbers.DRIVETRAIN_RIGHT_ENCODER_PORT_TWO);
 
     public static RobotDrive robotDrive = new RobotDrive(frontLeftSpeedController, backLeftSpeedController, frontRightSpeedController, backRightSpeedController);
+    
+    public static PowerDistributionPanel powerDistPanel = new PowerDistributionPanel(); // Please note that this must be CAN id 0.
+
+    // Climber related.
+    
+    public static Victor climberMotor = new Victor(PortNumbers.CLIMBER_SC_PORT); // TODO: Match actual hardware.
 }
