@@ -50,9 +50,6 @@ public class Robot extends IterativeRobot {
 		
 		SmartDashboard.putData("Auto mode", chooser);
 		SmartDashboard.putData(new Climb(0.5));
-
-		
-		
 	}
 
 	/**

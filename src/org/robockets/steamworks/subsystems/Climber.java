@@ -7,7 +7,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class Climber extends Subsystem{
 
-	public static final double  STALLING_THRESHOLD = 12; // The stalling current of the subsystem motor.
+	public static final double STALLING_THRESHOLD = 12; // The stalling current of the subsystem motor.
 	
 	/**
 	 * Read the current that the motor of the climber is using.
