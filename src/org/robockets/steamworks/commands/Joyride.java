@@ -12,7 +12,7 @@ import org.robockets.steamworks.RobotMap;
  */
 public class Joyride extends Command {
 
-    public double speed;
+    private double speed;
 
     /**
      * @param speed Speed multiplier
