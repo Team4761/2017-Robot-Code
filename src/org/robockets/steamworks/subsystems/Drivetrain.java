@@ -1,13 +1,30 @@
 package org.robockets.steamworks.subsystems;
 
+import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import org.robockets.steamworks.DummyPIDOutput;
 import org.robockets.steamworks.RobotMap;
+import org.robockets.steamworks.pidsources.GyroPIDSource;
 
 /**
  * @author Jake Backer
  * Drivetrain subsystem
  */
 public class Drivetrain extends Subsystem {
+
+    private final GyroPIDSource gyroPIDSource; // ?
+
+    public final PIDController gyroPID;
+
+    public Drivetrain() {
+        gyroPIDSource = new GyroPIDSource();
+        gyroPID = new PIDController(0, 0, 0, new GyroPIDSource(), new DummyPIDOutput());
+
+        gyroPID.disable();
+        gyroPID.setOutputRange(-1.0, 1.0); // Set turning speed range
+        gyroPID.setPercentTolerance(5.0); // Set tolerance of 5%
+        gyroPID.setSetpoint(0);
+    }
 
     public void initDefaultCommand() {
 
@@ -30,12 +47,31 @@ public class Drivetrain extends Subsystem {
     public void driveTank(double leftValue, double rightValue) {
         RobotMap.robotDrive.tankDrive(leftValue, rightValue);
     }
+
+    public void absoluteTurn(double angle) {
+        gyroPID.setSetpoint(angle);
+        gyroPID.enable();
+    }
+
+    public void relativeTurn(double angle) {
+        double newAngle = gyroPIDSource.pidGet() + angle;
+        gyroPID.setSetpoint(newAngle);
+        gyroPID.enable();
+    }
+
+    /**
+     * Turn on PID turning (THIS IS ONLY FOR TESTING!!!)
+     */
+    public void pidGo() {
+        RobotMap.robotDrive.arcadeDrive(0, gyroPID.get());
+    }
     
     /**
-     * A method to stop the drivetrain.
+     * A method to stop the drivetrain
      */
     public void stop() {
         driveArcade(0,0);
+        gyroPID.disable();
     }
 
 }

@@ -10,7 +10,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.robockets.steamworks.commands.Climb;
 import org.robockets.steamworks.commands.GottaGoFast;
+import org.robockets.steamworks.commands.TunePID;
+import org.robockets.steamworks.subsystems.BallIntake;
 import org.robockets.steamworks.subsystems.Climber;
+import org.robockets.steamworks.subsystems.Conveyor;
 import org.robockets.steamworks.subsystems.Drivetrain;
 import org.robockets.steamworks.subsystems.Shooter;
 
@@ -25,9 +28,11 @@ public class Robot extends IterativeRobot {
 
 	public static OI oi;
 
+	public static BallIntake ballIntake;
+  public static Climber climber;
+	public static Conveyor conveyor;
 	public static Drivetrain drivetrain;
 	public static Shooter shooter;
-	public static Climber climber;
 
 	private Command autonomousCommand;
 	private Command drive;
@@ -41,15 +46,21 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void robotInit() {
 		oi = new OI();
+
+		ballIntake = new BallIntake();
+    climber = new Climber();
+    conveyor = new Conveyor();
 		drivetrain = new Drivetrain();
 		shooter = new Shooter();
-		climber = new Climber();
+
 		// chooser.addObject("My Auto", new MyAutoCommand());
-		drive = new GottaGoFast(0.5);
 		climb = new Climb(0.5);
-		
+    drive = new GottaGoFast(0.5);
+    
 		SmartDashboard.putData("Auto mode", chooser);
 		SmartDashboard.putData(new Climb(0.5));
+
+		RobotMap.gyro.calibrate();
 	}
 
 	/**
@@ -112,6 +123,13 @@ public class Robot extends IterativeRobot {
 			autonomousCommand.cancel();
 
 		drive.start();
+
+		SmartDashboard.putNumber("GyroP", drivetrain.gyroPID.getP());
+		SmartDashboard.putNumber("GyroI", drivetrain.gyroPID.getI());
+		SmartDashboard.putNumber("GyroD", drivetrain.gyroPID.getD());
+		SmartDashboard.putNumber("GyroSetpoint", drivetrain.gyroPID.getSetpoint());
+
+		SmartDashboard.putData(new TunePID());
 	}
 
 	/**
@@ -120,6 +138,8 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
+		drivetrain.gyroPID.setPID(SmartDashboard.getNumber("GyroP"),SmartDashboard.getNumber("GyroI"),SmartDashboard.getNumber("GyroD"));
+		drivetrain.gyroPID.setSetpoint(SmartDashboard.getNumber("GyroSetpoint"));
 	}
 
 	/**
