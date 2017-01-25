@@ -1,9 +1,9 @@
 package org.robockets.steamworks.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
-import org.robockets.commons.YAxisRelativeDirection;
+
+import org.robockets.commons.RelativeDirection;
 import org.robockets.steamworks.Robot;
-import org.robockets.steamworks.subsystems.Conveyor;
 
 /**
  * @author Jake Backer
@@ -38,7 +38,7 @@ public class MoveConveyor extends Command {
     }
 
     protected void execute() {
-        Robot.conveyor.moveConveyor(YAxisRelativeDirection.FORWARD);
+        Robot.conveyor.moveConveyor(RelativeDirection.YAxis.FORWARD);
     }
 
     protected boolean isFinished() {

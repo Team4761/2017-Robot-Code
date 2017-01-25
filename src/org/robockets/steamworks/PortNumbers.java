@@ -7,7 +7,8 @@ package org.robockets.steamworks;
 public class PortNumbers {
     public static final int JOYSTICK_PORT_NUMBER = 0;
 
-    public static final int SHOOTER_ROLLER_SC_PORT = 4;
+    public static final int SHOOTER_ROLLER_SC_PORT_ONE = 4;
+    public static final int SHOOTER_ROLLER_SC_PORT_TWO = 5;
 
     public static final int SHOOTER_ROLLER_ENCODER_PORT_ONE = 8;
     public static final int SHOOTER_ROLLER_ENCODER_PORT_TWO = 9;
