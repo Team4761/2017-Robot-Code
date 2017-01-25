@@ -18,5 +18,6 @@ public class Shoot extends CommandGroup {
         }
         addParallel(new MoveConveyor(2)); // This will also be changed
         addParallel(new MoveElevator(RelativeDirection.ZAxis.UP, 2));
+        addSequential(new KillShooter());
     }
 }
