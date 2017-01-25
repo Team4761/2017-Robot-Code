@@ -1,9 +1,0 @@
-[submodule "lib/L3GD20HGyroLib"]
-	path = lib/L3GD20HGyroLib
-	url = https://github.com/Team4761/L3GD20HGyroLib
-[submodule "lib/Robockets-Commons"]
-	path = lib/Robockets-Commons
-	url = https://github.com/Team4761/Robockets-Commons
-[submodule "lib/gson"]
-	path = lib/gson
-	url = https://github.com/google/gson
