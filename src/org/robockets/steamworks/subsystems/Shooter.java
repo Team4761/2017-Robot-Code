@@ -20,13 +20,11 @@ public class Shooter extends Subsystem {
      */
     public void spinUp() {
         // Spin up motors
-        RobotMap.rollerSpeedController1.set(ROLLER_SPEED);
-        RobotMap.rollerSpeedController2.set(ROLLER_SPEED);
+        RobotMap.rollerSpeedController.set(ROLLER_SPEED);
     }
 
     public void stop() {
-        RobotMap.rollerSpeedController1.set(0);
-        RobotMap.rollerSpeedController2.set(0);
+        RobotMap.rollerSpeedController.set(0);
     }
 }
 

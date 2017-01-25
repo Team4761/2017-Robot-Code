@@ -12,8 +12,8 @@ import edu.wpi.first.wpilibj.TalonSRX;
  */
 public class RobotMap {
 
-    public static TalonSRX rollerSpeedController1 = new TalonSRX(PortNumbers.SHOOTER_ROLLER_SC_PORT_ONE);
-    public static TalonSRX rollerSpeedController2 = new TalonSRX(PortNumbers.SHOOTER_ROLLER_SC_PORT_TWO);
+    public static TalonSRX rollerSpeedController = new TalonSRX(PortNumbers.SHOOTER_ROLLER_SC_PORT);
+    public static TalonSRX elevatorSpeedController = new TalonSRX(PortNumbers.SHOOTER_ELEVATOR_SC_PORT);
 
     public static Encoder rollerEncoder = new Encoder(PortNumbers.SHOOTER_ROLLER_ENCODER_PORT_ONE, PortNumbers.SHOOTER_ROLLER_ENCODER_PORT_TWO);
 

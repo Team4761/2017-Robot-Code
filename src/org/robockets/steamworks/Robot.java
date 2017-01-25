@@ -11,6 +11,7 @@ import org.robockets.steamworks.commands.GottaGoFast;
 import org.robockets.steamworks.commands.SpinSpinners;
 import org.robockets.steamworks.subsystems.Conveyor;
 import org.robockets.steamworks.subsystems.Drivetrain;
+import org.robockets.steamworks.subsystems.Elevator;
 import org.robockets.steamworks.subsystems.Shooter;
 
 /**
@@ -27,6 +28,7 @@ public class Robot extends IterativeRobot {
 	public static Drivetrain drivetrain;
 	public static Shooter shooter;
 	public static Conveyor conveyor;
+	public static Elevator elevator;
 
 	private Command autonomousCommand;
 	private Command drive;
@@ -43,6 +45,7 @@ public class Robot extends IterativeRobot {
 		drivetrain = new Drivetrain();
 		shooter = new Shooter();
 		conveyor = new Conveyor();
+		elevator = new Elevator();
 
 		// chooser.addObject("My Auto", new MyAutoCommand());
 		SmartDashboard.putData("Auto mode", chooser);
