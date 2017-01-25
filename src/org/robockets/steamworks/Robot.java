@@ -7,6 +7,8 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
+import org.robockets.steamworks.commands.Climb;
 import org.robockets.steamworks.commands.GottaGoFast;
 import org.robockets.steamworks.subsystems.Climber;
 import org.robockets.steamworks.subsystems.Drivetrain;
@@ -29,6 +31,7 @@ public class Robot extends IterativeRobot {
 
 	private Command autonomousCommand;
 	private Command drive;
+	private Command climb;
 	private SendableChooser chooser = new SendableChooser();
 
 	/**
@@ -42,9 +45,14 @@ public class Robot extends IterativeRobot {
 		shooter = new Shooter();
 		climber = new Climber();
 		// chooser.addObject("My Auto", new MyAutoCommand());
-		SmartDashboard.putData("Auto mode", chooser);
-
 		drive = new GottaGoFast(0.5);
+		climb = new Climb(0.5);
+		
+		SmartDashboard.putData("Auto mode", chooser);
+		SmartDashboard.putData(new Climb(0.5));
+
+		
+		
 	}
 
 	/**
