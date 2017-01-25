@@ -8,9 +8,11 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
+import org.robockets.steamworks.commands.Climb;
 import org.robockets.steamworks.commands.GottaGoFast;
 import org.robockets.steamworks.commands.TunePID;
 import org.robockets.steamworks.subsystems.BallIntake;
+import org.robockets.steamworks.subsystems.Climber;
 import org.robockets.steamworks.subsystems.Conveyor;
 import org.robockets.steamworks.subsystems.Drivetrain;
 import org.robockets.steamworks.subsystems.Shooter;
@@ -27,12 +29,14 @@ public class Robot extends IterativeRobot {
 	public static OI oi;
 
 	public static BallIntake ballIntake;
+  public static Climber climber;
+	public static Conveyor conveyor;
 	public static Drivetrain drivetrain;
 	public static Shooter shooter;
-	public static Conveyor conveyor;
 
 	private Command autonomousCommand;
 	private Command drive;
+	private Command climb;
 	private SendableChooser chooser = new SendableChooser();
 
 	/**
@@ -44,14 +48,17 @@ public class Robot extends IterativeRobot {
 		oi = new OI();
 
 		ballIntake = new BallIntake();
+    climber = new Climber();
     conveyor = new Conveyor();
 		drivetrain = new Drivetrain();
 		shooter = new Shooter();
 
 		// chooser.addObject("My Auto", new MyAutoCommand());
+		climb = new Climb(0.5);
+    drive = new GottaGoFast(0.5);
+    
 		SmartDashboard.putData("Auto mode", chooser);
-
-		drive = new GottaGoFast(0.5);
+		SmartDashboard.putData(new Climb(0.5));
 
 		RobotMap.gyro.calibrate();
 	}
