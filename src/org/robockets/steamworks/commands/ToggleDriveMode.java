@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class ToggleDriveMode extends Command {
 
-	public static boolean isArcade;
+    public static boolean isArcade;
 	
     public ToggleDriveMode() {
     	isArcade = true;
