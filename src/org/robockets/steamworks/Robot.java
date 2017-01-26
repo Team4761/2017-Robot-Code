@@ -1,4 +1,3 @@
-
 package org.robockets.steamworks;
 
 import edu.wpi.first.wpilibj.CameraServer;
@@ -30,7 +29,7 @@ public class Robot extends IterativeRobot {
 	public static OI oi;
 
 	public static BallIntake ballIntake;
-  public static Climber climber;
+  	public static Climber climber;
 	public static Conveyor conveyor;
 	public static Drivetrain drivetrain;
 	public static Shooter shooter;
@@ -52,13 +51,13 @@ public class Robot extends IterativeRobot {
 
 		ballIntake = new BallIntake();
 		conveyor = new Conveyor();
-    climber = new Climber();
+    	climber = new Climber();
 		drivetrain = new Drivetrain();
 		shooter = new Shooter();
 
 		// chooser.addObject("My Auto", new MyAutoCommand());
 		climb = new Climb(0.5);
-    drive = new Joyride(0.5);
+		drive = new Joyride(0.5);
     
 		SmartDashboard.putData("Auto mode", chooser);
 		SmartDashboard.putData(new Climb(0.5));
