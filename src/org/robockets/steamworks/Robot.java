@@ -38,6 +38,8 @@ public class Robot extends IterativeRobot {
 	private Command drive;
 	private Command climb;
 	private SendableChooser chooser = new SendableChooser();
+	
+	private boolean smartDashboardDebug = true;
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -61,6 +63,9 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putData(new Climb(0.5));
 
 		RobotMap.gyro.calibrate();
+		
+		// SmartDashboard
+		Robot.climber.initSmartDashboard(smartDashboardDebug);
 	}
 
 	/**
@@ -111,6 +116,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
+		Robot.climber.periodicSmartDashboard(smartDashboardDebug);
 	}
 
 	@Override
@@ -140,6 +146,7 @@ public class Robot extends IterativeRobot {
 		Scheduler.getInstance().run();
 		drivetrain.gyroPID.setPID(SmartDashboard.getNumber("GyroP"),SmartDashboard.getNumber("GyroI"),SmartDashboard.getNumber("GyroD"));
 		drivetrain.gyroPID.setSetpoint(SmartDashboard.getNumber("GyroSetpoint"));
+		Robot.climber.periodicSmartDashboard(smartDashboardDebug);
 	}
 
 	/**
