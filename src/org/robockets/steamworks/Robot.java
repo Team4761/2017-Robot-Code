@@ -1,6 +1,6 @@
-
 package org.robockets.steamworks;
 
+import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.robockets.steamworks.commands.Climb;
-import org.robockets.steamworks.commands.GottaGoFast;
+import org.robockets.steamworks.commands.Joyride;
 import org.robockets.steamworks.commands.TunePID;
 import org.robockets.steamworks.subsystems.BallIntake;
 import org.robockets.steamworks.subsystems.Climber;
@@ -29,7 +29,7 @@ public class Robot extends IterativeRobot {
 	public static OI oi;
 
 	public static BallIntake ballIntake;
-  public static Climber climber;
+  	public static Climber climber;
 	public static Conveyor conveyor;
 	public static Drivetrain drivetrain;
 	public static Shooter shooter;
@@ -38,6 +38,8 @@ public class Robot extends IterativeRobot {
 	private Command drive;
 	private Command climb;
 	private SendableChooser chooser = new SendableChooser();
+
+	private CameraServer cameraServer;
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -48,19 +50,24 @@ public class Robot extends IterativeRobot {
 		oi = new OI();
 
 		ballIntake = new BallIntake();
-    climber = new Climber();
-    conveyor = new Conveyor();
+		conveyor = new Conveyor();
+    	climber = new Climber();
 		drivetrain = new Drivetrain();
 		shooter = new Shooter();
 
 		// chooser.addObject("My Auto", new MyAutoCommand());
 		climb = new Climb(0.5);
-    drive = new GottaGoFast(0.5);
+		drive = new Joyride(0.5);
     
 		SmartDashboard.putData("Auto mode", chooser);
 		SmartDashboard.putData(new Climb(0.5));
 
 		RobotMap.gyro.calibrate();
+
+		cameraServer = CameraServer.getInstance();
+
+		cameraServer.startAutomaticCapture();
+
 	}
 
 	/**
@@ -76,6 +83,12 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void disabledPeriodic() {
 		Scheduler.getInstance().run();
+		SmartDashboard.putNumber("GyroData", RobotMap.gyro.getAngle());
+		//System.out.println(RobotMap.gyro.getAngle());
+		SmartDashboard.putNumber("LeftEncoder", RobotMap.leftEncoder.get());
+		SmartDashboard.putNumber("RightEncoder", RobotMap.rightEncoder.get());
+		System.out.println(RobotMap.leftEncoder.get());
+		System.out.println(RobotMap.rightEncoder.get());
 	}
 
 	/**
@@ -140,6 +153,7 @@ public class Robot extends IterativeRobot {
 		Scheduler.getInstance().run();
 		drivetrain.gyroPID.setPID(SmartDashboard.getNumber("GyroP"),SmartDashboard.getNumber("GyroI"),SmartDashboard.getNumber("GyroD"));
 		drivetrain.gyroPID.setSetpoint(SmartDashboard.getNumber("GyroSetpoint"));
+		System.out.println(RobotMap.gyro.getAngle());
 	}
 
 	/**

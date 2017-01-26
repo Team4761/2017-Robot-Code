@@ -15,8 +15,8 @@ public class PortNumbers {
     public static final int SHOOTER_ROLLER_ENCODER_PORT_TWO = 9;
 
     public static final int DRIVETRAIN_FRONT_LEFT_SC_PORT = 0;
-    public static final int DRIVETRAIN_FRONT_RIGHT_SC_PORT = 1;
-    public static final int DRIVETRAIN_BACK_LEFT_SC_PORT = 2;
+    public static final int DRIVETRAIN_FRONT_RIGHT_SC_PORT = 2;
+    public static final int DRIVETRAIN_BACK_LEFT_SC_PORT = 1;
     public static final int DRIVETRAIN_BACK_RIGHT_SC_PORT = 3;
 
     public static final int SHOOTER_CONVEYOR_SC_ONE = 5;
@@ -26,14 +26,10 @@ public class PortNumbers {
   
     public static final int CLIMBER_SC_PORT = 8;
     
-    public static final int DRIVETRAIN_FRONT_LEFT_ENCODER_PORT_ONE = 0;
-    public static final int DRIVETRAIN_FRONT_LEFT_ENCODER_PORT_TWO = 1;
-    public static final int DRIVETRAIN_BACK_LEFT_ENCODER_PORT_ONE = 2;
-    public static final int DRIVETRAIN_BACK_LEFT_ENCODER_PORT_TWO = 3;
-    public static final int DRIVETRAIN_FRONT_RIGHT_ENCODER_PORT_ONE = 4;
-    public static final int DRIVETRAIN_FRONT_RIGHT_ENCODER_PORT_TWO = 5;
-    public static final int DRIVETRAIN_BACK_RIGHT_ENCODER_PORT_ONE = 6;
-    public static final int DRIVETRAIN_BACK_RIGHT_ENCODER_PORT_TWO = 7;
+    public static final int DRIVETRAIN_LEFT_ENCODER_PORT_ONE = 1;
+    public static final int DRIVETRAIN_LEFT_ENCODER_PORT_TWO = 0;
+    public static final int DRIVETRAIN_RIGHT_ENCODER_PORT_ONE = 2;
+    public static final int DRIVETRAIN_RIGHT_ENCODER_PORT_TWO = 3;
 
     public static final int JOYSTICK_LEFT_STICK = 1;
     public static final int JOYSTICK_RIGHT_STICK = 4;
