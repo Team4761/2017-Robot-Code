@@ -1,7 +1,6 @@
-package org.robockets.steamworks.commands;
+package org.robockets.steamworks.climber;
 
 import org.robockets.steamworks.Robot;
-import org.robockets.steamworks.subsystems.Climber;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -13,7 +12,7 @@ public class Climb extends Command {
 	
 	/**
 	 * Climb a rope until the motor stalls signaling hitting the button.
-	 * @param speed	The speed to climb the rope in.
+	 * @param speed	The speed to climb the rope in. 0 through 1
 	 */
 	public Climb (double speed) {
 		requires(Robot.climber);
@@ -22,7 +21,7 @@ public class Climb extends Command {
 	
 	/**
 	 * Climb a rope given a certain time interval.
-	 * @param time The time, in seconds, to stall the motor for. Set the time to zero to run it indefinitely.
+	 * @param time The time, in seconds, to run the motor for. Set the time to zero to run it indefinitely.
 	 */
 	public Climb (double speed, double time) {
 		this(speed);

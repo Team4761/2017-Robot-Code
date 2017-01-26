@@ -8,11 +8,11 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-import org.robockets.steamworks.commands.Climb;
+import org.robockets.steamworks.climber.Climb;
+import org.robockets.steamworks.climber.Climber;
 import org.robockets.steamworks.commands.GottaGoFast;
 import org.robockets.steamworks.commands.TunePID;
 import org.robockets.steamworks.subsystems.BallIntake;
-import org.robockets.steamworks.subsystems.Climber;
 import org.robockets.steamworks.subsystems.Conveyor;
 import org.robockets.steamworks.subsystems.Drivetrain;
 import org.robockets.steamworks.subsystems.Shooter;
