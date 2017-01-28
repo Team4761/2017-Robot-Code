@@ -4,7 +4,7 @@ install:
   - sh .travis-init.sh
   - ant get-dependencies
 
-script: ant compile -Dant.java.version=1.8
+script: ant compile
 
 jdk: oraclejdk8
 
