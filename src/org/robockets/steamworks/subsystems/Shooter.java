@@ -24,7 +24,7 @@ public class Shooter extends Subsystem {
     }
 
     public void stop() {
-        RobotMap.rollerSpeedController.set(0);
+        RobotMap.rollerSpeedController.stopMotor();
     }
 }
 
