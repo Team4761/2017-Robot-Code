@@ -11,16 +11,28 @@ import org.robockets.steamworks.Robot;
 public class MoveElevator extends Command {
 
 	RelativeDirection.ZAxis direction;
+
 	double time;
 
+	boolean isForever;
+
+	public MoveElevator(RelativeDirection.ZAxis direction) {
+		this.direction = direction;
+		isForever = true;
+	}
+
 	public MoveElevator(RelativeDirection.ZAxis direction, double time) {
-		requires(Robot.shooter);
+		// This cannot require the shooter because it would kill the SpinSpinners command
+		// requires(Robot.shooter);
 		this.direction = direction;
 		this.time = time;
+		isForever = false;
 	}
 
 	protected void initialize() {
-		setTimeout(time);
+		if (!isForever) {
+			setTimeout(time);
+		}
 	}
 
 	protected void execute() {
@@ -28,7 +40,11 @@ public class MoveElevator extends Command {
 	}
 
 	protected boolean isFinished() {
-		return isTimedOut();
+		if (!isForever) {
+			return isTimedOut();
+		} else {
+			return false;
+		}
 	}
 
 	protected void end() {
