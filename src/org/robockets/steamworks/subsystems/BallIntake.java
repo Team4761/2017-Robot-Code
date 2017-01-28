@@ -17,7 +17,7 @@ public class BallIntake extends Subsystem {
     }
     
     public void spinRollers(double speed) {
-    	if(isEnabled) {
+    	if(!isEnabled) {
     		RobotMap.ballIntakeRoller.set(speed);
     		isEnabled = true;
     	}
