@@ -12,7 +12,7 @@ public class Climber extends Subsystem{
 	
 	/**
 	 * Read the current that the motor of the climber is using.
-	 * @return current		The current of the motor.	
+	 * @return current The current of the motor.
 	 */
 	public double readCurrent() {
 		return RobotMap.powerDistPanel.getCurrent(PortNumbers.CLIMBER_PDP_PORT);
@@ -20,7 +20,7 @@ public class Climber extends Subsystem{
 	
 	/**
 	 * Set the motor speed.
-	 * @param speed 	A double (0-1) describing the speed to set the motor at. 
+	 * @param speed A double (0-1) describing the speed to set the motor at.
 	 */
 	public void setMotor(double speed) {
 		RobotMap.climberMotor.set(speed);
@@ -36,11 +36,11 @@ public class Climber extends Subsystem{
 	
 	/**
 	 * Method to run to initialize commands on the SmartDashboard.
-	 * @param debug		Whether to show a complete set of options of commands or not.
+	 * @param debug	Whether to show a complete set of options of commands or not.
 	 */
 	public void initSmartDashboard(boolean debug) {
 		// Debug set.
-		if (debug == true) {
+		if (debug) {
 			SmartDashboard.putData("Climb (speed 0.5, for 5 seconds)", new Climb(0.5, 5));
 			SmartDashboard.putData("Climb (speed 0.5, forever)", new Climb(0.5, 0));
 			SmartDashboard.putNumber("STALLING_THRESHOLD", STALLING_THRESHOLD);
@@ -50,7 +50,7 @@ public class Climber extends Subsystem{
 	
 	/**
 	 * Method to run to update data on the SmartDashboard.
-	 * @param debug		True to show current, other data, and allow editing of THRESHOLD.
+	 * @param debug	True to show current, other data, and allow editing of THRESHOLD.
 	 */
 	
 	public void periodicSmartDashboard(boolean debug) {
