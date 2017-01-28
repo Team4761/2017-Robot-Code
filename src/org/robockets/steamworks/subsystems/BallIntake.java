@@ -17,14 +17,14 @@ public class BallIntake extends Subsystem {
     }
     
     public void spinRollers(double speed) {
-    	if(isEnabled == false) {
+    	if(isEnabled) {
     		RobotMap.ballIntakeRoller.set(speed);
     		isEnabled = true;
     	}
     }
     
     public void stopRollers() {
-    	if(isEnabled == true) {
+    	if(isEnabled) {
     		RobotMap.ballIntakeRoller.stopMotor();
     		isEnabled = false;
     	}
