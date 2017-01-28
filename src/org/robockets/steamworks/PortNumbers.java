@@ -24,7 +24,9 @@ public class PortNumbers {
     public static final int DRIVETRAIN_BACK_RIGHT_SC_PORT = 3;
     
     public static final int BALL_INTAKE_ROLLER_SC_PORT = 8;
-    
+
+    public static final int BREAKBEAM_SENSOR_PORT = 1;
+
     public static final int DRIVETRAIN_FRONT_LEFT_ENCODER_PORT_ONE = 0;
     public static final int DRIVETRAIN_FRONT_LEFT_ENCODER_PORT_TWO = 1;
     public static final int DRIVETRAIN_BACK_LEFT_ENCODER_PORT_ONE = 2;

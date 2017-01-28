@@ -1,9 +1,6 @@
 package org.robockets.steamworks;
 
-import edu.wpi.first.wpilibj.ADXRS450_Gyro;
-import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj.RobotDrive;
-import edu.wpi.first.wpilibj.TalonSRX;
+import edu.wpi.first.wpilibj.*;
 
 /**
  * The RobotMap is a mapping from the ports sensors and actuators are wired into
@@ -25,7 +22,7 @@ public class RobotMap {
 
     public static ADXRS450_Gyro gyro = new ADXRS450_Gyro(PortNumbers.gyroPort);
 
-    // TODO: Add breakbeam sensor
+    public static DigitalInput breakbeamSensor = new DigitalInput(PortNumbers.BREAKBEAM_SENSOR_PORT);
 
     public static TalonSRX frontLeftSpeedController = new TalonSRX(PortNumbers.DRIVETRAIN_FRONT_LEFT_SC_PORT);
     public static TalonSRX frontRightSpeedController = new TalonSRX(PortNumbers.DRIVETRAIN_FRONT_RIGHT_SC_PORT);
