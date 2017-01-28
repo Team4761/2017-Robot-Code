@@ -49,7 +49,10 @@
     <getjar url="http://jcenter.bintray.com/com/google/code/gson/gson/2.8.0/gson-2.8.0.jar" jarname="gson-2.8.0.jar" />
   </target>
 
-  <target name="compile" description="Compile source code" depends="get-dependencies, athena-project-build.compile"></target>
+  <target name="compile" description="Compile source code" depends="get-dependencies, athena-project-build.compile">
+	<echo message="Java version: ${ant.java.version}" />
+  </target>
+  
   <target name="clean-dependencies" description="Deletes JAR files for dependencies">
     <delete>
       <fileset dir="lib/jar">
