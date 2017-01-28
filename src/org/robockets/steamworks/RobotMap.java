@@ -63,4 +63,5 @@ public class RobotMap {
     	PwmPort(int portNumber) {
     		this.portNumber = portNumber;
     	}
+    }
 }
