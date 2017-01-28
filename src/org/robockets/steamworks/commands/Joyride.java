@@ -1,7 +1,6 @@
 package org.robockets.steamworks.commands;
 
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.command.Command;
 
 import org.robockets.steamworks.OI;
@@ -37,7 +36,7 @@ public class Joyride extends Command {
     		translate *= 0.5;
     		rotate *= 0.5;
     	}
-    	
+
     	if(ToggleDriveMode.isArcade) {
     		//RobotMap.robotDrive.arcadeDrive(OI.joystick, 1, OI.joystick, 4);
     		RobotMap.robotDrive.arcadeDrive(translate, rotate);
