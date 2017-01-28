@@ -1,5 +1,8 @@
 package org.robockets.steamworks;
 
+import edu.wpi.cscore.CvSink;
+import edu.wpi.cscore.CvSource;
+import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
@@ -7,7 +10,12 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.vision.VisionPipeline;
+import edu.wpi.first.wpilibj.vision.VisionThread;
 
+import org.opencv.core.Mat;
+import org.opencv.imgproc.Imgproc;
+import org.robockets.steamworks.camera.Webcam;
 import org.robockets.steamworks.commands.Climb;
 import org.robockets.steamworks.commands.Joyride;
 import org.robockets.steamworks.commands.TunePID;
@@ -39,8 +47,6 @@ public class Robot extends IterativeRobot {
 	private Command climb;
 	private SendableChooser chooser = new SendableChooser();
 
-	private CameraServer cameraServer;
-
 	/**
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
@@ -63,11 +69,8 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putData(new Climb(0.5));
 
 		RobotMap.gyro.calibrate();
-
-		cameraServer = CameraServer.getInstance();
-
-		cameraServer.startAutomaticCapture();
-
+		
+		Webcam.getInstance().startThread();
 	}
 
 	/**
