@@ -47,11 +47,9 @@
   <target name="get-dependencies" description="Download JAR files for dependencies from the Internet" depends="make-jar-directory">
     <getjar url="https://github.com/Team4761/Robockets-Commons/releases/download/v2.0.0/Robockets-Commons-2.0.0.jar" jarname="Robockets-Commons-2.0.0.jar" />
     <getjar url="http://jcenter.bintray.com/com/google/code/gson/gson/2.8.0/gson-2.8.0.jar" jarname="gson-2.8.0.jar" />
-    <echo message="Java version: ${ant.java.version}" />
   </target>
 
-  <target name="compile" description="Compile source code" depends="get-dependencies, athena-project-build.compile">
-  </target>
+  <target name="compile" description="Compile source code" depends="get-dependencies, athena-project-build.compile"></target>
   
   <target name="clean-dependencies" description="Deletes JAR files for dependencies">
     <delete>
