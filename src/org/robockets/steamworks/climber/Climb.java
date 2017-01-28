@@ -55,7 +55,7 @@ public class Climb extends Command {
 	}
 	
 	protected void end() {
-		Robot.climber.setMotor(0); // Brake the motor.
+		Robot.climber.stop(); // Brake the motor.
 	}
 
 }
