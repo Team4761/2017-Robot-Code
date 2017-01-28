@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.RobotDrive;
+import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.TalonSRX;
 import edu.wpi.first.wpilibj.Victor;
 
@@ -44,5 +45,5 @@ public class RobotMap {
 
     // Climber related.
     
-    public static Victor climberMotor = new Victor(PortNumbers.CLIMBER_SC_PORT); // TODO: Match actual hardware.
+    public static Talon climberMotor = new Talon(PortNumbers.CLIMBER_SC_PORT); // TODO: Match actual hardware.
 }
