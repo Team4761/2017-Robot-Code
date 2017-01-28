@@ -37,4 +37,24 @@ public class RobotMap {
     public static Encoder backRightEncoder = new Encoder(PortNumbers.DRIVETRAIN_BACK_RIGHT_ENCODER_PORT_ONE, PortNumbers.DRIVETRAIN_BACK_RIGHT_ENCODER_PORT_TWO);
 
     public static RobotDrive robotDrive = new RobotDrive(frontLeftSpeedController, backLeftSpeedController, frontRightSpeedController, backRightSpeedController);
+    
+    enum PwmPort {
+    	
+    	BLACK(0),
+    	BROWN(1),
+    	RED(2),
+    	ORANGE(3),
+    	YELLOW(4),
+    	GREEN(5),
+    	BLUE(6),
+    	PURPLE(7),
+    	GRAY(8),
+    	WHITE(9);
+    	
+    	public final int portNumber;
+    	
+    	PwmPort(int portNumber) {
+    		this.portNumber = portNumber;
+    	}
+    }
 }
