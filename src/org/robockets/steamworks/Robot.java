@@ -1,6 +1,6 @@
-
 package org.robockets.steamworks;
 
+import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.robockets.steamworks.climber.Climb;
 import org.robockets.steamworks.climber.Climber;
-import org.robockets.steamworks.commands.GottaGoFast;
+import org.robockets.steamworks.commands.Joyride;
 import org.robockets.steamworks.commands.TunePID;
 import org.robockets.steamworks.subsystems.BallIntake;
 import org.robockets.steamworks.subsystems.Conveyor;
@@ -41,6 +41,8 @@ public class Robot extends IterativeRobot {
 	
 	private boolean smartDashboardDebug = true;
 
+	private CameraServer cameraServer;
+
 	/**
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
@@ -50,14 +52,14 @@ public class Robot extends IterativeRobot {
 		oi = new OI();
 
 		ballIntake = new BallIntake();
+		conveyor = new Conveyor();
     climber = new Climber();
-    conveyor = new Conveyor();
 		drivetrain = new Drivetrain();
 		shooter = new Shooter();
 
 		// chooser.addObject("My Auto", new MyAutoCommand());
 		climb = new Climb(0.5);
-    drive = new GottaGoFast(0.5);
+		drive = new Joyride(0.5);
     
 		SmartDashboard.putData("Auto mode", chooser);
 		SmartDashboard.putData(climb);
@@ -66,6 +68,9 @@ public class Robot extends IterativeRobot {
 		
 		// SmartDashboard
 		Robot.climber.initSmartDashboard(smartDashboardDebug);
+
+		cameraServer = CameraServer.getInstance();
+		cameraServer.startAutomaticCapture();
 	}
 
 	@Override

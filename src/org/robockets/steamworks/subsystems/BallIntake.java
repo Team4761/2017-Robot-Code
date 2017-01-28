@@ -11,10 +11,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 public class BallIntake extends Subsystem {
 	private boolean isEnabled = false;
 	
-    public void initDefaultCommand() {
-        // Set the default command for a subsystem here.
-        //setDefaultCommand(new MySpecialCommand());
-    }
+    public void initDefaultCommand() {}
     
     public void spinRollers(double speed) {
     	if(isEnabled == false) {
