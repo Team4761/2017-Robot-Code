@@ -11,6 +11,9 @@ import org.robockets.steamworks.pidsources.GyroPIDSource;
  * @author Jake Backer & Brian Shin
  * Drivetrain subsystem
  */
+//1ft 307
+//2ft 727
+//3ft 1040
 public class Drivetrain extends Subsystem {
 
     private final GyroPIDSource gyroPIDSource;
@@ -28,7 +31,7 @@ public class Drivetrain extends Subsystem {
         gyroPID.setPercentTolerance(5.0); // Set tolerance of 5%
         gyroPID.setSetpoint(0);
         
-        encoderPIDSource = new EncoderPIDSource(1.0 / 1.0); // Encoder factor: 1 / ticks per inch
+        encoderPIDSource = new EncoderPIDSource(1.0 / 29.0); // Encoder factor: 1 / ticks per inch
         encoderPID = new PIDController(0, 0, 0, encoderPIDSource, new DummyPIDOutput());
         
         encoderPID.disable();

@@ -16,6 +16,6 @@ public class OI {
     Button yButton = new JoystickButton(joystick, 4);
     
     public OI() {
-    	yButton.whenPressed(new ToggleDriveMode());
+    	yButton.whenPressed(Robot.toggleDriveMode);
     }
 }

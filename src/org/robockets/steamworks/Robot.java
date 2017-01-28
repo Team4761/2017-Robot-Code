@@ -10,6 +10,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.robockets.steamworks.commands.Climb;
 import org.robockets.steamworks.commands.Joyride;
+import org.robockets.steamworks.commands.ResetDriveEncoders;
+import org.robockets.steamworks.commands.ToggleDriveMode;
 import org.robockets.steamworks.commands.TunePID;
 import org.robockets.steamworks.subsystems.BallIntake;
 import org.robockets.steamworks.subsystems.Climber;
@@ -37,6 +39,7 @@ public class Robot extends IterativeRobot {
 	private Command autonomousCommand;
 	private Command drive;
 	private Command climb;
+	public static Command toggleDriveMode;
 	private SendableChooser chooser = new SendableChooser();
 
 	private CameraServer cameraServer;
@@ -54,6 +57,7 @@ public class Robot extends IterativeRobot {
     	climber = new Climber();
 		drivetrain = new Drivetrain();
 		shooter = new Shooter();
+		toggleDriveMode = new ToggleDriveMode();
 
 		// chooser.addObject("My Auto", new MyAutoCommand());
 		climb = new Climb(0.5);
@@ -141,8 +145,14 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("GyroI", drivetrain.gyroPID.getI());
 		SmartDashboard.putNumber("GyroD", drivetrain.gyroPID.getD());
 		SmartDashboard.putNumber("GyroSetpoint", drivetrain.gyroPID.getSetpoint());
-
+		
+		SmartDashboard.putNumber("drivetrain setpoint", drivetrain.encoderPID.getSetpoint());
+		SmartDashboard.putNumber("drivetrain P", drivetrain.encoderPID.getP());
+		SmartDashboard.putNumber("drivetrain I", drivetrain.encoderPID.getI());
+		SmartDashboard.putNumber("drivetrain D", drivetrain.encoderPID.getD());
+		
 		SmartDashboard.putData(new TunePID());
+		SmartDashboard.putData(new ResetDriveEncoders());
 	}
 
 	/**
@@ -150,10 +160,16 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void teleopPeriodic() {
-		Scheduler.getInstance().run();
-		drivetrain.gyroPID.setPID(SmartDashboard.getNumber("GyroP"),SmartDashboard.getNumber("GyroI"),SmartDashboard.getNumber("GyroD"));
-		drivetrain.gyroPID.setSetpoint(SmartDashboard.getNumber("GyroSetpoint"));
+		//Scheduler.getInstance().run();
+		drivetrain.gyroPID.setPID(SmartDashboard.getNumber("GyroP", 0),SmartDashboard.getNumber("GyroI", 0),SmartDashboard.getNumber("GyroD", 0));
+		drivetrain.gyroPID.setSetpoint(SmartDashboard.getNumber("GyroSetpoint", 0));
 		System.out.println(RobotMap.gyro.getAngle());
+		
+		drivetrain.encoderPID.setPID(SmartDashboard.getNumber("drivetrain P", 0), SmartDashboard.getNumber("drivetrain I", 0) , SmartDashboard.getNumber("drivetrain D", 0));
+		drivetrain.encoderPID.setSetpoint(SmartDashboard.getNumber("drivetrain setpoint", 0));	
+		SmartDashboard.putNumber("LeftEncoder", RobotMap.leftEncoder.get());
+		SmartDashboard.putNumber("RightEncoder", RobotMap.rightEncoder.get());
+		SmartDashboard.putNumber("Estimated Distance", RobotMap.leftEncoder.get() * (1/29));
 	}
 
 	/**
