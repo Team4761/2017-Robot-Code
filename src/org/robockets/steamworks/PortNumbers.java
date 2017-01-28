@@ -23,6 +23,8 @@ public class PortNumbers {
     public static final int SHOOTER_CONVEYOR_SC_TWO = 6;
     
     public static final int BALL_INTAKE_ROLLER_SC_PORT = 7;
+
+    public static final int GEAR_INTAKE_BREAKBEAM_SENSOR = 2;
   
     public static final int CLIMBER_SC_PORT = 8;
     
