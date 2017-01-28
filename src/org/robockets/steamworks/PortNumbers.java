@@ -9,8 +9,6 @@ import edu.wpi.first.wpilibj.SPI;
 public class PortNumbers {
     public static final int JOYSTICK_PORT_NUMBER = 0;
 
-    public static final int SHOOTER_ROLLER_SC_PORT = 4;
-
     public static final int SHOOTER_ROLLER_ENCODER_PORT_ONE = 8;
     public static final int SHOOTER_ROLLER_ENCODER_PORT_TWO = 9;
 
@@ -19,12 +17,15 @@ public class PortNumbers {
     public static final int DRIVETRAIN_BACK_LEFT_SC_PORT = 2;
     public static final int DRIVETRAIN_BACK_RIGHT_SC_PORT = 3;
 
+    public static final int CLIMBER_SC_PORT = 4;
+    
     public static final int SHOOTER_CONVEYOR_SC_ONE = 5;
     public static final int SHOOTER_CONVEYOR_SC_TWO = 6;
     
     public static final int BALL_INTAKE_ROLLER_SC_PORT = 7;
+    
+    public static final int SHOOTER_ROLLER_SC_PORT = 8;
   
-    public static final int CLIMBER_SC_PORT = 8;
     
     public static final int DRIVETRAIN_FRONT_LEFT_ENCODER_PORT_ONE = 0;
     public static final int DRIVETRAIN_FRONT_LEFT_ENCODER_PORT_TWO = 1;

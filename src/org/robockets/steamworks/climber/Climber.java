@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Climber extends Subsystem{
 
-	public double STALLING_THRESHOLD = 12; // The stalling current of the subsystem motor.
+	public double STALLING_THRESHOLD = 1.3; // The stalling current of the subsystem motor.
 	
 	/**
 	 * Read the current that the motor of the climber is using.
@@ -26,6 +26,10 @@ public class Climber extends Subsystem{
 		RobotMap.climberMotor.set(speed);
 	}
 	
+	public void stop() {
+		RobotMap.climberMotor.stopMotor();
+	}
+	
 	public void initDefaultCommand() {
 
 	}
@@ -37,7 +41,7 @@ public class Climber extends Subsystem{
 	public void initSmartDashboard(boolean debug) {
 		// Debug set.
 		if (debug == true) {
-			SmartDashboard.putData("Climb (speed 0.5, for 5 seconds)", new Climb(0.5, 1));
+			SmartDashboard.putData("Climb (speed 0.5, for 5 seconds)", new Climb(0.5, 5));
 			SmartDashboard.putData("Climb (speed 0.5, forever)", new Climb(0.5, 0));
 			SmartDashboard.putNumber("STALLING_THRESHOLD", STALLING_THRESHOLD);
 		}

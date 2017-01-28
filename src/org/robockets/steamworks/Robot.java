@@ -60,7 +60,7 @@ public class Robot extends IterativeRobot {
     drive = new GottaGoFast(0.5);
     
 		SmartDashboard.putData("Auto mode", chooser);
-		SmartDashboard.putData(new Climb(0.5));
+		SmartDashboard.putData(climb);
 
 		RobotMap.gyro.calibrate();
 		
@@ -68,6 +68,13 @@ public class Robot extends IterativeRobot {
 		Robot.climber.initSmartDashboard(smartDashboardDebug);
 	}
 
+	@Override
+	public void robotPeriodic() {
+		drivetrain.gyroPID.setPID(SmartDashboard.getNumber("GyroP", 0), SmartDashboard.getNumber("GyroI", 0),SmartDashboard.getNumber("GyroD", 0));
+		drivetrain.gyroPID.setSetpoint(SmartDashboard.getNumber("GyroSetpoint", 0));
+		
+		Robot.climber.periodicSmartDashboard(smartDashboardDebug);
+	}
 	/**
 	 * This function is called once each time the robot enters Disabled mode.
 	 * You can use it to reset any subsystem information you want to clear when
@@ -116,7 +123,6 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
-		Robot.climber.periodicSmartDashboard(smartDashboardDebug);
 	}
 
 	@Override
@@ -144,9 +150,6 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
-		drivetrain.gyroPID.setPID(SmartDashboard.getNumber("GyroP"),SmartDashboard.getNumber("GyroI"),SmartDashboard.getNumber("GyroD"));
-		drivetrain.gyroPID.setSetpoint(SmartDashboard.getNumber("GyroSetpoint"));
-		Robot.climber.periodicSmartDashboard(smartDashboardDebug);
 	}
 
 	/**
