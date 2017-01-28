@@ -60,7 +60,7 @@ public class Robot extends IterativeRobot {
     drive = new GottaGoFast(0.5);
     
 		SmartDashboard.putData("Auto mode", chooser);
-		SmartDashboard.putData(new Climb(0.5));
+		SmartDashboard.putData(climb);
 
 		RobotMap.gyro.calibrate();
 		
