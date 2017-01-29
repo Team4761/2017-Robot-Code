@@ -13,11 +13,7 @@ import org.robockets.steamworks.commands.Joyride;
 import org.robockets.steamworks.commands.ResetDriveEncoders;
 import org.robockets.steamworks.commands.ToggleDriveMode;
 import org.robockets.steamworks.commands.TunePID;
-import org.robockets.steamworks.subsystems.BallIntake;
-import org.robockets.steamworks.subsystems.Climber;
-import org.robockets.steamworks.subsystems.Conveyor;
-import org.robockets.steamworks.subsystems.Drivetrain;
-import org.robockets.steamworks.subsystems.Shooter;
+import org.robockets.steamworks.subsystems.*;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -35,6 +31,7 @@ public class Robot extends IterativeRobot {
 	public static Conveyor conveyor;
 	public static Drivetrain drivetrain;
 	public static Shooter shooter;
+	public static GearIntake gearIntake;
 
 	private Command autonomousCommand;
 	private Command drive;
@@ -57,7 +54,10 @@ public class Robot extends IterativeRobot {
     	climber = new Climber();
 		drivetrain = new Drivetrain();
 		shooter = new Shooter();
+		
 		toggleDriveMode = new ToggleDriveMode();
+
+		gearIntake = new GearIntake();
 
 		// chooser.addObject("My Auto", new MyAutoCommand());
 		climb = new Climb(0.5);
@@ -72,6 +72,11 @@ public class Robot extends IterativeRobot {
 
 		cameraServer.startAutomaticCapture();
 
+	}
+
+	@Override
+	public void robotPeriodic() {
+		gearIntake.periodicSmartDashboard();
 	}
 
 	/**
