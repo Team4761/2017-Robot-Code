@@ -12,10 +12,8 @@ import org.robockets.steamworks.climber.Climb;
 import org.robockets.steamworks.climber.Climber;
 import org.robockets.steamworks.commands.Joyride;
 import org.robockets.steamworks.commands.TunePID;
-import org.robockets.steamworks.subsystems.BallIntake;
-import org.robockets.steamworks.subsystems.Conveyor;
-import org.robockets.steamworks.subsystems.Drivetrain;
-import org.robockets.steamworks.subsystems.Shooter;
+
+import org.robockets.steamworks.subsystems.*;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -33,6 +31,7 @@ public class Robot extends IterativeRobot {
 	public static Conveyor conveyor;
 	public static Drivetrain drivetrain;
 	public static Shooter shooter;
+	public static GearIntake gearIntake;
 
 	private Command autonomousCommand;
 	private Command drive;
@@ -56,6 +55,7 @@ public class Robot extends IterativeRobot {
     climber = new Climber();
 		drivetrain = new Drivetrain();
 		shooter = new Shooter();
+		gearIntake = new GearIntake();
 
 		// chooser.addObject("My Auto", new MyAutoCommand());
 		climb = new Climb(0.5);
@@ -79,7 +79,9 @@ public class Robot extends IterativeRobot {
 		drivetrain.gyroPID.setSetpoint(SmartDashboard.getNumber("GyroSetpoint", 0));
 		
 		Robot.climber.periodicSmartDashboard(smartDashboardDebug);
+		gearIntake.periodicSmartDashboard();
 	}
+  
 	/**
 	 * This function is called once each time the robot enters Disabled mode.
 	 * You can use it to reset any subsystem information you want to clear when
