@@ -4,17 +4,20 @@ import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import org.robockets.steamworks.DummyPIDOutput;
 import org.robockets.steamworks.RobotMap;
+import org.robockets.steamworks.pidsources.EncoderPIDSource;
 import org.robockets.steamworks.pidsources.GyroPIDSource;
 
 /**
- * @author Jake Backer
+ * @author Jake Backer & Brian Shin
  * Drivetrain subsystem
  */
 public class Drivetrain extends Subsystem {
 
-    private final GyroPIDSource gyroPIDSource; // ?
+    private final GyroPIDSource gyroPIDSource;
+    private final EncoderPIDSource encoderPIDSource;
 
     public final PIDController gyroPID;
+    public final PIDController encoderPID;
 
     public Drivetrain() {
         gyroPIDSource = new GyroPIDSource();
@@ -24,10 +27,15 @@ public class Drivetrain extends Subsystem {
         gyroPID.setOutputRange(-1.0, 1.0); // Set turning speed range
         gyroPID.setPercentTolerance(5.0); // Set tolerance of 5%
         gyroPID.setSetpoint(0);
+        
+        encoderPIDSource = new EncoderPIDSource(1.0 / 1.0); // Encoder factor: 1 / ticks per inch
+        encoderPID = new PIDController(0, 0, 0, encoderPIDSource, new DummyPIDOutput());
+        
+        encoderPID.disable();
+        encoderPID.setOutputRange(-1.0, 1.0);
     }
 
     public void initDefaultCommand() {
-
     }
    
     /**
@@ -37,6 +45,7 @@ public class Drivetrain extends Subsystem {
      */
     public void driveArcade(double translate, double rotate) {
         RobotMap.robotDrive.arcadeDrive(translate, rotate);
+        disableEncoderPID();
     }
 
     /**
@@ -46,6 +55,21 @@ public class Drivetrain extends Subsystem {
      */
     public void driveTank(double leftValue, double rightValue) {
         RobotMap.robotDrive.tankDrive(leftValue, rightValue);
+        disableEncoderPID();
+    }
+    
+    public void driveDistance(double distance) {
+    	setDistanceInInches(distance);
+    	RobotMap.robotDrive.arcadeDrive(encoderPID.get(), 0);
+    }
+    
+    /**
+     * A basic method to set the setpoint of the robot for a given distance with PID
+     * @param distance Desired distance, in inches
+     */
+    public void setDistanceInInches(double distance) {
+    	encoderPID.setSetpoint(distance); // This is wrong, find encoder ticks per inch and edit the parameter on EncoderPIDSource!
+    	encoderPID.enable();
     }
 
     public void absoluteTurn(double angle) {
@@ -60,7 +84,7 @@ public class Drivetrain extends Subsystem {
     }
 
     /**
-     * Turn on PID turning (THIS IS ONLY FOR TESTING!!!)
+     * Turn on PID turning (THIS IS ONLY FOR TESTING!)
      */
     public void pidGo() {
         RobotMap.robotDrive.arcadeDrive(0, gyroPID.get());
@@ -72,6 +96,10 @@ public class Drivetrain extends Subsystem {
     public void stop() {
         driveArcade(0,0);
         gyroPID.disable();
+    }
+    
+    public void disableEncoderPID() {
+    	encoderPID.reset();
     }
 
 }
