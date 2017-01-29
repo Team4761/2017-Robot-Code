@@ -20,8 +20,8 @@ import org.opencv.core.Mat;
 import org.opencv.imgproc.Imgproc;
 import org.robockets.steamworks.camera.Webcam;
 
-import org.robockets.steamworks.commands.Joyride;
 import org.robockets.steamworks.commands.TunePID;
+import org.robockets.steamworks.drivetrain.Joyride;
 
 import org.robockets.steamworks.subsystems.*;
 

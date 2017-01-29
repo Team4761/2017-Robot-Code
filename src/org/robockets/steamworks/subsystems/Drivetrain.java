@@ -28,7 +28,7 @@ public class Drivetrain extends Subsystem {
         gyroPID.setPercentTolerance(5.0); // Set tolerance of 5%
         gyroPID.setSetpoint(0);
         
-        encoderPIDSource = new EncoderPIDSource(1.0 / 1.0); // Encoder factor: 1 / ticks per inch
+        encoderPIDSource = new EncoderPIDSource(RobotMap.leftEncoder, 1.0 / 1.0); // Encoder factor: 1 / ticks per inch
         encoderPID = new PIDController(0, 0, 0, encoderPIDSource, new DummyPIDOutput());
         
         encoderPID.disable();
