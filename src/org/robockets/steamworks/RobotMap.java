@@ -39,7 +39,7 @@ public class RobotMap {
 
     // Climber related.
     
-    public static Victor climberMotor = new Victor(PortNumbers.CLIMBER_SC_PORT); // TODO: Match actual hardware.
+    public static Talon climberMotor = new Talon(PortNumbers.CLIMBER_SC_PORT); // TODO: Match actual hardware.
   
     public enum PwmPort {
     	

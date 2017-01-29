@@ -13,12 +13,16 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.vision.VisionPipeline;
 import edu.wpi.first.wpilibj.vision.VisionThread;
 
+
+import org.robockets.steamworks.climber.Climb;
+import org.robockets.steamworks.climber.Climber;
 import org.opencv.core.Mat;
 import org.opencv.imgproc.Imgproc;
 import org.robockets.steamworks.camera.Webcam;
-import org.robockets.steamworks.commands.Climb;
+
 import org.robockets.steamworks.commands.Joyride;
 import org.robockets.steamworks.commands.TunePID;
+
 import org.robockets.steamworks.subsystems.*;
 
 /**
@@ -33,7 +37,7 @@ public class Robot extends IterativeRobot {
 	public static OI oi;
 
 	public static BallIntake ballIntake;
-  	public static Climber climber;
+  public static Climber climber;
 	public static Conveyor conveyor;
 	public static Drivetrain drivetrain;
 	public static Shooter shooter;
@@ -43,6 +47,8 @@ public class Robot extends IterativeRobot {
 	private Command drive;
 	private Command climb;
 	private SendableChooser chooser = new SendableChooser();
+	
+	private boolean smartDashboardDebug = true;
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -54,7 +60,7 @@ public class Robot extends IterativeRobot {
 
 		ballIntake = new BallIntake();
 		conveyor = new Conveyor();
-    	climber = new Climber();
+    climber = new Climber();
 		drivetrain = new Drivetrain();
 		shooter = new Shooter();
 		gearIntake = new GearIntake();
@@ -64,18 +70,26 @@ public class Robot extends IterativeRobot {
 		drive = new Joyride(0.5);
     
 		SmartDashboard.putData("Auto mode", chooser);
-		SmartDashboard.putData(new Climb(0.5));
+		SmartDashboard.putData(climb);
 
 		RobotMap.gyro.calibrate();
 		
+		// SmartDashboard
+		Robot.climber.initSmartDashboard(smartDashboardDebug);
+
 		Webcam.getInstance().startThread();
+
 	}
 
 	@Override
 	public void robotPeriodic() {
+		drivetrain.gyroPID.setPID(SmartDashboard.getNumber("GyroP", 0), SmartDashboard.getNumber("GyroI", 0),SmartDashboard.getNumber("GyroD", 0));
+		drivetrain.gyroPID.setSetpoint(SmartDashboard.getNumber("GyroSetpoint", 0));
+		
+		Robot.climber.periodicSmartDashboard(smartDashboardDebug);
 		gearIntake.periodicSmartDashboard();
 	}
-
+  
 	/**
 	 * This function is called once each time the robot enters Disabled mode.
 	 * You can use it to reset any subsystem information you want to clear when
@@ -89,12 +103,6 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void disabledPeriodic() {
 		Scheduler.getInstance().run();
-		SmartDashboard.putNumber("GyroData", RobotMap.gyro.getAngle());
-		//System.out.println(RobotMap.gyro.getAngle());
-		SmartDashboard.putNumber("LeftEncoder", RobotMap.leftEncoder.get());
-		SmartDashboard.putNumber("RightEncoder", RobotMap.rightEncoder.get());
-		System.out.println(RobotMap.leftEncoder.get());
-		System.out.println(RobotMap.rightEncoder.get());
 	}
 
 	/**
@@ -157,9 +165,6 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
-		drivetrain.gyroPID.setPID(SmartDashboard.getNumber("GyroP"),SmartDashboard.getNumber("GyroI"),SmartDashboard.getNumber("GyroD"));
-		drivetrain.gyroPID.setSetpoint(SmartDashboard.getNumber("GyroSetpoint"));
-		System.out.println(RobotMap.gyro.getAngle());
 	}
 
 	/**
