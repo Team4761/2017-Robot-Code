@@ -8,7 +8,7 @@ import org.robockets.steamworks.Robot;
  * General drive command
  * @author Jake Backer
  */
-public class Drive extends Command {
+public class DriveStraight extends Command {
     private int offset;
     private RelativeDirection.YAxis direction;
     private double speed;
@@ -19,7 +19,7 @@ public class Drive extends Command {
      * @param direction Forwards or Backwards
      * @param speed Speed multiplier
      */
-    public Drive(int offset, RelativeDirection.YAxis direction, double speed) {
+    public DriveStraight(int offset, RelativeDirection.YAxis direction, double speed) {
         this.offset = offset;
         this.direction = direction;
         this.speed = speed;
