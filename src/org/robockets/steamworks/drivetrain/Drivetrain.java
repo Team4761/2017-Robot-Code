@@ -14,10 +14,12 @@ import org.robockets.steamworks.pidsources.GyroPIDSource;
 public class Drivetrain extends Subsystem {
 
     private final GyroPIDSource gyroPIDSource;
-    private final EncoderPIDSource encoderPIDSource;
+    private final EncoderPIDSource leftPodPIDSource;
+    private final EncoderPIDSource rightPodPIDSource;
 
     public final PIDController gyroPID;
-    public final PIDController encoderPID;
+    public final PIDController leftPodPID;
+    public final PIDController rightPodPID;
 
     public Drivetrain() {
         gyroPIDSource = new GyroPIDSource();
@@ -28,16 +30,19 @@ public class Drivetrain extends Subsystem {
         gyroPID.setPercentTolerance(5.0); // Set tolerance of 5%
         gyroPID.setSetpoint(0);
         
-        encoderPIDSource = new EncoderPIDSource(RobotMap.leftEncoder, 1.0 / 1.0); // Encoder factor: 1 / ticks per inch
-        encoderPID = new PIDController(0, 0, 0, encoderPIDSource, new DummyPIDOutput());
+        leftPodPIDSource = new EncoderPIDSource(RobotMap.leftEncoder, 1.0 / 1.0); // Encoder factor: 1 / ticks per inch
+        leftPodPID = new PIDController(0, 0, 0, leftPodPIDSource, new DummyPIDOutput());
+        leftPodPID.disable();
+        leftPodPID.setOutputRange(-1.0, 1.0);
         
-        encoderPID.disable();
-        encoderPID.setOutputRange(-1.0, 1.0);
+        rightPodPIDSource = new EncoderPIDSource(RobotMap.rightEncoder, 1.0 / 1.0);
+        rightPodPID = new PIDController(0, 0, 0, rightPodPIDSource, new DummyPIDOutput());
+        rightPodPID.disable();
+        rightPodPID.setOutputRange(-1.0, 1.0);
     }
 
-    public void initDefaultCommand() {
-    }
-   
+    public void initDefaultCommand() {}
+
     /**
      * Basic method to control the movement of the robot 'arcade' style
      * @param translate Motor speed to move forward: -1 to 1
@@ -60,7 +65,7 @@ public class Drivetrain extends Subsystem {
     
     public void driveDistance(double distance) {
     	setDistanceInInches(distance);
-    	RobotMap.robotDrive.arcadeDrive(encoderPID.get(), 0);
+    	RobotMap.robotDrive.arcadeDrive(leftPodPID.get(), 0);
     }
     
     /**
@@ -68,8 +73,8 @@ public class Drivetrain extends Subsystem {
      * @param distance Desired distance, in inches
      */
     public void setDistanceInInches(double distance) {
-    	encoderPID.setSetpoint(distance); // This is wrong, find encoder ticks per inch and edit the parameter on EncoderPIDSource!
-    	encoderPID.enable();
+    	leftPodPID.setSetpoint(distance); // This is wrong, find encoder ticks per inch and edit the parameter on EncoderPIDSource!
+    	leftPodPID.enable();
     }
 
     public void absoluteTurn(double angle) {
@@ -99,7 +104,7 @@ public class Drivetrain extends Subsystem {
     }
     
     public void disableEncoderPID() {
-    	encoderPID.reset();
+    	leftPodPID.reset();
     }
 
 }
