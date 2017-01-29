@@ -21,6 +21,7 @@ import org.opencv.imgproc.Imgproc;
 import org.robockets.steamworks.camera.Webcam;
 
 import org.robockets.steamworks.commands.TunePID;
+import org.robockets.steamworks.drivetrain.Drivetrain;
 import org.robockets.steamworks.drivetrain.Joyride;
 
 import org.robockets.steamworks.subsystems.*;
