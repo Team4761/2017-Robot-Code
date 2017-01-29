@@ -50,6 +50,7 @@
   </target>
 
   <target name="compile" description="Compile source code" depends="get-dependencies, athena-project-build.compile"></target>
+  
   <target name="clean-dependencies" description="Deletes JAR files for dependencies">
     <delete>
       <fileset dir="lib/jar">

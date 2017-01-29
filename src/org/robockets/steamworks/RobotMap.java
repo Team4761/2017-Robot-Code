@@ -60,4 +60,9 @@ public class RobotMap {
     		this.portNumber = portNumber;
     	}
     }
+    
+    public class SmartDashboardKey {
+    	public static final String kCameraExposure = "Camera exposure";
+    	public static final String kVideoFeedResolution = "Video feed resolution";
+    }
 }
