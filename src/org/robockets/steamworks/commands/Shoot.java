@@ -14,7 +14,7 @@ public class Shoot extends CommandGroup {
 
         addSequential(new Wait(2)); // This will be changed
 
-        addParallel(new MoveConveyor()); // This will also be changed
+        addParallel(new MoveConveyor(RelativeDirection.YAxis.FORWARD)); // This will also be changed
         addParallel(new MoveElevator(RelativeDirection.ZAxis.UP));
 
         addSequential(new Wait(2)); // Time for it to shoot
