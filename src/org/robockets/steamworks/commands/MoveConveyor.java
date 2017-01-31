@@ -13,22 +13,26 @@ public class MoveConveyor extends Command {
     double time;
     boolean forever;
 
+    RelativeDirection.YAxis direction;
+
     /**
      * Move conveyor for a certain amount of time
      * @param time Time in seconds
      */
-    public MoveConveyor(double time) {
+    public MoveConveyor(double time, RelativeDirection.YAxis direction) {
         requires(Robot.conveyor);
         this.time = time;
         forever = false;
+        this.direction = direction;
     }
 
     /**
      * Move conveyor forever
      */
-    public MoveConveyor() {
+    public MoveConveyor(RelativeDirection.YAxis direction) {
         requires(Robot.conveyor);
         forever = true;
+        this.direction = direction;
     }
 
     protected void initialize() {
@@ -38,7 +42,7 @@ public class MoveConveyor extends Command {
     }
 
     protected void execute() {
-        Robot.conveyor.moveConveyor(RelativeDirection.YAxis.FORWARD);
+        Robot.conveyor.moveConveyor(direction);
     }
 
     protected boolean isFinished() {
