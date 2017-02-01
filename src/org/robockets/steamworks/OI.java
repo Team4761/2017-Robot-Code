@@ -11,11 +11,14 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
  * interface to the commands and command groups that allow control of the robot.
  */
 public class OI {
-    public static Joystick joystick = new Joystick(PortNumbers.JOYSTICK_PORT_NUMBER);
+    //public static Joystick joystick = new Joystick(PortNumbers.JOYSTICK_PORT_NUMBER);
     
-    Button yButton = new JoystickButton(joystick, 4);
+    //Button yButton = new JoystickButton(joystick, 4);
     
+	public static Joystick joystick1 = new Joystick(0);
+	public static Joystick joystick2 = new Joystick(1);
+	
     public OI() {
-    	yButton.whenPressed(new ToggleDriveMode());
+    	//yButton.whenPressed(new ToggleDriveMode());
     }
 }
