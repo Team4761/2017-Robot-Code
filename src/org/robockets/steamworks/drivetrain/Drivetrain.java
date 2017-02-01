@@ -74,7 +74,10 @@ public class Drivetrain extends Subsystem {
      */
     public void setDistanceInInches(double distance) {
     	leftPodPID.setSetpoint(distance); // This is wrong, find encoder ticks per inch and edit the parameter on EncoderPIDSource!
-    	leftPodPID.enable();
+    	rightPodPID.setSetpoint(distance);
+
+        leftPodPID.enable();
+    	rightPodPID.enable();
     }
 
     public void absoluteTurn(double angle) {
