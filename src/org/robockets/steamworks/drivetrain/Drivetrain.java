@@ -77,7 +77,7 @@ public class Drivetrain extends Subsystem {
     /**
      * A method to drive along an arc with PID, its usefulness is debatable
      * @param direction Direction of the turn, left or right
-     * @param chordLength Length of the hypotenuse of the triangle formed by two radii such that they are perpendicular
+     * @param chordLength Length of the hypotenuse of the triangle formed by two radii
      * @param radius Distance between the robot and a point directly below the target
      * @param speed Speed scalar
      */
