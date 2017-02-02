@@ -1,29 +1,18 @@
 package org.robockets.steamworks;
 
-import edu.wpi.cscore.CvSink;
-import edu.wpi.cscore.CvSource;
-import edu.wpi.cscore.UsbCamera;
-import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj.vision.VisionPipeline;
-import edu.wpi.first.wpilibj.vision.VisionThread;
-
 
 import org.robockets.steamworks.climber.Climb;
 import org.robockets.steamworks.climber.Climber;
-import org.opencv.core.Mat;
-import org.opencv.imgproc.Imgproc;
 import org.robockets.steamworks.camera.Webcam;
-
 import org.robockets.steamworks.commands.TunePID;
 import org.robockets.steamworks.drivetrain.Drivetrain;
 import org.robockets.steamworks.drivetrain.Joyride;
-
 import org.robockets.steamworks.subsystems.*;
 
 /**
@@ -38,7 +27,7 @@ public class Robot extends IterativeRobot {
 	public static OI oi;
 
 	public static BallIntake ballIntake;
-  public static Climber climber;
+  	public static Climber climber;
 	public static Conveyor conveyor;
 	public static Drivetrain drivetrain;
 	public static Shooter shooter;
@@ -61,7 +50,7 @@ public class Robot extends IterativeRobot {
 
 		ballIntake = new BallIntake();
 		conveyor = new Conveyor();
-    climber = new Climber();
+    	climber = new Climber();
 		drivetrain = new Drivetrain();
 		shooter = new Shooter();
 		gearIntake = new GearIntake();
@@ -74,6 +63,8 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putData(climb);
 
 		RobotMap.gyro.calibrate();
+
+		SmartDashboard.putData("GyroPIDGo", new TunePID());
 		
 		// SmartDashboard
 		Robot.climber.initSmartDashboard(smartDashboardDebug);
@@ -86,6 +77,12 @@ public class Robot extends IterativeRobot {
 	public void robotPeriodic() {
 		drivetrain.gyroPID.setPID(SmartDashboard.getNumber("GyroP", 0), SmartDashboard.getNumber("GyroI", 0),SmartDashboard.getNumber("GyroD", 0));
 		drivetrain.gyroPID.setSetpoint(SmartDashboard.getNumber("GyroSetpoint", 0));
+
+		drivetrain.leftPodPID.setPID(SmartDashboard.getNumber("EncoderP", 0), SmartDashboard.getNumber("EncoderI", 0),SmartDashboard.getNumber("EncoderD", 0));
+		drivetrain.leftPodPID.setSetpoint(SmartDashboard.getNumber("EncoderSetpoint", 0));
+		drivetrain.rightPodPID.setPID(SmartDashboard.getNumber("EncoderP", 0), SmartDashboard.getNumber("EncoderI", 0),SmartDashboard.getNumber("EncoderD", 0));
+		drivetrain.rightPodPID.setSetpoint(SmartDashboard.getNumber("EncoderSetpoint", 0));
+
 		
 		Robot.climber.periodicSmartDashboard(smartDashboardDebug);
 		gearIntake.periodicSmartDashboard();
@@ -157,6 +154,15 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("GyroD", drivetrain.gyroPID.getD());
 		SmartDashboard.putNumber("GyroSetpoint", drivetrain.gyroPID.getSetpoint());
 
+		SmartDashboard.putNumber("LeftEncoder", RobotMap.leftEncoder.get());
+		SmartDashboard.putNumber("RightEncoder", RobotMap.rightEncoder.get());
+
+		SmartDashboard.putNumber("EncoderP", drivetrain.leftPodPID.getP());
+		SmartDashboard.putNumber("EncoderI", drivetrain.leftPodPID.getI());
+		SmartDashboard.putNumber("EncoderD", drivetrain.leftPodPID.getD());
+		SmartDashboard.putNumber("EncoderSetpoint", 0);
+
+
 		SmartDashboard.putData(new TunePID());
 	}
 
@@ -166,6 +172,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
+
 	}
 
 	/**
