@@ -5,8 +5,8 @@ import org.robockets.commons.RelativeDirection;
 import org.robockets.steamworks.Robot;
 
 /**
- * General drive command
- * @author Jake Backer
+ * Command to drive straight with the help of a gyro
+ *
  */
 public class DriveStraight extends Command {
     private RelativeDirection.YAxis direction;
@@ -26,9 +26,9 @@ public class DriveStraight extends Command {
 
     protected void execute() {
         if (direction == RelativeDirection.YAxis.BACKWARD) {
-        	speed = -speed;
-            
+        	speed = -speed;        
         }
+        
         Robot.drivetrain.driveTank(speed, speed);
     }
 

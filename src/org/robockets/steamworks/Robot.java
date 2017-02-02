@@ -38,7 +38,7 @@ public class Robot extends IterativeRobot {
 	public static OI oi;
 
 	public static BallIntake ballIntake;
-  public static Climber climber;
+	public static Climber climber;
 	public static Conveyor conveyor;
 	public static Drivetrain drivetrain;
 	public static Shooter shooter;
@@ -61,7 +61,7 @@ public class Robot extends IterativeRobot {
 
 		ballIntake = new BallIntake();
 		conveyor = new Conveyor();
-    climber = new Climber();
+		climber = new Climber();
 		drivetrain = new Drivetrain();
 		shooter = new Shooter();
 		gearIntake = new GearIntake();

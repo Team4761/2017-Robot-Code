@@ -67,7 +67,21 @@ public class Drivetrain extends Subsystem {
     }
     
     /**
-     * A method to drive straight for a certain distance
+     * Method to control the driving of the robot through gyro or encoder PID; does not set setpoint of any PID; use the other methods.
+     * @param moveValue Constant speed to be driving the robot; input 0 if using encoderPID
+     * @param gyro Whether or not to use gyroPID or not
+     * @param encoder Whether or not to use encoderPID or not
+     */
+    public void driveAssisted(double moveValue, boolean gyro, boolean encoder) {
+    	if(gyro && !encoder) {
+    		driveArcade(moveValue, gyroPID.get());
+    	} else if(encoder && !gyro) {
+    		driveTank(leftPodPID.get(), rightPodPID.get());
+    	}
+    }
+    
+    /**
+     * A method to drive straight for a certain distance, based on leftPodPID
      * @param distance Distance, in inches
      */
     public void driveDistance(double distance) {
@@ -80,9 +94,9 @@ public class Drivetrain extends Subsystem {
      * @param direction Direction of the turn, left or right
      * @param chordLength Length of the hypotenuse of the triangle formed by two radii
      * @param radius Distance between the robot and a point directly below the target
-     * @param speed Speed scalar
+     * @param scalar Speed scalar
      */
-    public void driveArc(RelativeDirection.XAxis direction, double chordLength, double radius, double speed) {
+    public void driveArc(RelativeDirection.XAxis direction, double chordLength, double radius, double scalar) {
     	double arcLengthLeft;
     	double arcLengthRight;
     	if(direction == RelativeDirection.XAxis.RIGHT) {
@@ -94,7 +108,7 @@ public class Drivetrain extends Subsystem {
     	}
     	
     	setDistanceInInches(arcLengthLeft, arcLengthRight);
-    	driveTank(leftPodPID.get() * speed, rightPodPID.get() * speed);
+    	driveTank(leftPodPID.get() * scalar, rightPodPID.get() * scalar);
     }
     
     /**
@@ -161,20 +175,19 @@ public class Drivetrain extends Subsystem {
     }
     
     /**
-     * A method to stop the drivetrain
-     */
-    public void stop() {
-        driveArcade(0,0);
-        gyroPID.disable();
-    }
-    
-    /**
      * A method to disable the encoder PIDs
      */
     public void disableEncoderPID() {
     	leftPodPID.reset();
     	rightPodPID.reset();
     }
-
+    
+    /**
+     * A method to stop the drivetrain
+     */
+    public void stop() {
+        driveArcade(0,0);
+        gyroPID.disable();
+    }
 }
 
