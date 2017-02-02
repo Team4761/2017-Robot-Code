@@ -18,6 +18,7 @@ public class Drivetrain extends Subsystem {
     private final GyroPIDSource gyroPIDSource;
     private final EncoderPIDSource leftPodPIDSource;
     private final EncoderPIDSource rightPodPIDSource;
+    private final double CENTERPOINT_TO_WHEEL = 0; // In inches, of course
 
     public final PIDController gyroPID;
     public final PIDController leftPodPID;
@@ -82,7 +83,6 @@ public class Drivetrain extends Subsystem {
      * @param speed Speed scalar
      */
     public void driveArc(RelativeDirection.XAxis direction, double chordLength, double radius, double speed) {
-    	double CENTERPOINT_TO_WHEEL = 0; // In inches, of course
     	double arcLengthLeft;
     	double arcLengthRight;
     	if(direction == RelativeDirection.XAxis.RIGHT) {
@@ -129,6 +129,7 @@ public class Drivetrain extends Subsystem {
     public void absoluteTurn(double angle) {
         gyroPID.setSetpoint(angle);
         gyroPID.enable();
+        driveTank(gyroPID.get(), -gyroPID.get());
     }
 
     /**
@@ -139,6 +140,7 @@ public class Drivetrain extends Subsystem {
         double newAngle = gyroPIDSource.pidGet() + angle;
         gyroPID.setSetpoint(newAngle);
         gyroPID.enable();
+        driveTank(gyroPID.get(), -gyroPID.get());
     }
 
     /**
@@ -155,7 +157,7 @@ public class Drivetrain extends Subsystem {
      * @return Returns the arc length, in inches
      */
     public double calculateArcLength(double chordLength, double radius) {
-    	return Math.toDegrees(Math.asin(chordLength / radius/ 2)) * 96;
+    	return Math.toRadians(Math.asin(chordLength / radius/ 2)) * 96;
     }
     
     /**
