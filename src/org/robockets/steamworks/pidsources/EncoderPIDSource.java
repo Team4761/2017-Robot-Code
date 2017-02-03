@@ -3,6 +3,8 @@ package org.robockets.steamworks.pidsources;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.PIDSource;
 import edu.wpi.first.wpilibj.PIDSourceType;
+import org.robockets.steamworks.Robot;
+import org.robockets.steamworks.RobotMap;
 
 public class EncoderPIDSource implements PIDSource {
 	
@@ -18,6 +20,7 @@ public class EncoderPIDSource implements PIDSource {
 	public EncoderPIDSource(Encoder encoder, double factor) {
 		this.encoder = encoder;
 		this.factor = factor;
+		this.encoder.setDistancePerPulse(0.05555);
 	}
 	
 	@Override
@@ -31,7 +34,7 @@ public class EncoderPIDSource implements PIDSource {
 
 	@Override
 	public double pidGet() {
-		return this.encoder.get() * factor;
+		return this.encoder.getDistance();
 	}
 
 }

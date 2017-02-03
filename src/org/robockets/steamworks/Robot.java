@@ -13,6 +13,7 @@ import org.robockets.steamworks.camera.Webcam;
 import org.robockets.steamworks.commands.TunePID;
 import org.robockets.steamworks.drivetrain.Drivetrain;
 import org.robockets.steamworks.drivetrain.Joyride;
+import org.robockets.steamworks.drivetrain.ResetDriveEncoder;
 import org.robockets.steamworks.subsystems.*;
 
 /**
@@ -69,6 +70,8 @@ public class Robot extends IterativeRobot {
 		// SmartDashboard
 		Robot.climber.initSmartDashboard(smartDashboardDebug);
 
+		SmartDashboard.putData(new ResetDriveEncoder());
+
 		Webcam.getInstance().startThread();
 
 	}
@@ -86,6 +89,11 @@ public class Robot extends IterativeRobot {
 		
 		Robot.climber.periodicSmartDashboard(smartDashboardDebug);
 		gearIntake.periodicSmartDashboard();
+
+		SmartDashboard.putNumber("LeftEncoder", RobotMap.leftEncoder.get());
+		SmartDashboard.putNumber("RightEncoder", RobotMap.rightEncoder.get());
+
+		SmartDashboard.putNumber("LeftEncoderDistance", RobotMap.leftEncoder.getDistance());
 	}
   
 	/**
@@ -154,9 +162,6 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("GyroD", drivetrain.gyroPID.getD());
 		SmartDashboard.putNumber("GyroSetpoint", drivetrain.gyroPID.getSetpoint());
 
-		SmartDashboard.putNumber("LeftEncoder", RobotMap.leftEncoder.get());
-		SmartDashboard.putNumber("RightEncoder", RobotMap.rightEncoder.get());
-
 		SmartDashboard.putNumber("EncoderP", drivetrain.leftPodPID.getP());
 		SmartDashboard.putNumber("EncoderI", drivetrain.leftPodPID.getI());
 		SmartDashboard.putNumber("EncoderD", drivetrain.leftPodPID.getD());
@@ -164,6 +169,8 @@ public class Robot extends IterativeRobot {
 
 
 		SmartDashboard.putData(new TunePID());
+
+
 	}
 
 	/**

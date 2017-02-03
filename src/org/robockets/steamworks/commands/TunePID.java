@@ -25,6 +25,7 @@ public class TunePID extends Command {
     }
 
     protected void end() {
+        Robot.drivetrain.leftPodPID.disable();
         Robot.drivetrain.stop();
     }
 

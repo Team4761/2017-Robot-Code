@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 import org.robockets.commons.RelativeDirection;
+import org.robockets.steamworks.DrivetrainPIDOutput;
 import org.robockets.steamworks.DummyPIDOutput;
 import org.robockets.steamworks.RobotMap;
 import org.robockets.steamworks.pidsources.EncoderPIDSource;
@@ -33,15 +34,17 @@ public class Drivetrain extends Subsystem {
         gyroPID.setPercentTolerance(5.0); // Set tolerance of 5%
         gyroPID.setSetpoint(0);
         
-        leftPodPIDSource = new EncoderPIDSource(RobotMap.leftEncoder, 1.0 / 1.0); // Encoder factor: 1 / ticks per inch
-        leftPodPID = new PIDController(0, 0, 0, leftPodPIDSource, new DummyPIDOutput());
+        leftPodPIDSource = new EncoderPIDSource(RobotMap.leftEncoder, 1.0 / 17.18); // Encoder factor: 1 / ticks per inch
+        leftPodPID = new PIDController(0, 0, 0, leftPodPIDSource, new DrivetrainPIDOutput(RobotMap.robotDrive));
         leftPodPID.disable();
         leftPodPID.setOutputRange(-1.0, 1.0);
         
-        rightPodPIDSource = new EncoderPIDSource(RobotMap.rightEncoder, 1.0 / 1.0);
-        rightPodPID = new PIDController(0, 0, 0, rightPodPIDSource, new DummyPIDOutput());
+        rightPodPIDSource = new EncoderPIDSource(RobotMap.rightEncoder, 1.0 / 17.18);
+        rightPodPID = new PIDController(0, 0, 0, rightPodPIDSource, new DrivetrainPIDOutput(RobotMap.robotDrive));
         rightPodPID.disable();
         rightPodPID.setOutputRange(-1.0, 1.0);
+
+		RobotMap.leftEncoder.setDistancePerPulse(0.05555);
     }
 
     public void initDefaultCommand() {}
@@ -161,7 +164,7 @@ public class Drivetrain extends Subsystem {
      * Turn on PID turning (THIS IS ONLY FOR TESTING!)
      */
     public void pidGo() {
-        RobotMap.robotDrive.arcadeDrive(0, gyroPID.get());
+        leftPodPID.enable();
     }
     
     /**
