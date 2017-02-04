@@ -1,6 +1,8 @@
 package org.robockets.steamworks.drivetrain;
 
 import edu.wpi.first.wpilibj.command.Command;
+import org.robockets.steamworks.Robot;
+import org.robockets.steamworks.RobotMap;
 
 /**
  * Use motion profiling to drive a distance
@@ -31,6 +33,8 @@ public class DriveDistanceProf extends Command {
 	 */
 	private double stepHeight;
 
+	private double currentSetpoint;
+
 	/**
 	 * Initialize misc variables
 	 * @param distance Distance in inches
@@ -47,20 +51,21 @@ public class DriveDistanceProf extends Command {
 	}
 
 	protected void initialize() {
-
+		this.currentSetpoint = RobotMap.leftEncoder.getDistance();
+		Robot.drivetrain.leftPodPID.setSetpoint(this.currentSetpoint);
+		Robot.drivetrain.leftPodPID.enable();
 	}
 
 	protected void execute() {
 
-
 	}
 
 	protected boolean isFinished() {
-		return false;
+		return this.distance - RobotMap.leftEncoder.getDistance() <= 2.5; // 2.5 subject to change
 	}
 
 	protected void end() {
-
+		Robot.drivetrain.leftPodPID.disable();
 	}
 
 	protected void interrupted() {
