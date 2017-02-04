@@ -4,14 +4,14 @@ import org.robockets.steamworks.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class SpinIntake extends Command {
+public class SpinBallIntakeRollers extends Command {
 	private double speed;
-    public SpinIntake(double speed) {
+    public SpinBallIntakeRollers(double speed) {
     	requires(Robot.ballIntake);
     	this.speed = speed;
     }
     
-    public SpinIntake(double speed, double timeout) {
+    public SpinBallIntakeRollers(double speed, double timeout) {
     	this(speed);
     	setTimeout(timeout);
     }
