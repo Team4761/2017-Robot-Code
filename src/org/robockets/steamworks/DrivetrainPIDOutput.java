@@ -14,6 +14,7 @@ public class DrivetrainPIDOutput implements PIDOutput {
 
 	@Override
 	public void pidWrite(double value) {
+
 		SmartDashboard.putNumber("DrivetrainPIDOutput", value);
 		robotDrive.tankDrive(value, value);
 	}

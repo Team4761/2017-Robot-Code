@@ -35,7 +35,7 @@ public class Drivetrain extends Subsystem {
         gyroPID.setSetpoint(0);
         
         leftPodPIDSource = new EncoderPIDSource(RobotMap.leftEncoder, 1.0 / 17.18); // Encoder factor: 1 / ticks per inch
-        leftPodPID = new PIDController(0, 0, 0, leftPodPIDSource, new DrivetrainPIDOutput(RobotMap.robotDrive));
+        leftPodPID = new PIDController(-0.1, 0, 0, leftPodPIDSource, new DrivetrainPIDOutput(RobotMap.robotDrive));
         leftPodPID.disable();
         leftPodPID.setOutputRange(-1.0, 1.0);
         

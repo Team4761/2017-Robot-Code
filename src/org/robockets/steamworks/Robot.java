@@ -66,8 +66,6 @@ public class Robot extends IterativeRobot {
 		RobotMap.gyro.calibrate();
 
 		SmartDashboard.putData("GyroPIDGo", new TunePID());
-
-		SmartDashboard.putData(new KillProfiler());
 		
 		// SmartDashboard
 		Robot.climber.initSmartDashboard(smartDashboardDebug);
@@ -172,7 +170,7 @@ public class Robot extends IterativeRobot {
 
 		SmartDashboard.putData(new TunePID());
 
-		new DriveDistanceProf(60, 2).start();
+		new DriveDistanceProf(30, 2).start();
 
 	}
 

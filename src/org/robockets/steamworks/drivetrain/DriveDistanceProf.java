@@ -31,7 +31,6 @@ public class DriveDistanceProf extends Command {
 	 * @param velocity Velocity in inches per second
 	 */
 	public DriveDistanceProf(double distance, double velocity) {
-		requires(Robot.dummyProfilerSubsystem);
 		this.distance = distance;
 		this.velocity = velocity;
 	}
@@ -45,7 +44,7 @@ public class DriveDistanceProf extends Command {
 		} else {
 			stepHeight = velocity * -STEP_LENGTH;
 		}
-		//Robot.drivetrain.leftPodPID.enable();
+		Robot.drivetrain.leftPodPID.enable();
 	}
 
 	protected void execute() {
