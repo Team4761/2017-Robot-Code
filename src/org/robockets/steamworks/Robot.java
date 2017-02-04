@@ -24,6 +24,8 @@ import org.robockets.steamworks.subsystems.*;
  */
 public class Robot extends IterativeRobot {
 
+	public static final double MAX_SPEED = 240; // in/s
+	
 	public static OI oi;
 
 	public static BallIntake ballIntake;
@@ -167,8 +169,13 @@ public class Robot extends IterativeRobot {
 		if (autonomousCommand != null)
 			autonomousCommand.cancel();
 
+		leftDDP.start();
+		rightDDP.start();
+		
+		drivetrain.leftPodPID.enable();
+		drivetrain.rightPodPID.enable();
 		drive.start();
-
+		
 		SmartDashboard.putNumber("GyroP", drivetrain.gyroPID.getP());
 		SmartDashboard.putNumber("GyroI", drivetrain.gyroPID.getI());
 		SmartDashboard.putNumber("GyroD", drivetrain.gyroPID.getD());
@@ -193,7 +200,6 @@ public class Robot extends IterativeRobot {
 		final boolean encoderPIDStatus = Robot.drivetrain.isEncoderPIDEnabled();
 		if(!encoderPIDStatus) {
 			System.out.println("move to manual control");
-			
 		}
 	}
 

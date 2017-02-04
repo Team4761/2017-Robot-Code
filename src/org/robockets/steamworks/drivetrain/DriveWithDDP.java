@@ -27,8 +27,8 @@ public class DriveWithDDP extends CommandGroup {
         // e.g. if Command1 requires chassis, and Command2 requires arm,
         // a CommandGroup containing them would require both the chassis and the
         // arm.
-    	addParallel(new SpinDrivePod(Robot.drivetrain.leftPodPID, Robot.leftDDP, distance, velocity, true));
-    	//addParallel(new SpinDrivePod(Robot.drivetrain.rightPodPID, Robot.rightDDP, distance, velocity, true));
+    	addParallel(new SpinDrivePod(Robot.drivetrain.leftPodPID, Robot.leftDDP, distance, velocity));
+    	//addParallel(new SpinDrivePod(Robot.drivetrain.rightPodPID, Robot.rightDDP, distance, velocity));
     }
     
     public void initialize() {

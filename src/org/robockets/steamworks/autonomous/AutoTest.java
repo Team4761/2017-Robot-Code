@@ -28,7 +28,7 @@ public class AutoTest extends CommandGroup {
         // e.g. if Command1 requires chassis, and Command2 requires arm,
         // a CommandGroup containing them would require both the chassis and the
         // arm.
-    	addSequential(new DriveWithDDP(24, 2));
-    	addSequential(new DriveWithDDP(24, 4));
+    	addSequential(new DriveWithDDP(24, 8));
+    	//addSequential(new DriveWithDDP(24, 4));
     }
 }

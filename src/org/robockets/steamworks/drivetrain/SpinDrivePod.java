@@ -13,12 +13,10 @@ public class SpinDrivePod extends Command {
 
 	PIDController controller;
 	DriveDistanceProf ddp;
-	boolean isFinishable;
 
-	public SpinDrivePod(PIDController controller, DriveDistanceProf ddp, double distance, double velocity, boolean isFinishable) {
+	public SpinDrivePod(PIDController controller, DriveDistanceProf ddp, double distance, double velocity) {
 		this.controller = controller;
 		this.ddp = ddp;
-		this.isFinishable = isFinishable;
 		updateParameters(distance, velocity, 0);
 	}
 
@@ -35,7 +33,7 @@ public class SpinDrivePod extends Command {
 	}
 
 	protected boolean isFinished() {
-		return this.isFinishable && ddp.isInPosition() && controller.onTarget();
+		return ddp.isInPosition() && controller.onTarget();
 	}
 
 	protected void end() {

@@ -89,6 +89,14 @@ public class DriveDistanceProf extends Command {
 		this.newPosition = currentPosition;
 	}
 
+	public void updateParameters(double targetPosition, double velocity) {
+		this.targetPosition = targetPosition;
+		this.velocity = velocity;
+	}
+	public void updateCurrentPosition(double currentPosition) {
+		this.newPosition = currentPosition;
+	}
+
 	/**
 	 * Get the new position to move to
 	 */
