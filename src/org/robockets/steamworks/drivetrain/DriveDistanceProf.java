@@ -24,48 +24,74 @@ public class DriveDistanceProf extends Command {
 	 */
 	private double stepHeight;
 
-	private double currentPosition;
 	/**
+	 * New position to move to
+	 */
+	private double newPosition;
+
+	/*
 	 * Initialize misc variables
 	 * @param distance Distance in inches
 	 * @param velocity Velocity in inches per second
 	 */
+	/*
 	public DriveDistanceProf(double distance, double velocity) {
 		this.distance = distance;
 		this.velocity = velocity;
+	}*/
+
+	public DriveDistanceProf() {
+
 	}
 
 	protected void initialize() {
-		currentPosition = RobotMap.leftEncoder.getDistance();
-		Robot.drivetrain.leftPodPID.setSetpoint(this.currentPosition); // Prevent from things freaking out
-
-		if (distance>currentPosition) {
-			stepHeight = velocity * STEP_LENGTH;
-		} else {
-			stepHeight = velocity * -STEP_LENGTH;
-		}
-		Robot.drivetrain.leftPodPID.enable();
 	}
 
 	protected void execute() {
-		// This may or may not work. We may have to put it in its own Thread
-		currentPosition += stepHeight;
+		double distanceLeft = Math.abs(distance) - Math.abs(newPosition);
 
-		Robot.drivetrain.leftPodPID.setSetpoint(currentPosition);
+		if (distanceLeft >= Math.abs(stepHeight)) {
+			newPosition += stepHeight;
+		} else {
+			newPosition = distance;
+		}
 
-		System.out.println(Robot.drivetrain.leftPodPID.getSetpoint());
-		SmartDashboard.putNumber("MoProfSetpoint", Robot.drivetrain.leftPodPID.getSetpoint());
+		SmartDashboard.putNumber("MoProfSetpoint", Robot.drivetrain.leftPodPID.getSetpoint()); // For testing
 	}
 
 	protected boolean isFinished() {
-		return !(velocity <= 0) && Math.abs(distance - currentPosition) < Math.abs(stepHeight);
+		return false;
 	}
 
 	protected void end() {
-		Robot.drivetrain.leftPodPID.disable();
 	}
 
 	protected void interrupted() {
 		end();
+	}
+
+	/**
+	 * Update misc parameters
+	 * @param distance The distance to travel
+	 * @param velocity The velocity in which to travel
+	 * @param currentPosition The current position based on the Encoder
+	 */
+	public void updateParameters(double distance, double velocity, double currentPosition) {
+		this.distance = distance;
+		this.velocity = velocity;
+		this.newPosition = currentPosition;
+
+		if (this.distance>this.newPosition) {
+			stepHeight = this.velocity * STEP_LENGTH;
+		} else {
+			stepHeight = this.velocity * -STEP_LENGTH;
+		}
+	}
+
+	/**
+	 * Get the new position to move to
+	 */
+	public double getNewPosition() {
+		return newPosition;
 	}
 }

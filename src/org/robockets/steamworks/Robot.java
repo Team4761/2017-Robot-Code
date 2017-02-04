@@ -31,7 +31,6 @@ public class Robot extends IterativeRobot {
 	public static Drivetrain drivetrain;
 	public static Shooter shooter;
 	public static GearIntake gearIntake;
-	public static DummyProfilerSubsystem dummyProfilerSubsystem;
 
 	private Command autonomousCommand;
 	private Command drive;
@@ -54,7 +53,6 @@ public class Robot extends IterativeRobot {
 		drivetrain = new Drivetrain();
 		shooter = new Shooter();
 		gearIntake = new GearIntake();
-		dummyProfilerSubsystem = new DummyProfilerSubsystem();
 
 		// chooser.addObject("My Auto", new MyAutoCommand());
 		climb = new Climb(0.5);
@@ -169,8 +167,6 @@ public class Robot extends IterativeRobot {
 
 
 		SmartDashboard.putData(new TunePID());
-
-		new DriveDistanceProf(30, 2).start();
 
 	}
 
