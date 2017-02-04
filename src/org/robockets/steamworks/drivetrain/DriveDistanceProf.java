@@ -1,6 +1,7 @@
 package org.robockets.steamworks.drivetrain;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.robockets.steamworks.Robot;
 import org.robockets.steamworks.RobotMap;
 
@@ -14,29 +15,16 @@ public class DriveDistanceProf extends Command {
 	private double velocity;
 
 	/**
-	 * Time in seconds
-	 */
-	private double time;
-
-	/**
 	 * The length of one step in seconds
 	 */
-	private final double stepLength;
-
-	/**
-	 * The amount of steps in the given time
-	 */
-	private double stepCount;
+	private final double STEP_LENGTH = 0.02;
 
 	/**
 	 * The distance traveled in one step
 	 */
 	private double stepHeight;
 
-	private double currentSetpoint;
-
-	private double currentStep;
-
+	private double currentPosition;
 	/**
 	 * Initialize misc variables
 	 * @param distance Distance in inches
@@ -45,37 +33,36 @@ public class DriveDistanceProf extends Command {
 	public DriveDistanceProf(double distance, double velocity) {
 		this.distance = distance;
 		this.velocity = velocity;
-
-		this.time = this.distance / this.velocity;
-		this.stepLength = 0.002;
-		this.stepCount = this.time / this.stepLength;
-		this.stepHeight = this.distance / this.stepCount;
-
-		this.currentStep = 0;
 	}
 
 	protected void initialize() {
-		this.currentSetpoint = RobotMap.leftEncoder.getDistance();
-		Robot.drivetrain.leftPodPID.setSetpoint(this.currentSetpoint);
-		Robot.drivetrain.leftPodPID.enable();
+		currentPosition = RobotMap.leftEncoder.getDistance();
+		Robot.drivetrain.leftPodPID.setSetpoint(this.currentPosition); // Prevent from things freaking out
+
+		if (distance>currentPosition) {
+			stepHeight = velocity * STEP_LENGTH;
+		} else {
+			stepHeight = velocity * -STEP_LENGTH;
+		}
+		//Robot.drivetrain.leftPodPID.enable();
 	}
 
 	protected void execute() {
-		// This may or may not work. We may have to put it in its
-		this.currentSetpoint+=stepHeight;
-		this.currentStep++;
+		// This may or may not work. We may have to put it in its own Thread
+		currentPosition += stepHeight;
 
-		if (this.currentStep<=this.stepCount) {
-			Robot.drivetrain.leftPodPID.setSetpoint(this.currentSetpoint);
-		}
+		Robot.drivetrain.leftPodPID.setSetpoint(currentPosition);
+
+		System.out.println(Robot.drivetrain.leftPodPID.getSetpoint());
+		SmartDashboard.putNumber("MoProfSetpoint", Robot.drivetrain.leftPodPID.getSetpoint());
 	}
 
 	protected boolean isFinished() {
-		return this.distance - RobotMap.leftEncoder.getDistance() <= 2.5; // 2.5 subject to change
+		return velocity >= 0 || velocity <= 0 || Math.abs(distance - currentPosition) < Math.abs(stepHeight);
 	}
 
 	protected void end() {
-		Robot.drivetrain.leftPodPID.disable();
+		Robot.drivetrain.leftPodPID.disable(); // ???
 	}
 
 	protected void interrupted() {

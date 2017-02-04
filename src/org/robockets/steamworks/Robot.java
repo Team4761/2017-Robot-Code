@@ -11,6 +11,7 @@ import org.robockets.steamworks.climber.Climb;
 import org.robockets.steamworks.climber.Climber;
 import org.robockets.steamworks.camera.Webcam;
 import org.robockets.steamworks.commands.TunePID;
+import org.robockets.steamworks.drivetrain.DriveDistanceProf;
 import org.robockets.steamworks.drivetrain.Drivetrain;
 import org.robockets.steamworks.drivetrain.Joyride;
 import org.robockets.steamworks.drivetrain.ResetDriveEncoder;
@@ -170,6 +171,7 @@ public class Robot extends IterativeRobot {
 
 		SmartDashboard.putData(new TunePID());
 
+		new DriveDistanceProf(60, 2).start();
 
 	}
 
