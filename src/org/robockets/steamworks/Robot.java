@@ -179,7 +179,11 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
-
+		final boolean encoderPIDStatus = Robot.drivetrain.isEncoderPIDEnabled();
+		if(!encoderPIDStatus) {
+			System.out.println("move to manual control");
+			
+		}
 	}
 
 	/**

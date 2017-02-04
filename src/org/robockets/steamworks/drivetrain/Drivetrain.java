@@ -177,6 +177,17 @@ public class Drivetrain extends Subsystem {
     }
     
     /**
+     * Method that checks whether the encoder PIDs are enabled or not
+     * @return Returns true or false
+     */
+    public boolean isEncoderPIDEnabled() {
+    	if(leftPodPID.isEnabled() && rightPodPID.isEnabled()) {
+    		return true;
+    	}
+    	return false;
+    }
+    
+    /**
      * A method to disable the encoder PIDs
      */
     public void disableEncoderPID() {
