@@ -11,10 +11,7 @@ import org.robockets.steamworks.climber.Climb;
 import org.robockets.steamworks.climber.Climber;
 import org.robockets.steamworks.camera.Webcam;
 import org.robockets.steamworks.commands.TunePID;
-import org.robockets.steamworks.drivetrain.DriveDistanceProf;
-import org.robockets.steamworks.drivetrain.Drivetrain;
-import org.robockets.steamworks.drivetrain.Joyride;
-import org.robockets.steamworks.drivetrain.ResetDriveEncoder;
+import org.robockets.steamworks.drivetrain.*;
 import org.robockets.steamworks.subsystems.*;
 
 /**
@@ -34,6 +31,7 @@ public class Robot extends IterativeRobot {
 	public static Drivetrain drivetrain;
 	public static Shooter shooter;
 	public static GearIntake gearIntake;
+	public static DummyProfilerSubsystem dummyProfilerSubsystem;
 
 	private Command autonomousCommand;
 	private Command drive;
@@ -56,6 +54,7 @@ public class Robot extends IterativeRobot {
 		drivetrain = new Drivetrain();
 		shooter = new Shooter();
 		gearIntake = new GearIntake();
+		dummyProfilerSubsystem = new DummyProfilerSubsystem();
 
 		// chooser.addObject("My Auto", new MyAutoCommand());
 		climb = new Climb(0.5);
@@ -67,6 +66,8 @@ public class Robot extends IterativeRobot {
 		RobotMap.gyro.calibrate();
 
 		SmartDashboard.putData("GyroPIDGo", new TunePID());
+
+		SmartDashboard.putData(new KillProfiler());
 		
 		// SmartDashboard
 		Robot.climber.initSmartDashboard(smartDashboardDebug);
