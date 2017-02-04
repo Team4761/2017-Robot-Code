@@ -20,7 +20,7 @@ public class EncoderPIDSource implements PIDSource {
 	public EncoderPIDSource(Encoder encoder, double factor) {
 		this.encoder = encoder;
 		this.factor = factor;
-		this.encoder.setDistancePerPulse(0.05555);
+		this.encoder.setDistancePerPulse(factor);
 	}
 	
 	@Override

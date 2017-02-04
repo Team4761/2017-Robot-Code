@@ -35,6 +35,9 @@ public class RobotMap {
 
     public static RobotDrive robotDrive = new RobotDrive(frontLeftSpeedController, backLeftSpeedController, frontRightSpeedController, backRightSpeedController);
     
+    public static DrivePodOutput leftDrivePodOutput = new DrivePodOutput(frontLeftSpeedController, backLeftSpeedController);
+    public static DrivePodOutput rightDrivePodOutput = new DrivePodOutput(frontRightSpeedController, backRightSpeedController);
+
     public static PowerDistributionPanel powerDistPanel = new PowerDistributionPanel(); // Please note that this must be CAN id 0.
 
     // Climber related.

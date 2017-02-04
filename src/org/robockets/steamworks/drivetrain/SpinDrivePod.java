@@ -1,5 +1,6 @@
 package org.robockets.steamworks.drivetrain;
 
+import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.command.Command;
 import org.robockets.commons.RelativeDirection;
 import org.robockets.steamworks.Robot;
@@ -10,29 +11,35 @@ import org.robockets.steamworks.RobotMap;
  */
 public class SpinDrivePod extends Command {
 
-	RelativeDirection.XAxis direction;
-	double distance;
+	PIDController controller;
+	DriveDistanceProf ddp;
+	boolean isFinishable;
 
-	public SpinDrivePod(RelativeDirection.XAxis direction, double distance) {
-		this.direction = direction;
-		this.distance = distance;
+	public SpinDrivePod(PIDController controller, DriveDistanceProf ddp, double distance, double velocity, boolean isFinishable) {
+		this.controller = controller;
+		this.ddp = ddp;
+		this.isFinishable = isFinishable;
+		updateParameters(distance, velocity, 0);
 	}
 
+	public void updateParameters(double distance, double velocity, double currentPosition) {
+		ddp.updateParameters(distance + currentPosition, velocity, currentPosition);
+	}
+	
 	protected void initialize() {
-		Robot.drivetrain.leftPodPID.setSetpoint(distance);
-		Robot.drivetrain.leftPodPID.enable();
+		controller.enable();
 	}
 
 	protected void execute() {
-		RobotMap.backLeftSpeedController.set(Robot.drivetrain.leftPodPID.get());
+		controller.setSetpoint(ddp.getNewPosition());
 	}
 
 	protected boolean isFinished() {
-		return false;
+		return this.isFinishable && ddp.isInPosition() && controller.onTarget();
 	}
 
 	protected void end() {
-
+		controller.disable();
 	}
 
 	protected void interrupted() {

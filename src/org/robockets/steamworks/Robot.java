@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
+import org.robockets.steamworks.autonomous.AutoTest;
 import org.robockets.steamworks.climber.Climb;
 import org.robockets.steamworks.climber.Climber;
 import org.robockets.steamworks.camera.Webcam;
@@ -31,6 +32,8 @@ public class Robot extends IterativeRobot {
 	public static Drivetrain drivetrain;
 	public static Shooter shooter;
 	public static GearIntake gearIntake;
+	
+	public static DriveDistanceProf leftDDP, rightDDP;
 
 	private Command autonomousCommand;
 	private Command drive;
@@ -39,6 +42,8 @@ public class Robot extends IterativeRobot {
 	
 	private boolean smartDashboardDebug = true;
 
+	private int auto = 0;
+	
 	/**
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
@@ -57,7 +62,11 @@ public class Robot extends IterativeRobot {
 		// chooser.addObject("My Auto", new MyAutoCommand());
 		climb = new Climb(0.5);
 		drive = new Joyride(0.5);
-    
+		leftDDP = new DriveDistanceProf();
+		rightDDP = new DriveDistanceProf();
+		
+		autonomousCommand = new AutoTest();
+		
 		SmartDashboard.putData("Auto mode", chooser);
 		SmartDashboard.putData(climb);
 
@@ -68,22 +77,22 @@ public class Robot extends IterativeRobot {
 		// SmartDashboard
 		Robot.climber.initSmartDashboard(smartDashboardDebug);
 
-		SmartDashboard.putData(new ResetDriveEncoder());
-
+		SmartDashboard.putData(new ResetDriveEncoders());
+		
 		Webcam.getInstance().startThread();
 
 	}
 
 	@Override
 	public void robotPeriodic() {
-		drivetrain.gyroPID.setPID(SmartDashboard.getNumber("GyroP", 0), SmartDashboard.getNumber("GyroI", 0),SmartDashboard.getNumber("GyroD", 0));
+		/*drivetrain.gyroPID.setPID(SmartDashboard.getNumber("GyroP", 0), SmartDashboard.getNumber("GyroI", 0),SmartDashboard.getNumber("GyroD", 0));
 		drivetrain.gyroPID.setSetpoint(SmartDashboard.getNumber("GyroSetpoint", 0));
 
 		drivetrain.leftPodPID.setPID(SmartDashboard.getNumber("EncoderP", 0), SmartDashboard.getNumber("EncoderI", 0),SmartDashboard.getNumber("EncoderD", 0));
 		drivetrain.leftPodPID.setSetpoint(SmartDashboard.getNumber("EncoderSetpoint", 0));
 		drivetrain.rightPodPID.setPID(SmartDashboard.getNumber("EncoderP", 0), SmartDashboard.getNumber("EncoderI", 0),SmartDashboard.getNumber("EncoderD", 0));
 		drivetrain.rightPodPID.setSetpoint(SmartDashboard.getNumber("EncoderSetpoint", 0));
-
+		*/
 		
 		Robot.climber.periodicSmartDashboard(smartDashboardDebug);
 		gearIntake.periodicSmartDashboard();
@@ -92,6 +101,9 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("RightEncoder", RobotMap.rightEncoder.get());
 
 		SmartDashboard.putNumber("LeftEncoderDistance", RobotMap.leftEncoder.getDistance());
+		
+		SmartDashboard.putNumber("Left DDP new position", leftDDP.getNewPosition());
+		SmartDashboard.putBoolean("Left DDP is in position", leftDDP.isInPosition());
 	}
   
 	/**
@@ -132,6 +144,8 @@ public class Robot extends IterativeRobot {
 		 */
 
 		// Schedule the autonomous command (example)
+		leftDDP.start();
+		rightDDP.start();
 		if (autonomousCommand != null)
 			autonomousCommand.start();
 	}

@@ -11,7 +11,7 @@ import org.robockets.steamworks.RobotMap;
  */
 public class DriveDistanceProf extends Command {
 
-	private double distance;
+	private double targetPosition;
 	private double velocity;
 
 	/**
@@ -28,6 +28,8 @@ public class DriveDistanceProf extends Command {
 	 * New position to move to
 	 */
 	private double newPosition;
+	
+	private double distanceRemaining;
 
 	/*
 	 * Initialize misc variables
@@ -48,15 +50,20 @@ public class DriveDistanceProf extends Command {
 	}
 
 	protected void execute() {
-		double distanceLeft = Math.abs(distance) - Math.abs(newPosition);
-
-		if (distanceLeft >= Math.abs(stepHeight)) {
+		distanceRemaining = Math.abs(targetPosition) - Math.abs(newPosition);
+		
+		if (this.targetPosition>this.newPosition) {
+			stepHeight = this.velocity * STEP_LENGTH;
+		} else {
+			stepHeight = this.velocity * -STEP_LENGTH;
+		}
+		
+		if (distanceRemaining >= Math.abs(stepHeight)) {
 			newPosition += stepHeight;
 		} else {
-			newPosition = distance;
+			newPosition = targetPosition;
 		}
 
-		SmartDashboard.putNumber("MoProfSetpoint", Robot.drivetrain.leftPodPID.getSetpoint()); // For testing
 	}
 
 	protected boolean isFinished() {
@@ -72,20 +79,14 @@ public class DriveDistanceProf extends Command {
 
 	/**
 	 * Update misc parameters
-	 * @param distance The distance to travel
+	 * @param targetPosition The distance to travel
 	 * @param velocity The velocity in which to travel
 	 * @param currentPosition The current position based on the Encoder
 	 */
-	public void updateParameters(double distance, double velocity, double currentPosition) {
-		this.distance = distance;
+	public void updateParameters(double targetPosition, double velocity, double currentPosition) {
+		this.targetPosition = targetPosition;
 		this.velocity = velocity;
 		this.newPosition = currentPosition;
-
-		if (this.distance>this.newPosition) {
-			stepHeight = this.velocity * STEP_LENGTH;
-		} else {
-			stepHeight = this.velocity * -STEP_LENGTH;
-		}
 	}
 
 	/**
@@ -93,5 +94,10 @@ public class DriveDistanceProf extends Command {
 	 */
 	public double getNewPosition() {
 		return newPosition;
+	}
+	
+	public boolean isInPosition() {
+		distanceRemaining = Math.abs(targetPosition) - Math.abs(newPosition);
+		return distanceRemaining < Math.abs(stepHeight);
 	}
 }

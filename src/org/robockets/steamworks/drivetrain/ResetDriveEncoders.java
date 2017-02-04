@@ -7,9 +7,9 @@ import org.robockets.steamworks.RobotMap;
 /**
  * @author Jake Backer
  */
-public class ResetDriveEncoder extends Command {
+public class ResetDriveEncoders extends Command {
 
-	public ResetDriveEncoder() {
+	public ResetDriveEncoders() {
 
 	}
 
