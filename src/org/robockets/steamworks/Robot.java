@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj.vision.VisionPipeline;
 import edu.wpi.first.wpilibj.vision.VisionThread;
 
 
+import org.robockets.steamworks.ballintake.BallIntake;
 import org.robockets.steamworks.climber.Climb;
 import org.robockets.steamworks.climber.Climber;
 import org.opencv.core.Mat;
