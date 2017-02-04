@@ -87,9 +87,8 @@ public class Drivetrain extends Subsystem {
      * A method to drive straight for a certain distance, based on leftPodPID
      * @param distance Distance, in inches
      */
-    public void driveDistance(double distance) {
-    	setDistanceInInches(distance);
-    	RobotMap.robotDrive.arcadeDrive(leftPodPID.get(), 0);
+    public void driveDistance(double distance, double velocity) {
+
     }
     
     /**
