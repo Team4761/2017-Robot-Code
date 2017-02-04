@@ -35,6 +35,8 @@ public class DriveDistanceProf extends Command {
 
 	private double currentSetpoint;
 
+	private double currentStep;
+
 	/**
 	 * Initialize misc variables
 	 * @param distance Distance in inches
@@ -48,6 +50,8 @@ public class DriveDistanceProf extends Command {
 		this.stepLength = 0.002;
 		this.stepCount = this.time / this.stepLength;
 		this.stepHeight = this.distance / this.stepCount;
+
+		this.currentStep = 0;
 	}
 
 	protected void initialize() {
@@ -57,7 +61,13 @@ public class DriveDistanceProf extends Command {
 	}
 
 	protected void execute() {
+		// This may or may not work. We may have to put it in its
+		this.currentSetpoint+=stepHeight;
+		this.currentStep++;
 
+		if (this.currentStep<=this.stepCount) {
+			Robot.drivetrain.leftPodPID.setSetpoint(this.currentSetpoint);
+		}
 	}
 
 	protected boolean isFinished() {
