@@ -66,6 +66,8 @@ public class DriveDistanceProf extends Command {
 
 	}
 
+	public double getTargetPosition() { return targetPosition; }
+
 	protected boolean isFinished() {
 		return false;
 	}

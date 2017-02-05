@@ -10,6 +10,9 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class AutoTest extends CommandGroup {
     public AutoTest() {
     	addSequential(new DriveWithDDP(24, 8));
-    	//addSequential(new DriveWithDDP(24, 4));
+		System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+		addSequential(new DriveWithDDP(24, 4));
+		System.out.println("BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB");
+		//addSequential(new DriveWithDDP(24, 4));
     }
 }

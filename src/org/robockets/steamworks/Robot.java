@@ -83,6 +83,8 @@ public class Robot extends IterativeRobot {
 		
 		Webcam.getInstance().startThread();
 
+		SmartDashboard.putData(autonomousCommand);
+
 	}
 
 	@Override

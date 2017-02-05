@@ -1,7 +1,9 @@
 package org.robockets.steamworks.drivetrain;
 
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * @author Jake Backer
@@ -14,7 +16,7 @@ public class SpinDrivePod extends Command {
 	public SpinDrivePod(PIDController controller, DriveDistanceProf ddp, double distance, double velocity) {
 		this.controller = controller;
 		this.ddp = ddp;
-		updateParameters(distance, velocity, 0);
+		updateParameters(distance, velocity, this.controller.getSetpoint());
 	}
 
 	public void updateParameters(double distance, double velocity, double currentPosition) {
@@ -27,10 +29,21 @@ public class SpinDrivePod extends Command {
 
 	protected void execute() {
 		controller.setSetpoint(ddp.getNewPosition());
+		SmartDashboard.putNumber("SpinDrivePodSetpoint", controller.getSetpoint());
+		//SmartDashboard.putBoolean("ControllerOnTarget", controller.onTarget());
 	}
 
 	protected boolean isFinished() {
-		return ddp.isInPosition() && controller.onTarget();
+		boolean isOnTarget = compareInRange(controller.getSetpoint(), ddp.getTargetPosition(), 0.5);
+		SmartDashboard.putBoolean("ControllerOnTarget", isOnTarget);
+
+		SmartDashboard.putBoolean("IsInPosition", ddp.isInPosition());
+
+		return ddp.isInPosition() && isOnTarget;
+	}
+
+	private boolean compareInRange(double a, double b, double delta) {
+		return Math.abs(a - b) <= Math.abs(delta);
 	}
 
 	protected void end() {
@@ -40,4 +53,5 @@ public class SpinDrivePod extends Command {
 	protected void interrupted() {
 		end();
 	}
+
 }
