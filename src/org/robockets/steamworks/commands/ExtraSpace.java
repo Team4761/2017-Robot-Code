@@ -22,7 +22,8 @@ public class ExtraSpace extends Command {
 	}
 
 	protected boolean isFinished() {
-		return RobotMap.breakbeamSensor.get();
+		//return RobotMap.breakbeamSensor.get();
+		return false;
 	}
 
 	protected void end() {
