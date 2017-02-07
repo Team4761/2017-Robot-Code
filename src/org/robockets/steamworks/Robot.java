@@ -1,6 +1,7 @@
 package org.robockets.steamworks;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
@@ -34,8 +35,6 @@ public class Robot extends IterativeRobot {
 	public static Drivetrain drivetrain;
 	public static Shooter shooter;
 	public static GearIntake gearIntake;
-	
-	public static DriveDistanceProf leftDDP, rightDDP;
 
 	private Command autonomousCommand;
 	private Command drive;
@@ -43,8 +42,6 @@ public class Robot extends IterativeRobot {
 	private SendableChooser chooser = new SendableChooser();
 	
 	private boolean smartDashboardDebug = true;
-
-	private int auto = 0;
 	
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -64,8 +61,6 @@ public class Robot extends IterativeRobot {
 		// chooser.addObject("My Auto", new MyAutoCommand());
 		climb = new Climb(0.5);
 		drive = new Joyride(0.5);
-		leftDDP = new DriveDistanceProf();
-		rightDDP = new DriveDistanceProf();
 		
 		autonomousCommand = new AutoTest();
 		
@@ -106,8 +101,7 @@ public class Robot extends IterativeRobot {
 
 		SmartDashboard.putNumber("LeftEncoderDistance", RobotMap.leftEncoder.getDistance());
 		
-		SmartDashboard.putNumber("Left DDP new position", leftDDP.getNewPosition());
-		SmartDashboard.putBoolean("Left DDP is in position", leftDDP.isInPosition());
+		SmartDashboard.putNumber("Uptime", Timer.getFPGATimestamp());
 	}
   
 	/**
@@ -138,20 +132,9 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void autonomousInit() {
-		//autonomousCommand = chooser.getSelected(); // This is not working
-
-		/*
-		 * String autoSelected = SmartDashboard.getString("Auto Selector",
-		 * "Default"); switch(autoSelected) { case "My Auto": autonomousCommand
-		 * = new MyAutoCommand(); break; case "Default Auto": default:
-		 * autonomousCommand = new ExampleCommand(); break; }
-		 */
-
-		// Schedule the autonomous command (example)
-		leftDDP.start();
-		rightDDP.start();
-		if (autonomousCommand != null)
+		if(autonomousCommand != null) {
 			autonomousCommand.start();
+		}
 	}
 
 	/**
@@ -170,9 +153,6 @@ public class Robot extends IterativeRobot {
 		// this line or comment it out.
 		if (autonomousCommand != null)
 			autonomousCommand.cancel();
-
-		leftDDP.start();
-		rightDDP.start();
 		
 		drivetrain.leftPodPID.enable();
 		drivetrain.rightPodPID.enable();

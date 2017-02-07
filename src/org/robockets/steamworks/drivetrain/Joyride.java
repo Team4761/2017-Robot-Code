@@ -24,12 +24,10 @@ public class Joyride extends Command {
     }
 
     protected void initialize() {
-    	Robot.leftDDP.updateCurrentPosition(RobotMap.leftEncoder.getDistance());
-    	Robot.rightDDP.updateCurrentPosition(RobotMap.rightEncoder.getDistance());
     }
 
     protected void execute() { 	
-    	if(!Robot.drivetrain.isEncoderPIDEnabled()) {
+    	//if(!Robot.drivetrain.isEncoderPIDEnabled()) {
     		if(ToggleDriveMode.isArcade) {
 	    		//RobotMap.robotDrive.arcadeDrive(OI.joystick, 1, OI.joystick, 4);
 	    		RobotMap.robotDrive.arcadeDrive(OI.joystick.getRawAxis(1), OI.joystick.getRawAxis(4));
@@ -38,7 +36,7 @@ public class Joyride extends Command {
 	    		RobotMap.robotDrive.tankDrive(OI.joystick, 1, OI.joystick, 5);
 	    		OI.joystick.setRumble(Joystick.RumbleType.kRightRumble, 0.25f);
 	    	}
-    	} else {
+    	/*} else {
     		double leftJoyRaw = -OI.joystick.getRawAxis(1);
     		double rightJoyRaw = -OI.joystick.getRawAxis(5);
     		double distanceFactor = 0.02 * 5;
@@ -47,7 +45,7 @@ public class Joyride extends Command {
     		//RobotMap.robotDrive.tankDrive(Robot.leftDDP.getNewPosition(), Robot.rightDDP.getNewPosition());
     		Robot.drivetrain.leftPodPID.setSetpoint(Robot.leftDDP.getNewPosition());
     		Robot.drivetrain.rightPodPID.setSetpoint(Robot.rightDDP.getNewPosition());
-    	}
+    	} */
     }
 
     protected boolean isFinished() {
