@@ -1,6 +1,6 @@
 package org.robockets.steamworks.drivetrain;
 
-import org.robockets.steamworks.MotionPlanner;
+import org.robockets.steamworks.LinearSetpointGenerator;
 import org.robockets.steamworks.Robot;
 import org.robockets.steamworks.RobotMap;
 
@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class MoveDrivePodWithMP extends Command {
 
-	MotionPlanner mp;
+	LinearSetpointGenerator mp;
 	
     public MoveDrivePodWithMP() {
     	requires(Robot.drivetrain);
@@ -18,7 +18,7 @@ public class MoveDrivePodWithMP extends Command {
 
     protected void initialize() {
     	System.out.println("new command initialized()");
-    	mp = new MotionPlanner(24 /* inches */, 8 /* inches per second */, RobotMap.leftEncoder.getDistance());
+    	mp = new LinearSetpointGenerator(24 /* inches */, 8 /* inches per second */, RobotMap.leftEncoder.getDistance());
     	Robot.drivetrain.leftPodPID.enable();
     	mp.start();
     }
