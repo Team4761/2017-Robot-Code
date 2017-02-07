@@ -109,7 +109,7 @@ public class Drivetrain extends Subsystem {
     	}
     	
     	setDistanceInInches(arcLengthLeft, arcLengthRight);
-    	driveTank(leftPodPID.get() * scalar, rightPodPID.get() * scalar);
+    	//driveTank(leftPodPID.get() * scalar, rightPodPID.get() * scalar); // This may not be necessary now that we have a real PIDOutput
     }
     
     /**
