@@ -8,12 +8,9 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-import org.robockets.steamworks.commands.Shoot;
-import org.robockets.steamworks.commands.SpinSpinners;
-import org.robockets.steamworks.commands.TunePID;
+import org.robockets.commons.RelativeDirection;
+import org.robockets.steamworks.commands.*;
 import org.robockets.steamworks.subsystems.*;
-import org.robockets.steamworks.commands.Climb;
-import org.robockets.steamworks.commands.Joyride;
 
 
 /**
@@ -72,6 +69,9 @@ public class Robot extends IterativeRobot {
 
 		SmartDashboard.putData(new Climb(0.5));
 
+		SmartDashboard.putData("MoveConveyorForward", new MoveConveyor(RelativeDirection.YAxis.FORWARD));
+		SmartDashboard.putData("MoveConveyorBackward", new MoveConveyor(RelativeDirection.YAxis.BACKWARD));
+
 		RobotMap.gyro.calibrate();
 
 		cameraServer = CameraServer.getInstance();
@@ -83,6 +83,8 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void robotPeriodic() {
 		gearIntake.periodicSmartDashboard();
+		SmartDashboard.putNumber("RawShooterEncoderValue", RobotMap.shooterEncoder.get());
+
 	}
 
 	/**
