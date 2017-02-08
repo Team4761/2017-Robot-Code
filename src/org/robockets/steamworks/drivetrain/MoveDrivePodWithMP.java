@@ -18,21 +18,20 @@ public class MoveDrivePodWithMP extends Command {
 
     protected void initialize() {
     	System.out.println("new command initialized()");
-    	mp = new LinearSetpointGenerator(24 /* inches */, 8 /* inches per second */, RobotMap.leftEncoder.getDistance());
+    	mp = new LinearSetpointGenerator(96 /* inches */, 24 /* inches per second */, RobotMap.leftEncoder.getDistance());
     	Robot.drivetrain.leftPodPID.enable();
-    	mp.start();
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	double setpoint = mp.getSetpoint();
+    	double setpoint = mp.next();
     	SmartDashboard.putNumber("mp out", setpoint);
     	Robot.drivetrain.leftPodPID.setSetpoint(setpoint);
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return mp.isInPosition();
+    	return mp.hasNext();
     }
 
     // Called once after isFinished returns true

@@ -8,15 +8,14 @@ public class LinearSetpointGenerator implements Iterator<Double> {
 	private double velocity;
 	private double initialPosition;
 	private double time;
-	private final double stepLength = 0.02 /* seconds */;
+	private final double stepLength = 0.02; //seconds
 	private double stepCount;
 	private double stepHeight;
 	private double totalDisplacement;
 	private double getNextCount;
 
 	/**
-	 * Given a velocity and a set point, this class will give setpoints to help
-	 * you get to your destination.
+	 * Given a velocity and a set point, this class will give setpoints to help you get to your destination.
 	 * @param targetPosition Final setpoint for whatever it is you're
 	 * controlling. Unit is whatever the unit is for the value returned from
 	 * {@link edu.wpi.first.wpilibj.PIDSource#pidGet()} over seconds.
@@ -37,12 +36,14 @@ public class LinearSetpointGenerator implements Iterator<Double> {
 
 	@Override
 	public void forEachRemaining(Consumer<? super Double> arg0) {
-		// TODO Auto-generated method stub
+		// TODO Implement this?
 		
 	}
 
 	@Override
 	public boolean hasNext() {
+		System.out.println(stepCount);
+		System.out.println(getNextCount);
 		return stepCount == getNextCount; //TODO: Check if this is correct or if it "forgets" the last number
 	}
 
@@ -57,6 +58,4 @@ public class LinearSetpointGenerator implements Iterator<Double> {
 		
 	}
 	
-	
-
 }
