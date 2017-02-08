@@ -24,15 +24,41 @@ public class RobotMap {
 
    // public static DigitalInput breakbeamSensor = new DigitalInput(PortNumbers.BREAKBEAM_SENSOR_PORT);
 
-    public static TalonSRX frontLeftSpeedController = new TalonSRX(PortNumbers.DRIVETRAIN_FRONT_LEFT_SC_PORT);
-    public static TalonSRX frontRightSpeedController = new TalonSRX(PortNumbers.DRIVETRAIN_FRONT_RIGHT_SC_PORT);
-    public static TalonSRX backLeftSpeedController = new TalonSRX(PortNumbers.DRIVETRAIN_BACK_LEFT_SC_PORT);
-    public static TalonSRX backRightSpeedController = new TalonSRX(PortNumbers.DRIVETRAIN_BACK_RIGHT_SC_PORT);
+    public static DigitalInput gearInputBreakbeamSensor = new DigitalInput(PortNumbers.GEAR_INTAKE_BREAKBEAM_SENSOR);
 
-    public static Encoder frontLeftEncoder = new Encoder(PortNumbers.DRIVETRAIN_FRONT_LEFT_ENCODER_PORT_ONE, PortNumbers.DRIVETRAIN_FRONT_LEFT_ENCODER_PORT_TWO);
-    public static Encoder backLeftEncoder = new Encoder(PortNumbers.DRIVETRAIN_BACK_LEFT_ENCODER_PORT_ONE, PortNumbers.DRIVETRAIN_BACK_LEFT_ENCODER_PORT_TWO);
-    public static Encoder frontRightEncoder = new Encoder(PortNumbers.DRIVETRAIN_FRONT_RIGHT_ENCODER_PORT_ONE, PortNumbers.DRIVETRAIN_FRONT_RIGHT_ENCODER_PORT_TWO);
-    public static Encoder backRightEncoder = new Encoder(PortNumbers.DRIVETRAIN_BACK_RIGHT_ENCODER_PORT_ONE, PortNumbers.DRIVETRAIN_BACK_RIGHT_ENCODER_PORT_TWO);
+    public static Talon frontLeftSpeedController = new Talon(PortNumbers.DRIVETRAIN_FRONT_LEFT_SC_PORT);
+    public static Talon frontRightSpeedController = new Talon(PortNumbers.DRIVETRAIN_FRONT_RIGHT_SC_PORT);
+    public static Talon backLeftSpeedController = new Talon(PortNumbers.DRIVETRAIN_BACK_LEFT_SC_PORT);
+    public static Talon backRightSpeedController = new Talon(PortNumbers.DRIVETRAIN_BACK_RIGHT_SC_PORT);
+
+    public static Encoder leftEncoder = new Encoder(PortNumbers.DRIVETRAIN_LEFT_ENCODER_PORT_ONE, PortNumbers.DRIVETRAIN_LEFT_ENCODER_PORT_TWO);
+    public static Encoder rightEncoder = new Encoder(PortNumbers.DRIVETRAIN_RIGHT_ENCODER_PORT_ONE, PortNumbers.DRIVETRAIN_RIGHT_ENCODER_PORT_TWO);
 
     public static RobotDrive robotDrive = new RobotDrive(frontLeftSpeedController, backLeftSpeedController, frontRightSpeedController, backRightSpeedController);
+    
+    public static PowerDistributionPanel powerDistPanel = new PowerDistributionPanel(); // Please note that this must be CAN id 0.
+
+    // Climber related.
+    
+    public static Victor climberMotor = new Victor(PortNumbers.CLIMBER_SC_PORT); // TODO: Match actual hardware.
+  
+    public enum PwmPort {
+    	
+    	BLACK(0),
+    	BROWN(1),
+    	RED(2),
+    	ORANGE(3),
+    	YELLOW(4),
+    	GREEN(5),
+    	BLUE(6),
+    	PURPLE(7),
+    	GRAY(8),
+    	WHITE(9);
+    	
+    	public final int portNumber;
+    	
+    	PwmPort(int portNumber) {
+    		this.portNumber = portNumber;
+    	}
+    }
 }

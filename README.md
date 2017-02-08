@@ -6,4 +6,5 @@
  * [Game and Season Materials](http://www.firstinspires.org/resource-library/frc/competition-manual-qa-system)
  * [Steamworks sightlines](https://www.chiefdelphi.com/forums/showthread.php?threadid=153284)
  * [Photos of the field set up for kickoff (Manchester)](https://www.facebook.com/media/set/?set=a.1290287267703235.1073741837.378744932190811&type=3)
+ * [2017 Vision Samples](http://wpilib.screenstepslive.com/s/4485/m/24194/l/682952-2017-vision-examples)
  * [roboRIO manual](http://www.ni.com/pdf/manuals/374474a.pdf)
