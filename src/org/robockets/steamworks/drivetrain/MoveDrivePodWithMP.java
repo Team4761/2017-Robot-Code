@@ -9,29 +9,39 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class MoveDrivePodWithMP extends Command {
 
-	LinearSetpointGenerator mp;
-	
-    public MoveDrivePodWithMP() {
-    	requires(Robot.drivetrain);
-    	System.out.println("new command constructed");
-    }
+	private LinearSetpointGenerator mp;
+	private double targetPosition;
+	private double velocity;
+
+	/**
+	 * Method for driving with motion profiling
+	 * @param targetPosition Distance desired, in inches, and relative. Negative for backwards
+	 * @param velocity Inches per second, negative for backwards
+	 */
+	public MoveDrivePodWithMP(double targetPosition, double velocity) {
+		requires(Robot.drivetrain);
+		this.targetPosition = targetPosition;
+		this.velocity = velocity;
+		System.out.println("new command constructed");
+	}
 
     protected void initialize() {
     	System.out.println("new command initialized()");
-    	mp = new LinearSetpointGenerator(96 /* inches */, 24 /* inches per second */, RobotMap.leftEncoder.getDistance());
+    	mp = new LinearSetpointGenerator(targetPosition , velocity, RobotMap.leftEncoder.getDistance());
     	Robot.drivetrain.leftPodPID.enable();
-    }
+	}
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	double setpoint = mp.next();
-    	SmartDashboard.putNumber("mp out", setpoint);
+		SmartDashboard.putNumber("mp out", setpoint);
     	Robot.drivetrain.leftPodPID.setSetpoint(setpoint);
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	return mp.hasNext();
+		System.out.println(!mp.hasNext());
+		return !mp.hasNext();
     }
 
     // Called once after isFinished returns true

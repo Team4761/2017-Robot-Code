@@ -23,14 +23,17 @@ public class LinearSetpointGenerator implements Iterator<Double> {
 	 * @param velocity How fast you want to go, in units per second.
 	 */
 	public LinearSetpointGenerator(double targetPosition, double velocity, double initialPosition) {
-		this.targetPosition = targetPosition;
 		this.velocity = velocity;
 		this.initialPosition = initialPosition;
-		
+		this.targetPosition = targetPosition + this.initialPosition;
+
 		this.totalDisplacement = this.targetPosition - this.initialPosition;
-		this.time = (long) (this.totalDisplacement / this.velocity);
+		this.time = (this.totalDisplacement / this.velocity); // FIXME: Why is it long??? It should be double
 		this.stepCount = this.time / this.stepLength;
 		this.stepHeight = this.totalDisplacement / this.stepCount;
+		if (this.targetPosition < this.initialPosition) {
+			this.stepHeight = -this.stepHeight;
+		}
 		this.getNextCount = 0;
 	}
 
@@ -42,9 +45,7 @@ public class LinearSetpointGenerator implements Iterator<Double> {
 
 	@Override
 	public boolean hasNext() {
-		System.out.println(stepCount);
-		System.out.println(getNextCount);
-		return stepCount == getNextCount; //TODO: Check if this is correct or if it "forgets" the last number
+		return !(getNextCount>=stepCount); // FIXME: This is 100% wrong
 	}
 
 	@Override
