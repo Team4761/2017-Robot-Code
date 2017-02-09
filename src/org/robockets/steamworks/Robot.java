@@ -62,8 +62,6 @@ public class Robot extends IterativeRobot {
 		climb = new Climb(0.5);
 		drive = new Joyride(0.5);
 		
-		autonomousCommand = new AutoTest();
-		
 		SmartDashboard.putData("Auto mode", chooser);
 		SmartDashboard.putData(climb);
 
@@ -77,6 +75,8 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putData(new ResetDriveEncoders());
 		
 		Webcam.getInstance().startThread();
+
+		autonomousCommand = new AutoTest();
 
 		SmartDashboard.putData(autonomousCommand);
 
@@ -132,6 +132,7 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void autonomousInit() {
+		autonomousCommand = new AutoTest();
 		if(autonomousCommand != null) {
 			autonomousCommand.start();
 		}
