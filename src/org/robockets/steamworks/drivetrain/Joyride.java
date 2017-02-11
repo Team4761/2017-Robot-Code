@@ -26,26 +26,14 @@ public class Joyride extends Command {
     protected void initialize() {
     }
 
-    protected void execute() { 	
-    	//if(!Robot.drivetrain.isEncoderPIDEnabled()) {
-    		if(ToggleDriveMode.isArcade) {
-	    		//RobotMap.robotDrive.arcadeDrive(OI.joystick, 1, OI.joystick, 4);
-	    		RobotMap.robotDrive.arcadeDrive(OI.joystick.getRawAxis(1), OI.joystick.getRawAxis(4));
-	    		OI.joystick.setRumble(Joystick.RumbleType.kRightRumble, 0.0f);
-	    	} else {
-	    		RobotMap.robotDrive.tankDrive(OI.joystick, 1, OI.joystick, 5);
-	    		OI.joystick.setRumble(Joystick.RumbleType.kRightRumble, 0.25f);
-	    	}
-    	/*} else {
-    		double leftJoyRaw = -OI.joystick.getRawAxis(1);
-    		double rightJoyRaw = -OI.joystick.getRawAxis(5);
-    		double distanceFactor = 0.02 * 5;
-    		Robot.leftDDP.updateParameters(RobotMap.leftEncoder.getDistance() + (leftJoyRaw * Robot.MAX_SPEED * distanceFactor), (leftJoyRaw * Robot.MAX_SPEED));
-    		Robot.rightDDP.updateParameters(RobotMap.rightEncoder.getDistance() + (rightJoyRaw * (Robot.MAX_SPEED * distanceFactor)), (rightJoyRaw * Robot.MAX_SPEED));
-    		//RobotMap.robotDrive.tankDrive(Robot.leftDDP.getNewPosition(), Robot.rightDDP.getNewPosition());
-    		Robot.drivetrain.leftPodPID.setSetpoint(Robot.leftDDP.getNewPosition());
-    		Robot.drivetrain.rightPodPID.setSetpoint(Robot.rightDDP.getNewPosition());
-    	} */
+    protected void execute() {
+		if(ToggleDriveMode.isArcade) {
+			RobotMap.robotDrive.arcadeDrive(OI.joystick.getRawAxis(1), OI.joystick.getRawAxis(4));
+			OI.joystick.setRumble(Joystick.RumbleType.kRightRumble, 0.0f);
+		} else {
+			RobotMap.robotDrive.tankDrive(OI.joystick, 1, OI.joystick, 5);
+			OI.joystick.setRumble(Joystick.RumbleType.kRightRumble, 0.25f);
+		}
     }
 
     protected boolean isFinished() {
@@ -54,8 +42,6 @@ public class Joyride extends Command {
 
     protected void end() {
         Robot.drivetrain.stop();
-        Robot.drivetrain.leftPodPID.disable();
-        Robot.drivetrain.rightPodPID.disable();
     }
 
     protected void interrupted() {
