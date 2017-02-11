@@ -10,19 +10,22 @@ import org.robockets.steamworks.Robot;
  */
 public class MoveElevator extends Command {
 
-	RelativeDirection.ZAxis direction;
+	private RelativeDirection.ZAxis elevatorDirection;
+	private RelativeDirection.YAxis conveyorDirection;
 
-	double time;
+	private double time;
 
-	public MoveElevator(RelativeDirection.ZAxis direction) {
-		this.direction = direction;
+	public MoveElevator(RelativeDirection.ZAxis elevatorDirection) {
+		this.elevatorDirection = elevatorDirection;
+		conveyorDirection = (this.elevatorDirection == RelativeDirection.ZAxis.UP) ? RelativeDirection.YAxis.FORWARD : RelativeDirection.YAxis.BACKWARD;
 	}
 
-	public MoveElevator(RelativeDirection.ZAxis direction, double time) {
+	public MoveElevator(RelativeDirection.ZAxis elevatorDirection, double time) {
 		// This cannot require the shooter because it would kill the SpinSpinners command
 		// requires(Robot.shooter);
-		this.direction = direction;
+		this.elevatorDirection = elevatorDirection;
 		this.time = time;
+		conveyorDirection = (this.elevatorDirection == RelativeDirection.ZAxis.UP) ? RelativeDirection.YAxis.FORWARD : RelativeDirection.YAxis.BACKWARD;
 	}
 
 	protected void initialize() {
@@ -30,7 +33,8 @@ public class MoveElevator extends Command {
 	}
 
 	protected void execute() {
-		Robot.elevator.moveElevator(direction);
+		Robot.elevator.moveElevator(elevatorDirection);
+		Robot.conveyor.moveConveyor(conveyorDirection);
 	}
 
 	protected boolean isFinished() {
