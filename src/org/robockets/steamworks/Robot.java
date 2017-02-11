@@ -75,7 +75,7 @@ public class Robot extends IterativeRobot {
 
 		// chooser.addObject("My Auto", new MyAutoCommand());
 		climb = new Climb(0.5);
-		drive = new Joyride(0.5);
+		drive = new Joyride(1);
 		
 		SmartDashboard.putData("Auto mode", chooser);
 		SmartDashboard.putData(climb);
@@ -182,9 +182,7 @@ public class Robot extends IterativeRobot {
 		// this line or comment it out.
 		if (autonomousCommand != null)
 			autonomousCommand.cancel();
-		
-		drivetrain.leftPodPID.enable();
-		drivetrain.rightPodPID.enable();
+
 		drive.start();
 
 	}
