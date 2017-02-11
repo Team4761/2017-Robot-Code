@@ -18,7 +18,7 @@ public class ExtraSpace extends Command {
 	}
 
 	protected void execute() {
-		Robot.conveyor.moveConveyor(RelativeDirection.YAxis.FORWARD);
+		Robot.conveyor.moveConveyor(RelativeDirection.YAxis.FORWARD, 0.5);
 	}
 
 	protected boolean isFinished() {
