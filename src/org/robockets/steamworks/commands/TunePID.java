@@ -15,7 +15,7 @@ public class TunePID extends Command {
     }
 
     protected void initialize() {
-        Robot.drivetrain.driveDistance(SmartDashboard.getNumber("drivetrain setpoint", 0));
+        Robot.drivetrain.setDistanceInInches(SmartDashboard.getNumber("drivetrain setpoint", 0));
     }
 
     protected void execute() {
@@ -27,6 +27,7 @@ public class TunePID extends Command {
     }
 
     protected void end() {
+        Robot.drivetrain.leftPodPID.disable();
         Robot.drivetrain.stop();
     }
 

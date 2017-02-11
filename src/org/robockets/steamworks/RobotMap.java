@@ -10,54 +10,112 @@ import edu.wpi.first.wpilibj.*;
  */
 public class RobotMap {
 
-    public static TalonSRX rollerSpeedController = new TalonSRX(PortNumbers.SHOOTER_ROLLER_SC_PORT);
-
-    public static Encoder rollerEncoder = new Encoder(PortNumbers.SHOOTER_ROLLER_ENCODER_PORT_ONE, PortNumbers.SHOOTER_ROLLER_ENCODER_PORT_TWO);
-
-    public static TalonSRX conveyorSpeedControllerOne = new TalonSRX(PortNumbers.SHOOTER_CONVEYOR_SC_ONE);
-    public static TalonSRX conveyorSpeedControllerTwo = new TalonSRX(PortNumbers.SHOOTER_CONVEYOR_SC_TWO);
+	///////////
+	/// PWM ///
+	///////////
+	
+	/**
+	 * Speed controller for the front left wheel of the robot.
+	 */
+    public static Talon frontLeftSpeedController = new Talon(0);
     
-    public static TalonSRX ballIntakeRoller = new TalonSRX(PortNumbers.BALL_INTAKE_ROLLER_SC_PORT);
+    /**
+     * Speed controller for the back left wheel of the robot.
+     */
+    public static Talon backLeftSpeedController = new Talon(1);
+    
+    /**
+     * Speed controller for the front right wheel of the robot.
+     */
+    public static Talon frontRightSpeedController = new Talon(2);
+    
+    /**
+     * Speed controller for the back right wheel of the robot.
+     */
+    public static Talon backRightSpeedController = new Talon(3);
+    
+    /**
+     * Speed controller for the motor that is used to climb up rope. This might
+     * control two motors someday.
+     */
+    public static Talon climberSpeedController = new Talon(4);
+    
+    //TODO: JavaDocs for these four.
+    public static TalonSRX conveyorSpeedControllerOne = new TalonSRX(5);
+    public static TalonSRX conveyorSpeedControllerTwo = new TalonSRX(6);
+    public static TalonSRX ballIntakeRollerSpeedController = new TalonSRX(7);
+	public static TalonSRX shooterRollerSpeedController = new TalonSRX(8);
 
-    public static ADXRS450_Gyro gyro = new ADXRS450_Gyro(PortNumbers.gyroPort);
+	//////////////////
+	/// Digital IO ///
+	//////////////////
+	
+	/**
+	 * Encoder that goes on the left drivepod. For getting how fast the left
+	 * side of the robot is driving.
+	 */
+	public static Encoder leftEncoder = new Encoder(1, 0);
+	
+	/**
+	 * Encoder that goes on the right drivepod. For getting how fast the right
+	 * side of the robot is driving.
+	 */
+	public static Encoder rightEncoder = new Encoder(2, 3);
+	
+    //public static DigitalInput gearInputBreakbeamSensor = new DigitalInput(2);
+	
+	/**
+	 * Encoder that goes on the shooter roller. For getting how fast the
+	 * shooter roller is spinning.
+	 */
+    public static Encoder rollerEncoder = new Encoder(8, 9);
 
-    // TODO: Add breakbeam sensor
 
-    public static DigitalInput gearInputBreakbeamSensor = new DigitalInput(PortNumbers.GEAR_INTAKE_BREAKBEAM_SENSOR);
-
-    public static Talon frontLeftSpeedController = new Talon(PortNumbers.DRIVETRAIN_FRONT_LEFT_SC_PORT);
-    public static Talon frontRightSpeedController = new Talon(PortNumbers.DRIVETRAIN_FRONT_RIGHT_SC_PORT);
-    public static Talon backLeftSpeedController = new Talon(PortNumbers.DRIVETRAIN_BACK_LEFT_SC_PORT);
-    public static Talon backRightSpeedController = new Talon(PortNumbers.DRIVETRAIN_BACK_RIGHT_SC_PORT);
-
-    public static Encoder leftEncoder = new Encoder(PortNumbers.DRIVETRAIN_LEFT_ENCODER_PORT_ONE, PortNumbers.DRIVETRAIN_LEFT_ENCODER_PORT_TWO);
-    public static Encoder rightEncoder = new Encoder(PortNumbers.DRIVETRAIN_RIGHT_ENCODER_PORT_ONE, PortNumbers.DRIVETRAIN_RIGHT_ENCODER_PORT_TWO);
-
+    ///////////
+    /// SPI ///
+    ///////////
+    
+    /**
+     * The gyro. Needs to be mounted horizontally.
+     */
+    public static ADXRS450_Gyro gyro = new ADXRS450_Gyro(SPI.Port.kOnboardCS0);
+    
+    /////////////////////
+    /// Miscellaneous ///
+    /////////////////////
+    
+    /**
+     * {@link edu.wpi.first.wpilibj.RobotDrive RobotDrive} for controlling the
+     * the four speed controllers on our two drivepods. Used in teleoperated
+     * mode.
+     */
     public static RobotDrive robotDrive = new RobotDrive(frontLeftSpeedController, backLeftSpeedController, frontRightSpeedController, backRightSpeedController);
     
-    public static PowerDistributionPanel powerDistPanel = new PowerDistributionPanel(); // Please note that this must be CAN id 0.
-
-    // Climber related.
+    /**
+     * {@link edu.wpi.first.wpilibj.PIDOutput PIDOutput} for controlling the
+     * left drivepod.
+     */
+    public static DrivePodOutput leftDrivePodOutput = new DrivePodOutput(frontLeftSpeedController, backLeftSpeedController);
     
-    public static Victor climberMotor = new Victor(PortNumbers.CLIMBER_SC_PORT); // TODO: Match actual hardware.
-  
-    public enum PwmPort {
-    	
-    	BLACK(0),
-    	BROWN(1),
-    	RED(2),
-    	ORANGE(3),
-    	YELLOW(4),
-    	GREEN(5),
-    	BLUE(6),
-    	PURPLE(7),
-    	GRAY(8),
-    	WHITE(9);
-    	
-    	public final int portNumber;
-    	
-    	PwmPort(int portNumber) {
-    		this.portNumber = portNumber;
-    	}
+    /**
+     * {@link edu.wpi.first.wpilibj.PIDOutput PIDOutput} for controlling the
+     * right drivepod.
+     */
+    public static DrivePodOutput rightDrivePodOutput = new DrivePodOutput(frontRightSpeedController, backRightSpeedController);
+    
+    /**
+     * The power distribution panel. Used for getting current to the climber
+     * motor, letting us know when it is stalling.
+     */
+    public static PowerDistributionPanel powerDistPanel = new PowerDistributionPanel(); // Please note that this must be CAN id 0.
+    
+    /**
+     * PDP port that the climber's motor is attached to.
+     */
+    public static final int climberPdpPort = 1;
+    
+    public class SmartDashboardKey {
+    	public static final String kCameraExposure = "Camera exposure";
+    	public static final String kVideoFeedResolution = "Video feed resolution";
     }
 }

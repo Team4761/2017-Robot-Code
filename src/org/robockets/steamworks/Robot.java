@@ -8,18 +8,21 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-import org.robockets.steamworks.commands.Climb;
-import org.robockets.steamworks.commands.Joyride;
-import org.robockets.steamworks.commands.ToggleDriveMode;
-import org.robockets.steamworks.commands.Turn;
+import org.robockets.steamworks.autonomous.AutoTest;
+import org.robockets.steamworks.climber.Climb;
+import org.robockets.steamworks.climber.Climber;
+import org.robockets.steamworks.camera.Webcam;
 import org.robockets.steamworks.commands.TunePID;
-import org.robockets.steamworks.commands.ResetDriveEncoders;
+import org.robockets.steamworks.commands.Turn;
+import org.robockets.steamworks.drivetrain.Drivetrain;
+import org.robockets.steamworks.drivetrain.Joyride;
+import org.robockets.steamworks.drivetrain.ResetDriveEncoders;
+import org.robockets.steamworks.drivetrain.ToggleDriveMode;
 import org.robockets.steamworks.subsystems.BallIntake;
-import org.robockets.steamworks.subsystems.Climber;
 import org.robockets.steamworks.subsystems.Conveyor;
-import org.robockets.steamworks.subsystems.Drivetrain;
-import org.robockets.steamworks.subsystems.Shooter;
 import org.robockets.steamworks.subsystems.GearIntake;
+import org.robockets.steamworks.subsystems.Shooter;
+
 
 
 /**
@@ -31,10 +34,12 @@ import org.robockets.steamworks.subsystems.GearIntake;
  */
 public class Robot extends IterativeRobot {
 
+	public static final double MAX_SPEED = 240; // in/s
+	
 	public static OI oi;
 
 	public static BallIntake ballIntake;
-  	public static Climber climber;
+	public static Climber climber;
 	public static Conveyor conveyor;
 	public static Drivetrain drivetrain;
 	public static Shooter shooter;
@@ -45,9 +50,11 @@ public class Robot extends IterativeRobot {
 	public static Command climb;
 	public static Command toggleDriveMode;
 	private SendableChooser chooser = new SendableChooser();
+	
+	private boolean smartDashboardDebug = true;
 
 	private CameraServer cameraServer;
-
+	
 	/**
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
@@ -58,7 +65,7 @@ public class Robot extends IterativeRobot {
 
 		ballIntake = new BallIntake();
 		conveyor = new Conveyor();
-    	climber = new Climber();
+		climber = new Climber();
 		drivetrain = new Drivetrain();
 		shooter = new Shooter();
 		
@@ -69,9 +76,9 @@ public class Robot extends IterativeRobot {
 		// chooser.addObject("My Auto", new MyAutoCommand());
 		climb = new Climb(0.5);
 		drive = new Joyride(0.5);
-    
+		
 		SmartDashboard.putData("Auto mode", chooser);
-		SmartDashboard.putData(new Climb(0.5));
+		SmartDashboard.putData(climb);
 
 		SmartDashboard.putNumber("New Gyro Angle(AbsoluteOrRelative)", 0);
 
@@ -87,26 +94,44 @@ public class Robot extends IterativeRobot {
 
 		cameraServer = CameraServer.getInstance();
 
+		SmartDashboard.putData("GyroPIDGo", new TunePID());
+		
+		// SmartDashboard
+		Robot.climber.initSmartDashboard(smartDashboardDebug);
+
+		SmartDashboard.putData(new ResetDriveEncoders());
+		
+		Webcam.getInstance().startThread();
+
+		autonomousCommand = new AutoTest(); // This breaks things
+
+		SmartDashboard.putData(autonomousCommand);
+
 		cameraServer.startAutomaticCapture();
 
 	}
 
 	@Override
 	public void robotPeriodic() {
+		
+		Robot.climber.periodicSmartDashboard(smartDashboardDebug);
 		gearIntake.periodicSmartDashboard();
+
 		SmartDashboard.putNumber("Gyro Angle", RobotMap.gyro.getAngle());
 
 		drivetrain.gyroPID.setPID(SmartDashboard.getNumber("GyroP", 0),SmartDashboard.getNumber("GyroI", 0),SmartDashboard.getNumber("GyroD", 0));
 		drivetrain.gyroPID.setSetpoint(SmartDashboard.getNumber("GyroSetpoint", 0));
 		//System.out.println(RobotMap.gyro.getAngle());
 
-		drivetrain.encoderPID.setPID(SmartDashboard.getNumber("drivetrain P", 0), SmartDashboard.getNumber("drivetrain I", 0) , SmartDashboard.getNumber("drivetrain D", 0));
-		drivetrain.encoderPID.setSetpoint(SmartDashboard.getNumber("drivetrain setpoint", 0));
-		SmartDashboard.putNumber("LeftEncoder", RobotMap.leftEncoder.get());
-		SmartDashboard.putNumber("RightEncoder", RobotMap.rightEncoder.get());
-		SmartDashboard.putNumber("Estimated Distance", RobotMap.leftEncoder.get() * (1.0f/33.0f)); // This has about a 1 inch error after about a foot and a half
+		SDDumper.dumpEncoder("Left encoder", RobotMap.leftEncoder);
+		SDDumper.dumpEncoder("Right encoder", RobotMap.rightEncoder);
+		
+		SDDumper.dumpPidController("Left drivepod PID", drivetrain.leftPodPID);
+		SDDumper.dumpPidController("Right drivepod PID", drivetrain.rightPodPID);
+		
+		SDDumper.dumpMisc();
 	}
-
+  
 	/**
 	 * This function is called once each time the robot enters Disabled mode.
 	 * You can use it to reset any subsystem information you want to clear when
@@ -120,11 +145,6 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void disabledPeriodic() {
 		Scheduler.getInstance().run();
-		//System.out.println(RobotMap.gyro.getAngle());
-		SmartDashboard.putNumber("LeftEncoder", RobotMap.leftEncoder.get());
-		SmartDashboard.putNumber("RightEncoder", RobotMap.rightEncoder.get());
-		System.out.println(RobotMap.leftEncoder.get());
-		System.out.println(RobotMap.rightEncoder.get());
 	}
 
 	/**
@@ -140,18 +160,10 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void autonomousInit() {
-		//autonomousCommand = chooser.getSelected(); // This is not working
-
-		/*
-		 * String autoSelected = SmartDashboard.getString("Auto Selector",
-		 * "Default"); switch(autoSelected) { case "My Auto": autonomousCommand
-		 * = new MyAutoCommand(); break; case "Default Auto": default:
-		 * autonomousCommand = new ExampleCommand(); break; }
-		 */
-
-		// Schedule the autonomous command (example)
-		if (autonomousCommand != null)
+		autonomousCommand = new AutoTest(); // This needs to be here or else things break
+		//if(autonomousCommand != null) {
 			autonomousCommand.start();
+		//}
 	}
 
 	/**
@@ -170,16 +182,11 @@ public class Robot extends IterativeRobot {
 		// this line or comment it out.
 		if (autonomousCommand != null)
 			autonomousCommand.cancel();
-
+		
+		drivetrain.leftPodPID.enable();
+		drivetrain.rightPodPID.enable();
 		drive.start();
-		
-		SmartDashboard.putNumber("drivetrain setpoint", drivetrain.encoderPID.getSetpoint());
-		SmartDashboard.putNumber("drivetrain P", drivetrain.encoderPID.getP());
-		SmartDashboard.putNumber("drivetrain I", drivetrain.encoderPID.getI());
-		SmartDashboard.putNumber("drivetrain D", drivetrain.encoderPID.getD());
-		
-		SmartDashboard.putData(new TunePID());
-		SmartDashboard.putData(new ResetDriveEncoders());
+
 	}
 
 	/**
@@ -188,6 +195,11 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
+
+		final boolean encoderPIDStatus = Robot.drivetrain.isEncoderPIDEnabled();
+		if(!encoderPIDStatus) {
+			System.out.println("move to manual control");
+		}
 	}
 
 	/**
