@@ -8,11 +8,7 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-import org.robockets.steamworks.commands.Climb;
-import org.robockets.steamworks.commands.Joyride;
-import org.robockets.steamworks.commands.ResetDriveEncoders;
-import org.robockets.steamworks.commands.ToggleDriveMode;
-import org.robockets.steamworks.commands.TunePID;
+import org.robockets.steamworks.commands.*;
 import org.robockets.steamworks.subsystems.*;
 
 /**
@@ -65,6 +61,11 @@ public class Robot extends IterativeRobot {
     
 		SmartDashboard.putData("Auto mode", chooser);
 		SmartDashboard.putData(new Climb(0.5));
+
+		SmartDashboard.putNumber("New Gyro Angle(AbsoluteOrRelative)", 0);
+
+		SmartDashboard.putData("GyroTurn Absolute", new Turn(TurnType.ABSOLUTE, 90)); // Angle will be on SmartDashboard from the Turn command
+		SmartDashboard.putData("GyroTurn Relative", new Turn(TurnType.RELATIVE, 90));
 
 		RobotMap.gyro.calibrate();
 
