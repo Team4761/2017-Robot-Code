@@ -95,6 +95,16 @@ public class Robot extends IterativeRobot {
 	public void robotPeriodic() {
 		gearIntake.periodicSmartDashboard();
 		SmartDashboard.putNumber("Gyro Angle", RobotMap.gyro.getAngle());
+
+		drivetrain.gyroPID.setPID(SmartDashboard.getNumber("GyroP", 0),SmartDashboard.getNumber("GyroI", 0),SmartDashboard.getNumber("GyroD", 0));
+		drivetrain.gyroPID.setSetpoint(SmartDashboard.getNumber("GyroSetpoint", 0));
+		//System.out.println(RobotMap.gyro.getAngle());
+
+		drivetrain.encoderPID.setPID(SmartDashboard.getNumber("drivetrain P", 0), SmartDashboard.getNumber("drivetrain I", 0) , SmartDashboard.getNumber("drivetrain D", 0));
+		drivetrain.encoderPID.setSetpoint(SmartDashboard.getNumber("drivetrain setpoint", 0));
+		SmartDashboard.putNumber("LeftEncoder", RobotMap.leftEncoder.get());
+		SmartDashboard.putNumber("RightEncoder", RobotMap.rightEncoder.get());
+		SmartDashboard.putNumber("Estimated Distance", RobotMap.leftEncoder.get() * (1.0f/33.0f)); // This has about a 1 inch error after about a foot and a half
 	}
 
 	/**
@@ -178,15 +188,6 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
-		drivetrain.gyroPID.setPID(SmartDashboard.getNumber("GyroP", 0),SmartDashboard.getNumber("GyroI", 0),SmartDashboard.getNumber("GyroD", 0));
-		drivetrain.gyroPID.setSetpoint(SmartDashboard.getNumber("GyroSetpoint", 0));
-		//System.out.println(RobotMap.gyro.getAngle());
-		
-		drivetrain.encoderPID.setPID(SmartDashboard.getNumber("drivetrain P", 0), SmartDashboard.getNumber("drivetrain I", 0) , SmartDashboard.getNumber("drivetrain D", 0));
-		drivetrain.encoderPID.setSetpoint(SmartDashboard.getNumber("drivetrain setpoint", 0));	
-		SmartDashboard.putNumber("LeftEncoder", RobotMap.leftEncoder.get());
-		SmartDashboard.putNumber("RightEncoder", RobotMap.rightEncoder.get());
-		SmartDashboard.putNumber("Estimated Distance", RobotMap.leftEncoder.get() * (1.0f/33.0f)); // This has about a 1 inch error after about a foot and a half
 	}
 
 	/**
