@@ -1,29 +1,24 @@
 package org.robockets.steamworks;
 
-import edu.wpi.cscore.CvSink;
-import edu.wpi.cscore.CvSource;
-import edu.wpi.cscore.UsbCamera;
-import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj.vision.VisionPipeline;
-import edu.wpi.first.wpilibj.vision.VisionThread;
 
-
+import org.robockets.steamworks.ballintake.BallIntake;
+import org.robockets.steamworks.ballintake.SpinBallIntakeRollers;
 import org.robockets.steamworks.climber.Climb;
 import org.robockets.steamworks.climber.Climber;
-import org.opencv.core.Mat;
-import org.opencv.imgproc.Imgproc;
 import org.robockets.steamworks.camera.Webcam;
-
 import org.robockets.steamworks.commands.Joyride;
 import org.robockets.steamworks.commands.TunePID;
+import org.robockets.steamworks.subsystems.Conveyor;
+import org.robockets.steamworks.subsystems.Drivetrain;
+import org.robockets.steamworks.subsystems.GearIntake;
+import org.robockets.steamworks.subsystems.Shooter;
 
-import org.robockets.steamworks.subsystems.*;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -37,7 +32,7 @@ public class Robot extends IterativeRobot {
 	public static OI oi;
 
 	public static BallIntake ballIntake;
-  public static Climber climber;
+	public static Climber climber;
 	public static Conveyor conveyor;
 	public static Drivetrain drivetrain;
 	public static Shooter shooter;
@@ -60,7 +55,7 @@ public class Robot extends IterativeRobot {
 
 		ballIntake = new BallIntake();
 		conveyor = new Conveyor();
-    climber = new Climber();
+    	climber = new Climber();
 		drivetrain = new Drivetrain();
 		shooter = new Shooter();
 		gearIntake = new GearIntake();
@@ -71,6 +66,9 @@ public class Robot extends IterativeRobot {
     
 		SmartDashboard.putData("Auto mode", chooser);
 		SmartDashboard.putData(climb);
+
+		SmartDashboard.putData("IntakeRollersForward", new SpinBallIntakeRollers(1));
+		SmartDashboard.putData("IntakeRollersBackward", new SpinBallIntakeRollers(-1));
 
 		RobotMap.gyro.calibrate();
 		
