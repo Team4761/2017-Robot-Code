@@ -1,7 +1,6 @@
 package org.robockets.steamworks;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
@@ -13,8 +12,14 @@ import org.robockets.steamworks.climber.Climb;
 import org.robockets.steamworks.climber.Climber;
 import org.robockets.steamworks.camera.Webcam;
 import org.robockets.steamworks.commands.TunePID;
-import org.robockets.steamworks.drivetrain.*;
-import org.robockets.steamworks.subsystems.*;
+import org.robockets.steamworks.drivetrain.Drivetrain;
+import org.robockets.steamworks.drivetrain.Joyride;
+import org.robockets.steamworks.drivetrain.ResetDriveEncoders;
+import org.robockets.steamworks.subsystems.BallIntake;
+import org.robockets.steamworks.subsystems.Conveyor;
+import org.robockets.steamworks.subsystems.GearIntake;
+import org.robockets.steamworks.subsystems.Shooter;
+
 
 /**
  * The VM is configured to automatically run this class, and to call the
