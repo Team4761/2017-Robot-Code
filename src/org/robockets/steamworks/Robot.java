@@ -8,8 +8,19 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-import org.robockets.steamworks.commands.*;
-import org.robockets.steamworks.subsystems.*;
+import org.robockets.steamworks.commands.Climb;
+import org.robockets.steamworks.commands.Joyride;
+import org.robockets.steamworks.commands.ToggleDriveMode;
+import org.robockets.steamworks.commands.Turn;
+import org.robockets.steamworks.commands.TunePID;
+import org.robockets.steamworks.commands.ResetDriveEncoders;
+import org.robockets.steamworks.subsystems.BallIntake;
+import org.robockets.steamworks.subsystems.Climber;
+import org.robockets.steamworks.subsystems.Conveyor;
+import org.robockets.steamworks.subsystems.Drivetrain;
+import org.robockets.steamworks.subsystems.Shooter;
+import org.robockets.steamworks.subsystems.GearIntake;
+
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -29,9 +40,9 @@ public class Robot extends IterativeRobot {
 	public static Shooter shooter;
 	public static GearIntake gearIntake;
 
-	private Command autonomousCommand;
-	private Command drive;
-	private Command climb;
+	public static Command autonomousCommand;
+	public static Command drive;
+	public static Command climb;
 	public static Command toggleDriveMode;
 	private SendableChooser chooser = new SendableChooser();
 
