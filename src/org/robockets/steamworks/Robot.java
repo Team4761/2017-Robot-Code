@@ -1,7 +1,6 @@
 package org.robockets.steamworks;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
@@ -13,8 +12,14 @@ import org.robockets.steamworks.climber.Climb;
 import org.robockets.steamworks.climber.Climber;
 import org.robockets.steamworks.camera.Webcam;
 import org.robockets.steamworks.commands.TunePID;
-import org.robockets.steamworks.drivetrain.*;
-import org.robockets.steamworks.subsystems.*;
+import org.robockets.steamworks.drivetrain.Drivetrain;
+import org.robockets.steamworks.drivetrain.Joyride;
+import org.robockets.steamworks.drivetrain.ResetDriveEncoders;
+import org.robockets.steamworks.subsystems.BallIntake;
+import org.robockets.steamworks.subsystems.Conveyor;
+import org.robockets.steamworks.subsystems.GearIntake;
+import org.robockets.steamworks.subsystems.Shooter;
+
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -76,7 +81,7 @@ public class Robot extends IterativeRobot {
 		
 		Webcam.getInstance().startThread();
 
-		autonomousCommand = new AutoTest();
+		//autonomousCommand = new AutoTest(); // This breaks things
 
 		SmartDashboard.putData(autonomousCommand);
 
@@ -84,24 +89,17 @@ public class Robot extends IterativeRobot {
 
 	@Override
 	public void robotPeriodic() {
-		/*drivetrain.gyroPID.setPID(SmartDashboard.getNumber("GyroP", 0), SmartDashboard.getNumber("GyroI", 0),SmartDashboard.getNumber("GyroD", 0));
-		drivetrain.gyroPID.setSetpoint(SmartDashboard.getNumber("GyroSetpoint", 0));
-
-		drivetrain.leftPodPID.setPID(SmartDashboard.getNumber("EncoderP", 0), SmartDashboard.getNumber("EncoderI", 0),SmartDashboard.getNumber("EncoderD", 0));
-		drivetrain.leftPodPID.setSetpoint(SmartDashboard.getNumber("EncoderSetpoint", 0));
-		drivetrain.rightPodPID.setPID(SmartDashboard.getNumber("EncoderP", 0), SmartDashboard.getNumber("EncoderI", 0),SmartDashboard.getNumber("EncoderD", 0));
-		drivetrain.rightPodPID.setSetpoint(SmartDashboard.getNumber("EncoderSetpoint", 0));
-		*/
 		
 		Robot.climber.periodicSmartDashboard(smartDashboardDebug);
 		gearIntake.periodicSmartDashboard();
 
-		SmartDashboard.putNumber("LeftEncoder", RobotMap.leftEncoder.get());
-		SmartDashboard.putNumber("RightEncoder", RobotMap.rightEncoder.get());
-
-		SmartDashboard.putNumber("LeftEncoderDistance", RobotMap.leftEncoder.getDistance());
+		SDDumper.dumpEncoder("Left encoder", RobotMap.leftEncoder);
+		SDDumper.dumpEncoder("Right encoder", RobotMap.rightEncoder);
 		
-		SmartDashboard.putNumber("Uptime", Timer.getFPGATimestamp());
+		SDDumper.dumpPidController("Left drivepod PID", drivetrain.leftPodPID);
+		SDDumper.dumpPidController("Right drivepod PID", drivetrain.rightPodPID);
+		
+		SDDumper.dumpMisc();
 	}
   
 	/**
@@ -132,10 +130,10 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void autonomousInit() {
-		autonomousCommand = new AutoTest();
-		if(autonomousCommand != null) {
+		autonomousCommand = new AutoTest(); // This needs to be here or else things break
+		//if(autonomousCommand != null) {
 			autonomousCommand.start();
-		}
+		//}
 	}
 
 	/**
@@ -158,17 +156,6 @@ public class Robot extends IterativeRobot {
 		drivetrain.leftPodPID.enable();
 		drivetrain.rightPodPID.enable();
 		drive.start();
-		
-		SmartDashboard.putNumber("GyroP", drivetrain.gyroPID.getP());
-		SmartDashboard.putNumber("GyroI", drivetrain.gyroPID.getI());
-		SmartDashboard.putNumber("GyroD", drivetrain.gyroPID.getD());
-		SmartDashboard.putNumber("GyroSetpoint", drivetrain.gyroPID.getSetpoint());
-
-		SmartDashboard.putNumber("EncoderP", drivetrain.leftPodPID.getP());
-		SmartDashboard.putNumber("EncoderI", drivetrain.leftPodPID.getI());
-		SmartDashboard.putNumber("EncoderD", drivetrain.leftPodPID.getD());
-		SmartDashboard.putNumber("EncoderSetpoint", 0);
-
 
 		SmartDashboard.putData(new TunePID());
 

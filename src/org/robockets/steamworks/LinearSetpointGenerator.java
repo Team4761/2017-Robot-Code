@@ -59,7 +59,7 @@ public class LinearSetpointGenerator implements Iterator<Double> {
 		this.targetPosition = targetPosition + this.initialPosition;
 
 		this.totalDisplacement = this.targetPosition - this.initialPosition;
-		this.time = (this.totalDisplacement / this.velocity); // FIXME: Why is it long??? It should be double
+		this.time = (this.totalDisplacement / this.velocity);
 		this.stepCount = this.time / this.stepLength;
 		this.stepHeight = this.totalDisplacement / this.stepCount;
 		if (this.targetPosition < this.initialPosition) {
@@ -79,7 +79,7 @@ public class LinearSetpointGenerator implements Iterator<Double> {
 	 */
 	@Override
 	public boolean hasNext() {
-		return !(getNextCount>=stepCount); // FIXME: This is 100% wrong
+		return !(getNextCount>=stepCount);
 	}
 
 	/**
