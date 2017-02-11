@@ -14,6 +14,8 @@ import org.robockets.steamworks.climber.Climber;
 import org.robockets.steamworks.camera.Webcam;
 import org.robockets.steamworks.commands.TunePID;
 import org.robockets.steamworks.drivetrain.*;
+import org.robockets.steamworks.intakeflap.IntakeFlap;
+import org.robockets.steamworks.intakeflap.ToggleIntakeFlap;
 import org.robockets.steamworks.subsystems.*;
 
 /**
@@ -35,6 +37,7 @@ public class Robot extends IterativeRobot {
 	public static Drivetrain drivetrain;
 	public static Shooter shooter;
 	public static GearIntake gearIntake;
+	public static IntakeFlap intakeFlap;
 
 	private Command autonomousCommand;
 	private Command drive;
@@ -57,6 +60,7 @@ public class Robot extends IterativeRobot {
 		drivetrain = new Drivetrain();
 		shooter = new Shooter();
 		gearIntake = new GearIntake();
+		intakeFlap = new IntakeFlap(0.5);
 
 		// chooser.addObject("My Auto", new MyAutoCommand());
 		climb = new Climb(0.5);
@@ -79,6 +83,7 @@ public class Robot extends IterativeRobot {
 		autonomousCommand = new AutoTest();
 
 		SmartDashboard.putData(autonomousCommand);
+		SmartDashboard.putData(new ToggleIntakeFlap());
 
 	}
 
@@ -102,6 +107,8 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("LeftEncoderDistance", RobotMap.leftEncoder.getDistance());
 		
 		SmartDashboard.putNumber("Uptime", Timer.getFPGATimestamp());
+		
+		SmartDashboard.putNumber("Intake flap encoder position", RobotMap.intakeFlapServo.get());
 	}
   
 	/**

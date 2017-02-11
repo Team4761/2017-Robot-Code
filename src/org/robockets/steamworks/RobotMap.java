@@ -18,7 +18,8 @@ public class RobotMap {
     public static TalonSRX conveyorSpeedControllerTwo = new TalonSRX(PortNumbers.SHOOTER_CONVEYOR_SC_TWO);
     
     public static TalonSRX ballIntakeRoller = new TalonSRX(PortNumbers.BALL_INTAKE_ROLLER_SC_PORT);
-
+    public static Servo intakeFlapServo = new Servo(9);
+    
     public static ADXRS450_Gyro gyro = new ADXRS450_Gyro(PortNumbers.gyroPort);
 
     // TODO: Add breakbeam sensor
