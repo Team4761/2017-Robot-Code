@@ -84,24 +84,17 @@ public class Robot extends IterativeRobot {
 
 	@Override
 	public void robotPeriodic() {
-		/*drivetrain.gyroPID.setPID(SmartDashboard.getNumber("GyroP", 0), SmartDashboard.getNumber("GyroI", 0),SmartDashboard.getNumber("GyroD", 0));
-		drivetrain.gyroPID.setSetpoint(SmartDashboard.getNumber("GyroSetpoint", 0));
-
-		drivetrain.leftPodPID.setPID(SmartDashboard.getNumber("EncoderP", 0), SmartDashboard.getNumber("EncoderI", 0),SmartDashboard.getNumber("EncoderD", 0));
-		drivetrain.leftPodPID.setSetpoint(SmartDashboard.getNumber("EncoderSetpoint", 0));
-		drivetrain.rightPodPID.setPID(SmartDashboard.getNumber("EncoderP", 0), SmartDashboard.getNumber("EncoderI", 0),SmartDashboard.getNumber("EncoderD", 0));
-		drivetrain.rightPodPID.setSetpoint(SmartDashboard.getNumber("EncoderSetpoint", 0));
-		*/
 		
 		Robot.climber.periodicSmartDashboard(smartDashboardDebug);
 		gearIntake.periodicSmartDashboard();
 
-		SmartDashboard.putNumber("LeftEncoder", RobotMap.leftEncoder.get());
-		SmartDashboard.putNumber("RightEncoder", RobotMap.rightEncoder.get());
-
-		SmartDashboard.putNumber("LeftEncoderDistance", RobotMap.leftEncoder.getDistance());
+		SDDumper.dumpEncoder("Left encoder", RobotMap.leftEncoder);
+		SDDumper.dumpEncoder("Right encoder", RobotMap.rightEncoder);
 		
-		SmartDashboard.putNumber("Uptime", Timer.getFPGATimestamp());
+		SDDumper.dumpPidController("Left drivepod PID", drivetrain.leftPodPID);
+		SDDumper.dumpPidController("Right drivepod PID", drivetrain.rightPodPID);
+		
+		SDDumper.dumpMisc();
 	}
   
 	/**
@@ -158,17 +151,6 @@ public class Robot extends IterativeRobot {
 		drivetrain.leftPodPID.enable();
 		drivetrain.rightPodPID.enable();
 		drive.start();
-		
-		SmartDashboard.putNumber("GyroP", drivetrain.gyroPID.getP());
-		SmartDashboard.putNumber("GyroI", drivetrain.gyroPID.getI());
-		SmartDashboard.putNumber("GyroD", drivetrain.gyroPID.getD());
-		SmartDashboard.putNumber("GyroSetpoint", drivetrain.gyroPID.getSetpoint());
-
-		SmartDashboard.putNumber("EncoderP", drivetrain.leftPodPID.getP());
-		SmartDashboard.putNumber("EncoderI", drivetrain.leftPodPID.getI());
-		SmartDashboard.putNumber("EncoderD", drivetrain.leftPodPID.getD());
-		SmartDashboard.putNumber("EncoderSetpoint", 0);
-
 
 		SmartDashboard.putData(new TunePID());
 
