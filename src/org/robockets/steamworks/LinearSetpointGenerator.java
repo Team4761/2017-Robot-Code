@@ -31,9 +31,7 @@ public class LinearSetpointGenerator implements Iterator<Double> {
 		this.time = (this.totalDisplacement / this.velocity);
 		this.stepCount = this.time / this.stepLength;
 		this.stepHeight = this.totalDisplacement / this.stepCount;
-		if (this.targetPosition < this.initialPosition) {
-			this.stepHeight = -this.stepHeight;
-		}
+
 		this.getNextCount = 0;
 	}
 
