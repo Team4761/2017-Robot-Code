@@ -14,8 +14,8 @@ public class Shoot extends CommandGroup {
         addParallel(new SpinSpinners());
 
         addSequential(new WaitCommand(2));
-        
-        addParallel(new MoveElevator(RelativeDirection.ZAxis.UP));
+
+        addParallel(new MoveElevator(RelativeDirection.ZAxis.UP, 1));
 
         addSequential(new WaitCommand(2)); // Time for it to shoot
 

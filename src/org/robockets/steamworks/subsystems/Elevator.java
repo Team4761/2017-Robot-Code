@@ -10,17 +10,15 @@ import org.robockets.steamworks.RobotMap;
  */
 public class Elevator extends Subsystem {
 
-	private final double ELEVATOR_SPEED = 0.5;
-
 	public void initDefaultCommand() {
 
 	}
 
-	public void moveElevator (RelativeDirection.ZAxis direction) {
+	public void moveElevator (RelativeDirection.ZAxis direction, double speed) {
 		if (direction == RelativeDirection.ZAxis.UP) {
-			RobotMap.elevatorSpeedController.set(ELEVATOR_SPEED);
+			RobotMap.elevatorSpeedController.set(speed);
 		} else {
-			RobotMap.elevatorSpeedController.set(-ELEVATOR_SPEED);
+			RobotMap.elevatorSpeedController.set(-speed);
 		}
 	}
 

@@ -24,7 +24,7 @@ public class RobotMap {
 
    // public static DigitalInput breakbeamSensor = new DigitalInput(PortNumbers.BREAKBEAM_SENSOR_PORT);
 
-    public static DigitalInput gearInputBreakbeamSensor = new DigitalInput(PortNumbers.GEAR_INTAKE_BREAKBEAM_SENSOR);
+    //public static DigitalInput gearInputBreakbeamSensor = new DigitalInput(PortNumbers.GEAR_INTAKE_BREAKBEAM_SENSOR);
 
     public static Talon frontLeftSpeedController = new Talon(PortNumbers.DRIVETRAIN_FRONT_LEFT_SC_PORT);
     public static Talon frontRightSpeedController = new Talon(PortNumbers.DRIVETRAIN_FRONT_RIGHT_SC_PORT);

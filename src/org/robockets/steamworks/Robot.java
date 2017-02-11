@@ -72,6 +72,11 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putData("MoveConveyorForward", new MoveConveyor(RelativeDirection.YAxis.FORWARD));
 		SmartDashboard.putData("MoveConveyorBackward", new MoveConveyor(RelativeDirection.YAxis.BACKWARD));
 
+		SmartDashboard.putData("MoveElevatorUp", new MoveElevator(RelativeDirection.ZAxis.UP, 1));
+		SmartDashboard.putData("MoveElevatorDown", new MoveElevator(RelativeDirection.ZAxis.DOWN, 1));
+
+		SmartDashboard.putData(new MaxFillElevator());
+
 		RobotMap.gyro.calibrate();
 
 		cameraServer = CameraServer.getInstance();
