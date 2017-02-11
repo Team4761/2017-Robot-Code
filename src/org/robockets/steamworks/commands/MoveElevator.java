@@ -14,11 +14,8 @@ public class MoveElevator extends Command {
 
 	double time;
 
-	boolean isForever;
-
 	public MoveElevator(RelativeDirection.ZAxis direction) {
 		this.direction = direction;
-		isForever = true;
 	}
 
 	public MoveElevator(RelativeDirection.ZAxis direction, double time) {
@@ -26,13 +23,10 @@ public class MoveElevator extends Command {
 		// requires(Robot.shooter);
 		this.direction = direction;
 		this.time = time;
-		isForever = false;
 	}
 
 	protected void initialize() {
-		if (!isForever) {
-			setTimeout(time);
-		}
+		setTimeout(time);
 	}
 
 	protected void execute() {
@@ -40,11 +34,7 @@ public class MoveElevator extends Command {
 	}
 
 	protected boolean isFinished() {
-		if (!isForever) {
-			return isTimedOut();
-		} else {
-			return false;
-		}
+		return isTimedOut();
 	}
 
 	protected void end() {
