@@ -18,7 +18,7 @@ public class MoveConveyor extends Command {
      * Move conveyor for a certain amount of time
      * @param time Time in seconds
      */
-    public MoveConveyor(double time, RelativeDirection.YAxis direction) {
+    public MoveConveyor(RelativeDirection.YAxis direction, double time) {
         requires(Robot.conveyor);
         this.time = time;
         this.direction = direction;
