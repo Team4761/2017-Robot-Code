@@ -18,7 +18,7 @@ public class Drivetrain extends Subsystem {
     private final GyroPIDSource gyroPIDSource;
     private final EncoderPIDSource leftPodPIDSource;
     private final EncoderPIDSource rightPodPIDSource;
-    private final double CENTERPOINT_TO_WHEEL = 0; // In inches, of course
+    private final double CENTERPOINT_TO_WHEEL = 14.5; // In inches, of course
 
     public final PIDController gyroPID;
     public final PIDController leftPodPID;
@@ -40,7 +40,7 @@ public class Drivetrain extends Subsystem {
         leftPodPID.setAbsoluteTolerance(0.5);
         
         rightPodPIDSource = new EncoderPIDSource(RobotMap.rightEncoder, 0.05555);
-        rightPodPID = new PIDController(0, 0, 0, rightPodPIDSource, RobotMap.rightDrivePodOutput);
+        rightPodPID = new PIDController(-0.1, 0, 0, rightPodPIDSource, RobotMap.rightDrivePodOutput);
         rightPodPID.disable();
         rightPodPID.setOutputRange(-1.0, 1.0);
         rightPodPID.setAbsoluteTolerance(0.5);
