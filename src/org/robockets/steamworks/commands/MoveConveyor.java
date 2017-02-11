@@ -10,8 +10,7 @@ import org.robockets.steamworks.Robot;
  */
 public class MoveConveyor extends Command {
 
-    double time;
-    boolean forever;
+    double time = 0;
 
     RelativeDirection.YAxis direction;
 
@@ -22,7 +21,6 @@ public class MoveConveyor extends Command {
     public MoveConveyor(double time, RelativeDirection.YAxis direction) {
         requires(Robot.conveyor);
         this.time = time;
-        forever = false;
         this.direction = direction;
     }
 
@@ -31,14 +29,11 @@ public class MoveConveyor extends Command {
      */
     public MoveConveyor(RelativeDirection.YAxis direction) {
         requires(Robot.conveyor);
-        forever = true;
         this.direction = direction;
     }
 
     protected void initialize() {
-        if (!forever) {
-            setTimeout(time);
-        }
+        setTimeout(time);
     }
 
     protected void execute() {
@@ -46,11 +41,7 @@ public class MoveConveyor extends Command {
     }
 
     protected boolean isFinished() {
-        if (!forever) {
-            return isTimedOut();
-        } else {
-            return false;
-        }
+        return isTimedOut();
     }
 
     protected void end() {
