@@ -1,6 +1,5 @@
 package org.robockets.steamworks.climber;
 
-import org.robockets.steamworks.PortNumbers;
 import org.robockets.steamworks.RobotMap;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -15,7 +14,7 @@ public class Climber extends Subsystem{
 	 * @return current The current of the motor.
 	 */
 	public double readCurrent() {
-		return RobotMap.powerDistPanel.getCurrent(PortNumbers.CLIMBER_PDP_PORT);
+		return RobotMap.powerDistPanel.getCurrent(RobotMap.climberPdpPort);
 	}
 	
 	/**
@@ -23,11 +22,11 @@ public class Climber extends Subsystem{
 	 * @param speed A double (0-1) describing the speed to set the motor at.
 	 */
 	public void setMotor(double speed) {
-		RobotMap.climberMotor.set(speed);
+		RobotMap.climberSpeedController.set(speed);
 	}
 	
 	public void stop() {
-		RobotMap.climberMotor.stopMotor();
+		RobotMap.climberSpeedController.stopMotor();
 	}
 	
 	public void initDefaultCommand() {
