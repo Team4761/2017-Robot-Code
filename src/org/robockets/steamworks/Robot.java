@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj.vision.VisionThread;
 
 
 import org.robockets.steamworks.ballintake.BallIntake;
+import org.robockets.steamworks.ballintake.SpinBallIntakeRollers;
 import org.robockets.steamworks.climber.Climb;
 import org.robockets.steamworks.climber.Climber;
 import org.opencv.core.Mat;
@@ -72,6 +73,9 @@ public class Robot extends IterativeRobot {
     
 		SmartDashboard.putData("Auto mode", chooser);
 		SmartDashboard.putData(climb);
+
+		SmartDashboard.putData("IntakeRollersForward", new SpinBallIntakeRollers(1));
+		SmartDashboard.putData("IntakeRollersBackward", new SpinBallIntakeRollers(-1));
 
 		RobotMap.gyro.calibrate();
 		
