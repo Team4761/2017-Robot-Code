@@ -38,7 +38,7 @@ public class MoveConveyor extends Command {
     }
 
     protected void execute() {
-        Robot.conveyor.moveConveyor(direction);
+        Robot.conveyor.moveConveyor(direction, 1);
     }
 
     protected boolean isFinished() {
