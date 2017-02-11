@@ -81,7 +81,7 @@ public class Robot extends IterativeRobot {
 		
 		Webcam.getInstance().startThread();
 
-		autonomousCommand = new AutoTest();
+		//autonomousCommand = new AutoTest(); // This breaks things
 
 		SmartDashboard.putData(autonomousCommand);
 
@@ -130,10 +130,10 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void autonomousInit() {
-		autonomousCommand = new AutoTest();
-		if(autonomousCommand != null) {
+		autonomousCommand = new AutoTest(); // This needs to be here or else things break
+		//if(autonomousCommand != null) {
 			autonomousCommand.start();
-		}
+		//}
 	}
 
 	/**
