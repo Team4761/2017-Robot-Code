@@ -69,6 +69,11 @@ public class Robot extends IterativeRobot {
 
 		RobotMap.gyro.calibrate();
 
+		SmartDashboard.putNumber("GyroP", drivetrain.gyroPID.getP());
+		SmartDashboard.putNumber("GyroI", drivetrain.gyroPID.getI());
+		SmartDashboard.putNumber("GyroD", drivetrain.gyroPID.getD());
+		SmartDashboard.putNumber("GyroSetpoint", drivetrain.gyroPID.getSetpoint());
+
 		cameraServer = CameraServer.getInstance();
 
 		cameraServer.startAutomaticCapture();
@@ -78,6 +83,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void robotPeriodic() {
 		gearIntake.periodicSmartDashboard();
+		SmartDashboard.putNumber("Gyro Angle", RobotMap.gyro.getAngle());
 	}
 
 	/**
@@ -93,7 +99,6 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void disabledPeriodic() {
 		Scheduler.getInstance().run();
-		SmartDashboard.putNumber("GyroData", RobotMap.gyro.getAngle());
 		//System.out.println(RobotMap.gyro.getAngle());
 		SmartDashboard.putNumber("LeftEncoder", RobotMap.leftEncoder.get());
 		SmartDashboard.putNumber("RightEncoder", RobotMap.rightEncoder.get());
@@ -146,11 +151,6 @@ public class Robot extends IterativeRobot {
 			autonomousCommand.cancel();
 
 		drive.start();
-
-		SmartDashboard.putNumber("GyroP", drivetrain.gyroPID.getP());
-		SmartDashboard.putNumber("GyroI", drivetrain.gyroPID.getI());
-		SmartDashboard.putNumber("GyroD", drivetrain.gyroPID.getD());
-		SmartDashboard.putNumber("GyroSetpoint", drivetrain.gyroPID.getSetpoint());
 		
 		SmartDashboard.putNumber("drivetrain setpoint", drivetrain.encoderPID.getSetpoint());
 		SmartDashboard.putNumber("drivetrain P", drivetrain.encoderPID.getP());
