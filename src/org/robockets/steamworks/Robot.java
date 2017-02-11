@@ -12,8 +12,14 @@ import org.robockets.steamworks.climber.Climb;
 import org.robockets.steamworks.climber.Climber;
 import org.robockets.steamworks.camera.Webcam;
 import org.robockets.steamworks.commands.TunePID;
-import org.robockets.steamworks.drivetrain.*;
-import org.robockets.steamworks.subsystems.*;
+import org.robockets.steamworks.drivetrain.Drivetrain;
+import org.robockets.steamworks.drivetrain.Joyride;
+import org.robockets.steamworks.drivetrain.ResetDriveEncoders;
+import org.robockets.steamworks.subsystems.BallIntake;
+import org.robockets.steamworks.subsystems.Conveyor;
+import org.robockets.steamworks.subsystems.GearIntake;
+import org.robockets.steamworks.subsystems.Shooter;
+
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -34,8 +40,6 @@ public class Robot extends IterativeRobot {
 	public static Drivetrain drivetrain;
 	public static Shooter shooter;
 	public static GearIntake gearIntake;
-	
-	public static DriveDistanceProf leftDDP, rightDDP;
 
 	private Command autonomousCommand;
 	private Command drive;
@@ -43,8 +47,6 @@ public class Robot extends IterativeRobot {
 	private SendableChooser chooser = new SendableChooser();
 	
 	private boolean smartDashboardDebug = true;
-
-	private int auto = 0;
 	
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -64,10 +66,6 @@ public class Robot extends IterativeRobot {
 		// chooser.addObject("My Auto", new MyAutoCommand());
 		climb = new Climb(0.5);
 		drive = new Joyride(0.5);
-		leftDDP = new DriveDistanceProf();
-		rightDDP = new DriveDistanceProf();
-		
-		autonomousCommand = new AutoTest();
 		
 		SmartDashboard.putData("Auto mode", chooser);
 		SmartDashboard.putData(climb);
@@ -83,31 +81,25 @@ public class Robot extends IterativeRobot {
 		
 		Webcam.getInstance().startThread();
 
+		autonomousCommand = new AutoTest(); // This breaks things
+
 		SmartDashboard.putData(autonomousCommand);
 
 	}
 
 	@Override
 	public void robotPeriodic() {
-		/*drivetrain.gyroPID.setPID(SmartDashboard.getNumber("GyroP", 0), SmartDashboard.getNumber("GyroI", 0),SmartDashboard.getNumber("GyroD", 0));
-		drivetrain.gyroPID.setSetpoint(SmartDashboard.getNumber("GyroSetpoint", 0));
-
-		drivetrain.leftPodPID.setPID(SmartDashboard.getNumber("EncoderP", 0), SmartDashboard.getNumber("EncoderI", 0),SmartDashboard.getNumber("EncoderD", 0));
-		drivetrain.leftPodPID.setSetpoint(SmartDashboard.getNumber("EncoderSetpoint", 0));
-		drivetrain.rightPodPID.setPID(SmartDashboard.getNumber("EncoderP", 0), SmartDashboard.getNumber("EncoderI", 0),SmartDashboard.getNumber("EncoderD", 0));
-		drivetrain.rightPodPID.setSetpoint(SmartDashboard.getNumber("EncoderSetpoint", 0));
-		*/
 		
 		Robot.climber.periodicSmartDashboard(smartDashboardDebug);
 		gearIntake.periodicSmartDashboard();
 
-		SmartDashboard.putNumber("LeftEncoder", RobotMap.leftEncoder.get());
-		SmartDashboard.putNumber("RightEncoder", RobotMap.rightEncoder.get());
-
-		SmartDashboard.putNumber("LeftEncoderDistance", RobotMap.leftEncoder.getDistance());
+		SDDumper.dumpEncoder("Left encoder", RobotMap.leftEncoder);
+		SDDumper.dumpEncoder("Right encoder", RobotMap.rightEncoder);
 		
-		SmartDashboard.putNumber("Left DDP new position", leftDDP.getNewPosition());
-		SmartDashboard.putBoolean("Left DDP is in position", leftDDP.isInPosition());
+		SDDumper.dumpPidController("Left drivepod PID", drivetrain.leftPodPID);
+		SDDumper.dumpPidController("Right drivepod PID", drivetrain.rightPodPID);
+		
+		SDDumper.dumpMisc();
 	}
   
 	/**
@@ -138,20 +130,10 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void autonomousInit() {
-		//autonomousCommand = chooser.getSelected(); // This is not working
-
-		/*
-		 * String autoSelected = SmartDashboard.getString("Auto Selector",
-		 * "Default"); switch(autoSelected) { case "My Auto": autonomousCommand
-		 * = new MyAutoCommand(); break; case "Default Auto": default:
-		 * autonomousCommand = new ExampleCommand(); break; }
-		 */
-
-		// Schedule the autonomous command (example)
-		leftDDP.start();
-		rightDDP.start();
-		if (autonomousCommand != null)
+		autonomousCommand = new AutoTest(); // This needs to be here or else things break
+		//if(autonomousCommand != null) {
 			autonomousCommand.start();
+		//}
 	}
 
 	/**
@@ -170,24 +152,10 @@ public class Robot extends IterativeRobot {
 		// this line or comment it out.
 		if (autonomousCommand != null)
 			autonomousCommand.cancel();
-
-		leftDDP.start();
-		rightDDP.start();
 		
 		drivetrain.leftPodPID.enable();
 		drivetrain.rightPodPID.enable();
 		drive.start();
-		
-		SmartDashboard.putNumber("GyroP", drivetrain.gyroPID.getP());
-		SmartDashboard.putNumber("GyroI", drivetrain.gyroPID.getI());
-		SmartDashboard.putNumber("GyroD", drivetrain.gyroPID.getD());
-		SmartDashboard.putNumber("GyroSetpoint", drivetrain.gyroPID.getSetpoint());
-
-		SmartDashboard.putNumber("EncoderP", drivetrain.leftPodPID.getP());
-		SmartDashboard.putNumber("EncoderI", drivetrain.leftPodPID.getI());
-		SmartDashboard.putNumber("EncoderD", drivetrain.leftPodPID.getD());
-		SmartDashboard.putNumber("EncoderSetpoint", 0);
-
 
 		SmartDashboard.putData(new TunePID());
 

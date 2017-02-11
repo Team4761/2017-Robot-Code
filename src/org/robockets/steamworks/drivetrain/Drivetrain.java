@@ -83,14 +83,6 @@ public class Drivetrain extends Subsystem {
     }
     
     /**
-     * A method to drive straight for a certain distance, based on leftPodPID
-     * @param distance Distance, in inches
-     */
-    public void driveDistance(double distance, double velocity) {
-
-    }
-    
-    /**
      * A method to drive along an arc with PID, its usefulness is debatable
      * @param direction Direction of the turn, left or right
      * @param chordLength Length of the hypotenuse of the triangle formed by two radii

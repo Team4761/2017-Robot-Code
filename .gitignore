@@ -12,3 +12,6 @@ bin/
 
 .gradle/
 sysProps.xml
+
+# JavaDocs
+doc/
