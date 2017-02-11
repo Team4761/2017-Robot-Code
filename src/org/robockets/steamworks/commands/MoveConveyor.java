@@ -6,6 +6,7 @@ import org.robockets.commons.RelativeDirection;
 import org.robockets.steamworks.Robot;
 
 /**
+ * "Magic Carpet"
  * @author Jake Backer
  */
 public class MoveConveyor extends Command {
