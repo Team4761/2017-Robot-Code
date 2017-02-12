@@ -44,10 +44,11 @@ public class Robot extends IterativeRobot {
 	public static GearIntake gearIntake;
 
 	public static Command autonomousCommand;
+	public static Command autoTest;
 	public static Command drive;
 	public static Command climb;
 	public static Command toggleDriveMode;
-	private SendableChooser chooser = new SendableChooser();
+	private SendableChooser<Command> autonomousChooser;
 	
 	private boolean smartDashboardDebug = true;
 	
@@ -73,7 +74,7 @@ public class Robot extends IterativeRobot {
 		climb = new Climb(0.5);
 		drive = new Joyride(1);
 		
-		SmartDashboard.putData("Auto mode", chooser);
+		SmartDashboard.putData("Auto mode", autonomousChooser);
 		SmartDashboard.putData(climb);
 
 		SmartDashboard.putNumber("New Gyro Angle(AbsoluteOrRelative)", 0);
@@ -97,9 +98,12 @@ public class Robot extends IterativeRobot {
 		
 		Webcam.getInstance().startThread();
 
-		autonomousCommand = new AutoTest(); // This breaks things
+		autoTest = new AutoTest();
+		autonomousChooser = new SendableChooser<Command>();
+		autonomousChooser.addDefault("AutoTest", autoTest);
+		//autonomousChooser.addObject("Another auto", myAuto);
 
-		SmartDashboard.putData(autonomousCommand);
+		SmartDashboard.putData("Autonomous selector", autonomousChooser);
 
 	}
 
@@ -152,10 +156,10 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void autonomousInit() {
-		autonomousCommand = new AutoTest(); // This needs to be here or else things break
-		//if(autonomousCommand != null) {
+		autonomousCommand = autonomousChooser.getSelected();
+		if(autonomousCommand != null) {
 			autonomousCommand.start();
-		//}
+		}
 	}
 
 	/**
@@ -168,12 +172,9 @@ public class Robot extends IterativeRobot {
 
 	@Override
 	public void teleopInit() {
-		// This makes sure that the autonomous stops running when
-		// teleop starts running. If you want the autonomous to
-		// continue until interrupted by another command, remove
-		// this line or comment it out.
-		if (autonomousCommand != null)
+		if (autonomousCommand != null) {
 			autonomousCommand.cancel();
+		}
 
 		drive.start();
 
