@@ -1,6 +1,6 @@
 package org.robockets.steamworks;
 
-import org.robockets.steamworks.commands.ToggleDriveMode;
+import org.robockets.steamworks.drivetrain.ToggleDriveMode;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
@@ -11,11 +11,11 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
  * interface to the commands and command groups that allow control of the robot.
  */
 public class OI {
-    public static Joystick joystick = new Joystick(PortNumbers.JOYSTICK_PORT_NUMBER);
+    public static Joystick joystick = new Joystick(0);
     
     Button yButton = new JoystickButton(joystick, 4);
     
     public OI() {
-    	yButton.whenPressed(new ToggleDriveMode());
+    	yButton.whenPressed(Robot.toggleDriveMode);
     }
 }
