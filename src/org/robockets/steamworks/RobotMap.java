@@ -14,37 +14,38 @@ public class RobotMap {
 	/// PWM ///
 	///////////
 	
-	/**
-	 * Speed controller for the front left wheel of the robot.
-	 */
-    public static Talon frontLeftSpeedController = new Talon(0);
-    
-    /**
-     * Speed controller for the back left wheel of the robot.
-     */
-    public static Talon backLeftSpeedController = new Talon(1);
-    
-    /**
-     * Speed controller for the front right wheel of the robot.
-     */
-    public static Talon frontRightSpeedController = new Talon(2);
-    
-    /**
-     * Speed controller for the back right wheel of the robot.
-     */
-    public static Talon backRightSpeedController = new Talon(3);
-    
     /**
      * Speed controller for the motor that is used to climb up rope. This might
      * control two motors someday.
      */
-    public static Talon climberSpeedController = new Talon(4);
+    public static Victor climberSpeedController = new Victor(0); //TODO: get real port
+
+    public static Victor shooterRollerSpeedController = new Victor(1); //TODO: get real port
     
-    //TODO: JavaDocs for these four.
-    public static TalonSRX conveyorSpeedControllerOne = new TalonSRX(5);
-    public static TalonSRX conveyorSpeedControllerTwo = new TalonSRX(6);
-    public static TalonSRX ballIntakeRollerSpeedController = new TalonSRX(7);
-	public static TalonSRX shooterRollerSpeedController = new TalonSRX(8);
+    public static Victor conveyorSpeedControllerOne = new Victor(2); //TODO: get real port
+    public static Victor conveyorSpeedControllerTwo = new Victor(3); //TODO: get real port
+    
+    /**
+     * Speed controller for right side of the robot.
+     */
+    public static Victor leftDrivepodSpeedController = new Victor(4);
+    
+    /**
+     * Speed controller for the left side of the robot.
+     */
+    public static Victor rightDrivepodSpeedController = new Victor(5);
+    
+    // VICTOR #6 would go here
+    
+    /**
+     * Speed controller for the roller at the bottom of the robot that sucks
+     * fuel balls in.
+     */
+    public static Victor ballIntakeRollerSpeedController = new Victor(7); //TODO: get real port
+    
+    // VICTOR #8 would go here
+    
+    // VICTOR #9 would go here
 
 	//////////////////
 	/// Digital IO ///
@@ -89,19 +90,19 @@ public class RobotMap {
      * the four speed controllers on our two drivepods. Used in teleoperated
      * mode.
      */
-    public static RobotDrive robotDrive = new RobotDrive(frontLeftSpeedController, backLeftSpeedController, frontRightSpeedController, backRightSpeedController);
+    public static RobotDrive robotDrive = new RobotDrive(leftDrivepodSpeedController, rightDrivepodSpeedController);
     
     /**
      * {@link edu.wpi.first.wpilibj.PIDOutput PIDOutput} for controlling the
      * left drivepod.
      */
-    public static DrivePodOutput leftDrivePodOutput = new DrivePodOutput(frontLeftSpeedController, backLeftSpeedController);
+    public static DrivePodOutput leftDrivePodOutput = new DrivePodOutput(leftDrivepodSpeedController);
     
     /**
      * {@link edu.wpi.first.wpilibj.PIDOutput PIDOutput} for controlling the
      * right drivepod.
      */
-    public static DrivePodOutput rightDrivePodOutput = new DrivePodOutput(frontRightSpeedController, backRightSpeedController);
+    public static DrivePodOutput rightDrivePodOutput = new DrivePodOutput(rightDrivepodSpeedController);
     
     /**
      * The power distribution panel. Used for getting current to the climber
