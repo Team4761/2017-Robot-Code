@@ -8,22 +8,19 @@ import edu.wpi.first.wpilibj.SpeedController;
  */
 public class DrivePodOutput implements PIDOutput {
 
-	private SpeedController c1, c2;
+	private SpeedController c;
 
 	/**
-	 *
-	 * @param c1 Left side speed controller
-	 * @param c2 Right side speed controller
+	 * @param c Speed controller
 	 */
-	public DrivePodOutput(SpeedController c1, SpeedController c2) {
-		this.c1 = c1;
-		this.c2 = c2;
+	public DrivePodOutput(SpeedController c) {
+		this.c = c;
 	}
 	
 	@Override
 	public void pidWrite(double output) {
-		c1.set(output);
-		c2.set(output);
+		c.set(output);
+		c.set(output);
 	}
 
 }
