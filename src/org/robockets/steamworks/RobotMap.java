@@ -28,9 +28,9 @@ public class RobotMap {
 
     public static Victor shooterRollerSpeedController = new Victor(1); //TODO: get real port
 
-    public static Victor conveyorSpeedControllerOne = new Victor(2); //TODO: get real port
-    public static Victor conveyorSpeedControllerTwo = new Victor(3); //TODO: get real port
-    
+    public static Victor conveyorSpeedController = new Victor(2); //TODO: get real port
+    public static Victor elevatorSpeedController = new Victor(3); //TODO: get real port
+
     /**
      * Speed controller for right side of the robot.
      */
