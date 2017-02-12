@@ -64,12 +64,9 @@ public class Robot extends IterativeRobot {
 		climber = new Climber();
 		drivetrain = new Drivetrain();
 		shooter = new Shooter();
-		
-		toggleDriveMode = new ToggleDriveMode();
-
 		gearIntake = new GearIntake();
 
-		// chooser.addObject("My Auto", new MyAutoCommand());
+		toggleDriveMode = new ToggleDriveMode();
 		climb = new Climb(0.5);
 		drive = new Joyride(1);
 		
