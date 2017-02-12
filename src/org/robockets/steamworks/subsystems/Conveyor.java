@@ -22,13 +22,11 @@ public class Conveyor extends Subsystem {
     public void moveConveyor(RelativeDirection.YAxis direction, double speed) {
         double multiplier = (direction==RelativeDirection.YAxis.FORWARD) ? 1 : -1;
 
-        RobotMap.conveyorSpeedControllerOne.set(multiplier*speed);
-        RobotMap.conveyorSpeedControllerTwo.set(multiplier*speed);
+        RobotMap.conveyorSpeedController.set(multiplier*speed);
     }
 
     public void stop() {
-        RobotMap.conveyorSpeedControllerOne.stopMotor();
-        RobotMap.conveyorSpeedControllerTwo.stopMotor();
+        RobotMap.conveyorSpeedController.stopMotor();
     }
 }
 
