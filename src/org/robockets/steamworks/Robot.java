@@ -70,7 +70,6 @@ public class Robot extends IterativeRobot {
 		climb = new Climb(0.5);
 		drive = new Joyride(1);
 		
-		SmartDashboard.putData("Auto mode", autonomousChooser);
 		SmartDashboard.putData(climb);
 
 		SmartDashboard.putNumber("New Gyro Angle(AbsoluteOrRelative)", 0);
