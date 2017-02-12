@@ -63,7 +63,7 @@ public class RobotMap {
 	 */
 	public static Encoder rightEncoder = new Encoder(2, 3);
 	
-    //public static DigitalInput gearInputBreakbeamSensor = new DigitalInput(2);
+    public static DigitalInput gearInputBreakbeamSensor = new DigitalInput(5);
 	
 	/**
 	 * Encoder that goes on the shooter roller. For getting how fast the
