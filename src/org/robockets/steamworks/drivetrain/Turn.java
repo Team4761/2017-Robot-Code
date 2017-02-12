@@ -1,4 +1,4 @@
-package org.robockets.steamworks.commands;
+package org.robockets.steamworks.drivetrain;
 
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -31,7 +31,7 @@ public class Turn extends Command {
 	}
 
 	protected boolean isFinished() {
-		return true;
+		return true; // This need to return if it is on target or not
 	}
 
 	protected void end() {

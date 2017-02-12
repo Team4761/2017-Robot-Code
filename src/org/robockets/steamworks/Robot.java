@@ -1,6 +1,5 @@
 package org.robockets.steamworks;
 
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -18,7 +17,7 @@ import org.robockets.steamworks.camera.Webcam;
 import org.robockets.steamworks.climber.Climb;
 import org.robockets.steamworks.climber.Climber;
 import org.robockets.steamworks.commands.TunePID;
-import org.robockets.steamworks.commands.Turn;
+import org.robockets.steamworks.drivetrain.Turn;
 import org.robockets.steamworks.drivetrain.Drivetrain;
 import org.robockets.steamworks.drivetrain.Joyride;
 import org.robockets.steamworks.drivetrain.ResetDriveEncoders;
@@ -112,15 +111,15 @@ public class Robot extends IterativeRobot {
 		Webcam.getInstance().startThread();
 
 		autoTest = new AutoTest();
-		easyAuto1 = new EasyAuto(1, DriverStation.getInstance().getAlliance());
-		easyAuto2 = new EasyAuto(2, DriverStation.getInstance().getAlliance());
-		easyAuto3 = new EasyAuto(3, DriverStation.getInstance().getAlliance());
-		midAuto1 = new MidAuto(1, DriverStation.getInstance().getAlliance());
-		midAuto2 = new MidAuto(2, DriverStation.getInstance().getAlliance());
-		midAuto3 = new MidAuto(3, DriverStation.getInstance().getAlliance());
-		maxAuto1 = new MaxAuto(1, DriverStation.getInstance().getAlliance());
-		maxAuto2 = new MaxAuto(2, DriverStation.getInstance().getAlliance());
-		maxAuto3 = new MaxAuto(3, DriverStation.getInstance().getAlliance());
+		easyAuto1 = new EasyAuto(1);
+		easyAuto2 = new EasyAuto(2);
+		easyAuto3 = new EasyAuto(3);
+		midAuto1 = new MidAuto(1);
+		midAuto2 = new MidAuto(2);
+		midAuto3 = new MidAuto(3);
+		maxAuto1 = new MaxAuto(1);
+		maxAuto2 = new MaxAuto(2);
+		maxAuto3 = new MaxAuto(3);
 
 		autonomousChooser = new SendableChooser<>();
 		autonomousChooser.addDefault("AutoTest", autoTest);
