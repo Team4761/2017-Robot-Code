@@ -1,5 +1,6 @@
 package org.robockets.steamworks.autonomous;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
@@ -7,7 +8,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
  */
 public class EasyAuto extends CommandGroup {
 
-	public EasyAuto() {
+	public EasyAuto(int startingPos, DriverStation.Alliance alliance) {
 
 	}
 }

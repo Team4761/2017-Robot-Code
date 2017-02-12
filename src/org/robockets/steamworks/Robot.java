@@ -1,5 +1,6 @@
 package org.robockets.steamworks;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -47,9 +48,17 @@ public class Robot extends IterativeRobot {
 
 	public static Command autonomousCommand;
 	public static Command autoTest;
-	public static Command easyAuto;
-	public static Command midAuto;
-	public static Command maxAuto;
+
+	public static Command easyAuto1;
+	public static Command easyAuto2;
+	public static Command easyAuto3;
+	public static Command midAuto1;
+	public static Command midAuto2;
+	public static Command midAuto3;
+	public static Command maxAuto1;
+	public static Command maxAuto2;
+	public static Command maxAuto3;
+
 	public static Command drive;
 	public static Command climb;
 	public static Command toggleDriveMode;
@@ -103,19 +112,32 @@ public class Robot extends IterativeRobot {
 		Webcam.getInstance().startThread();
 
 		autoTest = new AutoTest();
-		easyAuto = new EasyAuto();
-		midAuto = new MidAuto();
-		maxAuto = new MaxAuto();
-		
+		easyAuto1 = new EasyAuto(1, DriverStation.getInstance().getAlliance());
+		easyAuto2 = new EasyAuto(2, DriverStation.getInstance().getAlliance());
+		easyAuto3 = new EasyAuto(3, DriverStation.getInstance().getAlliance());
+		midAuto1 = new MidAuto(1, DriverStation.getInstance().getAlliance());
+		midAuto2 = new MidAuto(2, DriverStation.getInstance().getAlliance());
+		midAuto3 = new MidAuto(3, DriverStation.getInstance().getAlliance());
+		maxAuto1 = new MaxAuto(1, DriverStation.getInstance().getAlliance());
+		maxAuto2 = new MaxAuto(2, DriverStation.getInstance().getAlliance());
+		maxAuto3 = new MaxAuto(3, DriverStation.getInstance().getAlliance());
+
 		autonomousChooser = new SendableChooser<>();
 		autonomousChooser.addDefault("AutoTest", autoTest);
-		autonomousChooser.addObject("EasyAuto", easyAuto);
-		autonomousChooser.addObject("MidAuto", midAuto);
-		autonomousChooser.addObject("MaxAuto", maxAuto);
+		autonomousChooser.addObject("EasyAutoStart1", easyAuto1);
+		autonomousChooser.addObject("EasyAutoStart2", easyAuto2);
+		autonomousChooser.addObject("EasyAutoStart3", easyAuto3);
+		autonomousChooser.addObject("MidAutoStart1", midAuto1);
+		autonomousChooser.addObject("MidAutoStart2", midAuto2);
+		autonomousChooser.addObject("MidAutoStart3", midAuto3);
+		autonomousChooser.addObject("MaxAutoStart1", maxAuto1);
+		autonomousChooser.addObject("MaxAutoStart2", maxAuto2);
+		autonomousChooser.addObject("MaxAutoStart3", maxAuto3);
 
 		//autonomousChooser.addObject("Another auto", myAuto);
 
 		SmartDashboard.putData("Autonomous selector", autonomousChooser);
+
 
 	}
 

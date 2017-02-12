@@ -1,5 +1,6 @@
 package org.robockets.steamworks.autonomous;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
@@ -7,7 +8,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
  */
 public class MaxAuto extends CommandGroup {
 
-	public MaxAuto() {
+	public MaxAuto(int startingPos, DriverStation.Alliance alliance) {
 
 	}
 }
