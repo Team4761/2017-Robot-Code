@@ -1,6 +1,12 @@
 package org.robockets.steamworks;
 
-import edu.wpi.first.wpilibj.*;
+import edu.wpi.first.wpilibj.ADXRS450_Gyro;
+import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.PowerDistributionPanel;
+import edu.wpi.first.wpilibj.RobotDrive;
+import edu.wpi.first.wpilibj.SPI;
+import edu.wpi.first.wpilibj.Victor;
 
 /**
  * The RobotMap is a mapping from the ports sensors and actuators are wired into
@@ -10,56 +16,110 @@ import edu.wpi.first.wpilibj.*;
  */
 public class RobotMap {
 
-    public static TalonSRX rollerSpeedController = new TalonSRX(PortNumbers.SHOOTER_ROLLER_SC_PORT);
+	///////////
+	/// PWM ///
+	///////////
+	
+    /**
+     * Speed controller for the motor that is used to climb up rope. This might
+     * control two motors someday.
+     */
+    public static Victor climberSpeedController = new Victor(0); //TODO: get real port
 
-    public static Encoder rollerEncoder = new Encoder(PortNumbers.SHOOTER_ROLLER_ENCODER_PORT_ONE, PortNumbers.SHOOTER_ROLLER_ENCODER_PORT_TWO);
+    public static Victor shooterRollerSpeedController = new Victor(1); //TODO: get real port
 
-    public static TalonSRX conveyorSpeedControllerOne = new TalonSRX(PortNumbers.SHOOTER_CONVEYOR_SC_ONE);
-    public static TalonSRX conveyorSpeedControllerTwo = new TalonSRX(PortNumbers.SHOOTER_CONVEYOR_SC_TWO);
+    public static Victor conveyorSpeedControllerOne = new Victor(2); //TODO: get real port
+    public static Victor conveyorSpeedControllerTwo = new Victor(3); //TODO: get real port
     
-    public static TalonSRX ballIntakeRoller = new TalonSRX(PortNumbers.BALL_INTAKE_ROLLER_SC_PORT);
-
-    public static ADXRS450_Gyro gyro = new ADXRS450_Gyro(PortNumbers.gyroPort);
-
-    // TODO: Add breakbeam sensor
-
-    //public static DigitalInput gearInputBreakbeamSensor = new DigitalInput(PortNumbers.GEAR_INTAKE_BREAKBEAM_SENSOR);
-
-    public static Talon frontLeftSpeedController = new Talon(PortNumbers.DRIVETRAIN_FRONT_LEFT_SC_PORT);
-    public static Talon frontRightSpeedController = new Talon(PortNumbers.DRIVETRAIN_FRONT_RIGHT_SC_PORT);
-    public static Talon backLeftSpeedController = new Talon(PortNumbers.DRIVETRAIN_BACK_LEFT_SC_PORT);
-    public static Talon backRightSpeedController = new Talon(PortNumbers.DRIVETRAIN_BACK_RIGHT_SC_PORT);
-
-    public static Encoder leftEncoder = new Encoder(PortNumbers.DRIVETRAIN_LEFT_ENCODER_PORT_ONE, PortNumbers.DRIVETRAIN_LEFT_ENCODER_PORT_TWO);
-    public static Encoder rightEncoder = new Encoder(PortNumbers.DRIVETRAIN_RIGHT_ENCODER_PORT_ONE, PortNumbers.DRIVETRAIN_RIGHT_ENCODER_PORT_TWO);
-
-    public static RobotDrive robotDrive = new RobotDrive(frontLeftSpeedController, backLeftSpeedController, frontRightSpeedController, backRightSpeedController);
+    /**
+     * Speed controller for right side of the robot.
+     */
+    public static Victor leftDrivepodSpeedController = new Victor(4);
     
+    /**
+     * Speed controller for the left side of the robot.
+     */
+    public static Victor rightDrivepodSpeedController = new Victor(5);
+    
+    // VICTOR #6 would go here
+    
+    /**
+     * Speed controller for the roller at the bottom of the robot that sucks
+     * fuel balls in.
+     */
+    public static Victor ballIntakeRollerSpeedController = new Victor(7); //TODO: get real port
+    
+    // VICTOR #8 would go here
+    
+    // VICTOR #9 would go here
+
+	//////////////////
+	/// Digital IO ///
+	//////////////////
+	
+	/**
+	 * Encoder that goes on the left drivepod. For getting how fast the left
+	 * side of the robot is driving.
+	 */
+	public static Encoder leftEncoder = new Encoder(1, 0);
+	
+	/**
+	 * Encoder that goes on the right drivepod. For getting how fast the right
+	 * side of the robot is driving.
+	 */
+	public static Encoder rightEncoder = new Encoder(2, 3);
+	
+    public static DigitalInput gearInputBreakbeamSensor = new DigitalInput(5);
+	
+	/**
+	 * Encoder that goes on the shooter roller. For getting how fast the
+	 * shooter roller is spinning.
+	 */
+    public static Encoder rollerEncoder = new Encoder(8, 9);
+
+
+    ///////////
+    /// SPI ///
+    ///////////
+    
+    /**
+     * The gyro. Needs to be mounted horizontally.
+     */
+    public static ADXRS450_Gyro gyro = new ADXRS450_Gyro(SPI.Port.kOnboardCS0);
+    
+    /////////////////////
+    /// Miscellaneous ///
+    /////////////////////
+    
+    /**
+     * {@link edu.wpi.first.wpilibj.RobotDrive RobotDrive} for controlling the
+     * the four speed controllers on our two drivepods. Used in teleoperated
+     * mode.
+     */
+    public static RobotDrive robotDrive = new RobotDrive(leftDrivepodSpeedController, rightDrivepodSpeedController);
+    
+    /**
+     * {@link edu.wpi.first.wpilibj.PIDOutput PIDOutput} for controlling the
+     * left drivepod.
+     */
+    public static DrivePodOutput leftDrivePodOutput = new DrivePodOutput(leftDrivepodSpeedController);
+    
+    /**
+     * {@link edu.wpi.first.wpilibj.PIDOutput PIDOutput} for controlling the
+     * right drivepod.
+     */
+    public static DrivePodOutput rightDrivePodOutput = new DrivePodOutput(rightDrivepodSpeedController);
+    
+    /**
+     * The power distribution panel. Used for getting current to the climber
+     * motor, letting us know when it is stalling.
+     */
     public static PowerDistributionPanel powerDistPanel = new PowerDistributionPanel(); // Please note that this must be CAN id 0.
-
-    // Climber related.
     
-    public static Talon climberMotor = new Talon(PortNumbers.CLIMBER_SC_PORT); // TODO: Match actual hardware.
-  
-    public enum PwmPort {
-    	
-    	BLACK(0),
-    	BROWN(1),
-    	RED(2),
-    	ORANGE(3),
-    	YELLOW(4),
-    	GREEN(5),
-    	BLUE(6),
-    	PURPLE(7),
-    	GRAY(8),
-    	WHITE(9);
-    	
-    	public final int portNumber;
-    	
-    	PwmPort(int portNumber) {
-    		this.portNumber = portNumber;
-    	}
-    }
+    /**
+     * PDP port that the climber's motor is attached to.
+     */
+    public static final int climberPdpPort = 1;
     
     public class SmartDashboardKey {
     	public static final String kCameraExposure = "Camera exposure";

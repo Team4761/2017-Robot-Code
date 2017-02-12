@@ -15,7 +15,7 @@ public class GearIntake extends Subsystem {
 	}
 
 	public boolean isGearInRobot() {
-		return false; //RobotMap.gearInputBreakbeamSensor.get();
+		return RobotMap.gearInputBreakbeamSensor.get();
 	}
 
 	public void periodicSmartDashboard() {

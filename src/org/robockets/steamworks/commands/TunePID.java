@@ -1,6 +1,8 @@
 package org.robockets.steamworks.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 import org.robockets.steamworks.Robot;
 
 /**
@@ -13,11 +15,11 @@ public class TunePID extends Command {
     }
 
     protected void initialize() {
-
+        Robot.drivetrain.setDistance(SmartDashboard.getNumber("drivetrain setpoint", 0));
     }
 
     protected void execute() {
-        Robot.drivetrain.pidGo();
+        //Robot.drivetrain.pidGo();
     }
 
     protected boolean isFinished() {
@@ -25,6 +27,7 @@ public class TunePID extends Command {
     }
 
     protected void end() {
+        Robot.drivetrain.leftPodPID.disable();
         Robot.drivetrain.stop();
     }
 
