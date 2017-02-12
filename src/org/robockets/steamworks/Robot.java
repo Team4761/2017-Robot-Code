@@ -8,6 +8,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.robockets.steamworks.autonomous.AutoTest;
+import org.robockets.steamworks.autonomous.EasyAuto;
+import org.robockets.steamworks.autonomous.MaxAuto;
+import org.robockets.steamworks.autonomous.MidAuto;
 import org.robockets.steamworks.ballintake.BallIntake;
 import org.robockets.steamworks.ballintake.SpinBallIntakeRollers;
 import org.robockets.steamworks.camera.Webcam;
@@ -44,6 +47,9 @@ public class Robot extends IterativeRobot {
 
 	public static Command autonomousCommand;
 	public static Command autoTest;
+	public static Command easyAuto;
+	public static Command midAuto;
+	public static Command maxAuto;
 	public static Command drive;
 	public static Command climb;
 	public static Command toggleDriveMode;
@@ -97,8 +103,16 @@ public class Robot extends IterativeRobot {
 		Webcam.getInstance().startThread();
 
 		autoTest = new AutoTest();
+		easyAuto = new EasyAuto();
+		midAuto = new MidAuto();
+		maxAuto = new MaxAuto();
+		
 		autonomousChooser = new SendableChooser<>();
 		autonomousChooser.addDefault("AutoTest", autoTest);
+		autonomousChooser.addObject("EasyAuto", easyAuto);
+		autonomousChooser.addObject("MidAuto", midAuto);
+		autonomousChooser.addObject("MaxAuto", maxAuto);
+
 		//autonomousChooser.addObject("Another auto", myAuto);
 
 		SmartDashboard.putData("Autonomous selector", autonomousChooser);
