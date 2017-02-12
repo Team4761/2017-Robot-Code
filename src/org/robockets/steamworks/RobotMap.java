@@ -1,6 +1,12 @@
 package org.robockets.steamworks;
 
-import edu.wpi.first.wpilibj.*;
+import edu.wpi.first.wpilibj.ADXRS450_Gyro;
+import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.PowerDistributionPanel;
+import edu.wpi.first.wpilibj.RobotDrive;
+import edu.wpi.first.wpilibj.SPI;
+import edu.wpi.first.wpilibj.Victor;
 
 /**
  * The RobotMap is a mapping from the ports sensors and actuators are wired into
@@ -21,7 +27,7 @@ public class RobotMap {
     public static Victor climberSpeedController = new Victor(0); //TODO: get real port
 
     public static Victor shooterRollerSpeedController = new Victor(1); //TODO: get real port
-    
+
     public static Victor conveyorSpeedControllerOne = new Victor(2); //TODO: get real port
     public static Victor conveyorSpeedControllerTwo = new Victor(3); //TODO: get real port
     

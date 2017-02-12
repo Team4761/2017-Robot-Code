@@ -8,20 +8,20 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.robockets.steamworks.autonomous.AutoTest;
+import org.robockets.steamworks.ballintake.BallIntake;
+import org.robockets.steamworks.ballintake.SpinBallIntakeRollers;
+import org.robockets.steamworks.camera.Webcam;
 import org.robockets.steamworks.climber.Climb;
 import org.robockets.steamworks.climber.Climber;
-import org.robockets.steamworks.camera.Webcam;
 import org.robockets.steamworks.commands.TunePID;
 import org.robockets.steamworks.commands.Turn;
 import org.robockets.steamworks.drivetrain.Drivetrain;
 import org.robockets.steamworks.drivetrain.Joyride;
 import org.robockets.steamworks.drivetrain.ResetDriveEncoders;
 import org.robockets.steamworks.drivetrain.ToggleDriveMode;
-import org.robockets.steamworks.subsystems.BallIntake;
 import org.robockets.steamworks.subsystems.Conveyor;
 import org.robockets.steamworks.subsystems.GearIntake;
 import org.robockets.steamworks.subsystems.Shooter;
-
 
 
 /**
@@ -77,6 +77,9 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putData("GyroTurn Absolute", new Turn(TurnType.ABSOLUTE, 90)); // Angle will be on SmartDashboard from the Turn command
 		SmartDashboard.putData("GyroTurn Relative", new Turn(TurnType.RELATIVE, 90));
 
+		SmartDashboard.putData("IntakeRollersForward", new SpinBallIntakeRollers(1));
+		SmartDashboard.putData("IntakeRollersBackward", new SpinBallIntakeRollers(-1));
+
 		RobotMap.gyro.calibrate();
 
 		SmartDashboard.putNumber("GyroP", drivetrain.gyroPID.getP());
@@ -94,7 +97,7 @@ public class Robot extends IterativeRobot {
 		Webcam.getInstance().startThread();
 
 		autoTest = new AutoTest();
-		autonomousChooser = new SendableChooser<Command>();
+		autonomousChooser = new SendableChooser<>();
 		autonomousChooser.addDefault("AutoTest", autoTest);
 		//autonomousChooser.addObject("Another auto", myAuto);
 
