@@ -100,7 +100,7 @@ public class Drivetrain extends Subsystem {
     		arcLengthRight = calculateArcLength(chordLength, radius + CENTERPOINT_TO_WHEEL);
     	}
     	
-    	setDistanceInInches(arcLengthLeft, arcLengthRight);
+    	setDistance(arcLengthLeft, arcLengthRight);
     	//driveTank(leftPodPID.get() * scalar, rightPodPID.get() * scalar); // This may not be necessary now that we have a real PIDOutput
     }
     
@@ -108,7 +108,7 @@ public class Drivetrain extends Subsystem {
      * A basic method to set the setpoint of both of the pods for a given distance with PID
      * @param distance Desired distance for both pods, in inches
      */
-    public void setDistanceInInches(double distance) {
+    public void setDistance(double distance) {
     	leftPodPID.setSetpoint(distance); // This is wrong, find encoder ticks per inch and edit the parameter on EncoderPIDSource!
     	rightPodPID.setSetpoint(distance);
 
@@ -121,7 +121,7 @@ public class Drivetrain extends Subsystem {
      * @param leftDistance Desired distance for the left pod, in inches
      * @param rightDistance Desired distance for the right pod, in inches
      */
-    public void setDistanceInInches(double leftDistance, double rightDistance) {
+    public void setDistance(double leftDistance, double rightDistance) {
     	leftPodPID.setSetpoint(leftDistance);
     	rightPodPID.setSetpoint(rightDistance);
     	

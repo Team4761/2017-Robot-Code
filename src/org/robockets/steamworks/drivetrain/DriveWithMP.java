@@ -35,7 +35,7 @@ public class DriveWithMP extends Command {
 
     protected void execute() {
     	double setpoint = mp.next();
-    	Robot.drivetrain.setDistanceInInches(setpoint);
+    	Robot.drivetrain.setDistance(setpoint);
     }
 
     protected boolean isFinished() {
