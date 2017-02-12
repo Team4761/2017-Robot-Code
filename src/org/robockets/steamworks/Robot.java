@@ -33,8 +33,6 @@ import org.robockets.steamworks.subsystems.Shooter;
  * directory.
  */
 public class Robot extends IterativeRobot {
-
-	public static final double MAX_SPEED = 240; // in/s
 	
 	public static OI oi;
 
