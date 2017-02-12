@@ -50,8 +50,6 @@ public class Robot extends IterativeRobot {
 	private SendableChooser chooser = new SendableChooser();
 	
 	private boolean smartDashboardDebug = true;
-
-	private CameraServer cameraServer;
 	
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -90,8 +88,6 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("GyroD", drivetrain.gyroPID.getD());
 		SmartDashboard.putNumber("GyroSetpoint", drivetrain.gyroPID.getSetpoint());
 
-		cameraServer = CameraServer.getInstance();
-
 		SmartDashboard.putData("GyroPIDGo", new TunePID());
 		
 		// SmartDashboard
@@ -104,8 +100,6 @@ public class Robot extends IterativeRobot {
 		autonomousCommand = new AutoTest(); // This breaks things
 
 		SmartDashboard.putData(autonomousCommand);
-
-		cameraServer.startAutomaticCapture();
 
 	}
 
