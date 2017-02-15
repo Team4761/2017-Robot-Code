@@ -37,7 +37,8 @@ public class MidAuto extends CommandGroup {
 		// FIXME: Values will be changed
 		addSequential(new DriveWithMP(60, 20));
 		addSequential(new Turn(TurnType.RELATIVE, 45* angleMultiplier));
-		addSequential(new WaitForGearOut());
+		// Align
+		addSequential(new WaitForGearOut()); // This needs to enable lights
 		addSequential(new DriveWithMP(-20, -10));
 		// Turn to boiler
 		addSequential(new Turn(TurnType.RELATIVE, 90 * horizontalDirectionMultiplier));

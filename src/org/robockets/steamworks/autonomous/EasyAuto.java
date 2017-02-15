@@ -30,5 +30,6 @@ public class EasyAuto extends CommandGroup {
 		// FIXME: Values will be changed
 		addSequential(new DriveWithMP(60, 20));
 		addSequential(new Turn(TurnType.RELATIVE, 45*angleMultiplier));
+		// Align
 	}
 }
