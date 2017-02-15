@@ -26,10 +26,12 @@ public class MaxAuto extends CommandGroup {
 			angleMultiplier = 0;
 		}
 
-		if (DriverStation.getInstance().getAlliance() == DriverStation.Alliance.Blue) {
-			// Changes variable for below
-		} else {
+		int horizontalDirectionMultiplier;
 
+		if (DriverStation.getInstance().getAlliance() == DriverStation.Alliance.Blue) {
+			horizontalDirectionMultiplier = -1;
+		} else {
+			horizontalDirectionMultiplier = 1;
 		}
 
 		// FIXME: Values will be changed
@@ -38,10 +40,12 @@ public class MaxAuto extends CommandGroup {
 		addSequential(new WaitForGearOut());
 		addSequential(new DriveWithMP(-20, -10));
 		// Turn to hopper (needs alliance stuff)
+		addSequential(new Turn(TurnType.RELATIVE, 90 * (-horizontalDirectionMultiplier)));
 		addSequential(new DriveWithMP(60, 20));
 		addSequential(new WaitCommand(5));
 		addSequential(new DriveWithMP(-30, -15));
 		// Turn to boiler (needs alliance stuff)
+		addSequential(new Turn(TurnType.RELATIVE, 90 * horizontalDirectionMultiplier));
 		addSequential(new DriveWithMP(60, 20));
 		// Align
 		addSequential(new Shoot());

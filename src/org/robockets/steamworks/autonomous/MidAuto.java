@@ -14,9 +14,9 @@ import org.robockets.steamworks.drivetrain.Turn;
  */
 public class MidAuto extends CommandGroup {
 
-	private int angleMultiplier;
-
 	public MidAuto(int startingPos) {
+
+		int angleMultiplier;
 
 		if (startingPos == 1) {
 			angleMultiplier = 1;
@@ -26,18 +26,21 @@ public class MidAuto extends CommandGroup {
 			angleMultiplier = 0;
 		}
 
-		if (DriverStation.getInstance().getAlliance() == DriverStation.Alliance.Blue) {
-			// Change some variable for below
-		} else {
+		int horizontalDirectionMultiplier;
 
+		if (DriverStation.getInstance().getAlliance() == DriverStation.Alliance.Blue) {
+			horizontalDirectionMultiplier = -1;
+		} else {
+			horizontalDirectionMultiplier = 1;
 		}
 
 		// FIXME: Values will be changed
 		addSequential(new DriveWithMP(60, 20));
-		addSequential(new Turn(TurnType.RELATIVE, 45*angleMultiplier));
+		addSequential(new Turn(TurnType.RELATIVE, 45* angleMultiplier));
 		addSequential(new WaitForGearOut());
 		addSequential(new DriveWithMP(-20, -10));
-		// Turn to boiler (this need the Alliance stuff)
+		// Turn to boiler
+		addSequential(new Turn(TurnType.RELATIVE, 90 * horizontalDirectionMultiplier));
 		addSequential(new DriveWithMP(55, 20));
 		// Align
 		addSequential(new Shoot());
