@@ -20,7 +20,6 @@ public class DrivePodOutput implements PIDOutput {
 	@Override
 	public void pidWrite(double output) {
 		c.set(output);
-		c.set(output);
 	}
 
 }

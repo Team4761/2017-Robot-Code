@@ -1,7 +1,5 @@
 package org.robockets.steamworks;
 
-import org.robockets.steamworks.drivetrain.ToggleDriveMode;
-
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;

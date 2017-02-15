@@ -15,10 +15,10 @@ import org.robockets.steamworks.pidsources.GyroPIDSource;
  */
 public class Drivetrain extends Subsystem {
 
+    private final double CENTERPOINT_TO_WHEEL = 14.5; // In inches, of course
     private final GyroPIDSource gyroPIDSource;
     private final EncoderPIDSource leftPodPIDSource;
     private final EncoderPIDSource rightPodPIDSource;
-    private final double CENTERPOINT_TO_WHEEL = 14.5; // In inches, of course
 
     public final PIDController gyroPID;
     public final PIDController leftPodPID;
@@ -27,11 +27,9 @@ public class Drivetrain extends Subsystem {
     public Drivetrain() {
         gyroPIDSource = new GyroPIDSource();
         gyroPID = new PIDController(0, 0, 0, new GyroPIDSource(), new DummyPIDOutput());
-
         gyroPID.disable();
         gyroPID.setOutputRange(-1.0, 1.0); // Set turning speed range
         gyroPID.setPercentTolerance(5.0); // Set tolerance of 5%
-        gyroPID.setSetpoint(0);
         
         leftPodPIDSource = new EncoderPIDSource(RobotMap.leftEncoder, 0.05555); // Encoder factor: 1 / ticks per inch
         leftPodPID = new PIDController(-0.1, 0, 0, leftPodPIDSource, RobotMap.leftDrivePodOutput);
@@ -109,11 +107,8 @@ public class Drivetrain extends Subsystem {
      * @param distance Desired distance for both pods, in inches
      */
     public void setDistance(double distance) {
-    	leftPodPID.setSetpoint(distance); // This is wrong, find encoder ticks per inch and edit the parameter on EncoderPIDSource!
+    	leftPodPID.setSetpoint(distance);
     	rightPodPID.setSetpoint(distance);
-
-        leftPodPID.enable();
-    	rightPodPID.enable();
     }
     
     /**
@@ -124,9 +119,6 @@ public class Drivetrain extends Subsystem {
     public void setDistance(double leftDistance, double rightDistance) {
     	leftPodPID.setSetpoint(leftDistance);
     	rightPodPID.setSetpoint(rightDistance);
-    	
-    	leftPodPID.enable();
-    	rightPodPID.enable();
     }
     
     /**
@@ -149,13 +141,6 @@ public class Drivetrain extends Subsystem {
         gyroPID.enable();
         driveTank(gyroPID.get(), -gyroPID.get());
     }
-
-    /**
-     * Turn on PID turning (THIS IS ONLY FOR TESTING!)
-     */
-    public void pidGo() {
-        leftPodPID.enable();
-    }
     
     /**
      * Method for calculating arc length
@@ -165,6 +150,40 @@ public class Drivetrain extends Subsystem {
      */
     public double calculateArcLength(double chordLength, double radius) {
     	return Math.toRadians(Math.asin(chordLength / radius/ 2)) * 96;
+    }
+    
+    /**
+     * Since the built in OnTarget for PID is terrible and broken, this is a manual one for gyro
+     * @return Returns if the gyro PID is OnTarget, with a tolerance of <code>PERCENT_TOLERANCE</code>
+     */
+    public boolean gyroOnTarget() {
+    	final double PERCENT_TOLERANCE = 5.0;
+    	return Math.abs((gyroPID.getSetpoint() - gyroPIDSource.pidGet()) / gyroPID.getSetpoint()) <= PERCENT_TOLERANCE;
+    }
+    
+    /**
+     * Since the built in OnTarget for PID is terrible and broken, this is a manual one for the drive pods
+     * @return Returns if both the encoder PIDs are OnTarget, with a tolerance of <code>PERCENT_TOLERANCE</code>
+     */
+    public boolean encodersOnTarget() {
+    	final double PERCENT_TOLERANCE = 5.0;
+    	return Math.abs((leftPodPID.getSetpoint() - leftPodPIDSource.pidGet()) / leftPodPID.getSetpoint()) <= PERCENT_TOLERANCE && 
+    			Math.abs((rightPodPID.getSetpoint() - rightPodPIDSource.pidGet()) / rightPodPID.getSetpoint()) <= PERCENT_TOLERANCE;
+    }
+    
+    /**
+     * Turn on PID turning (THIS IS ONLY FOR TESTING!)
+     */
+    public void pidGo() {
+        leftPodPID.enable();
+    }
+    
+    /**
+     * Method to enable both drive pod PIDs
+     */
+    public void enableEncoderPID() {
+    	leftPodPID.enable();
+    	rightPodPID.enable();
     }
     
     /**

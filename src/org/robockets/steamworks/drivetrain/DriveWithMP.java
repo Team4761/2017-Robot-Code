@@ -43,6 +43,7 @@ public class DriveWithMP extends Command {
     }
 
     protected void end() {
+    	Robot.drivetrain.stop();
     	Robot.drivetrain.disableEncoderPID();
     }
 
