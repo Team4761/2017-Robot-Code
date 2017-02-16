@@ -3,10 +3,12 @@ package org.robockets.steamworks;
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.Victor;
+import edu.wpi.first.wpilibj.I2C.Port;
 
 /**
  * The RobotMap is a mapping from the ports sensors and actuators are wired into
@@ -90,6 +92,8 @@ public class RobotMap {
     /////////////////////
     /// Miscellaneous ///
     /////////////////////
+    
+    public static I2C arduino = new I2C(Port.kOnboard, 8 );
     
     /**
      * {@link edu.wpi.first.wpilibj.RobotDrive RobotDrive} for controlling the
