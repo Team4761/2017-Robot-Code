@@ -1,7 +1,5 @@
 package org.robockets.steamworks.subsystems;
 
-
-
 import org.robockets.steamworks.RobotMap;
 
 import edu.wpi.first.wpilibj.command.Subsystem;

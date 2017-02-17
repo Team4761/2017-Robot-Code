@@ -1,7 +1,5 @@
 package org.robockets.steamworks.commands;
 
-
-
 import org.robockets.steamworks.LightsColors;
 import org.robockets.steamworks.Robot;
 

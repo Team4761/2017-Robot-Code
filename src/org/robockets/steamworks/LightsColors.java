@@ -7,5 +7,4 @@ public enum LightsColors {
 	PURPLE,
 	WHITE,
 	BROWN;
-	
 }

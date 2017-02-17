@@ -54,7 +54,6 @@ public class Robot extends IterativeRobot {
 
 	private SendableChooser<Command> autonomousChooser;
 	
-	
 	private boolean smartDashboardDebug = true;
 	
 	/**
