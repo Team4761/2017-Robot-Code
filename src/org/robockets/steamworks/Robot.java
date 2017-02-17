@@ -60,7 +60,7 @@ public class Robot extends IterativeRobot {
 		drivetrain = new Drivetrain();
 		shooter = new Shooter();
 		gearIntake = new GearIntake();
-		intakeFlap = new IntakeFlap(0.5);
+		intakeFlap = new IntakeFlap(1);
 
 		// chooser.addObject("My Auto", new MyAutoCommand());
 		climb = new Climb(0.5);
@@ -161,9 +161,9 @@ public class Robot extends IterativeRobot {
 		// this line or comment it out.
 		if (autonomousCommand != null)
 			autonomousCommand.cancel();
-		
+		/*
 		drivetrain.leftPodPID.enable();
-		drivetrain.rightPodPID.enable();
+		drivetrain.rightPodPID.enable();*/
 		drive.start();
 		
 		SmartDashboard.putNumber("GyroP", drivetrain.gyroPID.getP());

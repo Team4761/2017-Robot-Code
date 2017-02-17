@@ -29,11 +29,11 @@ public class IntakeFlap extends Subsystem {
     }
     
     public void start() {
-    	RobotMap.intakeFlapServo.set(0.5 + (speed * lastState.factor));
+    	RobotMap.intakeFlapServo.set(1 + (speed * lastState.factor));
     }
     
     public void stop() {
-    	RobotMap.intakeFlapServo.set(0.5);
+    	RobotMap.intakeFlapServo.set(0);
     	if(lastState == IntakeState.FUEL) lastState = IntakeState.GEARS;
     	else lastState = IntakeState.FUEL;
     }

@@ -17,7 +17,7 @@ public class ToggleIntakeFlap extends Command {
     // Called just before this Command runs the first time
     protected void initialize() {
     	//s2.free();
-    	setTimeout(0.5);
+    	setTimeout(1);
     }
 
     // Called repeatedly when this Command is scheduled to run
