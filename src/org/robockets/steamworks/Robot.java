@@ -68,7 +68,7 @@ public class Robot extends IterativeRobot {
 
 		toggleDriveMode = new ToggleDriveMode();
 		climb = new Climb(0.5);
-		drive = new Joyride(1);
+		drive = new Joyride(false);
 		
 		SmartDashboard.putData(climb);
 

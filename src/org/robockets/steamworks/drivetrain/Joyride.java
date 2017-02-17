@@ -13,38 +13,38 @@ import org.robockets.steamworks.RobotMap;
  */
 public class Joyride extends Command {
 
-    private double speed;
+    private boolean xBoxController;
     private double translate;
     private double rotate;
-
-    /**
-     * @param speed Speed multiplier
-     */
-    public Joyride(double speed) {
-        requires(Robot.drivetrain);
-        this.speed = speed;
+    private double leftStick;
+    private double rightStick;
+    
+    public Joyride(boolean xBoxController) {
+    	requires(Robot.drivetrain);
+    	this.xBoxController = xBoxController;
     }
 
     protected void initialize() {
+    	xBoxController = false;
     }
 
     protected void execute() {
-    	translate = OI.joystick.getRawAxis(1);
-    	rotate = OI.joystick.getRawAxis(4);
-    	
-    	if(OI.joystick.getRawButton(5)) {
-    		translate *= 0.5;
-    		rotate *= 0.5;
-    	}
-
-    	if(ToggleDriveMode.isArcade) {
-    		//RobotMap.robotDrive.arcadeDrive(OI.joystick, 1, OI.joystick, 4);
-    		RobotMap.robotDrive.arcadeDrive(translate, rotate);
-    		OI.joystick.setRumble(RumbleType.kRightRumble, 0.0);
+    	if(xBoxController) {
+    		translate = OI.joystick.getRawAxis(1);
+        	rotate = OI.joystick.getRawAxis(4);	
+        	
+        	if(ToggleDriveMode.isArcade) {
+        		RobotMap.robotDrive.arcadeDrive(translate, rotate);
+        		OI.joystick.setRumble(RumbleType.kRightRumble, 0.0);
+        	} else {
+        		RobotMap.robotDrive.tankDrive(OI.joystick, 1, OI.joystick, 5); // People who use tank drive don't deserve speed scaling
+        		OI.joystick.setRumble(RumbleType.kRightRumble, 0.25);
+        	}
     	} else {
-    		RobotMap.robotDrive.tankDrive(OI.joystick, 1, OI.joystick, 5); // People who use tank drive don't deserve speed scaling
-    		OI.joystick.setRumble(RumbleType.kRightRumble, 0.25);
-    	}
+    		leftStick = OI.attack3Left.getRawAxis(1);
+    		rightStick = OI.attack3Right.getRawAxis(1);
+    		RobotMap.robotDrive.tankDrive(leftStick, rightStick);
+    	} 	
     }
 
     protected boolean isFinished() {
