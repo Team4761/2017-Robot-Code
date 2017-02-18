@@ -18,6 +18,10 @@ public class IntakeFlap extends Subsystem {
     	this.lastState = IntakeState.GEARS; //Confirmed as starting position by Jake K
     }
 
+    public void setState(IntakeState state) {
+    	lastState = state;
+	}
+
     /**
      * Set the speed with which the servo moves.
      * @param speed Speed on a scale of 0...1.

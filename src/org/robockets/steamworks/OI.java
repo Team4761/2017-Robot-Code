@@ -3,8 +3,15 @@ package org.robockets.steamworks;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import org.robockets.commons.RelativeDirection;
 import org.robockets.steamworks.ballintake.SpinBallIntakeRollers;
+import org.robockets.steamworks.climber.Climb;
+import org.robockets.steamworks.commands.MakeExtraSpace;
+import org.robockets.steamworks.commands.MoveElevator;
 import org.robockets.steamworks.commands.SpinSpinners;
+import org.robockets.steamworks.intakeflap.IntakeFlap;
+import org.robockets.steamworks.intakeflap.IntakeToPos;
+import org.robockets.steamworks.intakeflap.MoveIntakeFlap;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -76,8 +83,22 @@ public class OI {
 
     private void bindButtons() {
         shooterMan1.toggleWhenPressed(new SpinSpinners());
+
         ballIntakeMan1.whileHeld(new SpinBallIntakeRollers(1));
         ballIntakeMan2.whileHeld(new SpinBallIntakeRollers(-1)); // FIXME: Make this a relative direction thing
 
+        gearIntakeMan1.whileHeld(new MoveIntakeFlap(RelativeDirection.YAxis.FORWARD));
+        gearIntakeMan2.whileHeld(new MoveIntakeFlap(RelativeDirection.YAxis.BACKWARD));
+
+        lifterMan1.whileHeld(new MoveElevator(RelativeDirection.ZAxis.UP, 1));
+        lifterMan2.whileHeld(new MoveElevator(RelativeDirection.ZAxis.DOWN, 1));
+
+        climber1.whileHeld(new Climb(0.5));
+        climber2.whileHeld(new Climb(1));
+
+        lifter1.whileHeld(new MakeExtraSpace());
+
+        gearIntake1.whenPressed(new IntakeToPos(IntakeFlap.IntakeState.FUEL));
+        gearIntake2.whenPressed(new IntakeToPos(IntakeFlap.IntakeState.GEARS));
     }
 }
