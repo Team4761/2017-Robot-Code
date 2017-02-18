@@ -36,7 +36,11 @@ public class Turn extends Command {
 	}
 
 	protected boolean isFinished() {
-		return Robot.drivetrain.gyroOnTarget();
+
+		//return Robot.drivetrain.gyroOnTarget();
+
+		return true; // This need to return if it is on target or not
+
 	}
 
 	protected void end() {
