@@ -17,7 +17,7 @@ public class IntakeFlap extends Subsystem {
     	setSpeed(speed);
     	this.lastState = IntakeState.GEARS; //Confirmed as starting position by Jake K
     }
-    
+
     /**
      * Set the speed with which the servo moves.
      * @param speed Speed on a scale of 0...1.
@@ -31,6 +31,10 @@ public class IntakeFlap extends Subsystem {
     public void start() {
     	RobotMap.intakeFlapServo.set(1 + (speed * lastState.factor));
     }
+
+    public void move(double speed) {
+		RobotMap.intakeFlapServo.set(speed);
+	}
     
     public void stop() {
     	RobotMap.intakeFlapServo.set(0);
