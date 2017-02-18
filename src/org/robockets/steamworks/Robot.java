@@ -16,6 +16,7 @@ import org.robockets.steamworks.ballintake.SpinBallIntakeRollers;
 import org.robockets.steamworks.camera.Webcam;
 import org.robockets.steamworks.climber.Climb;
 import org.robockets.steamworks.climber.Climber;
+import org.robockets.steamworks.commands.Cylon;
 import org.robockets.steamworks.commands.TunePID;
 import org.robockets.steamworks.drivetrain.Turn;
 import org.robockets.steamworks.drivetrain.Drivetrain;
@@ -24,6 +25,7 @@ import org.robockets.steamworks.drivetrain.ResetDriveEncoders;
 import org.robockets.steamworks.drivetrain.ToggleDriveMode;
 import org.robockets.steamworks.subsystems.Conveyor;
 import org.robockets.steamworks.subsystems.GearIntake;
+import org.robockets.steamworks.subsystems.LED;
 import org.robockets.steamworks.subsystems.Shooter;
 
 
@@ -44,6 +46,7 @@ public class Robot extends IterativeRobot {
 	public static Drivetrain drivetrain;
 	public static Shooter shooter;
 	public static GearIntake gearIntake;
+	public static LED ledSubsystem = new LED();
 
 	public static Command autonomousCommand;
 	public static Command autoTest;
@@ -61,6 +64,8 @@ public class Robot extends IterativeRobot {
 	public static Command drive;
 	public static Command climb;
 	public static Command toggleDriveMode;
+	public static Command cylonCommand = new Cylon();
+
 	private SendableChooser<Command> autonomousChooser;
 	
 	private boolean smartDashboardDebug = true;
@@ -210,6 +215,7 @@ public class Robot extends IterativeRobot {
 		}
 
 		drive.start();
+		cylonCommand.start();
 
 	}
 
