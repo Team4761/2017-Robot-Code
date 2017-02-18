@@ -105,5 +105,6 @@ public class OI {
         climber2.whileHeld(new Climb(1));  
         
         misc1.whenPressed(new KillEverything());
+        misc2.whenPressed(new Climb(1));
     }
 }
