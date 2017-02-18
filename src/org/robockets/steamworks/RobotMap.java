@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.SPI;
+import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.I2C.Port;
 
@@ -30,9 +31,14 @@ public class RobotMap {
 
     public static Victor shooterRollerSpeedController = new Victor(1); //TODO: get real port
 
-    public static Victor conveyorSpeedControllerOne = new Victor(2); //TODO: get real port
-    public static Victor conveyorSpeedControllerTwo = new Victor(3); //TODO: get real port
-    
+    public static Victor conveyorSpeedController = new Victor(2); //TODO: get real port
+    public static Victor elevatorSpeedController = new Victor(3); //TODO: get real port
+
+    public static Servo intakeFlapServo = new Servo(9);
+
+    // TODO: Add breakbeam sensor
+
+
     /**
      * Speed controller for right side of the robot.
      */
