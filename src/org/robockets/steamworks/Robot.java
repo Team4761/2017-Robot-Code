@@ -31,6 +31,8 @@ import org.robockets.steamworks.subsystems.Elevator;
 import org.robockets.steamworks.subsystems.GearIntake;
 import org.robockets.steamworks.subsystems.LED;
 import org.robockets.steamworks.subsystems.Shooter;
+import org.robockets.steamworks.intakeflap.IntakeFlap;
+import org.robockets.steamworks.intakeflap.ToggleIntakeFlap;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -52,13 +54,13 @@ public class Robot extends IterativeRobot {
 
 	public static GearIntake gearIntake;
 	public static LED ledSubsystem = new LED();
-
 	public static Command autonomousCommand;
 	public static Command autoTest;
 	public static Command drive;
 	public static Command climb;
 	public static Command toggleDriveMode;
 	public static Command cylonCommand = new Cylon();
+	public static IntakeFlap intakeFlap;
 
 	private SendableChooser<Command> autonomousChooser;
 	
@@ -79,6 +81,7 @@ public class Robot extends IterativeRobot {
 		drivetrain = new Drivetrain();
 		shooter = new Shooter();
 		gearIntake = new GearIntake();
+		intakeFlap = new IntakeFlap(1);
 
 		// chooser.addObject("My Auto", new MyAutoCommand());
 		climb = new Climb(0.5);
@@ -133,6 +136,7 @@ public class Robot extends IterativeRobot {
 		//autonomousChooser.addObject("Another auto", myAuto);
 
 		SmartDashboard.putData("Autonomous selector", autonomousChooser);
+		SmartDashboard.putData(new ToggleIntakeFlap());
 
 	}
 
@@ -151,13 +155,15 @@ public class Robot extends IterativeRobot {
 
 		SDDumper.dumpEncoder("Left encoder", RobotMap.leftEncoder);
 		SDDumper.dumpEncoder("Right encoder", RobotMap.rightEncoder);
-		
+
 		SDDumper.dumpPidController("Left drivepod PID", drivetrain.leftPodPID);
 		SDDumper.dumpPidController("Right drivepod PID", drivetrain.rightPodPID);
 
 		SDDumper.dumpEncoder("Roller Encoder", RobotMap.rollerEncoder);
 
 		SDDumper.dumpMisc();
+		
+		SmartDashboard.putNumber("Intake flap encoder position", RobotMap.intakeFlapServo.get());
 	}
   
 	/**
