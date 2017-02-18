@@ -3,6 +3,8 @@ package org.robockets.steamworks;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import org.robockets.steamworks.ballintake.SpinBallIntakeRollers;
+import org.robockets.steamworks.commands.SpinSpinners;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -73,6 +75,9 @@ public class OI {
     }
 
     private void bindButtons() {
+        shooterMan1.toggleWhenPressed(new SpinSpinners());
+        ballIntakeMan1.whileHeld(new SpinBallIntakeRollers(1));
+        ballIntakeMan2.whileHeld(new SpinBallIntakeRollers(-1)); // FIXME: Make this a relative direction thing
 
     }
 }
