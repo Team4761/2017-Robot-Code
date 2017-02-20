@@ -1,13 +1,13 @@
 package org.robockets.steamworks.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
+
 import org.robockets.steamworks.Robot;
 
 /**
  * @author Jake Backer
  */
 public class SpinSpinners extends Command {
-
 
     double time;
     boolean isForever;

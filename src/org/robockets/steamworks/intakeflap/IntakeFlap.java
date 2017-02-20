@@ -46,8 +46,11 @@ public class IntakeFlap extends Subsystem {
     
     public void stop() {
     	RobotMap.intakeFlapServo.set(0);
-    	if(lastState == IntakeState.FUEL) lastState = IntakeState.GEARS;
-    	else lastState = IntakeState.FUEL;
+    	if(lastState == IntakeState.FUEL) {
+    		lastState = IntakeState.GEARS;
+		} else {
+			lastState = IntakeState.FUEL;
+		}
     }
     
     public enum IntakeState {
