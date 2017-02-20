@@ -34,7 +34,7 @@ public class Climb extends Command {
 		if (climbWithTime == true && time != 0) {
 			setTimeout(time);
 		}
-		Robot.ledSubsystem.cylon(2);
+		//Robot.ledSubsystem.cylon(2);
 	}
 
 	@Override
@@ -57,7 +57,7 @@ public class Climb extends Command {
 	
 	protected void end() {
 		Robot.climber.stop(); // Brake the motor.
-		Robot.ledSubsystem.cylon(56);
+		//Robot.ledSubsystem.cylon(56);
 	}
 
 }

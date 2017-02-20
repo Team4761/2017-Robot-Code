@@ -32,6 +32,10 @@ public class IntakeFlap extends Subsystem {
     	this.speed = speed / 2; // This gets added onto the "stopped" speed of 0.5. The scale for the arguments is just 0...1 to be familiar
     }
     
+    public void setPosition(double pos) {
+    	RobotMap.intakeFlapServo.setAngle(pos);
+    }
+    
     public void start() {
     	RobotMap.intakeFlapServo.set(1 + (speed * lastState.factor));
     }

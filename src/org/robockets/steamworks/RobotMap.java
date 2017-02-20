@@ -27,12 +27,12 @@ public class RobotMap {
      * Speed controller for the motor that is used to climb up rope. This might
      * control two motors someday.
      */
-    public static Victor climberSpeedController = new Victor(0); //TODO: get real port
+    public static Victor climberSpeedController = new Victor(2); //TODO: get real port
 
     public static Victor shooterRollerSpeedController = new Victor(1); //TODO: get real port
 
-    public static Victor conveyorSpeedController = new Victor(2); //TODO: get real port
-    public static Victor elevatorSpeedController = new Victor(3); //TODO: get real port
+    public static Victor conveyorSpeedController = new Victor(3); //TODO: get real port
+    public static Victor elevatorSpeedController = new Victor(0); //TODO: get real port
 
     public static Servo intakeFlapServo = new Servo(9);
 
@@ -55,7 +55,7 @@ public class RobotMap {
      * Speed controller for the roller at the bottom of the robot that sucks
      * fuel balls in.
      */
-    public static Victor ballIntakeRollerSpeedController = new Victor(7); //TODO: get real port
+    public static Victor ballIntakeRollerSpeedController = new Victor(6); //TODO: get real port
     
     // VICTOR #8 would go here
     
