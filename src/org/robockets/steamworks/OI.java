@@ -10,6 +10,7 @@ import org.robockets.steamworks.ballintake.SpinBallIntakeRollers;
 import org.robockets.steamworks.climber.Climb;
 import org.robockets.steamworks.commands.KillEverything;
 import org.robockets.steamworks.commands.MakeExtraSpace;
+import org.robockets.steamworks.commands.MaxFillElevator;
 import org.robockets.steamworks.commands.MoveConveyor;
 import org.robockets.steamworks.commands.MoveElevator;
 import org.robockets.steamworks.commands.Shoot;
@@ -92,19 +93,19 @@ public class OI {
         gearIntake2.whenPressed(new IntakeToPos(IntakeFlap.IntakeState.GEARS));
        //gearIntakeMan1.whileHeld(new MoveIntakeFlap(RelativeDirection.YAxis.FORWARD));
        //gearIntakeMan2.whileHeld(new MoveIntakeFlap(RelativeDirection.YAxis.BACKWARD));
-       /*shooterMan1.toggleWhenPressed(new SpinSpinners());
+        shooterMan1.toggleWhenPressed(new SpinSpinners());
         shooter1.whileHeld(new Shoot());
-*/
+        
         ballIntake1.toggleWhenPressed(new SpinBallIntakeRollers(-1));
         ballIntake2.toggleWhenPressed(new IntakeBalls());
         ballIntakeMan1.whileHeld(new SpinBallIntakeRollers(1));
         ballIntakeMan2.whileHeld(new SpinBallIntakeRollers(-1)); // FIXME: Make this a relative direction thing
 
         
-        //lifter1.whileHeld(new MakeExtraSpace());
-        lifter1.whileHeld(new MoveConveyor(RelativeDirection.YAxis.FORWARD));
-        lifterMan1.whileHeld(new MoveConveyor(RelativeDirection.YAxis.FORWARD));
-        lifterMan2.whileHeld(new MoveConveyor(RelativeDirection.YAxis.BACKWARD));
+        // The horizonal conveyor, "Magic Carpet," is moved when `MoveElevator` is called
+        lifter1.whileHeld(new MakeExtraSpace());
+        lifterMan1.whileHeld(new MoveElevator(RelativeDirection.ZAxis.UP, 1));
+        lifterMan2.whileHeld(new MoveElevator(RelativeDirection.ZAxis.DOWN, 1));
 		
         climber1.whileHeld(new Climb(1));
         //climber2.whileHeld(new Climb(1));  

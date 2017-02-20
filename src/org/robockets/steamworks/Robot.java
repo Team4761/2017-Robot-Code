@@ -14,12 +14,12 @@ import org.robockets.steamworks.autonomous.MaxAuto;
 import org.robockets.steamworks.autonomous.MidAuto;
 import org.robockets.steamworks.ballintake.BallIntake;
 import org.robockets.steamworks.ballintake.SpinBallIntakeRollers;
+import org.robockets.steamworks.ballintake.IntakeBalls;
 import org.robockets.steamworks.camera.Webcam;
 import org.robockets.steamworks.climber.Climb;
 import org.robockets.steamworks.climber.Climber;
 import org.robockets.steamworks.commands.Cylon;
-import org.robockets.steamworks.commands.MaxFillElevator;
-import org.robockets.steamworks.commands.MoveConveyor;
+import org.robockets.steamworks.commands.MakeExtraSpace;
 import org.robockets.steamworks.commands.MoveElevator;
 import org.robockets.steamworks.commands.Shoot;
 import org.robockets.steamworks.commands.SpinSpinners;
@@ -74,37 +74,40 @@ public class Robot extends IterativeRobot {
 	public static Command drive;
 	public static Command climb;
 	public static Command toggleDriveMode;
-	public static Command cylonCommand = new Cylon();
+	public static Command cylonCommand;
 
 	private SendableChooser<Command> autonomousChooser;
 	
 	private boolean smartDashboardDebug = true;
 
+	public Robot() {
+		System.out.println("i swear to freaking god");
+	}
+	
 	/**
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
 	 */
 	@Override
 	public void robotInit() {
-
 		// SUBSYSTEMS //
 		ballIntake = new BallIntake();
 		elevator = new Elevator();
 		conveyor = new Conveyor();
 		climber = new Climber();
 		drivetrain = new Drivetrain();
-		//shooter = new Shooter();
+		shooter = new Shooter();
 		gearIntake = new GearIntake();
 		intakeFlap = new IntakeFlap(1);
 		ledSubsystem = new LED();
-	
+		cylonCommand = new Cylon();
+		
 		// COMMANDS //
 		climb = new Climb(0.5);
 		drive = new Joyride();
 		toggleDriveMode = new ToggleDriveMode();	
 		
 		// SMARTDASHBOARD //
-		Robot.climber.initSmartDashboard(smartDashboardDebug);
 		initSmartDashboard();
 		
 		// INIT //
@@ -139,37 +142,43 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putData("Autonomous selector", autonomousChooser);
 		
 		oi = new OI();
+		System.out.println("slgrhiushg");
 	}
 	
 	public void initSmartDashboard() {
 		
 		// CLIMBER //
-		SmartDashboard.putData("Climb", climb);
-		SmartDashboard.putData("Climb half speed", new Climb(0.5));
+		Robot.climber.initSmartDashboard(smartDashboardDebug);
+		SmartDashboard.putData("Climb", new Climb(1));
 		
 		// DRIVE ENCODERS //
 		SmartDashboard.putData(new ResetDriveEncoders());
 
 		// GYRO //
-		SmartDashboard.putData("GyroTurn Absolute", new Turn(TurnType.ABSOLUTE, 90)); // Angle will be on SmartDashboard from the Turn command
-		SmartDashboard.putData("GyroTurn Relative", new Turn(TurnType.RELATIVE, 90));
+		//SmartDashboard.putData("GyroTurn Absolute", new Turn(TurnType.ABSOLUTE, 90)); // Angle will be on SmartDashboard from the Turn command
+		//SmartDashboard.putData("GyroTurn Relative", new Turn(TurnType.RELATIVE, 90));
 		//SmartDashboard.putData("GyroPIDGo", new TunePID());
 
 		// BALL INTAKE //
 		SmartDashboard.putData("IntakeRollersForward", new SpinBallIntakeRollers(1));
 		SmartDashboard.putData("IntakeRollersBackward", new SpinBallIntakeRollers(-1));
+		SmartDashboard.putData("Intake Balls", new IntakeBalls());
+		
+		
+		// GEAR INTAKE //
 		SmartDashboard.putData("Toggle Intake Flap", new ToggleIntakeFlap());
 		
-		// CONVEYORS //
-		SmartDashboard.putData("MoveMagicCarpetForward", new MoveConveyor(RelativeDirection.YAxis.FORWARD));
-		SmartDashboard.putData("MoveMagicCarpetBackward", new MoveConveyor(RelativeDirection.YAxis.BACKWARD));
-		SmartDashboard.putData("MoveElevatorUp", new MoveElevator(RelativeDirection.ZAxis.UP, 1));
-		SmartDashboard.putData("MoveElevatorDown", new MoveElevator(RelativeDirection.ZAxis.DOWN, 1));
-		SmartDashboard.putData("Max Fill", new MaxFillElevator());	
+		// CONVEYORS // The Conveyor, "Magic Carpet," is moved when `MoveElevator` is called
+		//SmartDashboard.putData("MoveMagicCarpetForward", new MoveConveyor(RelativeDirection.YAxis.FORWARD));
+		//SmartDashboard.putData("MoveMagicCarpetBackward", new MoveConveyor(RelativeDirection.YAxis.BACKWARD));
+		SmartDashboard.putNumber("elevator Speed", 0.5);
+		SmartDashboard.putData("MoveElevatorUp", new MoveElevator(RelativeDirection.ZAxis.UP, SmartDashboard.getNumber("elevator Speed", 1)));
+		SmartDashboard.putData("MoveElevatorDown", new MoveElevator(RelativeDirection.ZAxis.DOWN,  SmartDashboard.getNumber("elevator Speed", 1)));
+		SmartDashboard.putData("MakeExtraSpace", new MakeExtraSpace());	
 		
 		// SHOOTER //
-		//SmartDashboard.putData(new SpinSpinners());
-		//SmartDashboard.putData(new Shoot());
+		SmartDashboard.putData(new SpinSpinners());
+		SmartDashboard.putData(new Shoot());
 	}
 
 	@Override
@@ -193,7 +202,7 @@ public class Robot extends IterativeRobot {
 
 		SDDumper.dumpMisc();
 		
-		SmartDashboard.putNumber("Intake flap encoder position", RobotMap.intakeFlapServo.get());
+		SmartDashboard.putNumber("Intake flap encoder1 position", RobotMap.intakeFlapServo1.get());
 	}
   
 	/**

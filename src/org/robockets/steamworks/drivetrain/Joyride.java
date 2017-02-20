@@ -39,6 +39,7 @@ public class Joyride extends Command {
     		rightStick *= 1 - OI.attack3Right.getRawAxis(2);
 
     		RobotMap.robotDrive.tankDrive(leftStick, rightStick);
+    		
     	}
     }
 

@@ -12,7 +12,7 @@ import org.robockets.commons.RelativeDirection;
  */
 public class Shoot extends CommandGroup {
 
-    public Shoot(int time) {
+    public Shoot() {
         addParallel(new SpinSpinners());
 
         addSequential(new WaitCommand(0.1));
@@ -26,16 +26,6 @@ public class Shoot extends CommandGroup {
         addSequential(new WaitCommand(2)); // Time for it to shoot
 
         addSequential(new KillShooter());
-    }
-
-    public Shoot() {
-        addParallel(new SpinSpinners());
-        try {
-            wait(100); // This will be changed
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        addSequential(new MoveConveyor(RelativeDirection.YAxis.FORWARD)); // This will also be changed
     }
     
     protected void initialize() {

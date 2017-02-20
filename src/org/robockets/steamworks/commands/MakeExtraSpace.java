@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj.command.Command;
 
 import org.robockets.commons.RelativeDirection;
 import org.robockets.steamworks.Robot;
+import org.robockets.steamworks.RobotMap;
 
 /**
  * @author Jake Backer
@@ -11,19 +12,20 @@ import org.robockets.steamworks.Robot;
 public class MakeExtraSpace extends Command {
 
 	public MakeExtraSpace() {
-
+		
 	}
 
 	protected void initialize() {
 	}
 
 	protected void execute() {
-		Robot.conveyor.moveConveyor(RelativeDirection.YAxis.FORWARD, 0.5);
+		Robot.conveyor.moveConveyor(RelativeDirection.YAxis.FORWARD, 0.25);
+		Robot.elevator.moveElevator(RelativeDirection.ZAxis.UP, 0.25);
 	}
 
 	protected boolean isFinished() {
-		//return RobotMap.breakbeamSensor.get();
-		return false;
+		return RobotMap.elevatorBreakbeamSensor.get();
+		//return false;
 	}
 
 	protected void end() {

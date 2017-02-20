@@ -9,7 +9,7 @@ import org.robockets.steamworks.RobotMap;
  */
 public class Shooter extends Subsystem {
 
-    private final double ROLLER_SPEED = 0.5;
+    private final double ROLLER_SPEED = -0.5;
 
     public void initDefaultCommand() {
 
@@ -17,10 +17,15 @@ public class Shooter extends Subsystem {
 
     /**
      * Spins up the motors to shoot
+     * @deprecated
      */
+    @Deprecated
     public void spinUp() {
-        // Spin up motors
         RobotMap.shooterRollerSpeedController.set(ROLLER_SPEED);
+    }
+    
+    public void spinUp(double rollerSpeed) {
+    	RobotMap.shooterRollerSpeedController.set(rollerSpeed);
     }
 
     public void stop() {

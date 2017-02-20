@@ -23,16 +23,16 @@ public class RobotMap {
 	/// PWM ///
 	///////////
 	
-    public static Victor elevatorSpeedController = new Victor(0); //TODO: get real port
+    public static Victor elevatorSpeedController = new Victor(0);
 
-    public static Victor shooterRollerSpeedController = new Victor(1); //TODO: get real port
+    public static Victor shooterRollerSpeedController = new Victor(1);
     /**
      * Speed controller for the motor that is used to climb up rope. This might
      * control two motors someday.
      */
-    public static Victor climberSpeedController = new Victor(2); //TODO: get real port
+    public static Victor climberSpeedController = new Victor(2);
 
-    public static Victor conveyorSpeedController = new Victor(3); //TODO: get real port
+    public static Victor conveyorSpeedController = new Victor(3);
 
     /**
      * Speed controller for right side of the robot.
@@ -44,17 +44,17 @@ public class RobotMap {
      */
     public static Victor rightDrivepodSpeedController = new Victor(5);
     
+    public static Victor climberSpeedController2 = new Victor(6);
+    
     /**
      * Speed controller for the roller at the bottom of the robot that sucks
      * fuel balls in.
      */
-    public static Victor ballIntakeRollerSpeedController = new Victor(6); //TODO: get real port
-    
-    // VICTOR #7 would go here
+    public static Victor ballIntakeRollerSpeedController = new Victor(7);
   
-    // VICTOR #8 would go here
+    public static Servo intakeFlapServo1 = new Servo(8);
     
-    public static Servo intakeFlapServo = new Servo(9);
+    public static Servo intakeFlapServo2 = new Servo(9);
 
 	//////////////////
 	/// Digital IO ///
@@ -64,21 +64,23 @@ public class RobotMap {
 	 * Encoder that goes on the left drivepod. For getting how fast the left
 	 * side of the robot is driving.
 	 */
-	public static Encoder leftEncoder = new Encoder(1, 0);
+	public static Encoder leftEncoder = new Encoder(8, 9);
 	
 	/**
 	 * Encoder that goes on the right drivepod. For getting how fast the right
 	 * side of the robot is driving.
 	 */
-	public static Encoder rightEncoder = new Encoder(2, 3);
+	public static Encoder rightEncoder = new Encoder(6, 7);
 	
-    public static DigitalInput gearInputBreakbeamSensor = new DigitalInput(5);
+    public static DigitalInput gearInputBreakbeamSensor = new DigitalInput(0);
+    
+    public static DigitalInput elevatorBreakbeamSensor =  new DigitalInput(1);
 	
 	/**
 	 * Encoder that goes on the shooter roller. For getting how fast the
 	 * shooter roller is spinning.
 	 */
-    public static Encoder rollerEncoder = new Encoder(8, 9);
+    public static Encoder rollerEncoder = new Encoder(2, 3);
 
     ///////////
     /// SPI ///

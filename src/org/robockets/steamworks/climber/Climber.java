@@ -23,10 +23,12 @@ public class Climber extends Subsystem{
 	 */
 	public void setMotor(double speed) {
 		RobotMap.climberSpeedController.set(speed);
+		RobotMap.climberSpeedController2.set(-speed);
 	}
 	
 	public void stop() {
 		RobotMap.climberSpeedController.stopMotor();
+		RobotMap.climberSpeedController2.stopMotor();
 	}
 	
 	public void initDefaultCommand() {

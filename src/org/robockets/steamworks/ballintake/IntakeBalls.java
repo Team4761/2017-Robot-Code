@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class IntakeBalls extends CommandGroup {
 
     public IntakeBalls() {
-        addParallel(new SpinBallIntakeRollers(-1));
-        addParallel(new MoveConveyor(RelativeDirection.YAxis.FORWARD));
+        addParallel(new SpinBallIntakeRollers(-0.75));
+        //addParallel(new MoveConveyor(RelativeDirection.YAxis.FORWARD));
     }
 }
