@@ -33,7 +33,7 @@ public class DriveStraight extends Command {
     }
 
     protected boolean isFinished() {
-        return leftLsg.hasNext() || rightLsg.hasNext();
+        return !leftLsg.hasNext() || !rightLsg.hasNext();
     }
 
     protected void end() {
