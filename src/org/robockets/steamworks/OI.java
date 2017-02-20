@@ -6,8 +6,10 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import org.robockets.commons.RelativeDirection;
 import org.robockets.steamworks.ballintake.SpinBallIntakeRollers;
 import org.robockets.steamworks.climber.Climb;
+import org.robockets.steamworks.commands.KillEverything;
 import org.robockets.steamworks.commands.MakeExtraSpace;
 import org.robockets.steamworks.commands.MoveElevator;
+import org.robockets.steamworks.commands.Shoot;
 import org.robockets.steamworks.commands.SpinSpinners;
 import org.robockets.steamworks.intakeflap.IntakeFlap;
 import org.robockets.steamworks.intakeflap.IntakeToPos;
@@ -83,22 +85,26 @@ public class OI {
 
     private void bindButtons() {
         shooterMan1.toggleWhenPressed(new SpinSpinners());
+        shooter1.whileHeld(new Shoot());
 
+        ballIntake1.whenPressed(new SpinBallIntakeRollers(1));
+        ballIntake2.whenPressed(new SpinBallIntakeRollers(0));
         ballIntakeMan1.whileHeld(new SpinBallIntakeRollers(1));
         ballIntakeMan2.whileHeld(new SpinBallIntakeRollers(-1)); // FIXME: Make this a relative direction thing
 
+        gearIntake1.whenPressed(new IntakeToPos(IntakeFlap.IntakeState.FUEL));
+        gearIntake2.whenPressed(new IntakeToPos(IntakeFlap.IntakeState.GEARS));
         gearIntakeMan1.whileHeld(new MoveIntakeFlap(RelativeDirection.YAxis.FORWARD));
         gearIntakeMan2.whileHeld(new MoveIntakeFlap(RelativeDirection.YAxis.BACKWARD));
 
+        lifter1.whileHeld(new MakeExtraSpace());
         lifterMan1.whileHeld(new MoveElevator(RelativeDirection.ZAxis.UP, 1));
         lifterMan2.whileHeld(new MoveElevator(RelativeDirection.ZAxis.DOWN, 1));
 
         climber1.whileHeld(new Climb(0.5));
-        climber2.whileHeld(new Climb(1));
-
-        lifter1.whileHeld(new MakeExtraSpace());
-
-        gearIntake1.whenPressed(new IntakeToPos(IntakeFlap.IntakeState.FUEL));
-        gearIntake2.whenPressed(new IntakeToPos(IntakeFlap.IntakeState.GEARS));
+        climber2.whileHeld(new Climb(1));  
+        
+        misc1.whenPressed(new KillEverything());
+        misc2.whenPressed(new Climb(1));
     }
 }
