@@ -20,9 +20,9 @@ public class Conveyor extends Subsystem {
      * @param direction The direction in which to move the conveyor
      */
     public void moveConveyor(RelativeDirection.YAxis direction, double speed) {
-        double multiplier = (direction==RelativeDirection.YAxis.FORWARD) ? 1 : -1;
+        double multiplier = (direction == RelativeDirection.YAxis.FORWARD) ? 1 : -1;
 
-        RobotMap.conveyorSpeedController.set(multiplier*speed);
+        RobotMap.conveyorSpeedController.set(multiplier * speed);
     }
 
     public void stop() {

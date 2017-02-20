@@ -16,15 +16,21 @@ public class IntakeToPos extends Command {
 
 	protected void initialize() {
 		Robot.intakeFlap.setState(state);
-		setTimeout(2);// Time to move
+		//setTimeout(2);// Time to move
+		if(state == IntakeFlap.IntakeState.FUEL) {
+			Robot.intakeFlap.setPosition(0);
+			
+		} else {
+			Robot.intakeFlap.setPosition(45);
+		}
 	}
 
 	protected void execute() {
-		Robot.intakeFlap.start();
+		//Robot.intakeFlap.start();
 	}
 
 	protected boolean isFinished() {
-		return isTimedOut();
+		return true;
 	}
 
 	protected void end() {

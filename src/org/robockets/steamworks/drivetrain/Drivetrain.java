@@ -37,7 +37,7 @@ public class Drivetrain extends Subsystem {
         leftPodPID.setOutputRange(-1.0, 1.0);
         leftPodPID.setAbsoluteTolerance(0.5);
         
-        rightPodPIDSource = new EncoderPIDSource(RobotMap.rightEncoder, 0.05555);
+        rightPodPIDSource = new EncoderPIDSource(RobotMap.rightEncoder, 0.05555);//Michael Found This was left 
         rightPodPID = new PIDController(-0.1, 0, 0, rightPodPIDSource, RobotMap.rightDrivePodOutput);
         rightPodPID.disable();
         rightPodPID.setOutputRange(-1.0, 1.0);
@@ -63,7 +63,7 @@ public class Drivetrain extends Subsystem {
      */
     public void driveTank(double leftValue, double rightValue) {
         RobotMap.robotDrive.tankDrive(leftValue, rightValue);
-        disableEncoderPID();
+        //disableEncoderPID();
     }
     
     /**
@@ -107,8 +107,10 @@ public class Drivetrain extends Subsystem {
      * @param distance Desired distance for both pods, in inches
      */
     public void setDistance(double distance) {
-    	leftPodPID.setSetpoint(distance);
-    	rightPodPID.setSetpoint(distance);
+    	leftPodPID.setSetpoint(-distance * .5);
+    	//rightPodPID.setSetpoint(distance);
+    	rightPodPID.setSetpoint(-distance* .5);
+    	//leftPodPID.setSetpoint(distance);// michael did this may be this will work
     }
     
     /**
@@ -165,10 +167,10 @@ public class Drivetrain extends Subsystem {
      * Since the built in OnTarget for PID is terrible and broken, this is a manual one for the drive pods
      * @return Returns if both the encoder PIDs are OnTarget, with a tolerance of <code>PERCENT_TOLERANCE</code>
      */
-    public boolean encodersOnTarget() {
-    	final double PERCENT_TOLERANCE = 5.0;
-    	return Math.abs((leftPodPID.getSetpoint() - leftPodPIDSource.pidGet()) / leftPodPID.getSetpoint()) <= PERCENT_TOLERANCE && 
-    			Math.abs((rightPodPID.getSetpoint() - rightPodPIDSource.pidGet()) / rightPodPID.getSetpoint()) <= PERCENT_TOLERANCE;
+   public boolean encodersOnTarget() {  
+  	final double PERCENT_TOLERANCE = 5.0;
+   	return Math.abs((leftPodPID.getSetpoint() - leftPodPIDSource.pidGet()) / leftPodPID.getSetpoint()) <= PERCENT_TOLERANCE && 
+   			Math.abs((rightPodPID.getSetpoint() - rightPodPIDSource.pidGet()) / rightPodPID.getSetpoint()) <= PERCENT_TOLERANCE; // michael did this 
     }
     
     /**

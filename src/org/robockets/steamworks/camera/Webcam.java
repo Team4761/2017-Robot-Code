@@ -43,7 +43,7 @@ public class Webcam {
 		output = new Mat();
 		
 		SmartDashboard.putData("Video feed resolution", resolutionChooser);
-		SmartDashboard.putNumber(RobotMap.SmartDashboardKey.kCameraExposure, 1);
+		SmartDashboard.putNumber(RobotMap.SmartDashboardKey.kCameraExposure, 75);
 	}
 	
 	public static Webcam getInstance() {
@@ -62,7 +62,7 @@ public class Webcam {
 	
 	private int lastExposure;
 	private void updateExposure() {
-		exposure = (int) SmartDashboard.getNumber(RobotMap.SmartDashboardKey.kCameraExposure, 1);
+		exposure = (int) SmartDashboard.getNumber(RobotMap.SmartDashboardKey.kCameraExposure, 75);
 		if(exposure != lastExposure) {
 			camera.setExposureManual(exposure);
 			lastExposure = exposure;

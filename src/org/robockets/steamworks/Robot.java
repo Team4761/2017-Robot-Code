@@ -86,14 +86,13 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void robotInit() {
-		oi = new OI();
 
 		ballIntake = new BallIntake();
 		elevator = new Elevator();
 		conveyor = new Conveyor();
 		climber = new Climber();
 		drivetrain = new Drivetrain();
-		shooter = new Shooter();
+		//shooter = new Shooter();
 		gearIntake = new GearIntake();
 		intakeFlap = new IntakeFlap(1);
 		ledSubsystem = new LED();
@@ -102,14 +101,12 @@ public class Robot extends IterativeRobot {
 		climb = new Climb(0.5);
 		drive = new Joyride(false);
 
-		SmartDashboard.putData(new SpinSpinners());
-		SmartDashboard.putData(new Shoot());
+		//SmartDashboard.putData(new SpinSpinners());
+		//SmartDashboard.putData(new Shoot());
 
 		SmartDashboard.putData(new Climb(0.5));
 
 		toggleDriveMode = new ToggleDriveMode();
-		climb = new Climb(0.5);
-		drive = new Joyride(false);
 		
 		SmartDashboard.putData(climb);
 
@@ -129,14 +126,14 @@ public class Robot extends IterativeRobot {
 
 		SmartDashboard.putData(new MaxFillElevator());
 
-		RobotMap.gyro.calibrate();
+		//RobotMap.gyro.calibrate();
 
 		SmartDashboard.putNumber("GyroP", drivetrain.gyroPID.getP());
 		SmartDashboard.putNumber("GyroI", drivetrain.gyroPID.getI());
 		SmartDashboard.putNumber("GyroD", drivetrain.gyroPID.getD());
 		SmartDashboard.putNumber("GyroSetpoint", drivetrain.gyroPID.getSetpoint());
 
-		SmartDashboard.putData("GyroPIDGo", new TunePID());
+		//SmartDashboard.putData("GyroPIDGo", new TunePID());
 		
 		// SmartDashboard
 		Robot.climber.initSmartDashboard(smartDashboardDebug);
@@ -156,7 +153,7 @@ public class Robot extends IterativeRobot {
 		maxAuto2 = new MaxAuto(2);
 		maxAuto3 = new MaxAuto(3);
 
-		autonomousChooser = new SendableChooser<>();
+		autonomousChooser = new SendableChooser<Command>();
 		autonomousChooser.addDefault("AutoTest", autoTest);
 		autonomousChooser.addObject("EasyAutoStart1", easyAuto1);
 		autonomousChooser.addObject("EasyAutoStart2", easyAuto2);
@@ -172,6 +169,9 @@ public class Robot extends IterativeRobot {
 
 		SmartDashboard.putData("Autonomous selector", autonomousChooser);
 		SmartDashboard.putData(new ToggleIntakeFlap());
+		SmartDashboard.putData(new ToggleDriveMode());
+		
+		oi = new OI();
 	}
 
 	@Override

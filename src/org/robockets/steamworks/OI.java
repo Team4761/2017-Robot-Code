@@ -3,11 +3,14 @@ package org.robockets.steamworks;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
+
 import org.robockets.commons.RelativeDirection;
+import org.robockets.steamworks.ballintake.IntakeBalls;
 import org.robockets.steamworks.ballintake.SpinBallIntakeRollers;
 import org.robockets.steamworks.climber.Climb;
 import org.robockets.steamworks.commands.KillEverything;
 import org.robockets.steamworks.commands.MakeExtraSpace;
+import org.robockets.steamworks.commands.MoveConveyor;
 import org.robockets.steamworks.commands.MoveElevator;
 import org.robockets.steamworks.commands.Shoot;
 import org.robockets.steamworks.commands.SpinSpinners;
@@ -21,8 +24,8 @@ import org.robockets.steamworks.intakeflap.MoveIntakeFlap;
  */
 public class OI {
     public static Joystick joystick = new Joystick(0); // XBox Controller
-    public static Joystick attack3Left = new Joystick(1);
-    public static Joystick attack3Right = new Joystick(2);
+    public static Joystick attack3Right = new Joystick(1);
+    public static Joystick attack3Left = new Joystick(2);
 
     public static Joystick launchpad = new Joystick(3);
     
@@ -84,27 +87,29 @@ public class OI {
     }
 
     private void bindButtons() {
-        shooterMan1.toggleWhenPressed(new SpinSpinners());
+    	
+    	gearIntake1.whenPressed(new IntakeToPos(IntakeFlap.IntakeState.FUEL));
+        gearIntake2.whenPressed(new IntakeToPos(IntakeFlap.IntakeState.GEARS));
+       //gearIntakeMan1.whileHeld(new MoveIntakeFlap(RelativeDirection.YAxis.FORWARD));
+       //gearIntakeMan2.whileHeld(new MoveIntakeFlap(RelativeDirection.YAxis.BACKWARD));
+       /*shooterMan1.toggleWhenPressed(new SpinSpinners());
         shooter1.whileHeld(new Shoot());
-
-        ballIntake1.whenPressed(new SpinBallIntakeRollers(1));
-        ballIntake2.whenPressed(new SpinBallIntakeRollers(0));
+*/
+        ballIntake1.toggleWhenPressed(new SpinBallIntakeRollers(-1));
+        ballIntake2.toggleWhenPressed(new IntakeBalls());
         ballIntakeMan1.whileHeld(new SpinBallIntakeRollers(1));
         ballIntakeMan2.whileHeld(new SpinBallIntakeRollers(-1)); // FIXME: Make this a relative direction thing
 
-        gearIntake1.whenPressed(new IntakeToPos(IntakeFlap.IntakeState.FUEL));
-        gearIntake2.whenPressed(new IntakeToPos(IntakeFlap.IntakeState.GEARS));
-        gearIntakeMan1.whileHeld(new MoveIntakeFlap(RelativeDirection.YAxis.FORWARD));
-        gearIntakeMan2.whileHeld(new MoveIntakeFlap(RelativeDirection.YAxis.BACKWARD));
-
-        lifter1.whileHeld(new MakeExtraSpace());
-        lifterMan1.whileHeld(new MoveElevator(RelativeDirection.ZAxis.UP, 1));
-        lifterMan2.whileHeld(new MoveElevator(RelativeDirection.ZAxis.DOWN, 1));
-
-        climber1.whileHeld(new Climb(0.5));
-        climber2.whileHeld(new Climb(1));  
         
-        misc1.whenPressed(new KillEverything());
-        misc2.whenPressed(new Climb(1));
+        //lifter1.whileHeld(new MakeExtraSpace());
+        lifter1.whileHeld(new MoveConveyor(RelativeDirection.YAxis.FORWARD));
+        lifterMan1.whileHeld(new MoveConveyor(RelativeDirection.YAxis.FORWARD));
+        lifterMan2.whileHeld(new MoveConveyor(RelativeDirection.YAxis.BACKWARD));
+		
+        climber1.whileHeld(new Climb(1));
+        //climber2.whileHeld(new Climb(1));  
+        /*
+        shooterMan1.whenPressed(new KillEverything()); */
+        //misc2.whenPressed(new Climb(1));*/
     }
 }

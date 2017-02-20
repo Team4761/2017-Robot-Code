@@ -2,6 +2,7 @@ package org.robockets.steamworks.drivetrain;
 
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.robockets.steamworks.OI;
 import org.robockets.steamworks.Robot;
@@ -29,22 +30,32 @@ public class Joyride extends Command {
     }
 
     protected void execute() {
-    	if(xBoxController) {
+    	/*rightStick = OI.attack3Left.getRawAxis(1);
+		leftStick = OI.attack3Right.getRawAxis(1);
+		rightStick *= 1 - OI.attack3Left.getRawAxis(2);
+		leftStick *= 1 - OI.attack3Right.getRawAxis(2);
+
+		RobotMap.robotDrive.tankDrive(leftStick, rightStick);*/
+    	
+    	if(ToggleDriveMode.isArcade) {
     		translate = OI.joystick.getRawAxis(1);
         	rotate = OI.joystick.getRawAxis(4);	
         	
-        	if(ToggleDriveMode.isArcade) {
-        		RobotMap.robotDrive.arcadeDrive(translate, rotate);
-        		OI.joystick.setRumble(RumbleType.kRightRumble, 0.0);
-        	} else {
-        		RobotMap.robotDrive.tankDrive(OI.joystick, 1, OI.joystick, 5); // People who use tank drive don't deserve speed scaling
-        		OI.joystick.setRumble(RumbleType.kRightRumble, 0.25);
-        	}
+        	RobotMap.robotDrive.arcadeDrive(translate, rotate);
+        
+        	
     	} else {
     		leftStick = OI.attack3Left.getRawAxis(1);
     		rightStick = OI.attack3Right.getRawAxis(1);
-    		RobotMap.robotDrive.tankDrive(-leftStick, -rightStick);
-    	} 	
+    		rightStick /= 2;
+    		leftStick /= 2;
+    		leftStick *= 1 - OI.attack3Left.getRawAxis(2);
+    		rightStick *= 1 - OI.attack3Right.getRawAxis(2);
+
+    		SmartDashboard.putNumber("left power", leftStick);
+    		SmartDashboard.putNumber("right power", rightStick);
+    		RobotMap.robotDrive.tankDrive(leftStick, rightStick);
+    	}
     }
 
     protected boolean isFinished() {
