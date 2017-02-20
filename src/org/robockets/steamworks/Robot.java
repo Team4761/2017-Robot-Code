@@ -9,6 +9,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.robockets.commons.RelativeDirection;
 import org.robockets.steamworks.autonomous.AutoTest;
+import org.robockets.steamworks.autonomous.EasyAuto;
+import org.robockets.steamworks.autonomous.MaxAuto;
+import org.robockets.steamworks.autonomous.MidAuto;
 import org.robockets.steamworks.ballintake.BallIntake;
 import org.robockets.steamworks.ballintake.SpinBallIntakeRollers;
 import org.robockets.steamworks.camera.Webcam;
@@ -21,11 +24,11 @@ import org.robockets.steamworks.commands.MoveElevator;
 import org.robockets.steamworks.commands.Shoot;
 import org.robockets.steamworks.commands.SpinSpinners;
 import org.robockets.steamworks.commands.TunePID;
+import org.robockets.steamworks.drivetrain.Turn;
 import org.robockets.steamworks.drivetrain.Drivetrain;
 import org.robockets.steamworks.drivetrain.Joyride;
 import org.robockets.steamworks.drivetrain.ResetDriveEncoders;
 import org.robockets.steamworks.drivetrain.ToggleDriveMode;
-import org.robockets.steamworks.drivetrain.Turn;
 import org.robockets.steamworks.subsystems.Conveyor;
 import org.robockets.steamworks.subsystems.Elevator;
 import org.robockets.steamworks.subsystems.GearIntake;
@@ -51,16 +54,27 @@ public class Robot extends IterativeRobot {
 	public static Drivetrain drivetrain;
 	public static Shooter shooter;
 	public static Elevator elevator;
-
 	public static GearIntake gearIntake;
-	public static LED ledSubsystem = new LED();
+	public static IntakeFlap intakeFlap;
+	public static LED ledSubsystem;
+
 	public static Command autonomousCommand;
 	public static Command autoTest;
+
+	public static Command easyAuto1;
+	public static Command easyAuto2;
+	public static Command easyAuto3;
+	public static Command midAuto1;
+	public static Command midAuto2;
+	public static Command midAuto3;
+	public static Command maxAuto1;
+	public static Command maxAuto2;
+	public static Command maxAuto3;
+
 	public static Command drive;
 	public static Command climb;
 	public static Command toggleDriveMode;
 	public static Command cylonCommand = new Cylon();
-	public static IntakeFlap intakeFlap;
 
 	private SendableChooser<Command> autonomousChooser;
 	
@@ -81,6 +95,7 @@ public class Robot extends IterativeRobot {
 		//shooter = new Shooter();
 		gearIntake = new GearIntake();
 		intakeFlap = new IntakeFlap(1);
+		ledSubsystem = new LED();
 
 		// chooser.addObject("My Auto", new MyAutoCommand());
 		climb = new Climb(0.5);
@@ -128,8 +143,28 @@ public class Robot extends IterativeRobot {
 		Webcam.getInstance().startThread();
 
 		autoTest = new AutoTest();
+		easyAuto1 = new EasyAuto(1);
+		easyAuto2 = new EasyAuto(2);
+		easyAuto3 = new EasyAuto(3);
+		midAuto1 = new MidAuto(1);
+		midAuto2 = new MidAuto(2);
+		midAuto3 = new MidAuto(3);
+		maxAuto1 = new MaxAuto(1);
+		maxAuto2 = new MaxAuto(2);
+		maxAuto3 = new MaxAuto(3);
+
 		autonomousChooser = new SendableChooser<Command>();
 		autonomousChooser.addDefault("AutoTest", autoTest);
+		autonomousChooser.addObject("EasyAutoStart1", easyAuto1);
+		autonomousChooser.addObject("EasyAutoStart2", easyAuto2);
+		autonomousChooser.addObject("EasyAutoStart3", easyAuto3);
+		autonomousChooser.addObject("MidAutoStart1", midAuto1);
+		autonomousChooser.addObject("MidAutoStart2", midAuto2);
+		autonomousChooser.addObject("MidAutoStart3", midAuto3);
+		autonomousChooser.addObject("MaxAutoStart1", maxAuto1);
+		autonomousChooser.addObject("MaxAutoStart2", maxAuto2);
+		autonomousChooser.addObject("MaxAutoStart3", maxAuto3);
+
 		//autonomousChooser.addObject("Another auto", myAuto);
 
 		SmartDashboard.putData("Autonomous selector", autonomousChooser);
@@ -150,7 +185,6 @@ public class Robot extends IterativeRobot {
 		//drivetrain.gyroPID.setPID(SmartDashboard.getNumber("GyroP", 0),SmartDashboard.getNumber("GyroI", 0),SmartDashboard.getNumber("GyroD", 0));
 		//drivetrain.gyroPID.setSetpoint(SmartDashboard.getNumber("GyroSetpoint", 0));
 		//System.out.println(RobotMap.gyro.getAngle());
-
 
 		SDDumper.dumpEncoder("Left encoder", RobotMap.leftEncoder);
 		SDDumper.dumpEncoder("Right encoder", RobotMap.rightEncoder);

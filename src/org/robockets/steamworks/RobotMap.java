@@ -23,21 +23,16 @@ public class RobotMap {
 	/// PWM ///
 	///////////
 	
+    public static Victor elevatorSpeedController = new Victor(0); //TODO: get real port
+
+    public static Victor shooterRollerSpeedController = new Victor(1); //TODO: get real port
     /**
      * Speed controller for the motor that is used to climb up rope. This might
      * control two motors someday.
      */
     public static Victor climberSpeedController = new Victor(2); //TODO: get real port
 
-    public static Victor shooterRollerSpeedController = new Victor(1); //TODO: get real port
-
     public static Victor conveyorSpeedController = new Victor(3); //TODO: get real port
-    public static Victor elevatorSpeedController = new Victor(0); //TODO: get real port
-
-    public static Servo intakeFlapServo = new Servo(9);
-
-    // TODO: Add breakbeam sensor
-
 
     /**
      * Speed controller for right side of the robot.
@@ -49,17 +44,17 @@ public class RobotMap {
      */
     public static Victor rightDrivepodSpeedController = new Victor(5);
     
-    // VICTOR #6 would go here
-    
     /**
      * Speed controller for the roller at the bottom of the robot that sucks
      * fuel balls in.
      */
     public static Victor ballIntakeRollerSpeedController = new Victor(6); //TODO: get real port
     
+    // VICTOR #7 would go here
+  
     // VICTOR #8 would go here
     
-    // VICTOR #9 would go here
+    public static Servo intakeFlapServo = new Servo(9);
 
 	//////////////////
 	/// Digital IO ///
@@ -84,7 +79,6 @@ public class RobotMap {
 	 * shooter roller is spinning.
 	 */
     public static Encoder rollerEncoder = new Encoder(8, 9);
-
 
     ///////////
     /// SPI ///
