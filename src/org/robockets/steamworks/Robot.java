@@ -87,6 +87,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void robotInit() {
 
+		// SUBSYSTEMS //
 		ballIntake = new BallIntake();
 		elevator = new Elevator();
 		conveyor = new Conveyor();
@@ -96,52 +97,22 @@ public class Robot extends IterativeRobot {
 		gearIntake = new GearIntake();
 		intakeFlap = new IntakeFlap(1);
 		ledSubsystem = new LED();
-
-		// chooser.addObject("My Auto", new MyAutoCommand());
+	
+		// COMMANDS //
 		climb = new Climb(0.5);
-		drive = new Joyride(false);
-
-		//SmartDashboard.putData(new SpinSpinners());
-		//SmartDashboard.putData(new Shoot());
-
-		SmartDashboard.putData(new Climb(0.5));
-
-		toggleDriveMode = new ToggleDriveMode();
+		drive = new Joyride();
+		toggleDriveMode = new ToggleDriveMode();	
 		
-		SmartDashboard.putData(climb);
-
-		SmartDashboard.putNumber("New Gyro Angle(AbsoluteOrRelative)", 0);
-
-		SmartDashboard.putData("GyroTurn Absolute", new Turn(TurnType.ABSOLUTE, 90)); // Angle will be on SmartDashboard from the Turn command
-		SmartDashboard.putData("GyroTurn Relative", new Turn(TurnType.RELATIVE, 90));
-
-		SmartDashboard.putData("IntakeRollersForward", new SpinBallIntakeRollers(1));
-		SmartDashboard.putData("IntakeRollersBackward", new SpinBallIntakeRollers(-1));
-
-		SmartDashboard.putData("MoveMagicCarpetForward", new MoveConveyor(RelativeDirection.YAxis.FORWARD));
-		SmartDashboard.putData("MoveMagicCarpetBackward", new MoveConveyor(RelativeDirection.YAxis.BACKWARD));
-
-		SmartDashboard.putData("MoveElevatorUp", new MoveElevator(RelativeDirection.ZAxis.UP, 1));
-		SmartDashboard.putData("MoveElevatorDown", new MoveElevator(RelativeDirection.ZAxis.DOWN, 1));
-
-		SmartDashboard.putData(new MaxFillElevator());
-
-		//RobotMap.gyro.calibrate();
-
-		SmartDashboard.putNumber("GyroP", drivetrain.gyroPID.getP());
-		SmartDashboard.putNumber("GyroI", drivetrain.gyroPID.getI());
-		SmartDashboard.putNumber("GyroD", drivetrain.gyroPID.getD());
-		SmartDashboard.putNumber("GyroSetpoint", drivetrain.gyroPID.getSetpoint());
-
-		//SmartDashboard.putData("GyroPIDGo", new TunePID());
-		
-		// SmartDashboard
+		// SMARTDASHBOARD //
 		Robot.climber.initSmartDashboard(smartDashboardDebug);
-
-		SmartDashboard.putData(new ResetDriveEncoders());
+		initSmartDashboard();
 		
+		// INIT //
 		Webcam.getInstance().startThread();
-
+		//chooser.addObject("My Auto", new MyAutoCommand());
+		//RobotMap.gyro.calibrate();
+		
+		// AUTO //
 		autoTest = new AutoTest();
 		easyAuto1 = new EasyAuto(1);
 		easyAuto2 = new EasyAuto(2);
@@ -152,7 +123,7 @@ public class Robot extends IterativeRobot {
 		maxAuto1 = new MaxAuto(1);
 		maxAuto2 = new MaxAuto(2);
 		maxAuto3 = new MaxAuto(3);
-
+		
 		autonomousChooser = new SendableChooser<Command>();
 		autonomousChooser.addDefault("AutoTest", autoTest);
 		autonomousChooser.addObject("EasyAutoStart1", easyAuto1);
@@ -164,14 +135,41 @@ public class Robot extends IterativeRobot {
 		autonomousChooser.addObject("MaxAutoStart1", maxAuto1);
 		autonomousChooser.addObject("MaxAutoStart2", maxAuto2);
 		autonomousChooser.addObject("MaxAutoStart3", maxAuto3);
-
-		//autonomousChooser.addObject("Another auto", myAuto);
-
+		
 		SmartDashboard.putData("Autonomous selector", autonomousChooser);
-		SmartDashboard.putData(new ToggleIntakeFlap());
-		SmartDashboard.putData(new ToggleDriveMode());
 		
 		oi = new OI();
+	}
+	
+	public void initSmartDashboard() {
+		
+		// CLIMBER //
+		SmartDashboard.putData("Climb", climb);
+		SmartDashboard.putData("Climb half speed", new Climb(0.5));
+		
+		// DRIVE ENCODERS //
+		SmartDashboard.putData(new ResetDriveEncoders());
+
+		// GYRO //
+		SmartDashboard.putData("GyroTurn Absolute", new Turn(TurnType.ABSOLUTE, 90)); // Angle will be on SmartDashboard from the Turn command
+		SmartDashboard.putData("GyroTurn Relative", new Turn(TurnType.RELATIVE, 90));
+		//SmartDashboard.putData("GyroPIDGo", new TunePID());
+
+		// BALL INTAKE //
+		SmartDashboard.putData("IntakeRollersForward", new SpinBallIntakeRollers(1));
+		SmartDashboard.putData("IntakeRollersBackward", new SpinBallIntakeRollers(-1));
+		SmartDashboard.putData("Toggle Intake Flap", new ToggleIntakeFlap());
+		
+		// CONVEYORS //
+		SmartDashboard.putData("MoveMagicCarpetForward", new MoveConveyor(RelativeDirection.YAxis.FORWARD));
+		SmartDashboard.putData("MoveMagicCarpetBackward", new MoveConveyor(RelativeDirection.YAxis.BACKWARD));
+		SmartDashboard.putData("MoveElevatorUp", new MoveElevator(RelativeDirection.ZAxis.UP, 1));
+		SmartDashboard.putData("MoveElevatorDown", new MoveElevator(RelativeDirection.ZAxis.DOWN, 1));
+		SmartDashboard.putData("Max Fill", new MaxFillElevator());	
+		
+		// SHOOTER //
+		//SmartDashboard.putData(new SpinSpinners());
+		//SmartDashboard.putData(new Shoot());
 	}
 
 	@Override
@@ -180,11 +178,10 @@ public class Robot extends IterativeRobot {
 		Robot.climber.periodicSmartDashboard(smartDashboardDebug);
 		gearIntake.periodicSmartDashboard();
 
-		SmartDashboard.putNumber("Gyro Angle", RobotMap.gyro.getAngle());
-
+		//SDDumper.dumpPidController("Gyro", Robot.drivetrain.gyroPID);
+		//SmartDashboard.putNumber("Gyro Angle", RobotMap.gyro.getAngle());
 		//drivetrain.gyroPID.setPID(SmartDashboard.getNumber("GyroP", 0),SmartDashboard.getNumber("GyroI", 0),SmartDashboard.getNumber("GyroD", 0));
 		//drivetrain.gyroPID.setSetpoint(SmartDashboard.getNumber("GyroSetpoint", 0));
-		//System.out.println(RobotMap.gyro.getAngle());
 
 		SDDumper.dumpEncoder("Left encoder", RobotMap.leftEncoder);
 		SDDumper.dumpEncoder("Right encoder", RobotMap.rightEncoder);
@@ -206,7 +203,6 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void disabledInit() {
-
 	}
 
 	@Override
@@ -248,7 +244,6 @@ public class Robot extends IterativeRobot {
 		}
 
 		drive.start();
-
 		cylonCommand.start();
 	}
 
@@ -263,7 +258,6 @@ public class Robot extends IterativeRobot {
 		if(!encoderPIDStatus) {
 			System.out.println("move to manual control");
 		}
-
 	}
 
 	/**
@@ -273,4 +267,5 @@ public class Robot extends IterativeRobot {
 	public void testPeriodic() {
 		LiveWindow.run();
 	}
+
 }
