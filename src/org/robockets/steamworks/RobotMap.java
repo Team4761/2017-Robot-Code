@@ -38,7 +38,6 @@ public class RobotMap {
 
     // TODO: Add breakbeam sensor
 
-
     /**
      * Speed controller for right side of the robot.
      */
@@ -49,13 +48,13 @@ public class RobotMap {
      */
     public static Victor rightDrivepodSpeedController = new Victor(5);
     
-    // VICTOR #6 would go here
-    
     /**
      * Speed controller for the roller at the bottom of the robot that sucks
      * fuel balls in.
      */
     public static Victor ballIntakeRollerSpeedController = new Victor(7); //TODO: get real port
+
+	// VICTOR #7 would go here
     
     // VICTOR #8 would go here
     
@@ -84,7 +83,6 @@ public class RobotMap {
 	 * shooter roller is spinning.
 	 */
     public static Encoder rollerEncoder = new Encoder(8, 9);
-
 
     ///////////
     /// SPI ///

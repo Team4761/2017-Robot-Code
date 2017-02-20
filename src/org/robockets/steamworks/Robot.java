@@ -54,9 +54,10 @@ public class Robot extends IterativeRobot {
 	public static Drivetrain drivetrain;
 	public static Shooter shooter;
 	public static Elevator elevator;
-
 	public static GearIntake gearIntake;
-	public static LED ledSubsystem = new LED();
+	public static IntakeFlap intakeFlap;
+	public static LED ledSubsystem;
+
 	public static Command autonomousCommand;
 	public static Command autoTest;
 
@@ -74,7 +75,6 @@ public class Robot extends IterativeRobot {
 	public static Command climb;
 	public static Command toggleDriveMode;
 	public static Command cylonCommand = new Cylon();
-	public static IntakeFlap intakeFlap;
 
 	private SendableChooser<Command> autonomousChooser;
 	
@@ -96,6 +96,7 @@ public class Robot extends IterativeRobot {
 		shooter = new Shooter();
 		gearIntake = new GearIntake();
 		intakeFlap = new IntakeFlap(1);
+		ledSubsystem = new LED();
 
 		// chooser.addObject("My Auto", new MyAutoCommand());
 		climb = new Climb(0.5);
@@ -171,8 +172,6 @@ public class Robot extends IterativeRobot {
 
 		SmartDashboard.putData("Autonomous selector", autonomousChooser);
 		SmartDashboard.putData(new ToggleIntakeFlap());
-
-
 	}
 
 	@Override
@@ -183,10 +182,9 @@ public class Robot extends IterativeRobot {
 
 		SmartDashboard.putNumber("Gyro Angle", RobotMap.gyro.getAngle());
 
-		drivetrain.gyroPID.setPID(SmartDashboard.getNumber("GyroP", 0),SmartDashboard.getNumber("GyroI", 0),SmartDashboard.getNumber("GyroD", 0));
-		drivetrain.gyroPID.setSetpoint(SmartDashboard.getNumber("GyroSetpoint", 0));
+		//drivetrain.gyroPID.setPID(SmartDashboard.getNumber("GyroP", 0),SmartDashboard.getNumber("GyroI", 0),SmartDashboard.getNumber("GyroD", 0));
+		//drivetrain.gyroPID.setSetpoint(SmartDashboard.getNumber("GyroSetpoint", 0));
 		//System.out.println(RobotMap.gyro.getAngle());
-
 
 		SDDumper.dumpEncoder("Left encoder", RobotMap.leftEncoder);
 		SDDumper.dumpEncoder("Right encoder", RobotMap.rightEncoder);
