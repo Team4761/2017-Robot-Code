@@ -35,7 +35,8 @@ public class IntakeFlap extends Subsystem {
     public void setPosition(double pos) {
     	RobotMap.intakeFlapServo.setAngle(pos);
     }
-    
+
+    @Deprecated
     public void start() {
     	RobotMap.intakeFlapServo.set(1 + (speed * lastState.factor));
     }
@@ -43,7 +44,18 @@ public class IntakeFlap extends Subsystem {
     public void move(double speed) {
 		RobotMap.intakeFlapServo.set(speed);
 	}
-    
+
+	public void toggle() {
+    	if (lastState == IntakeState.GEARS) {
+    		setPosition(45);
+    		setState(IntakeState.FUEL);
+		} else {
+    		setPosition(0);
+    		setState(IntakeState.GEARS);
+		}
+	}
+
+	@Deprecated
     public void stop() {
     	RobotMap.intakeFlapServo.set(0);
     	if(lastState == IntakeState.FUEL) {

@@ -10,6 +10,8 @@ import org.robockets.steamworks.Robot;
  */
 public class MoveIntakeFlap extends Command {
 
+	// FIXME: THIS MAY NOT WORK DUE TO THE CHANGE IN SERVOS AGAIN!!!! (thanks mechanical...)
+
 	private RelativeDirection.YAxis direction;
 
 	public MoveIntakeFlap(RelativeDirection.YAxis direction) {

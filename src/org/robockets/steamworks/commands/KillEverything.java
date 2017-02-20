@@ -10,36 +10,34 @@ import edu.wpi.first.wpilibj.command.Command;
 public class KillEverything extends Command {
 
     public KillEverything() {
-             
+		requires(Robot.ballIntake);
+		requires(Robot.elevator);
+		requires(Robot.conveyor);
+		requires(Robot.climber);
+		requires(Robot.drivetrain);
+		requires(Robot.shooter);
+		requires(Robot.gearIntake);
+		requires(Robot.intakeFlap);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	 requires(Robot.ballIntake);
-         requires(Robot.elevator);
-         requires(Robot.conveyor);
-         requires(Robot.climber);
-         requires(Robot.drivetrain);
-         requires(Robot.shooter);
-         requires(Robot.gearIntake);
-         requires(Robot.intakeFlap); 
-    	setTimeout(0.2);
+		Robot.ballIntake.stopRollers();
+		Robot.elevator.stop();
+		Robot.conveyor.stop();
+		Robot.climber.stop();
+		Robot.drivetrain.stop();
+		Robot.shooter.stop();
+		//Robot.intakeFlap.stop();
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.ballIntake.stopRollers();
-    	Robot.elevator.stop();
-    	Robot.conveyor.stop();
-    	Robot.climber.stop();
-    	Robot.drivetrain.stop();
-    	Robot.shooter.stop();
-    	Robot.intakeFlap.stop();
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return isTimedOut();
+        return true;
     }
 
     // Called once after isFinished returns true

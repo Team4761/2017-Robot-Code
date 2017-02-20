@@ -17,23 +17,22 @@ public class ToggleIntakeFlap extends Command {
     // Called just before this Command runs the first time
     protected void initialize() {
     	//s2.free();
-    	setTimeout(1);
+    	//setTimeout(1);
+		Robot.intakeFlap.toggle();
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.intakeFlap.start();
     	//s2.setSpeed(0.5);
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return isTimedOut();
+        return true;
     }
 
     // Called once after isFinished returns true
     protected void end() {
-    	Robot.intakeFlap.stop();
     	//s2.setSpeed(0.0);
     }
 
