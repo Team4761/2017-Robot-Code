@@ -37,7 +37,7 @@ public class Drivetrain extends Subsystem {
         leftPodPID.setOutputRange(-1.0, 1.0);
         leftPodPID.setAbsoluteTolerance(0.5);
         
-        rightPodPIDSource = new EncoderPIDSource(RobotMap.rightEncoder, 0.05555);//Michael Found This was left 
+        rightPodPIDSource = new EncoderPIDSource(RobotMap.rightEncoder, 0.05555);
         rightPodPID = new PIDController(-0.1, 0, 0, rightPodPIDSource, RobotMap.rightDrivePodOutput);
         rightPodPID.disable();
         rightPodPID.setOutputRange(-1.0, 1.0);
@@ -107,10 +107,8 @@ public class Drivetrain extends Subsystem {
      * @param distance Desired distance for both pods, in inches
      */
     public void setDistance(double distance) {
-    	leftPodPID.setSetpoint(-distance * .5);
-    	//rightPodPID.setSetpoint(distance);
-    	rightPodPID.setSetpoint(-distance* .5);
-    	//leftPodPID.setSetpoint(distance);// michael did this may be this will work
+    	rightPodPID.setSetpoint(distance);
+    	leftPodPID.setSetpoint(distance);
     }
     
     /**
