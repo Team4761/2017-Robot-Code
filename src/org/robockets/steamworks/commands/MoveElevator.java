@@ -16,12 +16,17 @@ public class MoveElevator extends Command {
 	private double time;
 	private boolean forever;
 	private double speed;
+	private boolean isConveyorRandom;
+	private int conveyorDirectionCounter = 0; // Used for keeping track for what direction to move in
+
+	private final int CONVEYOR_DIRECTION_MAX_COUNTS = 5;
 
 	public MoveElevator(RelativeDirection.ZAxis elevatorDirection, double speed) {
 		this.elevatorDirection = elevatorDirection;
 		conveyorDirection = (this.elevatorDirection == RelativeDirection.ZAxis.UP) ? RelativeDirection.YAxis.FORWARD : RelativeDirection.YAxis.BACKWARD;
 		forever = true;
 		this.speed = speed;
+		this.isConveyorRandom = false;
 	}
 
 	public MoveElevator(RelativeDirection.ZAxis elevatorDirection, double time, double speed) {
@@ -32,6 +37,15 @@ public class MoveElevator extends Command {
 		conveyorDirection = (this.elevatorDirection == RelativeDirection.ZAxis.UP) ? RelativeDirection.YAxis.FORWARD : RelativeDirection.YAxis.BACKWARD;
 		forever = false;
 		this.speed = speed;
+		this.isConveyorRandom = false;
+	}
+
+	public MoveElevator(RelativeDirection.ZAxis elevatorDirection, double speed, boolean isConveyorRandom) {
+		this.elevatorDirection = elevatorDirection;
+		conveyorDirection = (this.elevatorDirection == RelativeDirection.ZAxis.UP) ? RelativeDirection.YAxis.FORWARD : RelativeDirection.YAxis.BACKWARD;
+		forever = true;
+		this.speed = speed;
+		this.isConveyorRandom = isConveyorRandom;
 	}
 
 	protected void initialize() {
@@ -42,6 +56,13 @@ public class MoveElevator extends Command {
 
 	protected void execute() {
 		Robot.elevator.moveElevator(elevatorDirection, speed);
+
+		if (isConveyorRandom) {
+			if (conveyorDirectionCounter % CONVEYOR_DIRECTION_MAX_COUNTS == 0) {
+				switchConveyorDirection();
+			}
+		}
+
 		Robot.conveyor.moveConveyor(conveyorDirection, speed);
 	}
 
@@ -56,5 +77,13 @@ public class MoveElevator extends Command {
 
 	protected void interrupted() {
 		end();
+	}
+
+	private void switchConveyorDirection() {
+		if (conveyorDirection == RelativeDirection.YAxis.FORWARD) {
+			conveyorDirection = RelativeDirection.YAxis.BACKWARD;
+		} else {
+			conveyorDirection = RelativeDirection.YAxis.FORWARD;
+		}
 	}
 }
