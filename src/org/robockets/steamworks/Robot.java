@@ -152,6 +152,7 @@ public class Robot extends IterativeRobot {
 		
 		// DRIVE ENCODERS //
 		SmartDashboard.putData(new ResetDriveEncoders());
+		SmartDashboard.putData("Tune Encoder PID", new TunePID());
 
 		// GYRO //
 		//SmartDashboard.putData("GyroTurn Absolute", new Turn(TurnType.ABSOLUTE, 90)); // Angle will be on SmartDashboard from the Turn command
@@ -196,6 +197,20 @@ public class Robot extends IterativeRobot {
 
 		SDDumper.dumpPidController("Left drivepod PID", drivetrain.leftPodPID);
 		SDDumper.dumpPidController("Right drivepod PID", drivetrain.rightPodPID);
+
+		// Use the SmartDashboard PID Values
+
+		Robot.drivetrain.leftPodPID.setPID(SmartDashboard.getNumber("Left drivepod PID P value", 0),
+				SmartDashboard.getNumber("Left drivepod PID I value", 0),
+				SmartDashboard.getNumber("Left drivepod PID D value", 0));
+		Robot.drivetrain.leftPodPID.setSetpoint(SmartDashboard.getNumber("Left drivepod PID setpoint", 0));
+
+
+		// Possibly?
+		Robot.drivetrain.rightPodPID.setPID(SmartDashboard.getNumber("Right drivepod PID P value", 0),
+				SmartDashboard.getNumber("Right drivepod PID I value", 0),
+				SmartDashboard.getNumber("Right drivepod PID D value", 0));
+		Robot.drivetrain.rightPodPID.setSetpoint(SmartDashboard.getNumber("Right drivepod PID setpoint", 0));
 
 		SDDumper.dumpEncoder("Roller Encoder", RobotMap.rollerEncoder);
 
