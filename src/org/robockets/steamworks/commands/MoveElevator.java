@@ -60,6 +60,7 @@ public class MoveElevator extends Command {
 		if (isConveyorRandom) {
 			if (conveyorDirectionCounter % CONVEYOR_DIRECTION_MAX_COUNTS == 0) {
 				switchConveyorDirection();
+				conveyorDirectionCounter = 0;
 			}
 		}
 
