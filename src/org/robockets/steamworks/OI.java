@@ -25,10 +25,10 @@ import org.robockets.steamworks.intakeflap.MoveIntakeFlap;
  */
 public class OI {
     public static Joystick joystick = new Joystick(0); // XBox Controller
-    public static Joystick attack3Right = new Joystick(1);
-    public static Joystick attack3Left = new Joystick(2);
+    public static Joystick attack3Right = new Joystick(1); // Left attack joystick
+    public static Joystick attack3Left = new Joystick(2); // Right attack joystick
 
-    public static Joystick launchpad = new Joystick(3);
+    public static Joystick launchpad = new Joystick(3); // The launchpad for the button board
     
     Button yButton = new JoystickButton(joystick, 4);
 
