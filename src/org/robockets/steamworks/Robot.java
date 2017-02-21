@@ -142,7 +142,6 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putData("Autonomous selector", autonomousChooser);
 		
 		oi = new OI();
-		System.out.println("slgrhiushg");
 	}
 	
 	public void initSmartDashboard() {
