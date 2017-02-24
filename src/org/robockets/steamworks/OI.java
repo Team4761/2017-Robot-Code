@@ -14,6 +14,7 @@ import org.robockets.steamworks.commands.MaxFillElevator;
 import org.robockets.steamworks.commands.MoveConveyor;
 import org.robockets.steamworks.commands.MoveElevator;
 import org.robockets.steamworks.commands.Shoot;
+import org.robockets.steamworks.commands.ShootWithPID;
 import org.robockets.steamworks.commands.SpinSpinners;
 import org.robockets.steamworks.intakeflap.IntakeFlap;
 import org.robockets.steamworks.intakeflap.IntakeToPos;
@@ -25,8 +26,8 @@ import org.robockets.steamworks.intakeflap.MoveIntakeFlap;
  */
 public class OI {
     public static Joystick joystick = new Joystick(0); // XBox Controller
-    public static Joystick attack3Right = new Joystick(1); // Left attack joystick
-    public static Joystick attack3Left = new Joystick(2); // Right attack joystick
+    public static Joystick attack3Left = new Joystick(1); // Left attack joystick
+    public static Joystick attack3Right = new Joystick(2); // Right attack joystick
 
     public static Joystick launchpad = new Joystick(3); // The launchpad for the button board
     
@@ -37,7 +38,7 @@ public class OI {
     /////////////////////
 
     Button misc1 = new JoystickButton(launchpad, 2);
-    Button misc2 = new JoystickButton(launchpad, 3);
+    Button misc2 = new JoystickButton(launchpad, 6);
     Button misc3 = new JoystickButton(launchpad, 4);
     Button misc4 = new JoystickButton(launchpad, 5);
 
@@ -46,7 +47,7 @@ public class OI {
     ///////////////
 
     Button climber1 = new JoystickButton(launchpad, 7);
-    Button climber2 = new JoystickButton(launchpad, 6);
+    Button climber2 = new JoystickButton(launchpad, 3);
 
     ///////////////
     /// Lifter? ///
@@ -94,21 +95,27 @@ public class OI {
        //gearIntakeMan1.whileHeld(new MoveIntakeFlap(RelativeDirection.YAxis.FORWARD));
        //gearIntakeMan2.whileHeld(new MoveIntakeFlap(RelativeDirection.YAxis.BACKWARD));
         shooterMan1.toggleWhenPressed(new SpinSpinners());
-        shooter1.whileHeld(new Shoot());
+        shooter1.whileHeld(new Shoot(true));
+        shooter2.whileHeld(new Shoot(false));
         
-        ballIntake1.toggleWhenPressed(new SpinBallIntakeRollers(-1));
-        ballIntake2.toggleWhenPressed(new IntakeBalls());
+        /*ballIntake1.toggleWhenPressed(new SpinBallIntakeRollers(-1));
+        ballIntake2.toggleWhenPressed(new IntakeBalls());*/
+        
+        SpinBallIntakeRollers spinBallIntakeRollers = new SpinBallIntakeRollers(-1);
+        
+        ballIntake1.cancelWhenPressed(spinBallIntakeRollers);
+        ballIntake2.whenPressed(spinBallIntakeRollers);
         ballIntakeMan1.whileHeld(new SpinBallIntakeRollers(1));
         ballIntakeMan2.whileHeld(new SpinBallIntakeRollers(-1)); // FIXME: Make this a relative direction thing
 
         
         // The horizonal conveyor, "Magic Carpet," is moved when `MoveElevator` is called
         lifter1.whileHeld(new MakeExtraSpace());
-        lifterMan1.whileHeld(new MoveElevator(RelativeDirection.ZAxis.UP, 1));
-        lifterMan2.whileHeld(new MoveElevator(RelativeDirection.ZAxis.DOWN, 1));
-		
+        //lifterMan1.whileHeld(new MoveElevator(RelativeDirection.ZAxis.UP, 0.75, true));
+        lifterMan1.whileHeld(new MoveElevator(RelativeDirection.ZAxis.DOWN, 0.75));
+	
         climber1.whileHeld(new Climb(1));
-        //climber2.whileHeld(new Climb(1));  
+        climber2.whileHeld(new Climb(1));  
         /*
         shooterMan1.whenPressed(new KillEverything()); */
         //misc2.whenPressed(new Climb(1));*/

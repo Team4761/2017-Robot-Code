@@ -31,13 +31,13 @@ public class Drivetrain extends Subsystem {
         gyroPID.setOutputRange(-1.0, 1.0); // Set turning speed range
         gyroPID.setPercentTolerance(5.0); // Set tolerance of 5%
         
-        leftPodPIDSource = new EncoderPIDSource(RobotMap.leftEncoder, 0.05555); // Encoder factor: 1 / ticks per inch
-        leftPodPID = new PIDController(-0.1, 0, 0, leftPodPIDSource, RobotMap.leftDrivePodOutput);
+        leftPodPIDSource = new EncoderPIDSource(RobotMap.leftEncoder, 0.0352); // Encoder factor: 1 / ticks per inch
+        leftPodPID = new PIDController(0.1, 0, 0, leftPodPIDSource, RobotMap.leftDrivePodOutput);
         leftPodPID.disable();
         leftPodPID.setOutputRange(-1.0, 1.0);
         leftPodPID.setAbsoluteTolerance(0.5);
         
-        rightPodPIDSource = new EncoderPIDSource(RobotMap.rightEncoder, 0.05555);
+        rightPodPIDSource = new EncoderPIDSource(RobotMap.rightEncoder, 0.0352);
         rightPodPID = new PIDController(-0.1, 0, 0, rightPodPIDSource, RobotMap.rightDrivePodOutput);
         rightPodPID.disable();
         rightPodPID.setOutputRange(-1.0, 1.0);
@@ -212,5 +212,10 @@ public class Drivetrain extends Subsystem {
         driveArcade(0,0);
         gyroPID.disable();
     }
+    
+	public void resetEncoders() {
+		RobotMap.leftEncoder.reset();
+		RobotMap.rightEncoder.reset();
+	}
 }
 

@@ -22,8 +22,10 @@ import org.robockets.steamworks.commands.Cylon;
 import org.robockets.steamworks.commands.MakeExtraSpace;
 import org.robockets.steamworks.commands.MoveElevator;
 import org.robockets.steamworks.commands.Shoot;
+import org.robockets.steamworks.commands.ShootWithPID;
 import org.robockets.steamworks.commands.SpinSpinners;
 import org.robockets.steamworks.commands.TunePID;
+import org.robockets.steamworks.drivetrain.DriveWithMP;
 import org.robockets.steamworks.drivetrain.Turn;
 import org.robockets.steamworks.drivetrain.Drivetrain;
 import org.robockets.steamworks.drivetrain.Joyride;
@@ -141,6 +143,12 @@ public class Robot extends IterativeRobot {
 		
 		SmartDashboard.putData("Autonomous selector", autonomousChooser);
 		
+		RobotMap.rollerEncoderCounter.setUpSource(RobotMap.rollerEncoder);
+		RobotMap.rollerEncoderCounter.setUpDownCounterMode();
+		RobotMap.rollerEncoderCounter.setDistancePerPulse(1.0);
+		
+		RobotMap.shooterRollerSpeedController.setInverted(true);
+		
 		oi = new OI();
 	}
 	
@@ -152,7 +160,8 @@ public class Robot extends IterativeRobot {
 		
 		// DRIVE ENCODERS //
 		SmartDashboard.putData(new ResetDriveEncoders());
-		SmartDashboard.putData("Tune Encoder PID", new TunePID());
+		SmartDashboard.putData("Drive 60 at 10 per second with encoders", new DriveWithMP(60, 10));
+		SmartDashboard.putData("Drive 100 at 30 per second with encoders", new DriveWithMP(100, 30));
 
 		// GYRO //
 		//SmartDashboard.putData("GyroTurn Absolute", new Turn(TurnType.ABSOLUTE, 90)); // Angle will be on SmartDashboard from the Turn command
@@ -164,7 +173,6 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putData("IntakeRollersBackward", new SpinBallIntakeRollers(-1));
 		SmartDashboard.putData("Intake Balls", new IntakeBalls());
 		
-		
 		// GEAR INTAKE //
 		SmartDashboard.putData("Toggle Intake Flap", new ToggleIntakeFlap());
 		
@@ -172,18 +180,26 @@ public class Robot extends IterativeRobot {
 		//SmartDashboard.putData("MoveMagicCarpetForward", new MoveConveyor(RelativeDirection.YAxis.FORWARD));
 		//SmartDashboard.putData("MoveMagicCarpetBackward", new MoveConveyor(RelativeDirection.YAxis.BACKWARD));
 		SmartDashboard.putNumber("elevator Speed", 0.5);
-		SmartDashboard.putData("MoveElevatorUp", new MoveElevator(RelativeDirection.ZAxis.UP, SmartDashboard.getNumber("elevator Speed", 1)));
-		SmartDashboard.putData("MoveElevatorDown", new MoveElevator(RelativeDirection.ZAxis.DOWN,  SmartDashboard.getNumber("elevator Speed", 1)));
+		SmartDashboard.putData("MoveElevatorUp", new MoveElevator(RelativeDirection.ZAxis.UP, 1));
+		SmartDashboard.putData("Fluff", new MoveElevator(RelativeDirection.ZAxis.DOWN,  SmartDashboard.getNumber("elevator Speed", 1)));
 		SmartDashboard.putData("MakeExtraSpace", new MakeExtraSpace());	
 		
 		// SHOOTER //
 		SmartDashboard.putData(new SpinSpinners());
-		SmartDashboard.putData(new Shoot());
+		SmartDashboard.putData(new Shoot(false));
+		SmartDashboard.putData(new ShootWithPID());
+		
+		
+		SmartDashboard.putNumber("Edit Shooter PID setpoint", 0);
+		SmartDashboard.putNumber("Edit Shooter PID P value", 0);
+		SmartDashboard.putNumber("Edit Shooter PID I value", 0);
+		SmartDashboard.putNumber("Edit Shooter PID D value", 0);
+		SmartDashboard.putNumber("Edit Shooter PID F value", 0);
 	}
 
 	@Override
 	public void robotPeriodic() {
-
+		SmartDashboard.putNumber("djyro", RobotMap.gyro.getAngle());
 		Robot.climber.periodicSmartDashboard(smartDashboardDebug);
 		gearIntake.periodicSmartDashboard();
 
@@ -207,16 +223,22 @@ public class Robot extends IterativeRobot {
 
 
 		// Possibly?
-		Robot.drivetrain.rightPodPID.setPID(SmartDashboard.getNumber("Right drivepod PID P value", 0),
-				SmartDashboard.getNumber("Right drivepod PID I value", 0),
-				SmartDashboard.getNumber("Right drivepod PID D value", 0));
-		Robot.drivetrain.rightPodPID.setSetpoint(SmartDashboard.getNumber("Right drivepod PID setpoint", 0));
-
-		SDDumper.dumpEncoder("Roller Encoder", RobotMap.rollerEncoder);
+		Robot.drivetrain.rightPodPID.setPID(-SmartDashboard.getNumber("Left drivepod PID P value", 0),
+				SmartDashboard.getNumber("Left drivepod PID I value", 0),
+				SmartDashboard.getNumber("Left drivepod PID D value", 0));
+		Robot.drivetrain.rightPodPID.setSetpoint(SmartDashboard.getNumber("Left drivepod PID setpoint", 0));
 
 		SDDumper.dumpMisc();
 		
-		SmartDashboard.putNumber("Intake flap encoder1 position", RobotMap.intakeFlapServo1.get());
+		SmartDashboard.putNumber("Intake flap encoder1 position", RobotMap.leftIntakeFlapServo.get());
+		
+		SmartDashboard.putNumber("Touchless encoder count", RobotMap.rollerEncoderCounter.get());
+		SmartDashboard.putNumber("Touchless encoder rate", RobotMap.rollerEncoderCounter.getRate());
+		
+		//System.out.println(RobotMap.rollerEncoderCounter.getRate());
+		SDDumper.dumpPidController("Shooter PID", Robot.shooter.shooterPIDController);
+		Robot.shooter.shooterPIDController.setSetpoint(SmartDashboard.getNumber("Edit Shooter PID setpoint", 0));
+    	Robot.shooter.shooterPIDController.setPID(SmartDashboard.getNumber("Edit Shooter PID P value", 0.01), SmartDashboard.getNumber("Edit Shooter PID I value", 0.001), SmartDashboard.getNumber("Edit Shooter PID D value", 0.001), SmartDashboard.getNumber("Edit Shooter PID F value", 0.01));
 	}
   
 	/**
@@ -278,9 +300,6 @@ public class Robot extends IterativeRobot {
 		Scheduler.getInstance().run();
 
 		final boolean encoderPIDStatus = Robot.drivetrain.isEncoderPIDEnabled();
-		if(!encoderPIDStatus) {
-			System.out.println("move to manual control");
-		}
 	}
 
 	/**

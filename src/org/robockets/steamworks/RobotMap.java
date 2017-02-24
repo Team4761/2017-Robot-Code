@@ -1,6 +1,7 @@
 package org.robockets.steamworks;
 
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
+import edu.wpi.first.wpilibj.Counter;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.I2C;
@@ -37,12 +38,12 @@ public class RobotMap {
     /**
      * Speed controller for right side of the robot.
      */
-    public static Victor leftDrivepodSpeedController = new Victor(4);
+    public static Victor rightDrivepodSpeedController = new Victor(4);
     
     /**
      * Speed controller for the left side of the robot.
      */
-    public static Victor rightDrivepodSpeedController = new Victor(5);
+    public static Victor leftDrivepodSpeedController = new Victor(5);
     
     public static Victor climberSpeedController2 = new Victor(6);
     
@@ -52,25 +53,13 @@ public class RobotMap {
      */
     public static Victor ballIntakeRollerSpeedController = new Victor(7);
   
-    public static Servo intakeFlapServo1 = new Servo(8);
+    public static Servo leftIntakeFlapServo = new Servo(8);
     
-    public static Servo intakeFlapServo2 = new Servo(9);
+    public static Servo rightIntakeFlapServo = new Servo(9);
 
 	//////////////////
 	/// Digital IO ///
 	//////////////////
-	
-	/**
-	 * Encoder that goes on the left drivepod. For getting how fast the left
-	 * side of the robot is driving.
-	 */
-	public static Encoder leftEncoder = new Encoder(8, 9);
-	
-	/**
-	 * Encoder that goes on the right drivepod. For getting how fast the right
-	 * side of the robot is driving.
-	 */
-	public static Encoder rightEncoder = new Encoder(6, 7);
 	
     public static DigitalInput gearInputBreakbeamSensor = new DigitalInput(0);
     
@@ -80,7 +69,19 @@ public class RobotMap {
 	 * Encoder that goes on the shooter roller. For getting how fast the
 	 * shooter roller is spinning.
 	 */
-    public static Encoder rollerEncoder = new Encoder(2, 3);
+    public static DigitalInput rollerEncoder = new DigitalInput(2);
+    
+	/**
+	 * Encoder that goes on the right drivepod. For getting how fast the right
+	 * side of the robot is driving.
+	 */
+	public static Encoder rightEncoder = new Encoder(6, 7);
+    
+	/**
+	 * Encoder that goes on the left drivepod. For getting how fast the left
+	 * side of the robot is driving.
+	 */
+	public static Encoder leftEncoder = new Encoder(8, 9);
 
     ///////////
     /// SPI ///
@@ -125,7 +126,16 @@ public class RobotMap {
     /**
      * PDP port that the climber's motor is attached to.
      */
-    public static final int climberPdpPort = 1;
+    public static final int climberPdpPort = 14;
+    
+    public static final double INTAKE_FLAP_GEARS_LEFT_POS = 0.25;
+    public static final double INTAKE_FLAP_GEARS__RIGHT_POS = 0.80;
+    public static final double INTAKE_FLAP_FUEL__LEFT_POS = 0.80;
+    public static final double INTAKE_FLAP_FUEL__RIGHT_POS = 0.25;
+    
+    public static Counter rollerEncoderCounter = new Counter();
+    
+    
     
     public class SmartDashboardKey {
     	public static final String kCameraExposure = "Camera exposure";

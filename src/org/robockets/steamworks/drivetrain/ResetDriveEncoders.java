@@ -14,8 +14,7 @@ public class ResetDriveEncoders extends Command {
 	}
 
 	protected void initialize() {
-		RobotMap.leftEncoder.reset();
-		RobotMap.rightEncoder.reset();
+		Robot.drivetrain.resetEncoders();
 	}
 
 	protected void execute() {

@@ -30,7 +30,7 @@ public class SpinSpinners extends Command {
     }
 
     protected void execute() {
-        Robot.shooter.spinUp(-1);
+        Robot.shooter.spinUp(1);
     }
 
     protected boolean isFinished() {
