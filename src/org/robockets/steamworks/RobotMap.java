@@ -129,14 +129,12 @@ public class RobotMap {
     public static final int climberPdpPort = 14;
     
     public static final double INTAKE_FLAP_GEARS_LEFT_POS = 0.25;
-    public static final double INTAKE_FLAP_GEARS__RIGHT_POS = 0.80;
-    public static final double INTAKE_FLAP_FUEL__LEFT_POS = 0.80;
-    public static final double INTAKE_FLAP_FUEL__RIGHT_POS = 0.25;
+    public static final double INTAKE_FLAP_GEARS_RIGHT_POS = 0.80;
+    public static final double INTAKE_FLAP_FUEL_LEFT_POS = 0.80;
+    public static final double INTAKE_FLAP_FUEL_RIGHT_POS = 0.25;
     
     public static Counter rollerEncoderCounter = new Counter();
-    
-    
-    
+
     public class SmartDashboardKey {
     	public static final String kCameraExposure = "Camera exposure";
     	public static final String kVideoFeedResolution = "Video feed resolution";

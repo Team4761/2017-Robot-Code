@@ -79,11 +79,8 @@ public class Robot extends IterativeRobot {
 	public static Command cylonCommand;
 
 	private SendableChooser<Command> autonomousChooser;
-	
-	private boolean smartDashboardDebug = true;
 
 	public Robot() {
-		System.out.println("i swear to freaking god");
 	}
 	
 	/**
@@ -155,7 +152,7 @@ public class Robot extends IterativeRobot {
 	public void initSmartDashboard() {
 		
 		// CLIMBER //
-		Robot.climber.initSmartDashboard(smartDashboardDebug);
+		Robot.climber.initSmartDashboard();
 		SmartDashboard.putData("Climb", new Climb(1));
 		
 		// DRIVE ENCODERS //
@@ -189,7 +186,6 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putData(new Shoot(false));
 		SmartDashboard.putData(new ShootWithPID());
 		
-		
 		SmartDashboard.putNumber("Edit Shooter PID setpoint", 0);
 		SmartDashboard.putNumber("Edit Shooter PID P value", 0);
 		SmartDashboard.putNumber("Edit Shooter PID I value", 0);
@@ -200,7 +196,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void robotPeriodic() {
 		SmartDashboard.putNumber("djyro", RobotMap.gyro.getAngle());
-		Robot.climber.periodicSmartDashboard(smartDashboardDebug);
+		Robot.climber.periodicSmartDashboard();
 		gearIntake.periodicSmartDashboard();
 
 		//SDDumper.dumpPidController("Gyro", Robot.drivetrain.gyroPID);
@@ -215,12 +211,10 @@ public class Robot extends IterativeRobot {
 		SDDumper.dumpPidController("Right drivepod PID", drivetrain.rightPodPID);
 
 		// Use the SmartDashboard PID Values
-
 		Robot.drivetrain.leftPodPID.setPID(SmartDashboard.getNumber("Left drivepod PID P value", 0),
 				SmartDashboard.getNumber("Left drivepod PID I value", 0),
 				SmartDashboard.getNumber("Left drivepod PID D value", 0));
 		Robot.drivetrain.leftPodPID.setSetpoint(SmartDashboard.getNumber("Left drivepod PID setpoint", 0));
-
 
 		// Possibly?
 		Robot.drivetrain.rightPodPID.setPID(-SmartDashboard.getNumber("Left drivepod PID P value", 0),
@@ -238,7 +232,11 @@ public class Robot extends IterativeRobot {
 		//System.out.println(RobotMap.rollerEncoderCounter.getRate());
 		SDDumper.dumpPidController("Shooter PID", Robot.shooter.shooterPIDController);
 		Robot.shooter.shooterPIDController.setSetpoint(SmartDashboard.getNumber("Edit Shooter PID setpoint", 0));
-    	Robot.shooter.shooterPIDController.setPID(SmartDashboard.getNumber("Edit Shooter PID P value", 0.01), SmartDashboard.getNumber("Edit Shooter PID I value", 0.001), SmartDashboard.getNumber("Edit Shooter PID D value", 0.001), SmartDashboard.getNumber("Edit Shooter PID F value", 0.01));
+    	Robot.shooter.shooterPIDController.setPID(
+    			SmartDashboard.getNumber("Edit Shooter PID P value", 0.01),
+				SmartDashboard.getNumber("Edit Shooter PID I value", 0.001),
+				SmartDashboard.getNumber("Edit Shooter PID D value", 0.001),
+				SmartDashboard.getNumber("Edit Shooter PID F value", 0.01));
 	}
   
 	/**

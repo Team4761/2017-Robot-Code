@@ -49,10 +49,10 @@ public class IntakeFlap extends Subsystem {
 
 	public void toggle() {
     	if (lastState == IntakeState.GEARS) {
-    		setPosition(RobotMap.INTAKE_FLAP_FUEL__LEFT_POS, RobotMap.INTAKE_FLAP_FUEL__RIGHT_POS);
+    		setPosition(RobotMap.INTAKE_FLAP_FUEL_LEFT_POS, RobotMap.INTAKE_FLAP_FUEL_RIGHT_POS);
     		setState(IntakeState.FUEL);
 		} else {
-    		setPosition(RobotMap.INTAKE_FLAP_GEARS_LEFT_POS, RobotMap.INTAKE_FLAP_GEARS__RIGHT_POS);
+    		setPosition(RobotMap.INTAKE_FLAP_GEARS_LEFT_POS, RobotMap.INTAKE_FLAP_GEARS_RIGHT_POS);
     		setState(IntakeState.GEARS);
 		}
 	}

@@ -39,13 +39,10 @@ public class Climber extends Subsystem{
 	 * Method to run to initialize commands on the SmartDashboard.
 	 * @param debug	Whether to show a complete set of options of commands or not.
 	 */
-	public void initSmartDashboard(boolean debug) {
-		// Debug set.
-		if (debug) {
-			SmartDashboard.putData("Climb (speed 0.5, for 5 seconds)", new Climb(0.5, 5));
-			SmartDashboard.putData("Climb (speed 0.5, forever)", new Climb(0.5, 0));
-			SmartDashboard.putNumber("STALLING_THRESHOLD", STALLING_THRESHOLD);
-		}
+	public void initSmartDashboard() {
+		SmartDashboard.putData("Climb (speed 0.5, for 5 seconds)", new Climb(0.5, 5));
+		SmartDashboard.putData("Climb (speed 0.5, forever)", new Climb(0.5, 0));
+		SmartDashboard.putNumber("STALLING_THRESHOLD", STALLING_THRESHOLD);
 		SmartDashboard.putData("Climb (speed 0.5, until STALL)", new Climb(0.5, 1));
 	}
 	
@@ -54,11 +51,11 @@ public class Climber extends Subsystem{
 	 * @param debug	True to show current, other data, and allow editing of THRESHOLD.
 	 */
 	
-	public void periodicSmartDashboard(boolean debug) {
-		//if (debug) {
-			SmartDashboard.putNumber("Climber Current", readCurrent());
-			STALLING_THRESHOLD = SmartDashboard.getNumber("STALLING_THRESHOLD", STALLING_THRESHOLD);
-		//}
+	public void periodicSmartDashboard() {
+		SmartDashboard.putNumber("Climber Current", readCurrent());
+
+		STALLING_THRESHOLD = SmartDashboard.getNumber("STALLING_THRESHOLD", STALLING_THRESHOLD);
+
 		SmartDashboard.putBoolean("Climber STALLING", readCurrent() > STALLING_THRESHOLD);
 	}
 }

@@ -24,7 +24,7 @@ public class WaitUntilSpeed extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	System.out.println(Robot.shooter.shooterPIDController.onTarget());
+    	//System.out.println(Robot.shooter.shooterPIDController.onTarget());
         return Robot.shooter.shooterPIDController.onTarget();
     }
 

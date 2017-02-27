@@ -20,9 +20,9 @@ public class IntakeToPos extends Command {
 		Robot.intakeFlap.setState(state);
 		//setTimeout(2);// Time to move
 		if(state == IntakeFlap.IntakeState.GEARS) {
-			Robot.intakeFlap.setPosition(RobotMap.INTAKE_FLAP_FUEL__LEFT_POS, RobotMap.INTAKE_FLAP_FUEL__RIGHT_POS);
+			Robot.intakeFlap.setPosition(RobotMap.INTAKE_FLAP_FUEL_LEFT_POS, RobotMap.INTAKE_FLAP_FUEL_RIGHT_POS);
 		} else {
-			Robot.intakeFlap.setPosition(RobotMap.INTAKE_FLAP_GEARS_LEFT_POS, RobotMap.INTAKE_FLAP_GEARS__RIGHT_POS);
+			Robot.intakeFlap.setPosition(RobotMap.INTAKE_FLAP_GEARS_LEFT_POS, RobotMap.INTAKE_FLAP_GEARS_RIGHT_POS);
 		}
 	}
 
