@@ -24,6 +24,7 @@ import org.robockets.steamworks.commands.MoveElevator;
 import org.robockets.steamworks.commands.Shoot;
 import org.robockets.steamworks.commands.SpinSpinners;
 import org.robockets.steamworks.commands.TunePID;
+import org.robockets.steamworks.drivetrain.DriveWithMP;
 import org.robockets.steamworks.drivetrain.Turn;
 import org.robockets.steamworks.drivetrain.Drivetrain;
 import org.robockets.steamworks.drivetrain.Joyride;
@@ -152,7 +153,8 @@ public class Robot extends IterativeRobot {
 		
 		// DRIVE ENCODERS //
 		SmartDashboard.putData(new ResetDriveEncoders());
-		SmartDashboard.putData("Tune Encoder PID", new TunePID());
+		SmartDashboard.putData("Drive 60 at 10 per second with encoders", new DriveWithMP(60, 10));
+		SmartDashboard.putData("Drive 100 at 30 per second with encoders", new DriveWithMP(100, 30));
 
 		// GYRO //
 		//SmartDashboard.putData("GyroTurn Absolute", new Turn(TurnType.ABSOLUTE, 90)); // Angle will be on SmartDashboard from the Turn command

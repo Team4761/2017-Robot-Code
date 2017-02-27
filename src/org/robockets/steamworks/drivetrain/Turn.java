@@ -2,7 +2,6 @@ package org.robockets.steamworks.drivetrain;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.robockets.steamworks.Robot;
 import org.robockets.steamworks.TurnType;
 
@@ -13,15 +12,17 @@ public class Turn extends Command {
 
 	private TurnType type;
 	private double angle;
+	private TurnControllerType turnControllerType;
 
 	/**
 	 * Turn command to control turning with gyro
 	 * @param type Type of turn, absolute or relative
 	 * @param angle Desired angle
 	 */
-	public Turn(TurnType type, double angle) {
+	public Turn(TurnType type, double angle, TurnControllerType turnControllerType) {
 		this.type = type;
 		this.angle = angle;
+		this.turnControllerType = turnControllerType;
 	}
 
 	protected void initialize() {
@@ -50,5 +51,10 @@ public class Turn extends Command {
 
 	protected void interrupted() {
 		end();
+	}
+
+	public enum TurnControllerType {
+		GYRO,
+		ENCODER;
 	}
 }
