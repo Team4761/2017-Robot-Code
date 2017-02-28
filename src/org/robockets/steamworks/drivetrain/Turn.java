@@ -55,8 +55,8 @@ public class Turn extends Command {
 	protected void interrupted() {
 		end();
 	}
-	
-	public enum TurnControllerType{
+
+  public enum TurnControllerType{
 		ENCODER,
 		GYRO;
 	}
