@@ -89,7 +89,9 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void robotInit() {
+		////////////////
 		// SUBSYSTEMS //
+		////////////////
 		ballIntake = new BallIntake();
 		elevator = new Elevator();
 		conveyor = new Conveyor();
@@ -100,21 +102,22 @@ public class Robot extends IterativeRobot {
 		intakeFlap = new IntakeFlap(1);
 		ledSubsystem = new LED();
 		cylonCommand = new Cylon();
-		
+
+		//////////////
 		// COMMANDS //
+		//////////////
 		climb = new Climb(0.5);
 		drive = new Joyride();
 		toggleDriveMode = new ToggleDriveMode();	
-		
+
+		////////////////////
 		// SMARTDASHBOARD //
+		////////////////////
 		initSmartDashboard();
-		
-		// INIT //
-		Webcam.getInstance().startThread();
-		//chooser.addObject("My Auto", new MyAutoCommand());
-		//RobotMap.gyro.calibrate();
-		
+
+		//////////
 		// AUTO //
+		//////////
 		autoTest = new AutoTest();
 		easyAuto1 = new EasyAuto(1);
 		easyAuto2 = new EasyAuto(2);
@@ -139,7 +142,14 @@ public class Robot extends IterativeRobot {
 		autonomousChooser.addObject("MaxAutoStart3", maxAuto3);
 		
 		SmartDashboard.putData("Autonomous selector", autonomousChooser);
-		
+
+		//////////
+		// INIT //
+		//////////
+		Webcam.getInstance().startThread();
+		//chooser.addObject("My Auto", new MyAutoCommand());
+		//RobotMap.gyro.calibrate();
+
 		RobotMap.rollerEncoderCounter.setUpSource(RobotMap.rollerEncoder);
 		RobotMap.rollerEncoderCounter.setUpDownCounterMode();
 		RobotMap.rollerEncoderCounter.setDistancePerPulse(1.0);
@@ -149,39 +159,54 @@ public class Robot extends IterativeRobot {
 		oi = new OI();
 	}
 	
-	public void initSmartDashboard() {
-		
+	private void initSmartDashboard() {
+
+		/////////////
 		// CLIMBER //
+		/////////////
 		Robot.climber.initSmartDashboard();
 		SmartDashboard.putData("Climb", new Climb(1));
-		
-		// DRIVE ENCODERS //
+
+		////////////////
+		// DRIVETRAIN //
+		////////////////
 		SmartDashboard.putData(new ResetDriveEncoders());
 		SmartDashboard.putData("Drive 60 at 10 per second with encoders", new DriveWithMP(60, 10));
 		SmartDashboard.putData("Drive 100 at 30 per second with encoders", new DriveWithMP(100, 30));
 
+		//////////
 		// GYRO //
+		//////////
+
 		//SmartDashboard.putData("GyroTurn Absolute", new Turn(TurnType.ABSOLUTE, 90)); // Angle will be on SmartDashboard from the Turn command
 		//SmartDashboard.putData("GyroTurn Relative", new Turn(TurnType.RELATIVE, 90));
 		//SmartDashboard.putData("GyroPIDGo", new TunePID());
 
+		/////////////////
 		// BALL INTAKE //
+		/////////////////
 		SmartDashboard.putData("IntakeRollersForward", new SpinBallIntakeRollers(1));
 		SmartDashboard.putData("IntakeRollersBackward", new SpinBallIntakeRollers(-1));
 		SmartDashboard.putData("Intake Balls", new IntakeBalls());
-		
+
+		/////////////////
 		// GEAR INTAKE //
+		/////////////////
 		SmartDashboard.putData("Toggle Intake Flap", new ToggleIntakeFlap());
-		
+
+		///////////////
 		// CONVEYORS // The Conveyor, "Magic Carpet," is moved when `MoveElevator` is called
+		///////////////
 		//SmartDashboard.putData("MoveMagicCarpetForward", new MoveConveyor(RelativeDirection.YAxis.FORWARD));
 		//SmartDashboard.putData("MoveMagicCarpetBackward", new MoveConveyor(RelativeDirection.YAxis.BACKWARD));
 		SmartDashboard.putNumber("elevator Speed", 0.5);
 		SmartDashboard.putData("MoveElevatorUp", new MoveElevator(RelativeDirection.ZAxis.UP, 1));
 		SmartDashboard.putData("Fluff", new MoveElevator(RelativeDirection.ZAxis.DOWN,  SmartDashboard.getNumber("elevator Speed", 1)));
-		SmartDashboard.putData("MakeExtraSpace", new MakeExtraSpace());	
-		
+		SmartDashboard.putData("MakeExtraSpace", new MakeExtraSpace());
+
+		/////////////
 		// SHOOTER //
+		/////////////
 		SmartDashboard.putData(new SpinSpinners());
 		SmartDashboard.putData(new Shoot(false));
 		SmartDashboard.putData(new ShootWithPID());
@@ -195,14 +220,26 @@ public class Robot extends IterativeRobot {
 
 	@Override
 	public void robotPeriodic() {
-		SmartDashboard.putNumber("djyro", RobotMap.gyro.getAngle());
+
+		/////////////
+		// CLIMBER //
+		/////////////
+
 		Robot.climber.periodicSmartDashboard();
-		gearIntake.periodicSmartDashboard();
+
+		//////////
+		// GYRO //
+		//////////
 
 		//SDDumper.dumpPidController("Gyro", Robot.drivetrain.gyroPID);
-		//SmartDashboard.putNumber("Gyro Angle", RobotMap.gyro.getAngle());
+		SmartDashboard.putNumber("Gyro Angle", RobotMap.gyro.getAngle());
 		//drivetrain.gyroPID.setPID(SmartDashboard.getNumber("GyroP", 0),SmartDashboard.getNumber("GyroI", 0),SmartDashboard.getNumber("GyroD", 0));
 		//drivetrain.gyroPID.setSetpoint(SmartDashboard.getNumber("GyroSetpoint", 0));
+
+
+		////////////////
+		// DRIVETRAIN //
+		////////////////
 
 		SDDumper.dumpEncoder("Left encoder", RobotMap.leftEncoder);
 		SDDumper.dumpEncoder("Right encoder", RobotMap.rightEncoder);
@@ -223,12 +260,25 @@ public class Robot extends IterativeRobot {
 		Robot.drivetrain.rightPodPID.setSetpoint(SmartDashboard.getNumber("Left drivepod PID setpoint", 0));
 
 		SDDumper.dumpMisc();
-		
+
+		/////////////////
+		// GEAR INTAKE //
+		/////////////////
+
 		SmartDashboard.putNumber("Intake flap encoder1 position", RobotMap.leftIntakeFlapServo.get());
-		
+		gearIntake.periodicSmartDashboard();
+
+		///////////////////////
+		// TOUCHLESS ENCODER //
+		///////////////////////
+
 		SmartDashboard.putNumber("Touchless encoder count", RobotMap.rollerEncoderCounter.get());
 		SmartDashboard.putNumber("Touchless encoder rate", RobotMap.rollerEncoderCounter.getRate());
-		
+
+		/////////////
+		// SHOOTER //
+		/////////////
+
 		//System.out.println(RobotMap.rollerEncoderCounter.getRate());
 		SDDumper.dumpPidController("Shooter PID", Robot.shooter.shooterPIDController);
 		Robot.shooter.shooterPIDController.setSetpoint(SmartDashboard.getNumber("Edit Shooter PID setpoint", 0));
@@ -296,8 +346,6 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
-
-		final boolean encoderPIDStatus = Robot.drivetrain.isEncoderPIDEnabled();
 	}
 
 	/**
