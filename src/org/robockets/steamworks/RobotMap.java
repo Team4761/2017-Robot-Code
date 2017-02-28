@@ -70,7 +70,13 @@ public class RobotMap {
 	 * shooter roller is spinning.
 	 */
     public static DigitalInput rollerEncoder = new DigitalInput(2);
-    
+
+    // 3
+
+	// 4
+
+	// 5
+
 	/**
 	 * Encoder that goes on the right drivepod. For getting how fast the right
 	 * side of the robot is driving.
