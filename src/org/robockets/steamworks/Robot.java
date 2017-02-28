@@ -129,7 +129,7 @@ public class Robot extends IterativeRobot {
 		maxAuto2 = new MaxAuto(2);
 		maxAuto3 = new MaxAuto(3);
 		
-		autonomousChooser = new SendableChooser<>();
+		autonomousChooser = new SendableChooser<>(); // new SendableChooser<Command>(); is BAD!!!! Extra characters are unneeded!!!
 		autonomousChooser.addDefault("AutoTest", autoTest);
 		autonomousChooser.addObject("EasyAutoStart1", easyAuto1);
 		autonomousChooser.addObject("EasyAutoStart2", easyAuto2);
