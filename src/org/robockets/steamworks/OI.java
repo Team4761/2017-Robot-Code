@@ -89,15 +89,26 @@ public class OI {
     }
 
     private void bindButtons() {
-    	
+
+
+        /////////////////
+        // Gear Intake //
+        /////////////////
     	gearIntake1.whenPressed(new IntakeToPos(IntakeFlap.IntakeState.FUEL));
         gearIntake2.whenPressed(new IntakeToPos(IntakeFlap.IntakeState.GEARS));
-       //gearIntakeMan1.whileHeld(new MoveIntakeFlap(RelativeDirection.YAxis.FORWARD));
-       //gearIntakeMan2.whileHeld(new MoveIntakeFlap(RelativeDirection.YAxis.BACKWARD));
+        //gearIntakeMan1.whileHeld(new MoveIntakeFlap(RelativeDirection.YAxis.FORWARD));
+        //gearIntakeMan2.whileHeld(new MoveIntakeFlap(RelativeDirection.YAxis.BACKWARD));
+
+        /////////////
+        // Shooter //
+        /////////////
         shooterMan1.toggleWhenPressed(new SpinSpinners());
         shooter1.whileHeld(new Shoot(true));
         shooter2.whileHeld(new Shoot(false));
-        
+
+        /////////////////
+        // Ball Intake //
+        /////////////////
         /*ballIntake1.toggleWhenPressed(new SpinBallIntakeRollers(-1));
         ballIntake2.toggleWhenPressed(new IntakeBalls());*/
         
@@ -108,12 +119,17 @@ public class OI {
         ballIntakeMan1.whileHeld(new SpinBallIntakeRollers(1));
         ballIntakeMan2.whileHeld(new SpinBallIntakeRollers(-1)); // FIXME: Make this a relative direction thing
 
-        
-        // The horizonal conveyor, "Magic Carpet," is moved when `MoveElevator` is called
+        //////////////////
+        // Magic Carpet //
+        //////////////////
+        // The horizontal conveyor, "Magic Carpet," is moved when `MoveElevator` is called
         lifter1.whileHeld(new MakeExtraSpace());
         //lifterMan1.whileHeld(new MoveElevator(RelativeDirection.ZAxis.UP, 0.75, true));
         lifterMan1.whileHeld(new MoveElevator(RelativeDirection.ZAxis.DOWN, 0.75));
-	
+
+        /////////////
+        // Climber //
+        /////////////
         climber1.whileHeld(new Climb(1));
         climber2.whileHeld(new Climb(1));  
         /*
