@@ -155,7 +155,10 @@ public class Robot extends IterativeRobot {
 		RobotMap.rollerEncoderCounter.setDistancePerPulse(1.0);
 		
 		RobotMap.shooterRollerSpeedController.setInverted(true);
-		
+
+		RobotMap.leftEncoder.setDistancePerPulse(0.26592797783933518005540166204986);
+		RobotMap.rightEncoder.setDistancePerPulse(0.04164859002169197396963123644252);
+
 		oi = new OI();
 	}
 	
@@ -173,6 +176,17 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putData(new ResetDriveEncoders());
 		SmartDashboard.putData("Drive 60 at 10 per second with encoders", new DriveWithMP(60, 10));
 		SmartDashboard.putData("Drive 100 at 30 per second with encoders", new DriveWithMP(100, 30));
+
+		SmartDashboard.putNumber("Left drivepod PID P value", Robot.drivetrain.leftPodPID.getP());
+		SmartDashboard.putNumber("Left drivepod PID I value", Robot.drivetrain.leftPodPID.getI());
+		SmartDashboard.putNumber("Left drivepod PID D value", Robot.drivetrain.leftPodPID.getD());
+		SmartDashboard.putNumber("Left drivepod PID F value", Robot.drivetrain.leftPodPID.getF());
+
+		SmartDashboard.putNumber("Right drivepod PID P value", Robot.drivetrain.rightPodPID.getP());
+		SmartDashboard.putNumber("Right drivepod PID I value", Robot.drivetrain.rightPodPID.getI());
+		SmartDashboard.putNumber("Right drivepod PID D value", Robot.drivetrain.rightPodPID.getD());
+		SmartDashboard.putNumber("Right drivepod PID F value", Robot.drivetrain.rightPodPID.getF());
+
 
 		//////////
 		// GYRO //
@@ -244,8 +258,8 @@ public class Robot extends IterativeRobot {
 		SDDumper.dumpEncoder("Left encoder", RobotMap.leftEncoder);
 		SDDumper.dumpEncoder("Right encoder", RobotMap.rightEncoder);
 
-		SDDumper.dumpPidController("Left drivepod PID", drivetrain.leftPodPID);
-		SDDumper.dumpPidController("Right drivepod PID", drivetrain.rightPodPID);
+		//SDDumper.dumpPidController("Left drivepod PID", drivetrain.leftPodPID);
+		//SDDumper.dumpPidController("Right drivepod PID", drivetrain.rightPodPID);
 
 		// Use the SmartDashboard PID Values
 		Robot.drivetrain.leftPodPID.setPID(SmartDashboard.getNumber("Left drivepod PID P value", 0),
@@ -254,7 +268,7 @@ public class Robot extends IterativeRobot {
 		Robot.drivetrain.leftPodPID.setSetpoint(SmartDashboard.getNumber("Left drivepod PID setpoint", 0));
 
 		// Possibly?
-		Robot.drivetrain.rightPodPID.setPID(-SmartDashboard.getNumber("Left drivepod PID P value", 0),
+		Robot.drivetrain.rightPodPID.setPID(SmartDashboard.getNumber("Left drivepod PID P value", 0),
 				SmartDashboard.getNumber("Left drivepod PID I value", 0),
 				SmartDashboard.getNumber("Left drivepod PID D value", 0));
 		Robot.drivetrain.rightPodPID.setSetpoint(SmartDashboard.getNumber("Left drivepod PID setpoint", 0));

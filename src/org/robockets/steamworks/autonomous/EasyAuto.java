@@ -22,6 +22,7 @@ public class EasyAuto extends CommandGroup {
 	 */
 	public EasyAuto(int startingPos) {
 
+		/*
 		if (startingPos == 1) {
 			turnAngle = 60;
 			forwardDistance1 = 59.914;
@@ -34,12 +35,17 @@ public class EasyAuto extends CommandGroup {
 			forwardDistance1 = 93.25 - 35;
 		}
 
+
 		// FIXME: Values will be changed
 		addSequential(new DriveStraight(24, forwardDistance1));
 		if(turnAngle != 0 && forwardDistance2 != 0) {
 			addSequential(new Turn(TurnType.RELATIVE, turnAngle, 60));
 			//addSequential(new DriveStraight(forwardDistance2, 24)) ;
-		}
+		}*/
+
+		addSequential(new DriveStraight(3, 24));
+		//addSequential(new Turn(TurnType.RELATIVE, 45, 25));
+
 		// Align
 	}
 }
