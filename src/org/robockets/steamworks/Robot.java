@@ -92,6 +92,11 @@ public class Robot extends IterativeRobot {
 		////////////////
 		// SUBSYSTEMS //
 		////////////////
+
+		Webcam.getInstance().startThread();
+
+		oi = new OI();
+
 		ballIntake = new BallIntake();
 		elevator = new Elevator();
 		conveyor = new Conveyor();
@@ -108,12 +113,23 @@ public class Robot extends IterativeRobot {
 		//////////////
 		climb = new Climb(0.5);
 		drive = new Joyride();
-		toggleDriveMode = new ToggleDriveMode();	
+		toggleDriveMode = new ToggleDriveMode();
 
 		////////////////////
 		// SMARTDASHBOARD //
 		////////////////////
 		initSmartDashboard();
+		SmartDashboard.putNumber("GyroP", drivetrain.gyroPID.getP());
+		SmartDashboard.putNumber("GyroI", drivetrain.gyroPID.getI());
+		SmartDashboard.putNumber("GyroD", drivetrain.gyroPID.getD());
+		SmartDashboard.putNumber("GyroSetpoint", drivetrain.gyroPID.getSetpoint());
+
+		//SmartDashboard.putData("GyroPIDGo", new TunePID());
+		
+		// SmartDashboard
+		Robot.climber.initSmartDashboard(smartDashboardDebug);
+
+		SmartDashboard.putData(new ResetDriveEncoders());
 
 		//////////
 		// AUTO //

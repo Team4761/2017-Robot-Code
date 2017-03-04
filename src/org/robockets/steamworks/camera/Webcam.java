@@ -1,6 +1,17 @@
 package org.robockets.steamworks.camera;
 
+import java.util.ArrayList;
+import java.util.Collections;
+
+import org.opencv.core.CvType;
 import org.opencv.core.Mat;
+import org.opencv.core.MatOfPoint;
+import org.opencv.core.MatOfPoint2f;
+import org.opencv.core.Point;
+import org.opencv.core.Rect;
+import org.opencv.core.RotatedRect;
+import org.opencv.core.Scalar;
+import org.opencv.core.Size;
 import org.opencv.imgproc.Imgproc;
 import org.robockets.steamworks.RobotMap;
 
@@ -26,6 +37,7 @@ public class Webcam {
 	private static Webcam instance;
 	
 	private Webcam() {
+		System.out.println("webcam initialized");
 		camera = CameraServer.getInstance().startAutomaticCapture();
 		
 		resolutionChooser = new SendableChooser<Resolution>();
@@ -69,9 +81,56 @@ public class Webcam {
 		}
 	}
 	
+	private boolean isPegTape(MatOfPoint contour, Mat output) {
+		 /*
+		MatOfPoint2f mop2f = new MatOfPoint2f();
+		contour.convertTo(mop2f, CvType.CV_32FC2);
+		RotatedRect minAreaRect = Imgproc.minAreaRect(mop2f);
+		final double ratio = minAreaRect.size.width / minAreaRect.size.height;
+		if(ratio > 0.3 && ratio < 0.5) { */
+			ArrayList<MatOfPoint> temp = new ArrayList<MatOfPoint>();
+			temp.add(contour);
+			Imgproc.drawContours(output, temp, 0, new Scalar(0, 255, 0));
+			return true;
+		//}
+		//return false; */
+	}
+	
 	private void processFrame() {
 		cvSink.grabFrame(source);
-		Imgproc.cvtColor(source, output, Imgproc.COLOR_BGR2GRAY);
+		
+		/// Convert image to grayscale
+		Mat grayed = new Mat();
+		Imgproc.cvtColor(source, grayed, Imgproc.COLOR_BGR2GRAY);
+		
+		/// Threshold with Otsu's method
+		Mat thresholded = new Mat();
+		Imgproc.threshold(grayed, thresholded, 0, 255, Imgproc.THRESH_BINARY + Imgproc.THRESH_OTSU);
+		
+		/// Open (erode, followed by a dilate)
+		Mat opened = new Mat();
+		Imgproc.morphologyEx(thresholded, opened, Imgproc.MORPH_OPEN, new Mat());
+		
+		/// Canny
+		Mat cannyOut = new Mat();
+		Imgproc.Canny(opened, cannyOut, 100, 200);
+		
+		/// Find contours
+		ArrayList<MatOfPoint> contours = new ArrayList<MatOfPoint>();
+		Imgproc.findContours(cannyOut, contours, new Mat(), Imgproc.RETR_TREE, Imgproc.CHAIN_APPROX_SIMPLE);
+		
+		/// Filter and draw contours
+		output = Mat.zeros(source.size(), CvType.CV_8UC1);
+		int acceptableContourCount = 0;
+		for(MatOfPoint contour : contours) {
+			if(acceptableContourCount >= 2) break;
+			if(isPegTape(contour, output)) {
+				System.out.println("found contour");
+				acceptableContourCount++;
+			}
+		}
+		
+		cannyOut.copyTo(output);
 		processedOutputStream.putFrame(output);
 	}
 	
