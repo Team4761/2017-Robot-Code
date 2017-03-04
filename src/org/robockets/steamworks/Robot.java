@@ -128,7 +128,7 @@ public class Robot extends IterativeRobot {
 		//SmartDashboard.putData("GyroPIDGo", new TunePID());
 		
 		// SmartDashboard
-		Robot.climber.initSmartDashboard(smartDashboardDebug);
+		Robot.climber.initSmartDashboard();
 
 		SmartDashboard.putData(new ResetDriveEncoders());
 
