@@ -81,13 +81,13 @@ public class RobotMap {
 	 * Encoder that goes on the right drivepod. For getting how fast the right
 	 * side of the robot is driving.
 	 */
-	public static Encoder rightEncoder = new Encoder(6, 7);
+	public static Encoder rightEncoder = new Encoder(8, 9);
     
 	/**
 	 * Encoder that goes on the left drivepod. For getting how fast the left
 	 * side of the robot is driving.
 	 */
-	public static Encoder leftEncoder = new Encoder(8, 9);
+	public static Encoder leftEncoder = new Encoder(4, 5);
 
     ///////////
     /// SPI ///
