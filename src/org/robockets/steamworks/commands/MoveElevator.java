@@ -12,23 +12,23 @@ import org.robockets.steamworks.Robot;
 public class MoveElevator extends Command {
 
 	private RelativeDirection.ZAxis elevatorDirection;
-	private RelativeDirection.YAxis conveyorDirection;
+	//private RelativeDirection.YAxis conveyorDirection;
 
 	private double time;
 	private boolean forever;
 	private double speed;
-	private boolean isConveyorRandom;
+	//private boolean isConveyorRandom;
 	
 	private Timer timer;
 
-	private final int CONVEYOR_DIRECTION_MAX_TIME = 3; // In seconds
+	//private final int CONVEYOR_DIRECTION_MAX_TIME = 3; // In seconds
 	
 	public MoveElevator(RelativeDirection.ZAxis elevatorDirection, double speed) {
 		this.elevatorDirection = elevatorDirection;
-		conveyorDirection = (this.elevatorDirection == RelativeDirection.ZAxis.UP) ? RelativeDirection.YAxis.FORWARD : RelativeDirection.YAxis.BACKWARD;
+		//conveyorDirection = (this.elevatorDirection == RelativeDirection.ZAxis.UP) ? RelativeDirection.YAxis.FORWARD : RelativeDirection.YAxis.BACKWARD;
 		forever = true;
 		this.speed = speed;
-		this.isConveyorRandom = false;
+		//this.isConveyorRandom = false;
 	}
 
 	public MoveElevator(RelativeDirection.ZAxis elevatorDirection, double time, double speed) {
@@ -36,18 +36,19 @@ public class MoveElevator extends Command {
 		// requires(Robot.shooter);
 		this.elevatorDirection = elevatorDirection;
 		this.time = time;
-		conveyorDirection = (this.elevatorDirection == RelativeDirection.ZAxis.UP) ? RelativeDirection.YAxis.FORWARD : RelativeDirection.YAxis.BACKWARD;
+		//conveyorDirection = (this.elevatorDirection == RelativeDirection.ZAxis.UP) ? RelativeDirection.YAxis.FORWARD : RelativeDirection.YAxis.BACKWARD;
 		forever = false;
 		this.speed = speed;
-		this.isConveyorRandom = false;
+		//this.isConveyorRandom = false;
 	}
 
+	@Deprecated
 	public MoveElevator(RelativeDirection.ZAxis elevatorDirection, double speed, boolean isConveyorRandom) {
 		this.elevatorDirection = elevatorDirection;
-		conveyorDirection = (this.elevatorDirection == RelativeDirection.ZAxis.UP) ? RelativeDirection.YAxis.FORWARD : RelativeDirection.YAxis.BACKWARD;
+		//conveyorDirection = (this.elevatorDirection == RelativeDirection.ZAxis.UP) ? RelativeDirection.YAxis.FORWARD : RelativeDirection.YAxis.BACKWARD;
 		forever = true;
 		this.speed = speed;
-		this.isConveyorRandom = isConveyorRandom;
+		//this.isConveyorRandom = isConveyorRandom;
 	}
 
 	protected void initialize() {
@@ -61,7 +62,7 @@ public class MoveElevator extends Command {
 	protected void execute() {
 		Robot.elevator.moveElevator(elevatorDirection, speed);
 
-		if (isConveyorRandom) {			
+		/*if (isConveyorRandom) {
 			if (conveyorDirection == RelativeDirection.YAxis.FORWARD) {
 				if (timer.get() >= CONVEYOR_DIRECTION_MAX_TIME) {
 					switchConveyorDirection();
@@ -78,7 +79,7 @@ public class MoveElevator extends Command {
 		}
 		System.out.println(conveyorDirection.toString());
 
-		Robot.conveyor.moveConveyor(conveyorDirection, speed);
+		Robot.conveyor.moveConveyor(conveyorDirection, speed);*/
 	}
 
 	protected boolean isFinished() {
@@ -87,18 +88,19 @@ public class MoveElevator extends Command {
 
 	protected void end() {
 		Robot.elevator.stop();
-		Robot.conveyor.stop();
+		//Robot.conveyor.stop();
 	}
 
 	protected void interrupted() {
 		end();
 	}
 
+	@Deprecated
 	private void switchConveyorDirection() {
-		if (conveyorDirection == RelativeDirection.YAxis.FORWARD) {
+		/*if (conveyorDirection == RelativeDirection.YAxis.FORWARD) {
 			conveyorDirection = RelativeDirection.YAxis.BACKWARD;
 		} else {
 			conveyorDirection = RelativeDirection.YAxis.FORWARD;
-		}
+		}*/
 	}
 }
