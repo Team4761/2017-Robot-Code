@@ -32,7 +32,7 @@ import org.robockets.steamworks.shooter.SpinSpinners;
 import org.robockets.steamworks.subsystems.Conveyor;
 import org.robockets.steamworks.subsystems.Elevator;
 import org.robockets.steamworks.subsystems.GearIntake;
-import org.robockets.steamworks.subsystems.LED;
+import org.robockets.steamworks.lights.LED;
 import org.robockets.steamworks.intakeflap.IntakeFlap;
 import org.robockets.steamworks.intakeflap.ToggleIntakeFlap;
 import org.robockets.steamworks.lights.Cylon;
