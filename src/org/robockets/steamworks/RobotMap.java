@@ -1,5 +1,7 @@
 package org.robockets.steamworks;
 
+import org.robockets.steamworks.drivetrain.DrivePodOutput;
+
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.Counter;
 import edu.wpi.first.wpilibj.DigitalInput;

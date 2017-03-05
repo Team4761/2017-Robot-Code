@@ -40,7 +40,6 @@ public class Joyride extends Command {
     		SmartDashboard.putNumber("LeftStickVal", leftStick);
     		SmartDashboard.putNumber("RightStickVal", rightStick);
     		RobotMap.robotDrive.tankDrive(leftStick, rightStick);
-    		
     	}
     }
 
