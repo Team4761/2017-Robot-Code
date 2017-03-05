@@ -2,6 +2,11 @@ package org.robockets.steamworks.camera;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
+import java.util.function.Function;
+import java.util.function.ToDoubleFunction;
+import java.util.function.ToIntFunction;
+import java.util.function.ToLongFunction;
 
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
@@ -119,6 +124,8 @@ public class Webcam {
 		ArrayList<MatOfPoint> contours = new ArrayList<MatOfPoint>();
 		Imgproc.findContours(cannyOut, contours, new Mat(), Imgproc.RETR_TREE, Imgproc.CHAIN_APPROX_SIMPLE);
 		
+		Collections.sort(contours, contourAreaComparator);
+		
 		/// Filter and draw contours
 		output = Mat.zeros(source.size(), CvType.CV_8UC1);
 		int acceptableContourCount = 0;
@@ -133,6 +140,13 @@ public class Webcam {
 		cannyOut.copyTo(output);
 		processedOutputStream.putFrame(output);
 	}
+	
+	private Comparator<MatOfPoint> contourAreaComparator = new Comparator<MatOfPoint>() {
+		@Override
+		public int compare(MatOfPoint c1, MatOfPoint c2) {
+			return (int) (Imgproc.contourArea(c1) - Imgproc.contourArea(c2));
+		}
+	};
 	
 	public void startThread() {
 		Thread t = new Thread() {
