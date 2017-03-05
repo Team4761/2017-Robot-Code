@@ -11,10 +11,10 @@ import org.robockets.steamworks.Robot;
  */
 public class MoveConveyor extends Command {
 
-    double time = 0;
-    boolean forever;
+    private double time = 0;
+    private boolean forever;
 
-    RelativeDirection.YAxis direction;
+    private RelativeDirection.YAxis direction;
 
     /**
      * Move conveyor for a certain amount of time
@@ -47,10 +47,7 @@ public class MoveConveyor extends Command {
     }
 
     protected boolean isFinished() {
-    	if(!forever) {
-    		return isTimedOut();
-    	}
-        return false;
+        return !forever && isTimedOut();
     }
 
     protected void end() {

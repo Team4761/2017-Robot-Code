@@ -1,9 +1,7 @@
 package org.robockets.steamworks.intakeflap;
 
 import org.robockets.steamworks.Robot;
-import org.robockets.steamworks.RobotMap;
 
-import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**

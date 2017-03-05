@@ -148,7 +148,7 @@ public class Drivetrain extends Subsystem {
      * @param radius Radius of the circle
      * @return Returns the arc length, in inches
      */
-    public double calculateArcLength(double chordLength, double radius) {
+    private double calculateArcLength(double chordLength, double radius) {
     	return Math.toRadians(Math.asin(chordLength / radius/ 2)) * 96;
     }
     
@@ -191,11 +191,8 @@ public class Drivetrain extends Subsystem {
      * @return Returns true or false
      */
     public boolean isEncoderPIDEnabled() {
-    	if(leftPodPID.isEnabled() && rightPodPID.isEnabled()) {
-    		return true;
-    	}
-    	return false;
-    }
+		return leftPodPID.isEnabled() && rightPodPID.isEnabled();
+	}
     
     /**
      * A method to disable the encoder PIDs

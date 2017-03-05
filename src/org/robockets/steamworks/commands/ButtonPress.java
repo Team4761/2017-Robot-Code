@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class ButtonPress extends Command {
 
-	LightsColors type;
+	private LightsColors type;
 	
     public ButtonPress(LightsColors type) {
     	requires(Robot.ledSubsystem);
