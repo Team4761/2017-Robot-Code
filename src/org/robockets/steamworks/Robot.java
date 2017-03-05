@@ -18,7 +18,6 @@ import org.robockets.steamworks.ballintake.IntakeBalls;
 import org.robockets.steamworks.camera.Webcam;
 import org.robockets.steamworks.climber.Climb;
 import org.robockets.steamworks.climber.Climber;
-import org.robockets.steamworks.commands.Cylon;
 import org.robockets.steamworks.commands.MakeExtraSpace;
 import org.robockets.steamworks.commands.MoveElevator;
 import org.robockets.steamworks.commands.Shoot;
@@ -32,10 +31,11 @@ import org.robockets.steamworks.drivetrain.ToggleDriveMode;
 import org.robockets.steamworks.subsystems.Conveyor;
 import org.robockets.steamworks.subsystems.Elevator;
 import org.robockets.steamworks.subsystems.GearIntake;
-import org.robockets.steamworks.subsystems.LED;
 import org.robockets.steamworks.subsystems.Shooter;
 import org.robockets.steamworks.intakeflap.IntakeFlap;
 import org.robockets.steamworks.intakeflap.ToggleIntakeFlap;
+import org.robockets.steamworks.lights.Cylon;
+import org.robockets.steamworks.lights.LED;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -158,6 +158,7 @@ public class Robot extends IterativeRobot {
 		RobotMap.rightEncoder.setDistancePerPulse(0.04164859002169197396963123644252);
 
 		oi = new OI();
+		Robot.ledSubsystem.cylon(56);
 	}
 	
 	private void initSmartDashboard() {
