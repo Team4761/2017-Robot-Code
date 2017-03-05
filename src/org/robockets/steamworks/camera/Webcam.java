@@ -28,7 +28,7 @@ public class Webcam {
 	private Webcam() {
 		camera = CameraServer.getInstance().startAutomaticCapture();
 		
-		resolutionChooser = new SendableChooser<Resolution>();
+		resolutionChooser = new SendableChooser<>();
 		resolutionChooser.addDefault("320x240", new Resolution(320, 240));
 		resolutionChooser.addObject("640x480", new Resolution(640, 480));
 		resolutionChooser.addObject("160x120", new Resolution(160, 120));
