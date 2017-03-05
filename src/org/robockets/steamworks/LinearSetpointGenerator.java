@@ -68,8 +68,6 @@ public class LinearSetpointGenerator implements Iterator<Double> {
 
 	@Override
 	public void forEachRemaining(Consumer<? super Double> arg0) {
-		// TODO Implement this?
-		
 	}
 
 	/**
@@ -90,8 +88,6 @@ public class LinearSetpointGenerator implements Iterator<Double> {
 
 	@Override
 	public void remove() {
-		// TODO Implement this?
-		
 	}
 	
 }

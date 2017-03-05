@@ -28,6 +28,7 @@ public class DriveWithMP extends Command {
     }
 
     protected void initialize() {
+    	Robot.drivetrain.resetEncoders();
     	mp = new LinearSetpointGenerator(targetPosition , velocity, RobotMap.leftEncoder.getDistance());
     	Robot.drivetrain.leftPodPID.enable();
     	Robot.drivetrain.rightPodPID.enable();
@@ -43,6 +44,7 @@ public class DriveWithMP extends Command {
     }
 
     protected void end() {
+    	Robot.drivetrain.stop();
     	Robot.drivetrain.disableEncoderPID();
     }
 

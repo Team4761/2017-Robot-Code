@@ -1,12 +1,14 @@
 package org.robockets.steamworks;
 
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
+import edu.wpi.first.wpilibj.Counter;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.SPI;
+import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.I2C.Port;
 
@@ -22,63 +24,70 @@ public class RobotMap {
 	/// PWM ///
 	///////////
 	
+    public static Victor elevatorSpeedController = new Victor(0);
+
+    public static Victor shooterRollerSpeedController = new Victor(1);
     /**
      * Speed controller for the motor that is used to climb up rope. This might
      * control two motors someday.
      */
-    public static Victor climberSpeedController = new Victor(0); //TODO: get real port
+    public static Victor climberSpeedController = new Victor(2);
 
-    public static Victor shooterRollerSpeedController = new Victor(1); //TODO: get real port
+    public static Victor conveyorSpeedController = new Victor(3);
 
-    public static Victor conveyorSpeedControllerOne = new Victor(2); //TODO: get real port
-    public static Victor conveyorSpeedControllerTwo = new Victor(3); //TODO: get real port
-    
     /**
      * Speed controller for right side of the robot.
      */
-    public static Victor leftDrivepodSpeedController = new Victor(4);
+    public static Victor rightDrivepodSpeedController = new Victor(4);
     
     /**
      * Speed controller for the left side of the robot.
      */
-    public static Victor rightDrivepodSpeedController = new Victor(5);
+    public static Victor leftDrivepodSpeedController = new Victor(5);
     
-    // VICTOR #6 would go here
+    public static Victor climberSpeedController2 = new Victor(6);
     
     /**
      * Speed controller for the roller at the bottom of the robot that sucks
      * fuel balls in.
      */
-    public static Victor ballIntakeRollerSpeedController = new Victor(7); //TODO: get real port
+    public static Victor ballIntakeRollerSpeedController = new Victor(7);
+  
+    public static Servo leftIntakeFlapServo = new Servo(8);
     
-    // VICTOR #8 would go here
-    
-    // VICTOR #9 would go here
+    public static Servo rightIntakeFlapServo = new Servo(9);
 
 	//////////////////
 	/// Digital IO ///
 	//////////////////
 	
-	/**
-	 * Encoder that goes on the left drivepod. For getting how fast the left
-	 * side of the robot is driving.
-	 */
-	public static Encoder leftEncoder = new Encoder(1, 0);
-	
-	/**
-	 * Encoder that goes on the right drivepod. For getting how fast the right
-	 * side of the robot is driving.
-	 */
-	public static Encoder rightEncoder = new Encoder(2, 3);
-	
-    public static DigitalInput gearInputBreakbeamSensor = new DigitalInput(5);
+    public static DigitalInput gearInputBreakbeamSensor = new DigitalInput(0);
+    
+    public static DigitalInput elevatorBreakbeamSensor =  new DigitalInput(1);
 	
 	/**
 	 * Encoder that goes on the shooter roller. For getting how fast the
 	 * shooter roller is spinning.
 	 */
-    public static Encoder rollerEncoder = new Encoder(8, 9);
+    public static DigitalInput rollerEncoder = new DigitalInput(2);
 
+    // 3
+
+	// 4
+
+	// 5
+
+	/**
+	 * Encoder that goes on the right drivepod. For getting how fast the right
+	 * side of the robot is driving.
+	 */
+	public static Encoder rightEncoder = new Encoder(4, 5);
+    
+	/**
+	 * Encoder that goes on the left drivepod. For getting how fast the left
+	 * side of the robot is driving.
+	 */
+	public static Encoder leftEncoder = new Encoder(9, 8);
 
     ///////////
     /// SPI ///
@@ -123,8 +132,15 @@ public class RobotMap {
     /**
      * PDP port that the climber's motor is attached to.
      */
-    public static final int climberPdpPort = 1;
+    public static final int climberPdpPort = 14;
     
+    public static final double INTAKE_FLAP_GEARS_LEFT_POS = 0.25;
+    public static final double INTAKE_FLAP_GEARS_RIGHT_POS = 0.80;
+    public static final double INTAKE_FLAP_FUEL_LEFT_POS = 0.80;
+    public static final double INTAKE_FLAP_FUEL_RIGHT_POS = 0.25;
+    
+    public static Counter rollerEncoderCounter = new Counter();
+
     public class SmartDashboardKey {
     	public static final String kCameraExposure = "Camera exposure";
     	public static final String kVideoFeedResolution = "Video feed resolution";

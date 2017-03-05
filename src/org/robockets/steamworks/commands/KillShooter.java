@@ -1,19 +1,21 @@
-package org.robockets.steamworks.drivetrain;
+package org.robockets.steamworks.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
+
 import org.robockets.steamworks.Robot;
 
 /**
  * @author Jake Backer
  */
-public class ResetDriveEncoders extends Command {
+public class KillShooter extends Command {
 
-	public ResetDriveEncoders() {
-
+	public KillShooter() {
+		requires(Robot.shooter);
 	}
 
 	protected void initialize() {
-		Robot.drivetrain.resetEncoders();
+		Robot.shooter.stop();
+		Robot.elevator.stop();
 	}
 
 	protected void execute() {

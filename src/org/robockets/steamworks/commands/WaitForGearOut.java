@@ -1,26 +1,26 @@
-package org.robockets.steamworks.drivetrain;
+package org.robockets.steamworks.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
+
 import org.robockets.steamworks.Robot;
 
 /**
  * @author Jake Backer
  */
-public class ResetDriveEncoders extends Command {
+public class WaitForGearOut extends Command {
 
-	public ResetDriveEncoders() {
+	public WaitForGearOut() {
 
 	}
 
 	protected void initialize() {
-		Robot.drivetrain.resetEncoders();
 	}
 
 	protected void execute() {
 	}
 
 	protected boolean isFinished() {
-		return true;
+		return !Robot.gearIntake.isGearInRobot();
 	}
 
 	protected void end() {

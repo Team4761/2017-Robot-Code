@@ -3,23 +3,16 @@ package org.robockets.steamworks;
 import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.SpeedController;
 
-/**
- * PIDOutput used for drivepods
- */
-public class DrivePodOutput implements PIDOutput {
+public class ShooterPIDOutput implements PIDOutput {
 
 	private SpeedController c;
 
-	/**
-	 * @param c Speed controller
-	 */
-	public DrivePodOutput(SpeedController c) {
+	public ShooterPIDOutput (SpeedController c) {
 		this.c = c;
 	}
-	
+
 	@Override
 	public void pidWrite(double output) {
 		c.set(output);
 	}
-
 }

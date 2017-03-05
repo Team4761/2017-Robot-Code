@@ -1,6 +1,7 @@
 package org.robockets.steamworks.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
+
 import org.robockets.steamworks.Robot;
 
 /**
@@ -8,19 +9,32 @@ import org.robockets.steamworks.Robot;
  */
 public class SpinSpinners extends Command {
 
+    private double time;
+    private boolean isForever;
+
     public SpinSpinners() {
         requires(Robot.shooter);
+        isForever = true;
+    }
+
+    public SpinSpinners(double time) {
+        requires(Robot.shooter);
+        this.time = time;
+        isForever = false;
     }
 
     protected void initialize() {
+        if (!isForever) {
+            setTimeout(time);
+        }
     }
 
     protected void execute() {
-        Robot.shooter.spinUp();
+        Robot.shooter.spinUp(1);
     }
 
     protected boolean isFinished() {
-        return false;
+        return !isForever && isTimedOut();
     }
 
     protected void end() {
