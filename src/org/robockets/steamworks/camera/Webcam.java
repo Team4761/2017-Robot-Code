@@ -76,13 +76,16 @@ public class Webcam {
 	}
 	
 	public void startThread() {
-		Thread t = new Thread(() -> {
-			while(!Thread.interrupted()) {
-				updateResolution();
-				updateExposure();
-				processFrame();
+		Thread t = new Thread() {
+			@Override
+			public void run() {
+				while (!Thread.interrupted()) {
+					updateResolution();
+					updateExposure();
+					processFrame();
+				}
 			}
-		});
+		};
 		
 		t.start();
 	}
