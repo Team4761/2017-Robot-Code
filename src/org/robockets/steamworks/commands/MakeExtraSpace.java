@@ -19,7 +19,7 @@ public class MakeExtraSpace extends Command {
 	}
 
 	protected void execute() {
-		Robot.conveyor.moveConveyor(RelativeDirection.YAxis.FORWARD, 0.25);
+		//Robot.conveyor.moveConveyor(RelativeDirection.YAxis.FORWARD, 0.25);
 		Robot.elevator.moveElevator(RelativeDirection.ZAxis.UP, 0.25);
 	}
 
@@ -29,7 +29,7 @@ public class MakeExtraSpace extends Command {
 	}
 
 	protected void end() {
-		Robot.conveyor.stop();
+		//Robot.conveyor.stop();
 	}
 
 	protected void interrupted() {

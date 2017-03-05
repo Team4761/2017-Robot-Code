@@ -1,6 +1,8 @@
 package org.robockets.steamworks.drivetrain;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 import org.robockets.steamworks.OI;
 import org.robockets.steamworks.Robot;
 import org.robockets.steamworks.RobotMap;
@@ -21,7 +23,7 @@ public class Joyride extends Command {
     }
 
     protected void initialize() {
-    	ToggleDriveMode.isArcade = false;
+    	ToggleDriveMode.isArcade = true;
     }
 
     protected void execute() {  	
@@ -29,15 +31,17 @@ public class Joyride extends Command {
     		translate = OI.joystick.getRawAxis(1);
         	rotate = OI.joystick.getRawAxis(4);	
         	
-        	RobotMap.robotDrive.arcadeDrive(translate, rotate);
+        	RobotMap.robotDrive.arcadeDrive(-translate, -rotate);
     	} else {
     		leftStick = OI.attack3Left.getRawAxis(1);
     		rightStick = OI.attack3Right.getRawAxis(1);
-    		leftStick /= 2;
-    		rightStick /= 2;
+    		leftStick /= -2;
+    		rightStick /= -2;
     		leftStick *= 1 - OI.attack3Left.getRawAxis(2);
     		rightStick *= 1 - OI.attack3Right.getRawAxis(2);
 
+    		SmartDashboard.putNumber("LeftStickVal", leftStick);
+    		SmartDashboard.putNumber("RightStickVal", rightStick);
     		RobotMap.robotDrive.tankDrive(leftStick, rightStick);
     		
     	}

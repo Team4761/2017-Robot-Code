@@ -12,7 +12,7 @@ public class KillEverything extends Command {
     public KillEverything() {
 		requires(Robot.ballIntake);
 		requires(Robot.elevator);
-		requires(Robot.conveyor);
+		//requires(Robot.conveyor);
 		requires(Robot.climber);
 		requires(Robot.drivetrain);
 		requires(Robot.shooter);
@@ -24,7 +24,7 @@ public class KillEverything extends Command {
     protected void initialize() {
 		Robot.ballIntake.stopRollers();
 		Robot.elevator.stop();
-		Robot.conveyor.stop();
+		//Robot.conveyor.stop();
 		Robot.climber.stop();
 		Robot.drivetrain.stop();
 		Robot.shooter.stop();

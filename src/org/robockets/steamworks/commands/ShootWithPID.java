@@ -1,4 +1,4 @@
-package org.robockets.steamworks.intakeflap;
+package org.robockets.steamworks.commands;
 
 import org.robockets.steamworks.Robot;
 
@@ -7,31 +7,37 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class ToggleIntakeFlap extends Command {
-    public ToggleIntakeFlap() {
-    	requires(Robot.intakeFlap);
+public class ShootWithPID extends Command {
+
+	private double speed;
+	
+    public ShootWithPID() {
+        requires(Robot.shooter);
+        this.speed = 50;
+    }
+    
+    public ShootWithPID(double speed) {
+    	this.speed = speed;
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	//s2.free();
-    	//setTimeout(1);
-		Robot.intakeFlap.toggle();
+    	Robot.shooter.shooterPIDController.enable();
+    	Robot.shooter.shooterPIDController.setSetpoint(speed);
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	//s2.setSpeed(0.5);
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return true;
+        return false;
     }
 
     // Called once after isFinished returns true
     protected void end() {
-    	//s2.setSpeed(0.0);
+    	Robot.shooter.shooterPIDController.disable();
     }
 
     // Called when another command which requires one or more of the same

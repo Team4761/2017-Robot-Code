@@ -28,7 +28,7 @@ public class Webcam {
 	private Webcam() {
 		camera = CameraServer.getInstance().startAutomaticCapture();
 		
-		resolutionChooser = new SendableChooser<Resolution>();
+		resolutionChooser = new SendableChooser<>();
 		resolutionChooser.addDefault("320x240", new Resolution(320, 240));
 		resolutionChooser.addObject("640x480", new Resolution(640, 480));
 		resolutionChooser.addObject("160x120", new Resolution(160, 120));
@@ -79,7 +79,7 @@ public class Webcam {
 		Thread t = new Thread() {
 			@Override
 			public void run() {
-				while(!Thread.interrupted()) {
+				while (!Thread.interrupted()) {
 					updateResolution();
 					updateExposure();
 					processFrame();
@@ -91,8 +91,8 @@ public class Webcam {
 	}
 	
 	private class Resolution {
-		public final int width;
-		public final int height;
+		final int width;
+		final int height;
 		
 		public Resolution(int width, int height) {
 			this.width  = width;

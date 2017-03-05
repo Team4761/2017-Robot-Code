@@ -3,13 +3,14 @@ package org.robockets.steamworks.intakeflap;
 import edu.wpi.first.wpilibj.command.Command;
 
 import org.robockets.steamworks.Robot;
+import org.robockets.steamworks.RobotMap;
 
 /**
  * @author Jake Backer
  */
 public class IntakeToPos extends Command {
 
-	IntakeFlap.IntakeState state;
+	private IntakeFlap.IntakeState state;
 
 	public IntakeToPos(IntakeFlap.IntakeState state) {
 		this.state = state;
@@ -18,11 +19,10 @@ public class IntakeToPos extends Command {
 	protected void initialize() {
 		Robot.intakeFlap.setState(state);
 		//setTimeout(2);// Time to move
-		if(state == IntakeFlap.IntakeState.FUEL) {
-			Robot.intakeFlap.setPosition(0);
-			
+		if(state == IntakeFlap.IntakeState.GEARS) {
+			Robot.intakeFlap.setPosition(RobotMap.INTAKE_FLAP_FUEL_LEFT_POS, RobotMap.INTAKE_FLAP_FUEL_RIGHT_POS);
 		} else {
-			Robot.intakeFlap.setPosition(45);
+			Robot.intakeFlap.setPosition(RobotMap.INTAKE_FLAP_GEARS_LEFT_POS, RobotMap.INTAKE_FLAP_GEARS_RIGHT_POS);
 		}
 	}
 
@@ -35,7 +35,7 @@ public class IntakeToPos extends Command {
 	}
 
 	protected void end() {
-		Robot.intakeFlap.stop();
+		//Robot.intakeFlap.stop();
 	}
 
 	protected void interrupted() {

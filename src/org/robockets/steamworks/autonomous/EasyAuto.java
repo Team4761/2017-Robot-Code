@@ -1,9 +1,10 @@
 package org.robockets.steamworks.autonomous;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
+import edu.wpi.first.wpilibj.command.WaitCommand;
 
 import org.robockets.steamworks.TurnType;
-import org.robockets.steamworks.drivetrain.DriveWithMP;
+import org.robockets.steamworks.drivetrain.DriveStraight;
 import org.robockets.steamworks.drivetrain.Turn;
 
 /**
@@ -21,6 +22,7 @@ public class EasyAuto extends CommandGroup {
 	 */
 	public EasyAuto(int startingPos) {
 
+		/*
 		if (startingPos == 1) {
 			turnAngle = 60;
 			forwardDistance1 = 59.914;
@@ -30,15 +32,20 @@ public class EasyAuto extends CommandGroup {
 			forwardDistance1 = 60.785;
 			forwardDistance2 = 74.575;
 		} else {
-			forwardDistance1 = 93.25;
+			forwardDistance1 = 93.25 - 35;
 		}
 
+
 		// FIXME: Values will be changed
-		addSequential(new DriveWithMP(forwardDistance1, 24));
+		addSequential(new DriveStraight(24, forwardDistance1));
 		if(turnAngle != 0 && forwardDistance2 != 0) {
-			addSequential(new Turn(TurnType.RELATIVE, turnAngle, Turn.TurnControllerType.GYRO));
-			addSequential(new DriveWithMP(forwardDistance2, 24)) ;
-		}
+			addSequential(new Turn(TurnType.RELATIVE, turnAngle, 60));
+			//addSequential(new DriveStraight(forwardDistance2, 24)) ;
+		}*/
+
+		addSequential(new DriveStraight(3, 24));
+		//addSequential(new Turn(TurnType.RELATIVE, 45, 25));
+
 		// Align
 	}
 }

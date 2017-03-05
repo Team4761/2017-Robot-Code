@@ -9,8 +9,8 @@ import org.robockets.steamworks.Robot;
  */
 public class SpinSpinners extends Command {
 
-    double time;
-    boolean isForever;
+    private double time;
+    private boolean isForever;
 
     public SpinSpinners() {
         requires(Robot.shooter);
@@ -30,15 +30,11 @@ public class SpinSpinners extends Command {
     }
 
     protected void execute() {
-        Robot.shooter.spinUp(-1);
+        Robot.shooter.spinUp(1);
     }
 
     protected boolean isFinished() {
-        if (!isForever) {
-            return isTimedOut();
-        } else {
-            return false;
-        }
+        return !isForever && isTimedOut();
     }
 
     protected void end() {

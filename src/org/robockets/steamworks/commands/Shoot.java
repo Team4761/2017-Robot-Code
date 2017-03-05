@@ -12,20 +12,19 @@ import org.robockets.commons.RelativeDirection;
  */
 public class Shoot extends CommandGroup {
 
-    public Shoot() {
-        addParallel(new SpinSpinners());
+    public Shoot(boolean usePID) {
+    	if (!usePID) {
+    		addParallel(new SpinSpinners());
 
-        addSequential(new WaitCommand(0.1));
-        
-        addSequential(new MoveConveyor(RelativeDirection.YAxis.FORWARD)); // This will also be changed
+        	addSequential(new WaitCommand(3));
 
-        addSequential(new WaitCommand(2));
+        	addParallel(new MoveElevator(RelativeDirection.ZAxis.UP, 0.9));
 
-        addParallel(new MoveElevator(RelativeDirection.ZAxis.UP, 1));
-
-        addSequential(new WaitCommand(2)); // Time for it to shoot
-
-        addSequential(new KillShooter());
+    	} else {
+    		addParallel(new ShootWithPID(60));
+    		addSequential(new WaitUntilSpeed());
+    		addParallel(new MoveElevator(RelativeDirection.ZAxis.UP, 0.9));
+    	}
     }
     
     protected void initialize() {

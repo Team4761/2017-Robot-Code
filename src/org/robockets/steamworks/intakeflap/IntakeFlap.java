@@ -32,34 +32,34 @@ public class IntakeFlap extends Subsystem {
     	this.speed = speed / 2; // This gets added onto the "stopped" speed of 0.5. The scale for the arguments is just 0...1 to be familiar
     }
     
-    public void setPosition(double pos) {
-    	RobotMap.intakeFlapServo1.setAngle(pos);
-    	RobotMap.intakeFlapServo2.setAngle(180 - pos);
+    public void setPosition(double leftPos, double rightPos) {
+    	RobotMap.leftIntakeFlapServo.set(leftPos);
+    	RobotMap.rightIntakeFlapServo.set(rightPos);
     }
 
     @Deprecated
     public void start() {
-    	RobotMap.intakeFlapServo1.set(1 + (speed * lastState.factor));
+    	RobotMap.leftIntakeFlapServo.set(1 + (speed * lastState.factor));
     }
 
     public void move(double speed) {
-		RobotMap.intakeFlapServo1.set(speed);
-		RobotMap.intakeFlapServo1.set(180 - speed);
+		RobotMap.leftIntakeFlapServo.set(speed);
+		RobotMap.leftIntakeFlapServo.set(180 - speed);
 	}
 
 	public void toggle() {
     	if (lastState == IntakeState.GEARS) {
-    		setPosition(45);
+    		setPosition(RobotMap.INTAKE_FLAP_FUEL_LEFT_POS, RobotMap.INTAKE_FLAP_FUEL_RIGHT_POS);
     		setState(IntakeState.FUEL);
 		} else {
-    		setPosition(0);
+    		setPosition(RobotMap.INTAKE_FLAP_GEARS_LEFT_POS, RobotMap.INTAKE_FLAP_GEARS_RIGHT_POS);
     		setState(IntakeState.GEARS);
 		}
 	}
 
 	@Deprecated
     public void stop() {
-    	RobotMap.intakeFlapServo1.set(0);
+    	RobotMap.leftIntakeFlapServo.set(0);
     	if(lastState == IntakeState.FUEL) {
     		lastState = IntakeState.GEARS;
 		} else {

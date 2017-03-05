@@ -31,14 +31,14 @@ public class Drivetrain extends Subsystem {
         gyroPID.setOutputRange(-1.0, 1.0); // Set turning speed range
         gyroPID.setPercentTolerance(5.0); // Set tolerance of 5%
         
-        leftPodPIDSource = new EncoderPIDSource(RobotMap.leftEncoder, 0.05555); // Encoder factor: 1 / ticks per inch
-        leftPodPID = new PIDController(-0.1, 0, 0, leftPodPIDSource, RobotMap.leftDrivePodOutput);
+        leftPodPIDSource = new EncoderPIDSource(RobotMap.leftEncoder, 0.26592797783933518005540166204986); // Encoder factor: 1 / ticks per inch
+        leftPodPID = new PIDController(0.1, 0, 0, leftPodPIDSource, RobotMap.leftDrivePodOutput); //NOTE: Even with 0.1 P it is still going VERY fast and uneven relative to the right
         leftPodPID.disable();
         leftPodPID.setOutputRange(-1.0, 1.0);
         leftPodPID.setAbsoluteTolerance(0.5);
         
-        rightPodPIDSource = new EncoderPIDSource(RobotMap.rightEncoder, 0.05555);
-        rightPodPID = new PIDController(-0.1, 0, 0, rightPodPIDSource, RobotMap.rightDrivePodOutput);
+        rightPodPIDSource = new EncoderPIDSource(RobotMap.rightEncoder, 0.04164859002169197396963123644252);
+        rightPodPID = new PIDController(0.1, 0, 0, rightPodPIDSource, RobotMap.rightDrivePodOutput);
         rightPodPID.disable();
         rightPodPID.setOutputRange(-1.0, 1.0);
         rightPodPID.setAbsoluteTolerance(0.5);
@@ -148,7 +148,7 @@ public class Drivetrain extends Subsystem {
      * @param radius Radius of the circle
      * @return Returns the arc length, in inches
      */
-    public double calculateArcLength(double chordLength, double radius) {
+    private double calculateArcLength(double chordLength, double radius) {
     	return Math.toRadians(Math.asin(chordLength / radius/ 2)) * 96;
     }
     
@@ -191,11 +191,8 @@ public class Drivetrain extends Subsystem {
      * @return Returns true or false
      */
     public boolean isEncoderPIDEnabled() {
-    	if(leftPodPID.isEnabled() && rightPodPID.isEnabled()) {
-    		return true;
-    	}
-    	return false;
-    }
+		return leftPodPID.isEnabled() && rightPodPID.isEnabled();
+	}
     
     /**
      * A method to disable the encoder PIDs
@@ -212,5 +209,10 @@ public class Drivetrain extends Subsystem {
         driveArcade(0,0);
         gyroPID.disable();
     }
+    
+	public void resetEncoders() {
+		RobotMap.leftEncoder.reset();
+		RobotMap.rightEncoder.reset();
+	}
 }
 

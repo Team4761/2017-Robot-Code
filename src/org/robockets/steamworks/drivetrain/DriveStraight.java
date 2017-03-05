@@ -2,7 +2,6 @@ package org.robockets.steamworks.drivetrain;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-import org.robockets.commons.RelativeDirection;
 import org.robockets.steamworks.LinearSetpointGenerator;
 import org.robockets.steamworks.Robot;
 import org.robockets.steamworks.RobotMap;

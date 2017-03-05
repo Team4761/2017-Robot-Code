@@ -3,49 +3,51 @@ package org.robockets.steamworks.drivetrain;
 import edu.wpi.first.wpilibj.command.Command;
 
 import org.robockets.steamworks.Robot;
+import org.robockets.steamworks.RobotMap;
 import org.robockets.steamworks.TurnType;
+import org.robockets.steamworks.LinearSetpointGenerator;
 
 /**
  * @author Jake Backer & some Brian
  */
 public class Turn extends Command {
-
-	private TurnType type;
+	
+	private final double DIAMETER = 29;
 	private double angle;
-	private TurnControllerType turnControllerType;
-
-	/**
-	 * Turn command to control turning with gyro
-	 * @param type Type of turn, absolute or relative
-	 * @param angle Desired angle
-	 */
+	private double distance;
+	private double speed;
+	private LinearSetpointGenerator leftLsg, rightLsg;
+	
+	
 	public Turn(TurnType type, double angle, TurnControllerType turnControllerType) {
-		this.type = type;
-		this.angle = angle;
-		this.turnControllerType = turnControllerType;
+		this.angle = angle * (Math.PI / 180); // convert to radians
+		this.distance = (DIAMETER / 2) * angle; // s = r * theta
+		this.speed = 8;
+	}
+	
+	public Turn(TurnType type, double angle, double speed) {
+		this.angle = angle * (Math.PI / 180); // convert to radians
+		this.distance = (DIAMETER / 2) * angle; // s = r * theta
+		this.speed = (DIAMETER * (Math.PI / 360.0)) * speed;
 	}
 
 	protected void initialize() {
-		//angle = SmartDashboard.getNumber("New Gyro Angle(AbsoluteOrRelative)", 0);
-		if (type == TurnType.ABSOLUTE) {
-			Robot.drivetrain.absoluteTurn(angle);
-		} else {
-			Robot.drivetrain.relativeTurn(angle);
-		}
+		Robot.drivetrain.enableEncoderPID();
+		leftLsg = new LinearSetpointGenerator(distance, speed, RobotMap.leftEncoder.getDistance());
+		rightLsg = new LinearSetpointGenerator(-distance, -speed, RobotMap.rightEncoder.getDistance());
 	}
 
 	protected void execute() {
+		Robot.drivetrain.leftPodPID.setSetpoint(leftLsg.next());
+		Robot.drivetrain.rightPodPID.setSetpoint(rightLsg.next());
 	}
 
 	protected boolean isFinished() {
-
-		//return Robot.drivetrain.gyroOnTarget();
-
-		return true; // This need to return if it is on target or not
-
+		return !leftLsg.hasNext() || !rightLsg.hasNext();
 	}
 
 	protected void end() {
+		Robot.drivetrain.disableEncoderPID();
 		Robot.drivetrain.stop();
 	}
 
@@ -53,8 +55,8 @@ public class Turn extends Command {
 		end();
 	}
 
-	public enum TurnControllerType {
-		GYRO,
-		ENCODER;
+  public enum TurnControllerType{
+		ENCODER,
+		GYRO;
 	}
 }

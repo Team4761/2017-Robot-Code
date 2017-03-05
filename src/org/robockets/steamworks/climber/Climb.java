@@ -31,7 +31,7 @@ public class Climb extends Command {
 	}
 	
 	protected void initialize() {
-		if (climbWithTime == true && time != 0) {
+		if (climbWithTime && time != 0) {
 			setTimeout(time);
 		}
 		//Robot.ledSubsystem.cylon(2);

@@ -37,19 +37,19 @@ public class MaxAuto extends CommandGroup {
 
 		// FIXME: Values will be changed
 		addSequential(new DriveWithMP(60, 20));
-		addSequential(new Turn(TurnType.RELATIVE, 45*angleMultiplier, Turn.TurnControllerType.ENCODER));
+		addSequential(new Turn(TurnType.RELATIVE, 45*angleMultiplier, 60));
 		// Align
 		addSequential(new WaitForGearOut()); // This needs to enable lights
 		addSequential(new DriveWithMP(-20, -10));
 		// Turn to hopper
-		addSequential(new Turn(TurnType.RELATIVE, 90 * (-horizontalDirectionMultiplier), Turn.TurnControllerType.ENCODER));
+		addSequential(new Turn(TurnType.RELATIVE, 90 * (-horizontalDirectionMultiplier), 60));
 		addSequential(new DriveWithMP(60, 20));
 		addSequential(new WaitCommand(5));
 		addSequential(new DriveWithMP(-30, -15));
 		// Turn to boiler
-		addSequential(new Turn(TurnType.RELATIVE, 90 * horizontalDirectionMultiplier, Turn.TurnControllerType.ENCODER));
+		addSequential(new Turn(TurnType.RELATIVE, 90 * horizontalDirectionMultiplier, 60));
 		addSequential(new DriveWithMP(60, 20));
 		// Align
-		addSequential(new Shoot());
+		addSequential(new Shoot(true));
 	}
 }
