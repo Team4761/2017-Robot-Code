@@ -1,4 +1,4 @@
-package org.robockets.steamworks.subsystems;
+package org.robockets.steamworks.lights;
 
 import org.robockets.steamworks.RobotMap;
 
