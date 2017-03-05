@@ -1,4 +1,4 @@
-package org.robockets.steamworks.subsystems;
+package org.robockets.steamworks.shooter;
 
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.command.Subsystem;
