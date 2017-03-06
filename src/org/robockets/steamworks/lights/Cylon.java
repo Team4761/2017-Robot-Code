@@ -1,4 +1,4 @@
-package org.robockets.steamworks.commands;
+package org.robockets.steamworks.lights;
 
 import org.robockets.steamworks.Robot;
 
