@@ -43,7 +43,7 @@ public class EasyAuto extends CommandGroup {
 			//addSequential(new DriveStraight(forwardDistance2, 24)) ;
 		}*/
 
-		addSequential(new DriveStraight(3, 24));
+		addSequential(new DriveStraight(48, 120));
 		//addSequential(new Turn(TurnType.RELATIVE, 45, 25));
 
 		// Align

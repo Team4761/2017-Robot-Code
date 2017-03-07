@@ -22,6 +22,7 @@ public class DriveStraight extends Command {
 
     protected void initialize() {
     	Robot.drivetrain.enableEncoderPID();
+    	Robot.drivetrain.resetEncoders();
     	leftLsg = new LinearSetpointGenerator(distance, speed, RobotMap.leftEncoder.getDistance());
     	rightLsg = new LinearSetpointGenerator(distance, speed, RobotMap.rightEncoder.getDistance());
     }
