@@ -153,6 +153,8 @@ public class Robot extends IterativeRobot {
 		RobotMap.rollerEncoderCounter.setDistancePerPulse(1.0);
 		
 		RobotMap.shooterRollerSpeedController.setInverted(true);
+		RobotMap.climberSpeedController.setInverted(true);
+		RobotMap.climberSpeedController2.setInverted(true); // 55left 75 right
 
 		RobotMap.leftEncoder.setDistancePerPulse(0.03435326842837273991655076495132);
 		RobotMap.rightEncoder.setDistancePerPulse(0.03435326842837273991655076495132);
@@ -177,7 +179,7 @@ public class Robot extends IterativeRobot {
 		// CLIMBER //
 		/////////////
 		Robot.climber.initSmartDashboard();
-		SmartDashboard.putData("Climb", new Climb(1));
+		SmartDashboard.putData("Climb", new Climb(-1));
 
 		////////////////
 		// DRIVETRAIN //

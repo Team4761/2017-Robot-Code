@@ -134,7 +134,8 @@ public class RobotMap {
     /**
      * PDP port that the climber's motor is attached to.
      */
-    public static final int climberPdpPort = 14;
+    public static final int climberPdpPortRight = 14;
+    public static final int climberPdpPortLeft = 7;
     
     public static final double INTAKE_FLAP_GEARS_LEFT_POS = 0.25;
     public static final double INTAKE_FLAP_GEARS_RIGHT_POS = 0.80;
