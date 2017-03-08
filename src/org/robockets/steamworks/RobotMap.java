@@ -1,5 +1,7 @@
 package org.robockets.steamworks;
 
+import org.robockets.steamworks.drivetrain.DrivePodOutput;
+
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.Counter;
 import edu.wpi.first.wpilibj.DigitalInput;
@@ -81,13 +83,13 @@ public class RobotMap {
 	 * Encoder that goes on the right drivepod. For getting how fast the right
 	 * side of the robot is driving.
 	 */
-	public static Encoder rightEncoder = new Encoder(4, 5);
+	public static Encoder rightEncoder = new Encoder(6, 7);
     
 	/**
 	 * Encoder that goes on the left drivepod. For getting how fast the left
 	 * side of the robot is driving.
 	 */
-	public static Encoder leftEncoder = new Encoder(9, 8);
+	public static Encoder leftEncoder = new Encoder(8, 9);
 
     ///////////
     /// SPI ///
@@ -132,7 +134,8 @@ public class RobotMap {
     /**
      * PDP port that the climber's motor is attached to.
      */
-    public static final int climberPdpPort = 14;
+    public static final int climberPdpPortRight = 14;
+    public static final int climberPdpPortLeft = 7;
     
     public static final double INTAKE_FLAP_GEARS_LEFT_POS = 0.25;
     public static final double INTAKE_FLAP_GEARS_RIGHT_POS = 0.80;

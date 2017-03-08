@@ -9,7 +9,7 @@ import org.robockets.steamworks.Robot;
 public class ResetDriveEncoders extends Command {
 
 	public ResetDriveEncoders() {
-
+		this.setRunWhenDisabled(true);
 	}
 
 	protected void initialize() {
