@@ -153,11 +153,9 @@ public class Robot extends IterativeRobot {
 		RobotMap.rollerEncoderCounter.setDistancePerPulse(1.0);
 		
 		RobotMap.shooterRollerSpeedController.setInverted(true);
-		RobotMap.leftDrivepodSpeedController.setInverted(true);
-		RobotMap.rightDrivepodSpeedController.setInverted(true);
 
-		RobotMap.leftEncoder.setDistancePerPulse(0.03510159389485802501075579199195);
-		RobotMap.rightEncoder.setDistancePerPulse(0.058);
+		RobotMap.leftEncoder.setDistancePerPulse(0.03435326842837273991655076495132);
+		RobotMap.rightEncoder.setDistancePerPulse(0.03435326842837273991655076495132);
 
 		SmartDashboard.getNumber("Left drivepod PID P value", drivetrain.leftPodPID.getP());
 		SmartDashboard.getNumber("Left drivepod PID I value", drivetrain.leftPodPID.getI());
