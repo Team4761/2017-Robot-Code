@@ -13,12 +13,12 @@ import org.robockets.steamworks.commands.MakeExtraSpace;
 import org.robockets.steamworks.commands.MaxFillElevator;
 import org.robockets.steamworks.commands.MoveConveyor;
 import org.robockets.steamworks.commands.MoveElevator;
-import org.robockets.steamworks.commands.Shoot;
-import org.robockets.steamworks.commands.ShootWithPID;
-import org.robockets.steamworks.commands.SpinSpinners;
 import org.robockets.steamworks.intakeflap.IntakeFlap;
 import org.robockets.steamworks.intakeflap.IntakeToPos;
 import org.robockets.steamworks.intakeflap.MoveIntakeFlap;
+import org.robockets.steamworks.shooter.Shoot;
+import org.robockets.steamworks.shooter.ShootWithPID;
+import org.robockets.steamworks.shooter.SpinSpinners;
 
 /**
  * This class is the glue that binds the controls on the physical operator
