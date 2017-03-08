@@ -20,7 +20,6 @@ public class DriveTime extends TimedCommand {
 		super(timeout);
 		requires(Robot.drivetrain);
 		this.speed = speed;
-		// TODO Auto-generated constructor stub
 	}
 	
     // Called just before this Command runs the first time

@@ -156,8 +156,8 @@ public class Robot extends IterativeRobot {
 		RobotMap.climberSpeedController.setInverted(true);
 		RobotMap.climberSpeedController2.setInverted(true); // 55left 75 right
 
-		RobotMap.leftEncoder.setDistancePerPulse(0.03435326842837273991655076495132);
-		RobotMap.rightEncoder.setDistancePerPulse(0.03435326842837273991655076495132);
+		RobotMap.leftEncoder.setDistancePerPulse(4 * Math.PI / 360);
+		RobotMap.rightEncoder.setDistancePerPulse(4 * Math.PI / 360);
 
 		SmartDashboard.getNumber("Left drivepod PID P value", drivetrain.leftPodPID.getP());
 		SmartDashboard.getNumber("Left drivepod PID I value", drivetrain.leftPodPID.getI());
