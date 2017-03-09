@@ -19,7 +19,7 @@ public class Shooter extends Subsystem {
     public PIDController shooterPIDController;
 
     public Shooter() {
-    	shooterPIDController = new PIDController(0, 0, 0, 0, counterPIDSource, RobotMap.shooterRollerSpeedController);
+    	shooterPIDController = new PIDController(0.0006, 0, 0.001, 0, counterPIDSource, RobotMap.shooterRollerSpeedController);
     	shooterPIDController.disable();
     	shooterPIDController.setOutputRange(0, 1);
     	shooterPIDController.setPercentTolerance(5);
@@ -43,7 +43,7 @@ public class Shooter extends Subsystem {
     }
 
     public void enablePID() {
-    	shooterPIDController.setSetpoint(SmartDashboard.getNumber("Shooter PID setpoint", 0));
+    	//shooterPIDController.setSetpoint(SmartDashboard.getNumber("Shooter PID setpoint", 0));
     	shooterPIDController.enable();
 	}
 
