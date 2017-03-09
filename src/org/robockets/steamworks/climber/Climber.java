@@ -14,7 +14,12 @@ public class Climber extends Subsystem{
 	 * @return current The current of the motor.
 	 */
 	public double readCurrent() {
-		return RobotMap.powerDistPanel.getCurrent(RobotMap.climberPdpPort);
+		SmartDashboard.putNumber("current LEFT", RobotMap.powerDistPanel.getCurrent(RobotMap.climberPdpPortLeft));
+		SmartDashboard.putNumber("current RIGHT", RobotMap.powerDistPanel.getCurrent(RobotMap.climberPdpPortRight));
+		
+		return (
+				Math.abs(RobotMap.powerDistPanel.getCurrent(RobotMap.climberPdpPortLeft)) +
+				Math.abs(RobotMap.powerDistPanel.getCurrent(RobotMap.climberPdpPortRight))) / 2.0;
 	}
 	
 	/**

@@ -34,6 +34,10 @@ public class Climb extends Command {
 		if (climbWithTime && time != 0) {
 			setTimeout(time);
 		}
+
+		if (speed > 0) { // Make sure it is going the right direction
+			speed *= -1;
+		}
 		//Robot.ledSubsystem.cylon(2);
 	}
 
