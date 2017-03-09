@@ -159,15 +159,20 @@ public class Robot extends IterativeRobot {
 		RobotMap.leftEncoder.setDistancePerPulse(4 * Math.PI / 360);
 		RobotMap.rightEncoder.setDistancePerPulse(4 * Math.PI / 360);
 
-		SmartDashboard.getNumber("Left drivepod PID P value", drivetrain.leftPodPID.getP());
-		SmartDashboard.getNumber("Left drivepod PID I value", drivetrain.leftPodPID.getI());
-		SmartDashboard.getNumber("Left drivepod PID D value", drivetrain.leftPodPID.getD());
-		SmartDashboard.getNumber("Left drivepod PID F value", drivetrain.leftPodPID.getF());
+		SmartDashboard.putNumber("Left drivepod PID P value", drivetrain.leftPodPID.getP());
+		SmartDashboard.putNumber("Left drivepod PID I value", drivetrain.leftPodPID.getI());
+		SmartDashboard.putNumber("Left drivepod PID D value", drivetrain.leftPodPID.getD());
+		SmartDashboard.putNumber("Left drivepod PID F value", drivetrain.leftPodPID.getF());
 
-		SmartDashboard.getNumber("Right drivepod PID P value", drivetrain.rightPodPID.getP());
-		SmartDashboard.getNumber("Right drivepod PID I value", drivetrain.rightPodPID.getI());
-		SmartDashboard.getNumber("Right drivepod PID D value", drivetrain.rightPodPID.getD());
-		SmartDashboard.getNumber("Right drivepod PID F value", drivetrain.rightPodPID.getF());
+		SmartDashboard.putNumber("Right drivepod PID P value", drivetrain.rightPodPID.getP());
+		SmartDashboard.putNumber("Right drivepod PID I value", drivetrain.rightPodPID.getI());
+		SmartDashboard.putNumber("Right drivepod PID D value", drivetrain.rightPodPID.getD());
+		SmartDashboard.putNumber("Right drivepod PID F value", drivetrain.rightPodPID.getF());
+
+		SmartDashboard.putNumber("Shooter PID P value", shooter.shooterPIDController.getP());
+		SmartDashboard.putNumber("Shooter PID I value", shooter.shooterPIDController.getI());
+		SmartDashboard.putNumber("Shooter PID D value", shooter.shooterPIDController.getD());
+		SmartDashboard.putNumber("Shooter PID F value", shooter.shooterPIDController.getF());
 
 		oi = new OI();
 		Robot.ledSubsystem.cylon(56);
@@ -235,12 +240,6 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putData(new SpinSpinners());
 		SmartDashboard.putData(new Shoot(false));
 		SmartDashboard.putData(new ShootWithPID());
-		
-		SmartDashboard.putNumber("Edit Shooter PID setpoint", 0);
-		SmartDashboard.putNumber("Edit Shooter PID P value", 0);
-		SmartDashboard.putNumber("Edit Shooter PID I value", 0);
-		SmartDashboard.putNumber("Edit Shooter PID D value", 0);
-		SmartDashboard.putNumber("Edit Shooter PID F value", 0);
 	}
 
 	@Override
@@ -306,13 +305,11 @@ public class Robot extends IterativeRobot {
 		/////////////
 
 		//System.out.println(RobotMap.rollerEncoderCounter.getRate());
-		SDDumper.dumpPidController("Shooter PID", Robot.shooter.shooterPIDController);
-		Robot.shooter.shooterPIDController.setSetpoint(SmartDashboard.getNumber("Edit Shooter PID setpoint", 0));
     	Robot.shooter.shooterPIDController.setPID(
-    			SmartDashboard.getNumber("Edit Shooter PID P value", 0.01),
-				SmartDashboard.getNumber("Edit Shooter PID I value", 0.001),
-				SmartDashboard.getNumber("Edit Shooter PID D value", 0.001),
-				SmartDashboard.getNumber("Edit Shooter PID F value", 0.01));
+    			SmartDashboard.getNumber("Shooter PID P value", 0),
+				SmartDashboard.getNumber("Shooter PID I value", 0),
+				SmartDashboard.getNumber("Shooter PID D value", 0),
+				SmartDashboard.getNumber("Shooter PID F value", 0));
     	
     	/////////////////
     	/// TEST MODE ///
