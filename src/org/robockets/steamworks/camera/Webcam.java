@@ -8,6 +8,7 @@ import java.util.function.ToDoubleFunction;
 import java.util.function.ToIntFunction;
 import java.util.function.ToLongFunction;
 
+import org.opencv.core.Core;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
 import org.opencv.core.MatOfPoint;
@@ -37,11 +38,12 @@ public class Webcam {
 	private CvSource processedOutputStream;
 	
 	private Mat source;
-	private Mat output;
+	//private Mat output;
 	
 	private static Webcam instance;
 	
 	private Webcam() {
+		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
 		System.out.println("webcam initialized");
 		camera = CameraServer.getInstance().startAutomaticCapture();
 		
@@ -57,7 +59,7 @@ public class Webcam {
 		processedOutputStream = CameraServer.getInstance().putVideo("Processed", currentResolution.width, currentResolution.height);
 		
 		source = new Mat();
-		output = new Mat();
+		//output = new Mat();
 		
 		SmartDashboard.putData("Video feed resolution", resolutionChooser);
 		SmartDashboard.putNumber(RobotMap.SmartDashboardKey.kCameraExposure, 75);
@@ -79,74 +81,20 @@ public class Webcam {
 	
 	private int lastExposure;
 	private void updateExposure() {
-		exposure = (int) SmartDashboard.getNumber(RobotMap.SmartDashboardKey.kCameraExposure, 75);
+		exposure = (int) SmartDashboard.getNumber(RobotMap.SmartDashboardKey.kCameraExposure, 1);
 		if(exposure != lastExposure) {
 			camera.setExposureManual(exposure);
 			lastExposure = exposure;
 		}
 	}
 	
-	private boolean isPegTape(MatOfPoint contour, Mat output) {
-		 /*
-		MatOfPoint2f mop2f = new MatOfPoint2f();
-		contour.convertTo(mop2f, CvType.CV_32FC2);
-		RotatedRect minAreaRect = Imgproc.minAreaRect(mop2f);
-		final double ratio = minAreaRect.size.width / minAreaRect.size.height;
-		if(ratio > 0.3 && ratio < 0.5) { */
-			ArrayList<MatOfPoint> temp = new ArrayList<MatOfPoint>();
-			temp.add(contour);
-			Imgproc.drawContours(output, temp, 0, new Scalar(0, 255, 0));
-			return true;
-		//}
-		//return false; */
-	}
-	
 	private void processFrame() {
 		cvSink.grabFrame(source);
 		
-		/// Convert image to grayscale
-		Mat grayed = new Mat();
-		Imgproc.cvtColor(source, grayed, Imgproc.COLOR_BGR2GRAY);
+		ImageProcessor.process(source);
 		
-		/// Threshold with Otsu's method
-		Mat thresholded = new Mat();
-		Imgproc.threshold(grayed, thresholded, 0, 255, Imgproc.THRESH_BINARY + Imgproc.THRESH_OTSU);
-		
-		/// Open (erode, followed by a dilate)
-		Mat opened = new Mat();
-		Imgproc.morphologyEx(thresholded, opened, Imgproc.MORPH_OPEN, new Mat());
-		
-		/// Canny
-		Mat cannyOut = new Mat();
-		Imgproc.Canny(opened, cannyOut, 100, 200);
-		
-		/// Find contours
-		ArrayList<MatOfPoint> contours = new ArrayList<MatOfPoint>();
-		Imgproc.findContours(cannyOut, contours, new Mat(), Imgproc.RETR_TREE, Imgproc.CHAIN_APPROX_SIMPLE);
-		
-		Collections.sort(contours, contourAreaComparator);
-		
-		/// Filter and draw contours
-		output = Mat.zeros(source.size(), CvType.CV_8UC1);
-		int acceptableContourCount = 0;
-		for(MatOfPoint contour : contours) {
-			if(acceptableContourCount >= 2) break;
-			if(isPegTape(contour, output)) {
-				System.out.println("found contour");
-				acceptableContourCount++;
-			}
-		}
-		
-		cannyOut.copyTo(output);
-		processedOutputStream.putFrame(output);
+		processedOutputStream.putFrame(source);
 	}
-	
-	private Comparator<MatOfPoint> contourAreaComparator = new Comparator<MatOfPoint>() {
-		@Override
-		public int compare(MatOfPoint c1, MatOfPoint c2) {
-			return (int) (Imgproc.contourArea(c1) - Imgproc.contourArea(c2));
-		}
-	};
 	
 	public void startThread() {
 		Thread t = new Thread() {
