@@ -36,7 +36,7 @@ public class OI {
     Button misc1 = new JoystickButton(launchpad2, 8); // Done
     Button misc2 = new JoystickButton(launchpad2, 14); // Done
     Button misc3 = new JoystickButton(launchpad2, 9); // Done
-    Button misc4 = new JoystickButton(launchpad2, 5);
+    Button misc4 = new JoystickButton(launchpad2, 5); // Does not work
     Button misc5 = new JoystickButton(launchpad2, 15); // Done
 
     ///////////////
@@ -50,34 +50,34 @@ public class OI {
     /// Lifter? ///
     ///////////////
 
-    Button lifter1 = new JoystickButton(launchpad1, 8);
-    Button lifterMan1 = new JoystickButton(launchpad1, 20);
-    Button lifterMan2 = new JoystickButton(launchpad1, 1);
+    Button lifter1 = new JoystickButton(launchpad1, 4); // Done
+    Button lifterMan1 = new JoystickButton(launchpad1, 5); // Done
+    Button lifterMan2 = new JoystickButton(launchpad1, 6); // Done
 
     /////////////
     /// Shoot ///
     /////////////
 
-    Button shooter1 = new JoystickButton(launchpad1, 10);
-    Button shooter2 = new JoystickButton(launchpad1, 9);
+    Button shooter1 = new JoystickButton(launchpad1, 2); // Done
+    Button shooter2 = new JoystickButton(launchpad1, 3); // Done
     Button shooterMan1 = new JoystickButton(launchpad1, 8); // Done
 
     ///////////////////
     /// Gear Intake ///
     ///////////////////
 
-    Button gearIntake1 = new JoystickButton(launchpad1, 12);
+    Button gearIntake1 = new JoystickButton(launchpad2, 16); // Done
     Button gearIntake2 = new JoystickButton(launchpad1, 11); // Done
     Button gearIntakeMan1 = new JoystickButton(launchpad1, 14); // Done
-    Button gearIntakeMan2 = new JoystickButton(launchpad1, 18);
+    Button gearIntakeMan2 = new JoystickButton(launchpad2, 6); // Done
 
     ///////////////////
     /// Ball Intake ///
     ///////////////////
 
-    Button ballIntake1 = new JoystickButton(launchpad1, 14);
+    Button ballIntake1 = new JoystickButton(launchpad1, 13); // Done
     Button ballIntake2 = new JoystickButton(launchpad1, 12); // Done
-    Button ballIntakeMan1 = new JoystickButton(launchpad1, 16);
+    Button ballIntakeMan1 = new JoystickButton(launchpad1, 16); // Does not work
     Button ballIntakeMan2 = new JoystickButton(launchpad1, 10); // Done
 
     public OI() {
