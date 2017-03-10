@@ -1,5 +1,6 @@
 package org.robockets.steamworks.climber;
 
+import org.robockets.steamworks.Robot;
 import org.robockets.steamworks.RobotMap;
 
 import org.robockets.commons.RelativeDirection;
@@ -9,16 +10,21 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Climber extends Subsystem{
 
-	public double STALLING_THRESHOLD_LEFT = 42; // The stalling current of the subsystem motor.
-	public double STALLING_THRESHOLD_RIGHT = 75; // The stalling current of the subsystem motor.
+	public double STALLING_THRESHOLD_LEFT = 65; // The stalling current of the subsystem motor.
+	public double STALLING_THRESHOLD_RIGHT = 70; // The stalling current of the subsystem motor.
 	
 	/**
 	 * Read the current that the motor of the climber is using.
 	 * @return current The current of the motor.
 	 */
 	public double readCurrent(RelativeDirection.XAxis direction) {
-		SmartDashboard.putNumber("current LEFT", RobotMap.powerDistPanel.getCurrent(RobotMap.climberPdpPortLeft));
-		SmartDashboard.putNumber("current RIGHT", RobotMap.powerDistPanel.getCurrent(RobotMap.climberPdpPortRight));
+		
+		double leftCurrent = RobotMap.powerDistPanel.getCurrent(RobotMap.climberPdpPortLeft);
+		
+		double rightCurrent = RobotMap.powerDistPanel.getCurrent(RobotMap.climberPdpPortRight);
+		
+		SmartDashboard.putNumber("current LEFT", leftCurrent);
+		SmartDashboard.putNumber("current RIGHT", rightCurrent);
 
 		if (direction == RelativeDirection.XAxis.LEFT) {
 			return Math.abs(RobotMap.powerDistPanel.getCurrent(RobotMap.climberPdpPortLeft));
@@ -69,5 +75,16 @@ public class Climber extends Subsystem{
 		/*STALLING_THRESHOLD_LEFT = SmartDashboard.getNumber("STALLING_THRESHOLD", STALLING_THRESHOLD);
 
 		SmartDashboard.putBoolean("Climber STALLING", readCurrent() > STALLING_THRESHOLD);*/
+	}
+	
+	public boolean isStalling() {
+		double leftCurrent = RobotMap.powerDistPanel.getCurrent(RobotMap.climberPdpPortLeft);
+		double rightCurrent = RobotMap.powerDistPanel.getCurrent(RobotMap.climberPdpPortRight);
+		
+		SmartDashboard.putNumber("current LEFT", leftCurrent);
+		SmartDashboard.putNumber("current RIGHT", rightCurrent);
+
+		return leftCurrent  > Robot.climber.STALLING_THRESHOLD_LEFT 
+			|| rightCurrent > Robot.climber.STALLING_THRESHOLD_RIGHT;
 	}
 }
