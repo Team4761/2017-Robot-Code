@@ -1,4 +1,4 @@
-package org.robockets.steamworks.commands;
+package org.robockets.steamworks.shooter;
 
 import edu.wpi.first.wpilibj.command.Command;
 
