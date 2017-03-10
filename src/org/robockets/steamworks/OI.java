@@ -5,19 +5,13 @@ import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 import org.robockets.commons.RelativeDirection;
-import org.robockets.steamworks.ballintake.IntakeBalls;
 import org.robockets.steamworks.ballintake.SpinBallIntakeRollers;
 import org.robockets.steamworks.climber.Climb;
-import org.robockets.steamworks.commands.KillEverything;
 import org.robockets.steamworks.commands.MakeExtraSpace;
-import org.robockets.steamworks.commands.MaxFillElevator;
-import org.robockets.steamworks.commands.MoveConveyor;
 import org.robockets.steamworks.commands.MoveElevator;
 import org.robockets.steamworks.intakeflap.IntakeFlap;
 import org.robockets.steamworks.intakeflap.IntakeToPos;
-import org.robockets.steamworks.intakeflap.MoveIntakeFlap;
 import org.robockets.steamworks.shooter.Shoot;
-import org.robockets.steamworks.shooter.ShootWithPID;
 import org.robockets.steamworks.shooter.SpinSpinners;
 
 /**
@@ -29,7 +23,9 @@ public class OI {
     public static Joystick attack3Left = new Joystick(1); // Left attack joystick
     public static Joystick attack3Right = new Joystick(2); // Right attack joystick
 
-    public static Joystick launchpad = new Joystick(3); // The launchpad for the button board
+    public static Joystick launchpad1 = new Joystick(3); // The right launchpad for the button board
+
+    public static Joystick launchpad2 = new Joystick(4); // The left launchpad for the button board
     
     Button yButton = new JoystickButton(joystick, 4);
 
@@ -37,51 +33,52 @@ public class OI {
     /// Miscellaneous ///
     /////////////////////
 
-    Button misc1 = new JoystickButton(launchpad, 2);
-    Button misc2 = new JoystickButton(launchpad, 6);
-    Button misc3 = new JoystickButton(launchpad, 4);
-    Button misc4 = new JoystickButton(launchpad, 5);
+    Button misc1 = new JoystickButton(launchpad2, 8); // Done
+    Button misc2 = new JoystickButton(launchpad2, 14); // Done
+    Button misc3 = new JoystickButton(launchpad2, 9); // Done
+    Button misc4 = new JoystickButton(launchpad2, 5);
+    Button misc5 = new JoystickButton(launchpad2, 15); // Done
 
     ///////////////
     /// Climber ///
     ///////////////
 
-    Button climber1 = new JoystickButton(launchpad, 7);
-    Button climber2 = new JoystickButton(launchpad, 3);
+    Button climber1 = new JoystickButton(launchpad2, 10); // Done
+    Button climber2 = new JoystickButton(launchpad2, 16); // Done
 
     ///////////////
     /// Lifter? ///
     ///////////////
 
-    Button lifter1 = new JoystickButton(launchpad, 8);
-    Button lifterMan1 = new JoystickButton(launchpad, 20);
-    Button lifterMan2 = new JoystickButton(launchpad, 1); // Blame Dominik
+    Button lifter1 = new JoystickButton(launchpad1, 8);
+    Button lifterMan1 = new JoystickButton(launchpad1, 20);
+    Button lifterMan2 = new JoystickButton(launchpad1, 1);
 
     /////////////
     /// Shoot ///
     /////////////
 
-    Button shooter1 = new JoystickButton(launchpad, 10);
-    Button shooter2 = new JoystickButton(launchpad, 9);
-    Button shooterMan1 = new JoystickButton(launchpad, 19);
+    Button shooter1 = new JoystickButton(launchpad1, 10);
+    Button shooter2 = new JoystickButton(launchpad1, 9);
+    Button shooterMan1 = new JoystickButton(launchpad1, 8); // Done
 
     ///////////////////
     /// Gear Intake ///
     ///////////////////
 
-    Button gearIntake1 = new JoystickButton(launchpad, 12);
-    Button gearIntake2 = new JoystickButton(launchpad, 11);
-    Button gearIntakeMan1 = new JoystickButton(launchpad, 17);
-    Button gearIntakeMan2 = new JoystickButton(launchpad, 18);
+    Button gearIntake1 = new JoystickButton(launchpad1, 12);
+    Button gearIntake2 = new JoystickButton(launchpad1, 11); // Done
+    Button gearIntakeMan1 = new JoystickButton(launchpad1, 14); // Done
+    Button gearIntakeMan2 = new JoystickButton(launchpad1, 18);
 
     ///////////////////
     /// Ball Intake ///
     ///////////////////
 
-    Button ballIntake1 = new JoystickButton(launchpad, 14);
-    Button ballIntake2 = new JoystickButton(launchpad, 13);
-    Button ballIntakeMan1 = new JoystickButton(launchpad, 16);
-    Button ballIntakeMan2 = new JoystickButton(launchpad, 15);
+    Button ballIntake1 = new JoystickButton(launchpad1, 14);
+    Button ballIntake2 = new JoystickButton(launchpad1, 12); // Done
+    Button ballIntakeMan1 = new JoystickButton(launchpad1, 16);
+    Button ballIntakeMan2 = new JoystickButton(launchpad1, 10); // Done
 
     public OI() {
     	//yButton.whenPressed(Robot.toggleDriveMode);
