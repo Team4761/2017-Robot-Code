@@ -36,7 +36,7 @@ public class EasyAuto extends CommandGroup {
 
 
 		// FIXME: Values will be changed
-		addSequential(new DriveStraight(12, forwardDistance1));
+		addSequential(new DriveStraight(24, forwardDistance1));
 		/*if(turnAngle != 0 && forwardDistance2 != 0) {
 			addSequential(new Turn(TurnType.RELATIVE, turnAngle, 60));
 			//addSequential(new DriveStraight(forwardDistance2, 24)) ;
