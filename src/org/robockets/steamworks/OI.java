@@ -113,8 +113,8 @@ public class OI {
         
         ballIntake1.cancelWhenPressed(spinBallIntakeRollers);
         ballIntake2.whenPressed(spinBallIntakeRollers);
-        ballIntakeMan1.whileHeld(new SpinBallIntakeRollers(1));
-        ballIntakeMan2.whileHeld(new SpinBallIntakeRollers(-1)); // FIXME: Make this a relative direction thing
+        ballIntakeMan1.whileHeld(new SpinBallIntakeRollers(-1));
+        ballIntakeMan2.whileHeld(new SpinBallIntakeRollers(1)); // FIXME: Make this a relative direction thing
 
         //////////////////
         // Magic Carpet //
