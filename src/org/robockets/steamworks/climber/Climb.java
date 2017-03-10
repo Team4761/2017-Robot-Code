@@ -1,5 +1,6 @@
 package org.robockets.steamworks.climber;
 
+import org.robockets.commons.RelativeDirection;
 import org.robockets.steamworks.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
@@ -50,7 +51,8 @@ public class Climb extends Command {
 		if (climbWithTime && time != 0) { // The case that the command runs within a certain time.
 			return isTimedOut(); 
 		} else if (!climbWithTime) { // The case that the command runs until the motor stalls.
-			return Robot.climber.readCurrent() > Robot.climber.STALLING_THRESHOLD;
+			return (Robot.climber.readCurrent(RelativeDirection.XAxis.LEFT) > Robot.climber.STALLING_THRESHOLD_LEFT)
+					|| (Robot.climber.readCurrent(RelativeDirection.XAxis.RIGHT) > Robot.climber.STALLING_THRESHOLD_RIGHT);
 		}									
 		return false; // The case that the command runs indefinitely.
 	}
