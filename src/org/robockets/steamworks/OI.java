@@ -7,10 +7,13 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import org.robockets.commons.RelativeDirection;
 import org.robockets.steamworks.ballintake.SpinBallIntakeRollers;
 import org.robockets.steamworks.climber.Climb;
+import org.robockets.steamworks.climber.ClimberListener;
 import org.robockets.steamworks.commands.MakeExtraSpace;
 import org.robockets.steamworks.commands.MoveElevator;
 import org.robockets.steamworks.intakeflap.IntakeFlap;
 import org.robockets.steamworks.intakeflap.IntakeToPos;
+import org.robockets.steamworks.lights.ButtonPress;
+import org.robockets.steamworks.lights.LightsColors;
 import org.robockets.steamworks.shooter.Shoot;
 import org.robockets.steamworks.shooter.SpinSpinners;
 
@@ -29,6 +32,7 @@ public class OI {
 
     public static Joystick backupJoystick = new Joystick(5);
 
+    Button driverRightBumper = new JoystickButton(joystick, 6);
 
     Button aButton = new JoystickButton(backupJoystick, 1);
     Button bButton = new JoystickButton(backupJoystick, 2);
@@ -153,6 +157,9 @@ public class OI {
         rightBumperButton.whileHeld(new SpinBallIntakeRollers(-1));
         leftBumperButton.whileHeld(new SpinBallIntakeRollers(1));
 
+        driverRightBumper.whileHeld(new Climb(1));
 
+        xButton.whileHeld(new ButtonPress(LightsColors.BLUE));
+        bButton.whileHeld(new ButtonPress(LightsColors.WHITE));
     }
 }

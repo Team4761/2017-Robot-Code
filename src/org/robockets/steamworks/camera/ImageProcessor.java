@@ -3,6 +3,9 @@ package org.robockets.steamworks.camera;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import edu.wpi.cscore.CvSource;
+import edu.wpi.first.wpilibj.CameraServer;
+import edu.wpi.first.wpilibj.vision.VisionPipeline;
 import org.opencv.core.Core;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
@@ -14,9 +17,12 @@ import org.opencv.core.Scalar;
 import org.opencv.imgcodecs.Imgcodecs;
 import org.opencv.imgproc.Imgproc;
 
-public class ImageProcessor {
-	
-	private static Mat binarize(Mat image) {
+public class ImageProcessor implements VisionPipeline {
+
+	public double angleOffset;
+	public static CvSource processedOutputStream = CameraServer.getInstance().putVideo("Vision (processed)", 480, 320);
+
+	public static Mat binarize(Mat image) {
 		
 		/// Convert to grayscale
 		Mat grayed = new Mat();
@@ -56,10 +62,12 @@ public class ImageProcessor {
 		}
 		return tapeContours;
 	}
-	
-	public static void process(Mat image) {
+
+	@Override
+	public void process(Mat image) {
 		Mat binarized = binarize(image);
 		ArrayList<MatOfPoint> contours = filterContours(getContours(binarized));
+		System.out.println(contours.size());
 		if(contours.size() == 2) {
 			Rect leftRect = Imgproc.boundingRect(contours.get(0));
 			Rect rightRect = Imgproc.boundingRect(contours.get(1));
@@ -76,12 +84,13 @@ public class ImageProcessor {
 			double pixelOffset = midpoint - (image.width() / 2d);
 			double pixelToAngleFactor = CVConstants.LOGITECH_C270_FOV / image.width();
 			
-			Imgproc.rectangle(image, leftRect.tl(), leftRect.br(), new Scalar(0, 255, 0), 2);
-			Imgproc.rectangle(image, rightRect.tl(), rightRect.tl(), new Scalar(0, 255, 0), 2);
-			
-			Imgproc.rectangle(image, leftRect.tl(), rightRect.br(), new Scalar(255, 0, 0), 3);
-			
-			CVConstants.setOffset(pixelOffset * pixelToAngleFactor);
+			Imgproc.rectangle(binarized, leftRect.tl(), leftRect.br(), new Scalar(0, 255, 0), 2);
+			Imgproc.rectangle(binarized, rightRect.tl(), rightRect.tl(), new Scalar(0, 255, 0), 2);
+			Imgproc.rectangle(binarized, leftRect.tl(), rightRect.br(), new Scalar(255, 0, 0), 3);
+
+			processedOutputStream.putFrame(binarized);
+
+			angleOffset = pixelOffset * pixelToAngleFactor;
 		}
 	}
 	

@@ -1,11 +1,16 @@
 package org.robockets.steamworks;
 
+import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
+import edu.wpi.first.wpilibj.vision.VisionRunner;
+import edu.wpi.first.wpilibj.vision.VisionThread;
 
 import org.robockets.commons.RelativeDirection;
 import org.robockets.steamworks.autonomous.AutoTest;
@@ -15,9 +20,11 @@ import org.robockets.steamworks.autonomous.MidAuto;
 import org.robockets.steamworks.ballintake.BallIntake;
 import org.robockets.steamworks.ballintake.SpinBallIntakeRollers;
 import org.robockets.steamworks.ballintake.IntakeBalls;
-import org.robockets.steamworks.camera.Webcam;
+import org.robockets.steamworks.camera.CVConstants;
+import org.robockets.steamworks.camera.ImageProcessor;
 import org.robockets.steamworks.climber.Climb;
 import org.robockets.steamworks.climber.Climber;
+import org.robockets.steamworks.climber.ClimberListener;
 import org.robockets.steamworks.commands.MakeExtraSpace;
 import org.robockets.steamworks.commands.MoveElevator;
 import org.robockets.steamworks.drivetrain.DriveWithMP;
@@ -27,6 +34,7 @@ import org.robockets.steamworks.drivetrain.Joyride;
 import org.robockets.steamworks.drivetrain.ResetDriveEncoders;
 import org.robockets.steamworks.drivetrain.ToggleDriveMode;
 import org.robockets.steamworks.drivetrain.Turn;
+import org.robockets.steamworks.intakeflap.IntakeToPos;
 import org.robockets.steamworks.shooter.Shoot;
 import org.robockets.steamworks.shooter.ShootWithPID;
 import org.robockets.steamworks.shooter.Shooter;
@@ -43,7 +51,8 @@ import org.robockets.steamworks.lights.Cylon;
 /**
  * The VM is configured to automatically run this class, and to call the
  * functions corresponding to each mode, as described in the IterativeRobot
- * documentation. If you change the name of this class or the package after
+ * documentation. If you change the
+ * name of this class or the package after
  * creating this project, you must also update the manifest file in the resource
  * directory.
  */
@@ -78,8 +87,10 @@ public class Robot extends IterativeRobot {
 	public static Command climb;
 	public static Command toggleDriveMode;
 	public static Command cylonCommand;
+	public static Command flapToGear;
 	public static Command elevatorListener;
 	public static Command shooterListener;
+	public static Command climberListener;
 
 	private SendableChooser<Command> autonomousChooser;
 
@@ -92,27 +103,17 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void robotInit() {
-		
+
+		//NetworkTable.flush();
+
+		NetworkTable.globalDeleteAll();
+
+
 		////////////////
 		// SUBSYSTEMS //
 		////////////////
 
-		Webcam.getInstance().startThread();
-
-		oi = new OI();
-
-		ballIntake = new BallIntake();
-		elevator = new Elevator();
-		conveyor = new Conveyor();
-		climber = new Climber();
-		drivetrain = new Drivetrain();
-		shooter = new Shooter();
-		gearIntake = new GearIntake();
-		intakeFlap = new IntakeFlap(1);
-		ledSubsystem = new LED();
-		cylonCommand = new Cylon();
-		elevatorListener = new ElevatorDPadListener();
-		shooterListener = new ShooterListener();
+		initSubsystems();
 
 		//////////////
 		// COMMANDS //
@@ -120,15 +121,12 @@ public class Robot extends IterativeRobot {
 		climb = new Climb(0.5);
 		drive = new Joyride();
 		toggleDriveMode = new ToggleDriveMode();
+		flapToGear = new IntakeToPos(IntakeFlap.IntakeState.GEARS);
 
 		////////////////////
 		// SMARTDASHBOARD //
 		////////////////////
 		initSmartDashboard();
-		SmartDashboard.putNumber("GyroP", drivetrain.gyroPID.getP());
-		SmartDashboard.putNumber("GyroI", drivetrain.gyroPID.getI());
-		SmartDashboard.putNumber("GyroD", drivetrain.gyroPID.getD());
-		SmartDashboard.putNumber("GyroSetpoint", drivetrain.gyroPID.getSetpoint());
 
 		//SmartDashboard.putData("GyroPIDGo", new TunePID());
 		
@@ -140,35 +138,20 @@ public class Robot extends IterativeRobot {
 		//////////
 		// AUTO //
 		//////////
-		autoTest = new AutoTest();
-		easyAuto1 = new EasyAuto(1);
-		easyAuto2 = new EasyAuto(2);
-		easyAuto3 = new EasyAuto(3);
-		midAuto1 = new MidAuto(1);
-		midAuto2 = new MidAuto(2);
-		midAuto3 = new MidAuto(3);
-		maxAuto1 = new MaxAuto(1);
-		maxAuto2 = new MaxAuto(2);
-		maxAuto3 = new MaxAuto(3);
-		
-		autonomousChooser = new SendableChooser<>(); // new SendableChooser<Command>(); is BAD!!!! Extra characters are unneeded!!!
-		autonomousChooser.addDefault("AutoTest", autoTest);
-		autonomousChooser.addObject("EasyAutoStart1", easyAuto1);
-		autonomousChooser.addObject("EasyAutoStart2", easyAuto2);
-		autonomousChooser.addObject("EasyAutoStart3", easyAuto3);
-		autonomousChooser.addObject("MidAutoStart1", midAuto1);
-		autonomousChooser.addObject("MidAutoStart2", midAuto2);
-		autonomousChooser.addObject("MidAutoStart3", midAuto3);
-		autonomousChooser.addObject("MaxAutoStart1", maxAuto1);
-		autonomousChooser.addObject("MaxAutoStart2", maxAuto2);
-		autonomousChooser.addObject("MaxAutoStart3", maxAuto3);
-		
-		SmartDashboard.putData("Autonomous selector", autonomousChooser);
+		initAutoThings();
 
 		//////////
 		// INIT //
 		//////////
-		Webcam.getInstance().startThread();
+		CameraServer.getInstance().startAutomaticCapture(RobotMap.drivingCamera);
+		CameraServer.getInstance().startAutomaticCapture(RobotMap.visionCamera);
+		new VisionThread(new VisionRunner<ImageProcessor>(RobotMap.visionCamera, new ImageProcessor(), new VisionRunner.Listener<ImageProcessor>() {
+			@Override
+			public void copyPipelineOutputs(ImageProcessor pipeline) {
+				CVConstants.setOffset(pipeline.angleOffset);
+			}
+		})).start();
+
 		//chooser.addObject("My Auto", new MyAutoCommand());
 		//RobotMap.gyro.calibrate();
 
@@ -234,9 +217,13 @@ public class Robot extends IterativeRobot {
 		// GYRO //
 		//////////
 
-		//SmartDashboard.putData("GyroTurn Absolute", new Turn(TurnType.ABSOLUTE, 90)); // Angle will be on SmartDashboard from the Turn command
-		//SmartDashboard.putData("GyroTurn Relative", new Turn(TurnType.RELATIVE, 90));
-		//SmartDashboard.putData("GyroPIDGo", new TunePID());
+		/*SmartDashboard.putData("GyroTurn Absolute", new Turn(TurnType.ABSOLUTE, 90)); // Angle will be on SmartDashboard from the Turn command
+		SmartDashboard.putData("GyroTurn Relative", new Turn(TurnType.RELATIVE, 90));
+		SmartDashboard.putData("GyroPIDGo", new TunePID());
+		SmartDashboard.putNumber("GyroP", drivetrain.gyroPID.getP());
+		SmartDashboard.putNumber("GyroI", drivetrain.gyroPID.getI());
+		SmartDashboard.putNumber("GyroD", drivetrain.gyroPID.getD());
+		SmartDashboard.putNumber("GyroSetpoint", drivetrain.gyroPID.getSetpoint());*/
 
 		/////////////////
 		// BALL INTAKE //
@@ -398,6 +385,8 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void autonomousInit() {
+		flapToGear.start();
+
 		autonomousCommand = autonomousChooser.getSelected();
 		if(autonomousCommand != null) {
 			autonomousCommand.start();
@@ -425,6 +414,7 @@ public class Robot extends IterativeRobot {
 		cylonCommand.start();
 		elevatorListener.start();
 		shooterListener.start();
+		//climberListener.start();
 	}
 
 	/**
@@ -433,6 +423,13 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
+
+		if (RobotMap.gearInputBreakbeamSensor.get()) {
+			Robot.ledSubsystem.cylon(2);
+		} else {
+			Robot.ledSubsystem.cylon(56);
+		}
+
 	}
 
 	/**
@@ -443,5 +440,47 @@ public class Robot extends IterativeRobot {
 		LiveWindow.run();
 	}
 
+	private void initSubsystems() {
+		ballIntake = new BallIntake();
+		elevator = new Elevator();
+		conveyor = new Conveyor();
+		climber = new Climber();
+		drivetrain = new Drivetrain();
+		shooter = new Shooter();
+		gearIntake = new GearIntake();
+		intakeFlap = new IntakeFlap(1);
+		ledSubsystem = new LED();
+		cylonCommand = new Cylon();
+		elevatorListener = new ElevatorDPadListener();
+		shooterListener = new ShooterListener();
+		climberListener = new ClimberListener();
+	}
+
+	private void initAutoThings() {
+		autoTest = new AutoTest();
+		easyAuto1 = new EasyAuto(1);
+		easyAuto2 = new EasyAuto(2);
+		easyAuto3 = new EasyAuto(3);
+		midAuto1 = new MidAuto(1);
+		midAuto2 = new MidAuto(2);
+		midAuto3 = new MidAuto(3);
+		maxAuto1 = new MaxAuto(1);
+		maxAuto2 = new MaxAuto(2);
+		maxAuto3 = new MaxAuto(3);
+
+		autonomousChooser = new SendableChooser<>(); // new SendableChooser<Command>(); is BAD!!!! Extra characters are unneeded!!!
+		autonomousChooser.addDefault("AutoTest", autoTest);
+		autonomousChooser.addObject("EasyAutoStart1", easyAuto1);
+		autonomousChooser.addObject("EasyAutoStart2", easyAuto2);
+		autonomousChooser.addObject("EasyAutoStart3", easyAuto3);
+		autonomousChooser.addObject("MidAutoStart1", midAuto1);
+		autonomousChooser.addObject("MidAutoStart2", midAuto2);
+		autonomousChooser.addObject("MidAutoStart3", midAuto3);
+		autonomousChooser.addObject("MaxAutoStart1", maxAuto1);
+		autonomousChooser.addObject("MaxAutoStart2", maxAuto2);
+		autonomousChooser.addObject("MaxAutoStart3", maxAuto3);
+
+		SmartDashboard.putData("Autonomous selector", autonomousChooser);
+	}
 }
 

@@ -19,11 +19,17 @@ public class ClimberListener extends Command { // NOTE: THE DRIVER HAS CONTROL O
 	}
 
 	protected void execute() {
-		double rightTriggerVal = OI.joystick.getRawAxis(2);
+		/*double rightTriggerVal = OI.joystick.getRawAxis(3);
+		double leftTriggerVal = OI.joystick.getRawAxis(2);
 
 		if (rightTriggerVal != 0 && !Robot.climber.isStalling()) {
 			Robot.climber.setMotor(-1); // FIXME: Make sure this is right
-		}
+		} else if (leftTriggerVal != 0 && !Robot.climber.isStalling()) {
+			Robot.climber.setMotor(-1);
+		} else {
+			Robot.climber.setMotor(0);
+		}*/
+
 	}
 
 	protected boolean isFinished() {

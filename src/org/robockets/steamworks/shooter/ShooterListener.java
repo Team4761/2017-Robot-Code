@@ -22,6 +22,8 @@ public class ShooterListener extends Command {
 
 		if (rightTriggerVal != 0) {
 			Robot.shooter.spinUp(1);
+		} else {
+			Robot.shooter.stop();
 		}
 	}
 

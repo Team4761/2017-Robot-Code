@@ -39,7 +39,7 @@ public class Climb extends Command {
 		if (speed > 0) { // Make sure it is going the right direction
 			speed *= -1;
 		}
-		//Robot.ledSubsystem.cylon(2);
+		Robot.ledSubsystem.cylon(1);
 	}
 
 	@Override
@@ -62,7 +62,7 @@ public class Climb extends Command {
 	
 	protected void end() {
 		Robot.climber.stop(); // Brake the motor.
-		//Robot.ledSubsystem.cylon(56);
+		Robot.ledSubsystem.cylon(56);
 	}
 
 }

@@ -9,7 +9,7 @@ public class CVConstants {
 		return _offset;
 	}
 	
-	protected static void setOffset(double offset) {
+	public static void setOffset(double offset) {
 		_offset = offset;
 	}
 }
