@@ -22,6 +22,7 @@ import org.robockets.steamworks.commands.MakeExtraSpace;
 import org.robockets.steamworks.commands.MoveElevator;
 import org.robockets.steamworks.drivetrain.DriveWithMP;
 import org.robockets.steamworks.drivetrain.Drivetrain;
+import org.robockets.steamworks.commands.ElevatorDPadListener;
 import org.robockets.steamworks.drivetrain.Joyride;
 import org.robockets.steamworks.drivetrain.ResetDriveEncoders;
 import org.robockets.steamworks.drivetrain.ToggleDriveMode;
@@ -29,6 +30,7 @@ import org.robockets.steamworks.drivetrain.Turn;
 import org.robockets.steamworks.shooter.Shoot;
 import org.robockets.steamworks.shooter.ShootWithPID;
 import org.robockets.steamworks.shooter.Shooter;
+import org.robockets.steamworks.shooter.ShooterListener;
 import org.robockets.steamworks.shooter.SpinSpinners;
 import org.robockets.steamworks.subsystems.Conveyor;
 import org.robockets.steamworks.subsystems.Elevator;
@@ -37,7 +39,6 @@ import org.robockets.steamworks.lights.LED;
 import org.robockets.steamworks.intakeflap.IntakeFlap;
 import org.robockets.steamworks.intakeflap.ToggleIntakeFlap;
 import org.robockets.steamworks.lights.Cylon;
-import org.robockets.steamworks.lights.LED;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -77,6 +78,8 @@ public class Robot extends IterativeRobot {
 	public static Command climb;
 	public static Command toggleDriveMode;
 	public static Command cylonCommand;
+	public static Command elevatorListener;
+	public static Command shooterListener;
 
 	private SendableChooser<Command> autonomousChooser;
 
@@ -102,6 +105,8 @@ public class Robot extends IterativeRobot {
 		intakeFlap = new IntakeFlap(1);
 		ledSubsystem = new LED();
 		cylonCommand = new Cylon();
+		elevatorListener = new ElevatorDPadListener();
+		shooterListener = new ShooterListener();
 
 		//////////////
 		// COMMANDS //
@@ -401,6 +406,8 @@ public class Robot extends IterativeRobot {
 
 		drive.start();
 		cylonCommand.start();
+		elevatorListener.start();
+		shooterListener.start();
 	}
 
 	/**

@@ -20,16 +20,24 @@ import org.robockets.steamworks.shooter.SpinSpinners;
  */
 public class OI {
     public static Joystick joystick = new Joystick(0); // XBox Controller
-    public static Joystick attack3Left = new Joystick(
-
-            1); // Left attack joystick
+    public static Joystick attack3Left = new Joystick(1); // Left attack joystick
     public static Joystick attack3Right = new Joystick(2); // Right attack joystick
 
-    public static Joystick launchpad1 = new Joystick(3); // The right launchpad for the button board
+    public static Joystick launchpad1 = new Joystick(3); // The left launchpad for the button board
 
-    public static Joystick launchpad2 = new Joystick(4); // The left launchpad for the button board
-    
-    Button yButton = new JoystickButton(joystick, 4);
+    public static Joystick launchpad2 = new Joystick(4); // The right launchpad for the button board
+
+    public static Joystick backupJoystick = new Joystick(5);
+
+
+    Button aButton = new JoystickButton(backupJoystick, 1);
+    Button bButton = new JoystickButton(backupJoystick, 2);
+    Button xButton = new JoystickButton(backupJoystick, 3);
+    Button yButton = new JoystickButton(backupJoystick, 4);
+    Button leftBumperButton = new JoystickButton(backupJoystick, 5);
+    Button rightBumperButton = new JoystickButton(backupJoystick, 6);
+    Button selectButton = new JoystickButton(backupJoystick, 7);
+    Button startButton = new JoystickButton(backupJoystick, 8);
 
     /////////////////////
     /// Miscellaneous ///
@@ -89,7 +97,6 @@ public class OI {
 
     private void bindButtons() {
 
-
         /////////////////
         // Gear Intake //
         /////////////////
@@ -129,10 +136,23 @@ public class OI {
         /////////////
         // Climber //
         /////////////
-        climber1.whileHeld(new Climb(1));
+        climber1.whileHeld(new Climb(0.5));
         climber2.whileHeld(new Climb(1));  
         /*
         shooterMan1.whenPressed(new KillEverything()); */
         //misc2.whenPressed(new Climb(1));*/
+
+
+        ////////////
+        // Backup //
+        ////////////
+
+        yButton.whenPressed(new IntakeToPos(IntakeFlap.IntakeState.GEARS));
+        aButton.whenPressed(new IntakeToPos(IntakeFlap.IntakeState.FUEL));
+
+        rightBumperButton.whileHeld(new SpinBallIntakeRollers(1));
+        leftBumperButton.whileHeld(new SpinBallIntakeRollers(-1));
+
+
     }
 }
