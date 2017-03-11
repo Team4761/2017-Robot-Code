@@ -1,8 +1,9 @@
-package org.robockets.steamworks.subsystems;
+package org.robockets.steamworks.shooter;
 
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.robockets.steamworks.CounterRatePIDSource;
 import org.robockets.steamworks.RobotMap;
 
@@ -18,7 +19,7 @@ public class Shooter extends Subsystem {
     public PIDController shooterPIDController;
 
     public Shooter() {
-    	shooterPIDController = new PIDController(0.01, 0.001, 0.001, 0.01, counterPIDSource, RobotMap.shooterRollerSpeedController);
+    	shooterPIDController = new PIDController(0.0006, 0, 0.001, 0, counterPIDSource, RobotMap.shooterRollerSpeedController);
     	shooterPIDController.disable();
     	shooterPIDController.setOutputRange(0, 1);
     	shooterPIDController.setPercentTolerance(5);
@@ -40,6 +41,12 @@ public class Shooter extends Subsystem {
     public void spinUp(double rollerSpeed) {
     	RobotMap.shooterRollerSpeedController.set(rollerSpeed);
     }
+
+    public void enablePID() {
+    	//shooterPIDController.setSetpoint(SmartDashboard.getNumber("Shooter PID setpoint", 0));
+    	shooterPIDController.enable();
+	}
+
 
     public void stop() {
         RobotMap.shooterRollerSpeedController.stopMotor();

@@ -18,26 +18,27 @@ import org.robockets.steamworks.ballintake.IntakeBalls;
 import org.robockets.steamworks.camera.Webcam;
 import org.robockets.steamworks.climber.Climb;
 import org.robockets.steamworks.climber.Climber;
-import org.robockets.steamworks.commands.Cylon;
 import org.robockets.steamworks.commands.MakeExtraSpace;
 import org.robockets.steamworks.commands.MoveElevator;
-import org.robockets.steamworks.commands.Shoot;
-import org.robockets.steamworks.commands.ShootWithPID;
-import org.robockets.steamworks.commands.SpinSpinners;
-import org.robockets.steamworks.commands.TunePID;
 import org.robockets.steamworks.drivetrain.DriveWithMP;
-import org.robockets.steamworks.drivetrain.Turn;
 import org.robockets.steamworks.drivetrain.Drivetrain;
+import org.robockets.steamworks.commands.ElevatorDPadListener;
 import org.robockets.steamworks.drivetrain.Joyride;
 import org.robockets.steamworks.drivetrain.ResetDriveEncoders;
 import org.robockets.steamworks.drivetrain.ToggleDriveMode;
+import org.robockets.steamworks.drivetrain.Turn;
+import org.robockets.steamworks.shooter.Shoot;
+import org.robockets.steamworks.shooter.ShootWithPID;
+import org.robockets.steamworks.shooter.Shooter;
+import org.robockets.steamworks.shooter.ShooterListener;
+import org.robockets.steamworks.shooter.SpinSpinners;
 import org.robockets.steamworks.subsystems.Conveyor;
 import org.robockets.steamworks.subsystems.Elevator;
 import org.robockets.steamworks.subsystems.GearIntake;
-import org.robockets.steamworks.subsystems.LED;
-import org.robockets.steamworks.subsystems.Shooter;
+import org.robockets.steamworks.lights.LED;
 import org.robockets.steamworks.intakeflap.IntakeFlap;
 import org.robockets.steamworks.intakeflap.ToggleIntakeFlap;
+import org.robockets.steamworks.lights.Cylon;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -77,6 +78,8 @@ public class Robot extends IterativeRobot {
 	public static Command climb;
 	public static Command toggleDriveMode;
 	public static Command cylonCommand;
+	public static Command elevatorListener;
+	public static Command shooterListener;
 
 	private SendableChooser<Command> autonomousChooser;
 
@@ -108,6 +111,8 @@ public class Robot extends IterativeRobot {
 		intakeFlap = new IntakeFlap(1);
 		ledSubsystem = new LED();
 		cylonCommand = new Cylon();
+		elevatorListener = new ElevatorDPadListener();
+		shooterListener = new ShooterListener();
 
 		//////////////
 		// COMMANDS //
@@ -172,11 +177,29 @@ public class Robot extends IterativeRobot {
 		RobotMap.rollerEncoderCounter.setDistancePerPulse(1.0);
 		
 		RobotMap.shooterRollerSpeedController.setInverted(true);
+		RobotMap.climberSpeedController.setInverted(true);
+		RobotMap.climberSpeedController2.setInverted(true); // 55left 75 right
 
-		RobotMap.leftEncoder.setDistancePerPulse(0.26592797783933518005540166204986);
-		RobotMap.rightEncoder.setDistancePerPulse(0.04164859002169197396963123644252);
+		RobotMap.leftEncoder.setDistancePerPulse(4 * Math.PI / 360);
+		RobotMap.rightEncoder.setDistancePerPulse(4 * Math.PI / 360);
+
+		SmartDashboard.putNumber("Left drivepod PID P value", drivetrain.leftPodPID.getP());
+		SmartDashboard.putNumber("Left drivepod PID I value", drivetrain.leftPodPID.getI());
+		SmartDashboard.putNumber("Left drivepod PID D value", drivetrain.leftPodPID.getD());
+		SmartDashboard.putNumber("Left drivepod PID F value", drivetrain.leftPodPID.getF());
+
+		SmartDashboard.putNumber("Right drivepod PID P value", drivetrain.rightPodPID.getP());
+		SmartDashboard.putNumber("Right drivepod PID I value", drivetrain.rightPodPID.getI());
+		SmartDashboard.putNumber("Right drivepod PID D value", drivetrain.rightPodPID.getD());
+		SmartDashboard.putNumber("Right drivepod PID F value", drivetrain.rightPodPID.getF());
+
+		SmartDashboard.putNumber("Shooter PID P value", shooter.shooterPIDController.getP());
+		SmartDashboard.putNumber("Shooter PID I value", shooter.shooterPIDController.getI());
+		SmartDashboard.putNumber("Shooter PID D value", shooter.shooterPIDController.getD());
+		SmartDashboard.putNumber("Shooter PID F value", shooter.shooterPIDController.getF());
 
 		oi = new OI();
+		Robot.ledSubsystem.cylon(56);
 	}
 	
 	private void initSmartDashboard() {
@@ -185,7 +208,7 @@ public class Robot extends IterativeRobot {
 		// CLIMBER //
 		/////////////
 		Robot.climber.initSmartDashboard();
-		SmartDashboard.putData("Climb", new Climb(1));
+		SmartDashboard.putData("Climb", new Climb(-1));
 
 		////////////////
 		// DRIVETRAIN //
@@ -194,7 +217,9 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putData("Drive 60 at 10 per second with encoders", new DriveWithMP(60, 10));
 		SmartDashboard.putData("Drive 100 at 30 per second with encoders", new DriveWithMP(100, 30));
 
-		SmartDashboard.putNumber("Left drivepod PID P value", Robot.drivetrain.leftPodPID.getP());
+		SmartDashboard.putData("Turn Test", new Turn(TurnType.RELATIVE, 90, 40));
+
+		/*SmartDashboard.putNumber("Left drivepod PID P value", Robot.drivetrain.leftPodPID.getP());
 		SmartDashboard.putNumber("Left drivepod PID I value", Robot.drivetrain.leftPodPID.getI());
 		SmartDashboard.putNumber("Left drivepod PID D value", Robot.drivetrain.leftPodPID.getD());
 		SmartDashboard.putNumber("Left drivepod PID F value", Robot.drivetrain.leftPodPID.getF());
@@ -202,7 +227,7 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("Right drivepod PID P value", Robot.drivetrain.rightPodPID.getP());
 		SmartDashboard.putNumber("Right drivepod PID I value", Robot.drivetrain.rightPodPID.getI());
 		SmartDashboard.putNumber("Right drivepod PID D value", Robot.drivetrain.rightPodPID.getD());
-		SmartDashboard.putNumber("Right drivepod PID F value", Robot.drivetrain.rightPodPID.getF());
+		SmartDashboard.putNumber("Right drivepod PID F value", Robot.drivetrain.rightPodPID.getF());*/
 
 
 		//////////
@@ -241,12 +266,6 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putData(new SpinSpinners());
 		SmartDashboard.putData(new Shoot(false));
 		SmartDashboard.putData(new ShootWithPID());
-		
-		SmartDashboard.putNumber("Edit Shooter PID setpoint", 0);
-		SmartDashboard.putNumber("Edit Shooter PID P value", 0);
-		SmartDashboard.putNumber("Edit Shooter PID I value", 0);
-		SmartDashboard.putNumber("Edit Shooter PID D value", 0);
-		SmartDashboard.putNumber("Edit Shooter PID F value", 0);
 	}
 
 	@Override
@@ -282,13 +301,14 @@ public class Robot extends IterativeRobot {
 		Robot.drivetrain.leftPodPID.setPID(SmartDashboard.getNumber("Left drivepod PID P value", 0),
 				SmartDashboard.getNumber("Left drivepod PID I value", 0),
 				SmartDashboard.getNumber("Left drivepod PID D value", 0));
-		Robot.drivetrain.leftPodPID.setSetpoint(SmartDashboard.getNumber("Left drivepod PID setpoint", 0));
 
 		// Possibly?
-		Robot.drivetrain.rightPodPID.setPID(SmartDashboard.getNumber("Left drivepod PID P value", 0),
-				SmartDashboard.getNumber("Left drivepod PID I value", 0),
-				SmartDashboard.getNumber("Left drivepod PID D value", 0));
-		Robot.drivetrain.rightPodPID.setSetpoint(SmartDashboard.getNumber("Left drivepod PID setpoint", 0));
+		Robot.drivetrain.rightPodPID.setPID(SmartDashboard.getNumber("Right drivepod PID P value", 0),
+				SmartDashboard.getNumber("Right drivepod PID I value", 0),
+				SmartDashboard.getNumber("Right drivepod PID D value", 0));
+
+		SmartDashboard.putNumber("Left drivepod PID Setpoint", drivetrain.leftPodPID.getSetpoint());
+		SmartDashboard.putNumber("Right drivepod PID Setpoint", drivetrain.rightPodPID.getSetpoint());
 
 		SDDumper.dumpMisc();
 
@@ -311,13 +331,11 @@ public class Robot extends IterativeRobot {
 		/////////////
 
 		//System.out.println(RobotMap.rollerEncoderCounter.getRate());
-		SDDumper.dumpPidController("Shooter PID", Robot.shooter.shooterPIDController);
-		Robot.shooter.shooterPIDController.setSetpoint(SmartDashboard.getNumber("Edit Shooter PID setpoint", 0));
     	Robot.shooter.shooterPIDController.setPID(
-    			SmartDashboard.getNumber("Edit Shooter PID P value", 0.01),
-				SmartDashboard.getNumber("Edit Shooter PID I value", 0.001),
-				SmartDashboard.getNumber("Edit Shooter PID D value", 0.001),
-				SmartDashboard.getNumber("Edit Shooter PID F value", 0.01));
+    			SmartDashboard.getNumber("Shooter PID P value", 0),
+				SmartDashboard.getNumber("Shooter PID I value", 0),
+				SmartDashboard.getNumber("Shooter PID D value", 0),
+				SmartDashboard.getNumber("Shooter PID F value", 0));
     	
     	/////////////////
     	/// TEST MODE ///
@@ -400,8 +418,13 @@ public class Robot extends IterativeRobot {
 			autonomousCommand.cancel();
 		}
 
+		drivetrain.leftPodPID.disable();
+		drivetrain.rightPodPID.disable();
+
 		drive.start();
 		cylonCommand.start();
+		elevatorListener.start();
+		shooterListener.start();
 	}
 
 	/**
@@ -421,3 +444,4 @@ public class Robot extends IterativeRobot {
 	}
 
 }
+

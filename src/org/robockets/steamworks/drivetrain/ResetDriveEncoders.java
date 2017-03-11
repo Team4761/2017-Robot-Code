@@ -2,7 +2,6 @@ package org.robockets.steamworks.drivetrain;
 
 import edu.wpi.first.wpilibj.command.Command;
 import org.robockets.steamworks.Robot;
-import org.robockets.steamworks.RobotMap;
 
 /**
  * @author Jake Backer
@@ -10,7 +9,7 @@ import org.robockets.steamworks.RobotMap;
 public class ResetDriveEncoders extends Command {
 
 	public ResetDriveEncoders() {
-
+		this.setRunWhenDisabled(true);
 	}
 
 	protected void initialize() {

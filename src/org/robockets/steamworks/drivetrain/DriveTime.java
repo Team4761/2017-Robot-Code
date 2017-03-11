@@ -1,37 +1,44 @@
-package org.robockets.steamworks.intakeflap;
+package org.robockets.steamworks.drivetrain;
 
 import org.robockets.steamworks.Robot;
 
-import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.TimedCommand;
 
 /**
  *
  */
-public class ToggleIntakeFlap extends Command {
-    public ToggleIntakeFlap() {
-    	requires(Robot.intakeFlap);
-    }
+public class DriveTime extends TimedCommand {
+	
+	private double speed;
 
+	/**
+	 * Timed drive, while setting both motors to same speed
+	 * @param timeout Time to drive
+	 * @param speed Speed of driving
+	 */
+	public DriveTime(double timeout, double speed) {
+		super(timeout);
+		requires(Robot.drivetrain);
+		this.speed = speed;
+	}
+	
     // Called just before this Command runs the first time
     protected void initialize() {
-    	//s2.free();
-    	//setTimeout(1);
-		Robot.intakeFlap.toggle();
+    	Robot.drivetrain.driveArcade(speed, 0);
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	//s2.setSpeed(0.5);
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return true;
+        return isTimedOut();
     }
 
     // Called once after isFinished returns true
     protected void end() {
-    	//s2.setSpeed(0.0);
+    	Robot.drivetrain.stop();
     }
 
     // Called when another command which requires one or more of the same

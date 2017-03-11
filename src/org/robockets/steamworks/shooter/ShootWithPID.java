@@ -1,9 +1,8 @@
-package org.robockets.steamworks.commands;
+package org.robockets.steamworks.shooter;
 
 import org.robockets.steamworks.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
@@ -23,12 +22,13 @@ public class ShootWithPID extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.shooter.shooterPIDController.enable();
-    	Robot.shooter.shooterPIDController.setSetpoint(speed);
+        Robot.shooter.shooterPIDController.setSetpoint(speed);
+    	Robot.shooter.enablePID();
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+        System.out.println(Robot.shooter.shooterPIDController.getSetpoint());
     }
 
     // Make this return true when this Command no longer needs to run execute()

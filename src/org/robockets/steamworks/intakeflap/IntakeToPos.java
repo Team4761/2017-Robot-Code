@@ -10,7 +10,7 @@ import org.robockets.steamworks.RobotMap;
  */
 public class IntakeToPos extends Command {
 
-	IntakeFlap.IntakeState state;
+	private IntakeFlap.IntakeState state;
 
 	public IntakeToPos(IntakeFlap.IntakeState state) {
 		this.state = state;

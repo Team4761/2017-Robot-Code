@@ -1,6 +1,6 @@
-package org.robockets.steamworks.commands;
+package org.robockets.steamworks.lights;
 
-import org.robockets.steamworks.LightsColors;
+//import org.robockets.steamworks.LightsColors;
 import org.robockets.steamworks.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class ButtonPress extends Command {
 
-	LightsColors type;
+	private LightsColors type;
 	
     public ButtonPress(LightsColors type) {
     	requires(Robot.ledSubsystem);

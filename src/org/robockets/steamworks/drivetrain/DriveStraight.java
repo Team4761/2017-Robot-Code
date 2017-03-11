@@ -2,7 +2,7 @@ package org.robockets.steamworks.drivetrain;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-import org.robockets.commons.RelativeDirection;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.robockets.steamworks.LinearSetpointGenerator;
 import org.robockets.steamworks.Robot;
 import org.robockets.steamworks.RobotMap;
@@ -23,17 +23,21 @@ public class DriveStraight extends Command {
 
     protected void initialize() {
     	Robot.drivetrain.enableEncoderPID();
+    	Robot.drivetrain.resetEncoders();
     	leftLsg = new LinearSetpointGenerator(distance, speed, RobotMap.leftEncoder.getDistance());
     	rightLsg = new LinearSetpointGenerator(distance, speed, RobotMap.rightEncoder.getDistance());
     }
 
     protected void execute() {
-        Robot.drivetrain.leftPodPID.setSetpoint(leftLsg.next());
-        Robot.drivetrain.rightPodPID.setSetpoint(rightLsg.next());
+        if (leftLsg.hasNext() || rightLsg.hasNext()) {
+            Robot.drivetrain.leftPodPID.setSetpoint(leftLsg.next());
+            Robot.drivetrain.rightPodPID.setSetpoint(rightLsg.next());
+        }
     }
 
     protected boolean isFinished() {
-        return !leftLsg.hasNext() || !rightLsg.hasNext();
+        SmartDashboard.putBoolean("Encoders on Target", Robot.drivetrain.encodersOnTarget());
+        return Robot.drivetrain.encodersOnTarget() && (!leftLsg.hasNext() && !rightLsg.hasNext());
     }
 
     protected void end() {

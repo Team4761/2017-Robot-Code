@@ -3,8 +3,6 @@ package org.robockets.steamworks.pidsources;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.PIDSource;
 import edu.wpi.first.wpilibj.PIDSourceType;
-import org.robockets.steamworks.Robot;
-import org.robockets.steamworks.RobotMap;
 
 public class EncoderPIDSource implements PIDSource {
 	

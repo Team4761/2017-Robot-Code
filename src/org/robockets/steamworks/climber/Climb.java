@@ -1,7 +1,7 @@
 package org.robockets.steamworks.climber;
 
+import org.robockets.commons.RelativeDirection;
 import org.robockets.steamworks.Robot;
-import org.robockets.steamworks.RobotMap;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -32,8 +32,12 @@ public class Climb extends Command {
 	}
 	
 	protected void initialize() {
-		if (climbWithTime == true && time != 0) {
+		if (climbWithTime && time != 0) {
 			setTimeout(time);
+		}
+
+		if (speed > 0) { // Make sure it is going the right direction
+			speed *= -1;
 		}
 		//Robot.ledSubsystem.cylon(2);
 	}
@@ -41,15 +45,13 @@ public class Climb extends Command {
 	@Override
 	protected void execute() {
 		Robot.climber.setMotor(speed);
-		//System.out.println(RobotMap.powerDistPanel.getCurrent(RobotMap.climberPdpPort));
 	}
 
 	protected boolean isFinished() {
 		if (climbWithTime && time != 0) { // The case that the command runs within a certain time.
 			return isTimedOut(); 
 		} else if (!climbWithTime) { // The case that the command runs until the motor stalls.
-			//System.out.println("TEST");
-			return Robot.climber.readCurrent() > Robot.climber.STALLING_THRESHOLD;
+			return Robot.climber.isStalling();
 		}									
 		return false; // The case that the command runs indefinitely.
 	}

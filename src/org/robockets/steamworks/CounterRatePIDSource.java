@@ -14,19 +14,15 @@ public class CounterRatePIDSource implements PIDSource {
 	
 	@Override
 	public void setPIDSourceType(PIDSourceType pidSource) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public PIDSourceType getPIDSourceType() {
-		// TODO Auto-generated method stub
 		return PIDSourceType.kRate;
 	}
 
 	@Override
 	public double pidGet() {
-		// TODO Auto-generated method stub
 		return counter.getRate();
 	}
 		

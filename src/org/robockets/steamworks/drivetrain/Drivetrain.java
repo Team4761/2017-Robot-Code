@@ -31,14 +31,14 @@ public class Drivetrain extends Subsystem {
         gyroPID.setOutputRange(-1.0, 1.0); // Set turning speed range
         gyroPID.setPercentTolerance(5.0); // Set tolerance of 5%
         
-        leftPodPIDSource = new EncoderPIDSource(RobotMap.leftEncoder, 0.26592797783933518005540166204986); // Encoder factor: 1 / ticks per inch
-        leftPodPID = new PIDController(0.1, 0, 0, leftPodPIDSource, RobotMap.leftDrivePodOutput); //NOTE: Even with 0.1 P it is still going VERY fast and uneven relative to the right
+        leftPodPIDSource = new EncoderPIDSource(RobotMap.leftEncoder, 1); // This should be 1
+		leftPodPID = new PIDController(0.015, 0.001, 0.005, leftPodPIDSource, RobotMap.leftDrivePodOutput); //NOTE: Even with 0.1 P it is still going VERY fast and uneven relative to the right
         leftPodPID.disable();
         leftPodPID.setOutputRange(-1.0, 1.0);
         leftPodPID.setAbsoluteTolerance(0.5);
         
-        rightPodPIDSource = new EncoderPIDSource(RobotMap.rightEncoder, 0.04164859002169197396963123644252);
-        rightPodPID = new PIDController(0.1, 0, 0, rightPodPIDSource, RobotMap.rightDrivePodOutput);
+        rightPodPIDSource = new EncoderPIDSource(RobotMap.rightEncoder, 1);
+        rightPodPID = new PIDController(-0.015, -0.001, -0.005, rightPodPIDSource, RobotMap.rightDrivePodOutput);
         rightPodPID.disable();
         rightPodPID.setOutputRange(-1.0, 1.0);
         rightPodPID.setAbsoluteTolerance(0.5);
@@ -148,7 +148,7 @@ public class Drivetrain extends Subsystem {
      * @param radius Radius of the circle
      * @return Returns the arc length, in inches
      */
-    public double calculateArcLength(double chordLength, double radius) {
+    private double calculateArcLength(double chordLength, double radius) {
     	return Math.toRadians(Math.asin(chordLength / radius/ 2)) * 96;
     }
     
@@ -166,9 +166,9 @@ public class Drivetrain extends Subsystem {
      * @return Returns if both the encoder PIDs are OnTarget, with a tolerance of <code>PERCENT_TOLERANCE</code>
      */
    public boolean encodersOnTarget() {  
-  	final double PERCENT_TOLERANCE = 5.0;
-   	return Math.abs((leftPodPID.getSetpoint() - leftPodPIDSource.pidGet()) / leftPodPID.getSetpoint()) <= PERCENT_TOLERANCE && 
-   			Math.abs((rightPodPID.getSetpoint() - rightPodPIDSource.pidGet()) / rightPodPID.getSetpoint()) <= PERCENT_TOLERANCE; // michael did this 
+  	final double ABSOLUTE_TOLERANCE = 1.0;
+   	return Math.abs((leftPodPID.getSetpoint() - leftPodPIDSource.pidGet())) <= ABSOLUTE_TOLERANCE &&
+   			Math.abs((rightPodPID.getSetpoint() - rightPodPIDSource.pidGet())) <= ABSOLUTE_TOLERANCE; // michael did this
     }
     
     /**
@@ -191,11 +191,8 @@ public class Drivetrain extends Subsystem {
      * @return Returns true or false
      */
     public boolean isEncoderPIDEnabled() {
-    	if(leftPodPID.isEnabled() && rightPodPID.isEnabled()) {
-    		return true;
-    	}
-    	return false;
-    }
+		return leftPodPID.isEnabled() && rightPodPID.isEnabled();
+	}
     
     /**
      * A method to disable the encoder PIDs
