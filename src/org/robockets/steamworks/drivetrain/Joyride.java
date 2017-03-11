@@ -31,7 +31,7 @@ public class Joyride extends Command {
         	//RobotMap.robotDrive.arcadeDrive(OI.joystick); // "Cleaner" but its javadocs says its one-joystick arcade drive
         	
         	translate = OI.joystick.getRawAxis(1);
-        	rotate = OI.joystick.getRawAxis(4);	
+        	rotate = OI.joystick.getRawAxis(2);
         	        	
         	RobotMap.robotDrive.arcadeDrive(-translate, -rotate);
     	} else {

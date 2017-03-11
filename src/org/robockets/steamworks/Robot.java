@@ -25,6 +25,7 @@ import org.robockets.steamworks.drivetrain.Drivetrain;
 import org.robockets.steamworks.drivetrain.Joyride;
 import org.robockets.steamworks.drivetrain.ResetDriveEncoders;
 import org.robockets.steamworks.drivetrain.ToggleDriveMode;
+import org.robockets.steamworks.drivetrain.Turn;
 import org.robockets.steamworks.shooter.Shoot;
 import org.robockets.steamworks.shooter.ShootWithPID;
 import org.robockets.steamworks.shooter.Shooter;
@@ -193,6 +194,8 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putData(new ResetDriveEncoders());
 		SmartDashboard.putData("Drive 60 at 10 per second with encoders", new DriveWithMP(60, 10));
 		SmartDashboard.putData("Drive 100 at 30 per second with encoders", new DriveWithMP(100, 30));
+
+		SmartDashboard.putData("Turn Test", new Turn(TurnType.RELATIVE, 90, 40));
 
 		/*SmartDashboard.putNumber("Left drivepod PID P value", Robot.drivetrain.leftPodPID.getP());
 		SmartDashboard.putNumber("Left drivepod PID I value", Robot.drivetrain.leftPodPID.getI());
@@ -393,6 +396,9 @@ public class Robot extends IterativeRobot {
 			autonomousCommand.cancel();
 		}
 
+		drivetrain.leftPodPID.disable();
+		drivetrain.rightPodPID.disable();
+
 		drive.start();
 		cylonCommand.start();
 	}
@@ -414,3 +420,4 @@ public class Robot extends IterativeRobot {
 	}
 
 }
+

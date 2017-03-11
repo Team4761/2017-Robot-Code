@@ -20,7 +20,9 @@ import org.robockets.steamworks.shooter.SpinSpinners;
  */
 public class OI {
     public static Joystick joystick = new Joystick(0); // XBox Controller
-    public static Joystick attack3Left = new Joystick(1); // Left attack joystick
+    public static Joystick attack3Left = new Joystick(
+
+            1); // Left attack joystick
     public static Joystick attack3Right = new Joystick(2); // Right attack joystick
 
     public static Joystick launchpad1 = new Joystick(3); // The right launchpad for the button board
@@ -33,7 +35,7 @@ public class OI {
     /// Miscellaneous ///
     /////////////////////
 
-    Button misc1 = new JoystickButton(launchpad2, 8); // Done
+    Button misc1 = new JoystickButton(launchpad2, 7); // Done
     Button misc2 = new JoystickButton(launchpad2, 14); // Done
     Button misc3 = new JoystickButton(launchpad2, 9); // Done
     Button misc4 = new JoystickButton(launchpad2, 5); // Does not work
@@ -66,19 +68,19 @@ public class OI {
     /// Gear Intake ///
     ///////////////////
 
-    Button gearIntake1 = new JoystickButton(launchpad2, 16); // Done
+    Button gearIntake1 = new JoystickButton(launchpad2, 15); // Done
     Button gearIntake2 = new JoystickButton(launchpad1, 11); // Done
-    Button gearIntakeMan1 = new JoystickButton(launchpad1, 14); // Done
-    Button gearIntakeMan2 = new JoystickButton(launchpad2, 6); // Done
+    Button gearIntakeMan1 = new JoystickButton(launchpad1, 14); // No
+    Button gearIntakeMan2 = new JoystickButton(launchpad2, 6); // No
 
     ///////////////////
     /// Ball Intake ///
     ///////////////////
 
-    Button ballIntake1 = new JoystickButton(launchpad1, 13); // Done
-    Button ballIntake2 = new JoystickButton(launchpad1, 12); // Done
-    Button ballIntakeMan1 = new JoystickButton(launchpad1, 16); // Does not work
-    Button ballIntakeMan2 = new JoystickButton(launchpad1, 10); // Done
+    Button ballIntake1 = new JoystickButton(launchpad1, 12); // Done
+    Button ballIntake2 = new JoystickButton(launchpad1, 14); // Done
+    Button ballIntakeMan1 = new JoystickButton(launchpad1, 10);
+    Button ballIntakeMan2 = new JoystickButton(launchpad1, 10); // Does not work
 
     public OI() {
     	//yButton.whenPressed(Robot.toggleDriveMode);
