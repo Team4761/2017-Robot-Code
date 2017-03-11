@@ -13,7 +13,6 @@ public class LED extends Subsystem {
     }
     public void cylon (int value) {
     	RobotMap.arduino.write(8,value);
-    	System.out.println("Writing 50");
     }
 }
 

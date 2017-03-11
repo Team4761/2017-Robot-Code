@@ -150,8 +150,8 @@ public class OI {
         yButton.whenPressed(new IntakeToPos(IntakeFlap.IntakeState.GEARS));
         aButton.whenPressed(new IntakeToPos(IntakeFlap.IntakeState.FUEL));
 
-        rightBumperButton.whileHeld(new SpinBallIntakeRollers(1));
-        leftBumperButton.whileHeld(new SpinBallIntakeRollers(-1));
+        rightBumperButton.whileHeld(new SpinBallIntakeRollers(-1));
+        leftBumperButton.whileHeld(new SpinBallIntakeRollers(1));
 
 
     }
