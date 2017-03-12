@@ -159,7 +159,7 @@ public class OI {
 
         driverRightBumper.whileHeld(new Climb(1));
 
-        xButton.whileHeld(new ButtonPress(LightsColors.BLUE));
-        bButton.whileHeld(new ButtonPress(LightsColors.WHITE));
+        //xButton.whileHeld(new ButtonPress(LightsColors.BLUE));
+        //bButton.whileHeld(new ButtonPress(LightsColors.WHITE));
     }
 }

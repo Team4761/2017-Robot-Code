@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.vision.VisionRunner;
 import edu.wpi.first.wpilibj.vision.VisionThread;
 
+import jdk.nashorn.internal.runtime.regexp.joni.Warnings;
 import org.robockets.commons.RelativeDirection;
 import org.robockets.steamworks.autonomous.AutoTest;
 import org.robockets.steamworks.autonomous.EasyAuto;
@@ -145,10 +146,13 @@ public class Robot extends IterativeRobot {
 		//////////
 		CameraServer.getInstance().startAutomaticCapture(RobotMap.drivingCamera);
 		CameraServer.getInstance().startAutomaticCapture(RobotMap.visionCamera);
+		RobotMap.visionCamera.setExposureManual(0);
 		new VisionThread(new VisionRunner<ImageProcessor>(RobotMap.visionCamera, new ImageProcessor(), new VisionRunner.Listener<ImageProcessor>() {
 			@Override
 			public void copyPipelineOutputs(ImageProcessor pipeline) {
 				CVConstants.setOffset(pipeline.angleOffset);
+				SmartDashboard.putNumber("Vision angle offset", pipeline.angleOffset);
+				RobotMap.visionCamera.setExposureManual(0);
 			}
 		})).start();
 
@@ -417,6 +421,7 @@ public class Robot extends IterativeRobot {
 		//climberListener.start();
 	}
 
+	boolean lightsEnabled = false;
 	/**
 	 * This function is called periodically during operator control
 	 */
@@ -424,10 +429,13 @@ public class Robot extends IterativeRobot {
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
 
-		if (RobotMap.gearInputBreakbeamSensor.get()) {
+		if (RobotMap.gearInputBreakbeamSensor.get() && !lightsEnabled) {
 			Robot.ledSubsystem.cylon(2);
-		} else {
-			Robot.ledSubsystem.cylon(56);
+			lightsEnabled = true;
+		}
+		if (!RobotMap.gearInputBreakbeamSensor.get()) {
+			//Robot.ledSubsystem.cylon(56);
+			lightsEnabled = false;
 		}
 
 	}
