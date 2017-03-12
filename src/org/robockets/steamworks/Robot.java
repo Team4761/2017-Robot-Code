@@ -369,6 +369,7 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void disabledInit() {
+		//Robot.ledSubsystem.cylon(56);
 	}
 
 	@Override
@@ -421,7 +422,7 @@ public class Robot extends IterativeRobot {
 		//climberListener.start();
 	}
 
-	boolean lightsEnabled = false;
+	private boolean lightsEnabled = false;
 	/**
 	 * This function is called periodically during operator control
 	 */
@@ -432,9 +433,8 @@ public class Robot extends IterativeRobot {
 		if (RobotMap.gearInputBreakbeamSensor.get() && !lightsEnabled) {
 			Robot.ledSubsystem.cylon(2);
 			lightsEnabled = true;
-		}
-		if (!RobotMap.gearInputBreakbeamSensor.get()) {
-			//Robot.ledSubsystem.cylon(56);
+		} else if (!RobotMap.gearInputBreakbeamSensor.get() && lightsEnabled) {
+			Robot.ledSubsystem.cylon(56);
 			lightsEnabled = false;
 		}
 

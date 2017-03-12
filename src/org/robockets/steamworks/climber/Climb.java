@@ -1,6 +1,5 @@
 package org.robockets.steamworks.climber;
 
-import org.robockets.commons.RelativeDirection;
 import org.robockets.steamworks.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
