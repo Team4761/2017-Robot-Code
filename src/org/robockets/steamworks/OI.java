@@ -13,6 +13,7 @@ import org.robockets.steamworks.commands.MoveElevator;
 import org.robockets.steamworks.intakeflap.IntakeFlap;
 import org.robockets.steamworks.intakeflap.IntakeToPos;
 import org.robockets.steamworks.lights.ButtonPress;
+import org.robockets.steamworks.lights.KillLights;
 import org.robockets.steamworks.lights.LightsColors;
 import org.robockets.steamworks.shooter.Shoot;
 import org.robockets.steamworks.shooter.SpinSpinners;
@@ -152,7 +153,9 @@ public class OI {
         ////////////
 
         yButton.whenPressed(new IntakeToPos(IntakeFlap.IntakeState.GEARS));
+        yButton.whenReleased(new KillLights());
         aButton.whenPressed(new IntakeToPos(IntakeFlap.IntakeState.FUEL));
+        aButton.whenReleased(new KillLights());
 
         rightBumperButton.whileHeld(new SpinBallIntakeRollers(-1));
         leftBumperButton.whileHeld(new SpinBallIntakeRollers(1));

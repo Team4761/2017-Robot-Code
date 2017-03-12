@@ -12,7 +12,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.vision.VisionRunner;
 import edu.wpi.first.wpilibj.vision.VisionThread;
 
-import jdk.nashorn.internal.runtime.regexp.joni.Warnings;
 import org.robockets.commons.RelativeDirection;
 import org.robockets.steamworks.autonomous.AutoTest;
 import org.robockets.steamworks.autonomous.EasyAuto;
@@ -147,14 +146,16 @@ public class Robot extends IterativeRobot {
 		CameraServer.getInstance().startAutomaticCapture(RobotMap.drivingCamera);
 		CameraServer.getInstance().startAutomaticCapture(RobotMap.visionCamera);
 		RobotMap.visionCamera.setExposureManual(0);
+		System.out.println("starting vision thread");
 		new VisionThread(new VisionRunner<ImageProcessor>(RobotMap.visionCamera, new ImageProcessor(), new VisionRunner.Listener<ImageProcessor>() {
 			@Override
 			public void copyPipelineOutputs(ImageProcessor pipeline) {
 				CVConstants.setOffset(pipeline.angleOffset);
 				SmartDashboard.putNumber("Vision angle offset", pipeline.angleOffset);
-				RobotMap.visionCamera.setExposureManual(0);
+				RobotMap.visionCamera.setExposureManual(1);
 			}
 		})).start();
+		System.out.println("started vision thread");
 
 		//chooser.addObject("My Auto", new MyAutoCommand());
 		//RobotMap.gyro.calibrate();
@@ -422,7 +423,7 @@ public class Robot extends IterativeRobot {
 		//climberListener.start();
 	}
 
-	private boolean lightsEnabled = false;
+	//private boolean lightsEnabled = false;
 	/**
 	 * This function is called periodically during operator control
 	 */
@@ -430,12 +431,16 @@ public class Robot extends IterativeRobot {
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
 
-		if (RobotMap.gearInputBreakbeamSensor.get() && !lightsEnabled) {
+		/*if (RobotMap.gearInputBreakbeamSensor.get() && !lightsEnabled) {
 			Robot.ledSubsystem.cylon(2);
 			lightsEnabled = true;
 		} else if (!RobotMap.gearInputBreakbeamSensor.get() && lightsEnabled) {
 			Robot.ledSubsystem.cylon(56);
 			lightsEnabled = false;
+		}*/
+
+		if (RobotMap.gearInputBreakbeamSensor.get()) {
+			Robot.ledSubsystem.cylon(56);
 		}
 
 	}
