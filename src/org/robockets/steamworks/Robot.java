@@ -145,7 +145,8 @@ public class Robot extends IterativeRobot {
 		// INIT //
 		//////////
 		CameraServer.getInstance().startAutomaticCapture(RobotMap.drivingCamera);
-		CameraServer.getInstance().startAutomaticCapture(RobotMap.visionCamera);
+		
+		/*CameraServer.getInstance().startAutomaticCapture(RobotMap.visionCamera);
 		RobotMap.visionCamera.setExposureManual(0);
 		new VisionThread(new VisionRunner<ImageProcessor>(RobotMap.visionCamera, new ImageProcessor(), new VisionRunner.Listener<ImageProcessor>() {
 			@Override
@@ -154,9 +155,8 @@ public class Robot extends IterativeRobot {
 				SmartDashboard.putNumber("Vision angle offset", pipeline.angleOffset);
 				RobotMap.visionCamera.setExposureManual(0);
 			}
-		})).start();
+		})).start(); */
 
-		//chooser.addObject("My Auto", new MyAutoCommand());
 		//RobotMap.gyro.calibrate();
 
 		RobotMap.rollerEncoderCounter.setUpSource(RobotMap.rollerEncoder);

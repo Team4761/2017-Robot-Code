@@ -1,9 +1,11 @@
 package org.robockets.steamworks;
 
+import edu.wpi.cscore.CvSource;
 import edu.wpi.cscore.UsbCamera;
 import org.robockets.steamworks.drivetrain.DrivePodOutput;
 
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
+import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.Counter;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
@@ -104,9 +106,10 @@ public class RobotMap {
     ///////////////
     /// Cameras ///
 	///////////////
-
+    
+    public static CvSource processedOutputStream = CameraServer.getInstance().putVideo("Vision (processed)", 480, 320);
 	public static UsbCamera drivingCamera = new UsbCamera("Driving camera", 0);
-	public static UsbCamera visionCamera = new UsbCamera("Vision camera", 1);
+	public static UsbCamera visionCamera  = new UsbCamera("Vision camera",  1);
 
     /////////////////////
     /// Miscellaneous ///
