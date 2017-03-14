@@ -3,6 +3,7 @@ package org.robockets.steamworks;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
 import org.robockets.commons.RelativeDirection;
 import org.robockets.steamworks.ballintake.SpinBallIntakeRollers;
@@ -161,5 +162,37 @@ public class OI {
 
         //xButton.whileHeld(new ButtonPress(LightsColors.BLUE));
         //bButton.whileHeld(new ButtonPress(LightsColors.WHITE));
+    }
+    
+    protected static void initTestMode() {
+    	final String LEFT_DRIVEPOD_SUBSYSTEM_NAME = "Left Drivepod";
+		LiveWindow.addSensor(LEFT_DRIVEPOD_SUBSYSTEM_NAME, "Encoder", RobotMap.leftEncoder);
+		LiveWindow.addActuator(LEFT_DRIVEPOD_SUBSYSTEM_NAME, "Speed controller", RobotMap.leftDrivepodSpeedController);
+		
+		final String RIGHT_DRIVEPOD_SUBSYSTEM_NAME = "Right Drivepod";
+		LiveWindow.addSensor(RIGHT_DRIVEPOD_SUBSYSTEM_NAME, "Encoder", RobotMap.rightEncoder);
+		LiveWindow.addActuator(RIGHT_DRIVEPOD_SUBSYSTEM_NAME, "Speed controller", RobotMap.rightDrivepodSpeedController);
+		
+		final String BALL_INTAKE_SUBSYSTEM_NAME = "Ball Intake";
+		LiveWindow.addActuator(BALL_INTAKE_SUBSYSTEM_NAME, "Speed controller", RobotMap.ballIntakeRollerSpeedController);
+		
+		final String GEAR_INTAKE_SUBSYSTEM_NAME = "Gear intake";
+		LiveWindow.addActuator(GEAR_INTAKE_SUBSYSTEM_NAME, "Left servo", RobotMap.leftIntakeFlapServo);
+		LiveWindow.addActuator(GEAR_INTAKE_SUBSYSTEM_NAME, "Right servo", RobotMap.rightIntakeFlapServo);
+		LiveWindow.addSensor(GEAR_INTAKE_SUBSYSTEM_NAME, "Breakbeam sensor", RobotMap.gearInputBreakbeamSensor);
+		
+		final String CONVEYOR_SUBSYSTEM_NAME = "Conveyor";
+		LiveWindow.addActuator(CONVEYOR_SUBSYSTEM_NAME, "Speed controller", RobotMap.conveyorSpeedController);
+		
+		final String ELEVATOR_SUBSYSTEM_NAME = "Elevator";
+		LiveWindow.addActuator(ELEVATOR_SUBSYSTEM_NAME, "Speed controller", RobotMap.elevatorSpeedController);
+		LiveWindow.addSensor(ELEVATOR_SUBSYSTEM_NAME, "Breakbeam sensor", RobotMap.elevatorBreakbeamSensor);
+		
+		final String SHOOTER_SUBSYSTEM_NAME = "Shooter";
+		LiveWindow.addActuator(SHOOTER_SUBSYSTEM_NAME, "Roller speed controller", RobotMap.shooterRollerSpeedController);
+		LiveWindow.addSensor(SHOOTER_SUBSYSTEM_NAME, "Touchless encoder", RobotMap.rollerEncoderCounter);
+		
+		final String GYRO_SUBSYSTEM_NAME = "Gyro";
+		LiveWindow.addSensor(GYRO_SUBSYSTEM_NAME, "Gyro", RobotMap.gyro);
     }
 }
