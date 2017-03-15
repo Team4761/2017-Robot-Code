@@ -107,7 +107,6 @@ public class RobotMap {
     /// Cameras ///
 	///////////////
     
-    public static CvSource processedOutputStream = CameraServer.getInstance().putVideo("Vision (processed)", 480, 320);
 	public static UsbCamera drivingCamera = new UsbCamera("Driving camera", 0);
 	public static UsbCamera visionCamera  = new UsbCamera("Vision camera",  1);
 

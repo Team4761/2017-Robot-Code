@@ -15,25 +15,15 @@ import org.robockets.steamworks.RobotMap;
 
 public class ImageProcessor implements VisionPipeline {
 
-
 	public double angleOffset;
 	
-	public static ArrayList<MatOfPoint> filterContours(ArrayList<MatOfPoint> contours) {
-		ArrayList<MatOfPoint> tapeContours = new ArrayList<MatOfPoint>();
-		for(int i = 0; i < contours.size(); i++) {
-			MatOfPoint contour = contours.get(i);
-			if(isPegTape(contour)) tapeContours.add(contour);
-			if(tapeContours.size() >= 2) break;
-		}
-		return tapeContours;
-	}
+	public Mat output;
 
 	@Override
 	public void process(Mat image) {
 		Mat binarized = VisionUtils.binarize(image);
 		ArrayList<MatOfPoint> contours = filterContours(VisionUtils.getContours(binarized));
 		if(contours.size() != 2) {
-			RobotMap.processedOutputStream.putFrame(binarized);
 			angleOffset = 4761;
 			return;
 		}
@@ -55,7 +45,18 @@ public class ImageProcessor implements VisionPipeline {
 		Imgproc.rectangle(binarized, leftRect.tl(), rightRect.br(), new Scalar(255, 255, 0), 3);
 
 		angleOffset = pixelOffset * pixelToAngleFactor  *10;
-		RobotMap.processedOutputStream.putFrame(binarized);
+		
+		output = binarized;
+	}
+	
+	public static ArrayList<MatOfPoint> filterContours(ArrayList<MatOfPoint> contours) {
+		ArrayList<MatOfPoint> tapeContours = new ArrayList<MatOfPoint>();
+		for(int i = 0; i < contours.size(); i++) {
+			MatOfPoint contour = contours.get(i);
+			if(isPegTape(contour)) tapeContours.add(contour);
+			if(tapeContours.size() >= 2) break;
+		}
+		return tapeContours;
 	}
 	
 	private static boolean isPegTape(MatOfPoint contour) {

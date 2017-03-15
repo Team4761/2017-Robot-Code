@@ -12,7 +12,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.vision.VisionRunner;
 import edu.wpi.first.wpilibj.vision.VisionThread;
 
-import jdk.nashorn.internal.runtime.regexp.joni.Warnings;
 import org.robockets.commons.RelativeDirection;
 import org.robockets.steamworks.autonomous.AutoTest;
 import org.robockets.steamworks.autonomous.EasyAuto;
@@ -23,6 +22,7 @@ import org.robockets.steamworks.ballintake.SpinBallIntakeRollers;
 import org.robockets.steamworks.ballintake.IntakeBalls;
 import org.robockets.steamworks.camera.CVConstants;
 import org.robockets.steamworks.camera.ImageProcessor;
+import org.robockets.steamworks.camera.VisionManager;
 import org.robockets.steamworks.climber.Climb;
 import org.robockets.steamworks.climber.Climber;
 import org.robockets.steamworks.climber.ClimberListener;
@@ -92,6 +92,8 @@ public class Robot extends IterativeRobot {
 	public static Command elevatorListener;
 	public static Command shooterListener;
 	public static Command climberListener;
+	
+	public static VisionManager visionManager;
 
 	private SendableChooser<Command> autonomousChooser;
 
@@ -145,17 +147,8 @@ public class Robot extends IterativeRobot {
 		// INIT //
 		//////////
 		CameraServer.getInstance().startAutomaticCapture(RobotMap.drivingCamera);
-		
-		/*CameraServer.getInstance().startAutomaticCapture(RobotMap.visionCamera);
-		RobotMap.visionCamera.setExposureManual(0);
-		new VisionThread(new VisionRunner<ImageProcessor>(RobotMap.visionCamera, new ImageProcessor(), new VisionRunner.Listener<ImageProcessor>() {
-			@Override
-			public void copyPipelineOutputs(ImageProcessor pipeline) {
-				CVConstants.setOffset(pipeline.angleOffset);
-				SmartDashboard.putNumber("Vision angle offset", pipeline.angleOffset);
-				RobotMap.visionCamera.setExposureManual(0);
-			}
-		})).start(); */
+		visionManager = new VisionManager();
+		visionManager.startProcessing();
 
 		//RobotMap.gyro.calibrate();
 

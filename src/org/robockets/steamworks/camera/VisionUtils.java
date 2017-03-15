@@ -30,13 +30,9 @@ public class VisionUtils {
 	}
 	
 	public static ArrayList<MatOfPoint> getContours(Mat binaryImage) {
-		/// Canny
-		Mat cannyOut = new Mat();
-		Imgproc.Canny(binaryImage, cannyOut, 100, 200);
-		
 		/// Find contours
 		ArrayList<MatOfPoint> contours = new ArrayList<MatOfPoint>();
-		Imgproc.findContours(cannyOut, contours, new Mat(), Imgproc.RETR_TREE, Imgproc.CHAIN_APPROX_SIMPLE);
+		Imgproc.findContours(binaryImage, contours, new Mat(), Imgproc.RETR_TREE, Imgproc.CHAIN_APPROX_SIMPLE);
 		Collections.sort(contours, new ContourAreaComparator());
 		ArrayList<MatOfPoint> ret = new ArrayList<>();
 		for(int i = 0; i < contours.size(); i++) {
@@ -52,18 +48,6 @@ public class VisionUtils {
 		double larger = Math.max(width, height);
 		double smaller = Math.min(width, height);
 		return (double) larger / (double) smaller;
-	}
-	
-	public static ArrayList<MatOfPoint> removeDuplicateContours(ArrayList<MatOfPoint> list) {
-		for(int i = 0; i < list.size(); i++) {
-			ArrayList<MatOfPoint> temp = new ArrayList<MatOfPoint>();
-			for(MatOfPoint contour : list) temp.add(contour);
-			temp.remove(i);
-			for(MatOfPoint contour : temp) {
-				//if()
-			}
-		}
-		return null;
 	}
 
 }
