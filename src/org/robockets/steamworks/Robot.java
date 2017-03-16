@@ -22,6 +22,7 @@ import org.robockets.steamworks.ballintake.SpinBallIntakeRollers;
 import org.robockets.steamworks.ballintake.IntakeBalls;
 import org.robockets.steamworks.camera.CVConstants;
 import org.robockets.steamworks.camera.ImageProcessor;
+import org.robockets.steamworks.camera.VisionManager;
 import org.robockets.steamworks.climber.Climb;
 import org.robockets.steamworks.climber.Climber;
 import org.robockets.steamworks.climber.ClimberListener;
@@ -91,6 +92,8 @@ public class Robot extends IterativeRobot {
 	public static Command elevatorListener;
 	public static Command shooterListener;
 	public static Command climberListener;
+	
+	public static VisionManager visionManager;
 
 	private SendableChooser<Command> autonomousChooser;
 
@@ -144,20 +147,9 @@ public class Robot extends IterativeRobot {
 		// INIT //
 		//////////
 		CameraServer.getInstance().startAutomaticCapture(RobotMap.drivingCamera);
-		CameraServer.getInstance().startAutomaticCapture(RobotMap.visionCamera);
-		RobotMap.visionCamera.setExposureManual(0);
-		System.out.println("starting vision thread");
-		new VisionThread(new VisionRunner<ImageProcessor>(RobotMap.visionCamera, new ImageProcessor(), new VisionRunner.Listener<ImageProcessor>() {
-			@Override
-			public void copyPipelineOutputs(ImageProcessor pipeline) {
-				CVConstants.setOffset(pipeline.angleOffset);
-				SmartDashboard.putNumber("Vision angle offset", pipeline.angleOffset);
-				RobotMap.visionCamera.setExposureManual(1);
-			}
-		})).start();
-		System.out.println("started vision thread");
-
-		//chooser.addObject("My Auto", new MyAutoCommand());
+		visionManager = new VisionManager();
+		visionManager.startProcessing();
+		
 		//RobotMap.gyro.calibrate();
 
 		RobotMap.rollerEncoderCounter.setUpSource(RobotMap.rollerEncoder);
@@ -258,6 +250,8 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putData(new SpinSpinners());
 		SmartDashboard.putData(new Shoot(false));
 		SmartDashboard.putData(new ShootWithPID());
+		
+		OI.initTestMode();
 	}
 
 	@Override
@@ -329,38 +323,6 @@ public class Robot extends IterativeRobot {
 				SmartDashboard.getNumber("Shooter PID D value", 0),
 				SmartDashboard.getNumber("Shooter PID F value", 0));
     	
-    	/////////////////
-    	/// TEST MODE ///
-    	/////////////////
-		final String LEFT_DRIVEPOD_SUBSYSTEM_NAME = "Left Drivepod";
-		LiveWindow.addSensor(LEFT_DRIVEPOD_SUBSYSTEM_NAME, "Encoder", RobotMap.leftEncoder);
-		LiveWindow.addActuator(LEFT_DRIVEPOD_SUBSYSTEM_NAME, "Speed controller", RobotMap.leftDrivepodSpeedController);
-		
-		final String RIGHT_DRIVEPOD_SUBSYSTEM_NAME = "Right Drivepod";
-		LiveWindow.addSensor(RIGHT_DRIVEPOD_SUBSYSTEM_NAME, "Encoder", RobotMap.rightEncoder);
-		LiveWindow.addActuator(RIGHT_DRIVEPOD_SUBSYSTEM_NAME, "Speed controller", RobotMap.rightDrivepodSpeedController);
-		
-		final String BALL_INTAKE_SUBSYSTEM_NAME = "Ball Intake";
-		LiveWindow.addActuator(BALL_INTAKE_SUBSYSTEM_NAME, "Speed controller", RobotMap.ballIntakeRollerSpeedController);
-		
-		final String GEAR_INTAKE_SUBSYSTEM_NAME = "Gear intake";
-		LiveWindow.addActuator(GEAR_INTAKE_SUBSYSTEM_NAME, "Left servo", RobotMap.leftIntakeFlapServo);
-		LiveWindow.addActuator(GEAR_INTAKE_SUBSYSTEM_NAME, "Right servo", RobotMap.rightIntakeFlapServo);
-		LiveWindow.addSensor(GEAR_INTAKE_SUBSYSTEM_NAME, "Breakbeam sensor", RobotMap.gearInputBreakbeamSensor);
-		
-		final String CONVEYOR_SUBSYSTEM_NAME = "Conveyor";
-		LiveWindow.addActuator(CONVEYOR_SUBSYSTEM_NAME, "Speed controller", RobotMap.conveyorSpeedController);
-		
-		final String ELEVATOR_SUBSYSTEM_NAME = "Elevator";
-		LiveWindow.addActuator(ELEVATOR_SUBSYSTEM_NAME, "Speed controller", RobotMap.elevatorSpeedController);
-		LiveWindow.addSensor(ELEVATOR_SUBSYSTEM_NAME, "Breakbeam sensor", RobotMap.elevatorBreakbeamSensor);
-		
-		final String SHOOTER_SUBSYSTEM_NAME = "Shooter";
-		LiveWindow.addActuator(SHOOTER_SUBSYSTEM_NAME, "Roller speed controller", RobotMap.shooterRollerSpeedController);
-		LiveWindow.addSensor(SHOOTER_SUBSYSTEM_NAME, "Touchless encoder", RobotMap.rollerEncoderCounter);
-		
-		final String GYRO_SUBSYSTEM_NAME = "Gyro";
-		LiveWindow.addSensor(GYRO_SUBSYSTEM_NAME, "Gyro", RobotMap.gyro);
 	}
   
 	/**
