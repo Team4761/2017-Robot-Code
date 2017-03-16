@@ -21,9 +21,9 @@ public class ElevatorDPadListener extends Command {
 		int povVal = OI.backupJoystick.getPOV(); // Read in degrees
 
 		if (povVal == 0) {
-			Robot.elevator.moveElevator(RelativeDirection.ZAxis.UP, 1);
+			Robot.elevator.moveElevator(RelativeDirection.ZAxis.UP, 0.6);
 		} else if (povVal == 180) {
-			Robot.elevator.moveElevator(RelativeDirection.ZAxis.DOWN, 1);
+			Robot.elevator.moveElevator(RelativeDirection.ZAxis.DOWN, 0.6);
 		} else {
 			// Left trigger
 			double leftTriggerVal = OI.backupJoystick.getRawAxis(2);

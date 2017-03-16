@@ -17,6 +17,7 @@ public class ShootWithPID extends Command {
     }
     
     public ShootWithPID(double speed) {
+        requires(Robot.shooter);
     	this.speed = speed;
     }
 
