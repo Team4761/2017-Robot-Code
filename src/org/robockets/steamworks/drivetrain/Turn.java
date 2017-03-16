@@ -57,6 +57,7 @@ public class Turn extends Command {
 
 	protected void initialize() {
 		// Could alter PID if needed
+		Robot.drivetrain.resetEncoders();
 		Robot.drivetrain.enableEncoderPID();
 		leftLsg = new LinearSetpointGenerator(distance, speed, RobotMap.leftEncoder.getDistance());
 		rightLsg = new LinearSetpointGenerator(-distance, -speed, RobotMap.rightEncoder.getDistance());
@@ -79,10 +80,5 @@ public class Turn extends Command {
 
 	protected void interrupted() {
 		end();
-	}
-
-  public enum TurnControllerType {
-		ENCODER,
-		GYRO;
 	}
 }

@@ -19,7 +19,7 @@ public class Shooter extends Subsystem {
     public PIDController shooterPIDController;
 
     public Shooter() {
-    	shooterPIDController = new PIDController(0.0006, 0, 0.001, 0, counterPIDSource, RobotMap.shooterRollerSpeedController);
+    	shooterPIDController = new PIDController(0.001, 0.01, 0.7, 0.017, counterPIDSource, RobotMap.shooterRollerSpeedController);
     	shooterPIDController.disable();
     	shooterPIDController.setOutputRange(0, 1);
     	shooterPIDController.setPercentTolerance(5);
