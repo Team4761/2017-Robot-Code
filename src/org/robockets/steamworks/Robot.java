@@ -1,11 +1,16 @@
 package org.robockets.steamworks;
 
+import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
+import edu.wpi.first.wpilibj.vision.VisionRunner;
+import edu.wpi.first.wpilibj.vision.VisionThread;
 
 import org.robockets.commons.RelativeDirection;
 import org.robockets.steamworks.autonomous.AutoTest;
@@ -15,19 +20,26 @@ import org.robockets.steamworks.autonomous.MidAuto;
 import org.robockets.steamworks.ballintake.BallIntake;
 import org.robockets.steamworks.ballintake.SpinBallIntakeRollers;
 import org.robockets.steamworks.ballintake.IntakeBalls;
-import org.robockets.steamworks.camera.Webcam;
+import org.robockets.steamworks.camera.CVConstants;
+import org.robockets.steamworks.camera.ImageProcessor;
+import org.robockets.steamworks.camera.VisionManager;
 import org.robockets.steamworks.climber.Climb;
 import org.robockets.steamworks.climber.Climber;
+import org.robockets.steamworks.climber.ClimberListener;
 import org.robockets.steamworks.commands.MakeExtraSpace;
 import org.robockets.steamworks.commands.MoveElevator;
 import org.robockets.steamworks.drivetrain.DriveWithMP;
 import org.robockets.steamworks.drivetrain.Drivetrain;
+import org.robockets.steamworks.commands.ElevatorDPadListener;
 import org.robockets.steamworks.drivetrain.Joyride;
 import org.robockets.steamworks.drivetrain.ResetDriveEncoders;
 import org.robockets.steamworks.drivetrain.ToggleDriveMode;
+import org.robockets.steamworks.drivetrain.Turn;
+import org.robockets.steamworks.intakeflap.IntakeToPos;
 import org.robockets.steamworks.shooter.Shoot;
 import org.robockets.steamworks.shooter.ShootWithPID;
 import org.robockets.steamworks.shooter.Shooter;
+import org.robockets.steamworks.shooter.ShooterListener;
 import org.robockets.steamworks.shooter.SpinSpinners;
 import org.robockets.steamworks.subsystems.Conveyor;
 import org.robockets.steamworks.subsystems.Elevator;
@@ -36,12 +48,12 @@ import org.robockets.steamworks.lights.LED;
 import org.robockets.steamworks.intakeflap.IntakeFlap;
 import org.robockets.steamworks.intakeflap.ToggleIntakeFlap;
 import org.robockets.steamworks.lights.Cylon;
-import org.robockets.steamworks.lights.LED;
 
 /**
  * The VM is configured to automatically run this class, and to call the
  * functions corresponding to each mode, as described in the IterativeRobot
- * documentation. If you change the name of this class or the package after
+ * documentation. If you change the
+ * name of this class or the package after
  * creating this project, you must also update the manifest file in the resource
  * directory.
  */
@@ -76,6 +88,12 @@ public class Robot extends IterativeRobot {
 	public static Command climb;
 	public static Command toggleDriveMode;
 	public static Command cylonCommand;
+	public static Command flapToGear;
+	public static Command elevatorListener;
+	public static Command shooterListener;
+	public static Command climberListener;
+	
+	public static VisionManager visionManager;
 
 	private SendableChooser<Command> autonomousChooser;
 
@@ -88,65 +106,50 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void robotInit() {
+
+		//NetworkTable.flush();
+
+		NetworkTable.globalDeleteAll();
+
+
 		////////////////
 		// SUBSYSTEMS //
 		////////////////
-		ballIntake = new BallIntake();
-		elevator = new Elevator();
-		conveyor = new Conveyor();
-		climber = new Climber();
-		drivetrain = new Drivetrain();
-		shooter = new Shooter();
-		gearIntake = new GearIntake();
-		intakeFlap = new IntakeFlap(1);
-		ledSubsystem = new LED();
-		cylonCommand = new Cylon();
+
+		initSubsystems();
 
 		//////////////
 		// COMMANDS //
 		//////////////
 		climb = new Climb(0.5);
 		drive = new Joyride();
-		toggleDriveMode = new ToggleDriveMode();	
+		toggleDriveMode = new ToggleDriveMode();
+		flapToGear = new IntakeToPos(IntakeFlap.IntakeState.GEARS);
 
 		////////////////////
 		// SMARTDASHBOARD //
 		////////////////////
 		initSmartDashboard();
 
+		//SmartDashboard.putData("GyroPIDGo", new TunePID());
+		
+		// SmartDashboard
+		Robot.climber.initSmartDashboard();
+
+		SmartDashboard.putData(new ResetDriveEncoders());
+
 		//////////
 		// AUTO //
 		//////////
-		autoTest = new AutoTest();
-		easyAuto1 = new EasyAuto(1);
-		easyAuto2 = new EasyAuto(2);
-		easyAuto3 = new EasyAuto(3);
-		midAuto1 = new MidAuto(1);
-		midAuto2 = new MidAuto(2);
-		midAuto3 = new MidAuto(3);
-		maxAuto1 = new MaxAuto(1);
-		maxAuto2 = new MaxAuto(2);
-		maxAuto3 = new MaxAuto(3);
-		
-		autonomousChooser = new SendableChooser<>(); // new SendableChooser<Command>(); is BAD!!!! Extra characters are unneeded!!!
-		autonomousChooser.addDefault("AutoTest", autoTest);
-		autonomousChooser.addObject("EasyAutoStart1", easyAuto1);
-		autonomousChooser.addObject("EasyAutoStart2", easyAuto2);
-		autonomousChooser.addObject("EasyAutoStart3", easyAuto3);
-		autonomousChooser.addObject("MidAutoStart1", midAuto1);
-		autonomousChooser.addObject("MidAutoStart2", midAuto2);
-		autonomousChooser.addObject("MidAutoStart3", midAuto3);
-		autonomousChooser.addObject("MaxAutoStart1", maxAuto1);
-		autonomousChooser.addObject("MaxAutoStart2", maxAuto2);
-		autonomousChooser.addObject("MaxAutoStart3", maxAuto3);
-		
-		SmartDashboard.putData("Autonomous selector", autonomousChooser);
+		initAutoThings();
 
 		//////////
 		// INIT //
 		//////////
-		Webcam.getInstance().startThread();
-		//chooser.addObject("My Auto", new MyAutoCommand());
+		CameraServer.getInstance().startAutomaticCapture(RobotMap.drivingCamera);
+		visionManager = new VisionManager();
+		visionManager.startProcessing();
+		
 		//RobotMap.gyro.calibrate();
 
 		RobotMap.rollerEncoderCounter.setUpSource(RobotMap.rollerEncoder);
@@ -160,15 +163,20 @@ public class Robot extends IterativeRobot {
 		RobotMap.leftEncoder.setDistancePerPulse(4 * Math.PI / 360);
 		RobotMap.rightEncoder.setDistancePerPulse(4 * Math.PI / 360);
 
-		SmartDashboard.getNumber("Left drivepod PID P value", drivetrain.leftPodPID.getP());
-		SmartDashboard.getNumber("Left drivepod PID I value", drivetrain.leftPodPID.getI());
-		SmartDashboard.getNumber("Left drivepod PID D value", drivetrain.leftPodPID.getD());
-		SmartDashboard.getNumber("Left drivepod PID F value", drivetrain.leftPodPID.getF());
+		SmartDashboard.putNumber("Left drivepod PID P value", drivetrain.leftPodPID.getP());
+		SmartDashboard.putNumber("Left drivepod PID I value", drivetrain.leftPodPID.getI());
+		SmartDashboard.putNumber("Left drivepod PID D value", drivetrain.leftPodPID.getD());
+		SmartDashboard.putNumber("Left drivepod PID F value", drivetrain.leftPodPID.getF());
 
-		SmartDashboard.getNumber("Right drivepod PID P value", drivetrain.rightPodPID.getP());
-		SmartDashboard.getNumber("Right drivepod PID I value", drivetrain.rightPodPID.getI());
-		SmartDashboard.getNumber("Right drivepod PID D value", drivetrain.rightPodPID.getD());
-		SmartDashboard.getNumber("Right drivepod PID F value", drivetrain.rightPodPID.getF());
+		SmartDashboard.putNumber("Right drivepod PID P value", drivetrain.rightPodPID.getP());
+		SmartDashboard.putNumber("Right drivepod PID I value", drivetrain.rightPodPID.getI());
+		SmartDashboard.putNumber("Right drivepod PID D value", drivetrain.rightPodPID.getD());
+		SmartDashboard.putNumber("Right drivepod PID F value", drivetrain.rightPodPID.getF());
+
+		SmartDashboard.putNumber("Shooter PID P value", shooter.shooterPIDController.getP());
+		SmartDashboard.putNumber("Shooter PID I value", shooter.shooterPIDController.getI());
+		SmartDashboard.putNumber("Shooter PID D value", shooter.shooterPIDController.getD());
+		SmartDashboard.putNumber("Shooter PID F value", shooter.shooterPIDController.getF());
 
 		oi = new OI();
 		Robot.ledSubsystem.cylon(56);
@@ -189,6 +197,8 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putData("Drive 60 at 10 per second with encoders", new DriveWithMP(60, 10));
 		SmartDashboard.putData("Drive 100 at 30 per second with encoders", new DriveWithMP(100, 30));
 
+		SmartDashboard.putData("Turn Test", new Turn(TurnType.RELATIVE, 90, 90));
+
 		/*SmartDashboard.putNumber("Left drivepod PID P value", Robot.drivetrain.leftPodPID.getP());
 		SmartDashboard.putNumber("Left drivepod PID I value", Robot.drivetrain.leftPodPID.getI());
 		SmartDashboard.putNumber("Left drivepod PID D value", Robot.drivetrain.leftPodPID.getD());
@@ -204,9 +214,13 @@ public class Robot extends IterativeRobot {
 		// GYRO //
 		//////////
 
-		//SmartDashboard.putData("GyroTurn Absolute", new Turn(TurnType.ABSOLUTE, 90)); // Angle will be on SmartDashboard from the Turn command
-		//SmartDashboard.putData("GyroTurn Relative", new Turn(TurnType.RELATIVE, 90));
-		//SmartDashboard.putData("GyroPIDGo", new TunePID());
+		/*SmartDashboard.putData("GyroTurn Absolute", new Turn(TurnType.ABSOLUTE, 90)); // Angle will be on SmartDashboard from the Turn command
+		SmartDashboard.putData("GyroTurn Relative", new Turn(TurnType.RELATIVE, 90));
+		SmartDashboard.putData("GyroPIDGo", new TunePID());
+		SmartDashboard.putNumber("GyroP", drivetrain.gyroPID.getP());
+		SmartDashboard.putNumber("GyroI", drivetrain.gyroPID.getI());
+		SmartDashboard.putNumber("GyroD", drivetrain.gyroPID.getD());
+		SmartDashboard.putNumber("GyroSetpoint", drivetrain.gyroPID.getSetpoint());*/
 
 		/////////////////
 		// BALL INTAKE //
@@ -237,11 +251,7 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putData(new Shoot(false));
 		SmartDashboard.putData(new ShootWithPID());
 		
-		SmartDashboard.putNumber("Edit Shooter PID setpoint", 0);
-		SmartDashboard.putNumber("Edit Shooter PID P value", 0);
-		SmartDashboard.putNumber("Edit Shooter PID I value", 0);
-		SmartDashboard.putNumber("Edit Shooter PID D value", 0);
-		SmartDashboard.putNumber("Edit Shooter PID F value", 0);
+		OI.initTestMode();
 	}
 
 	@Override
@@ -307,46 +317,12 @@ public class Robot extends IterativeRobot {
 		/////////////
 
 		//System.out.println(RobotMap.rollerEncoderCounter.getRate());
-		SDDumper.dumpPidController("Shooter PID", Robot.shooter.shooterPIDController);
-		Robot.shooter.shooterPIDController.setSetpoint(SmartDashboard.getNumber("Edit Shooter PID setpoint", 0));
     	Robot.shooter.shooterPIDController.setPID(
-    			SmartDashboard.getNumber("Edit Shooter PID P value", 0.01),
-				SmartDashboard.getNumber("Edit Shooter PID I value", 0.001),
-				SmartDashboard.getNumber("Edit Shooter PID D value", 0.001),
-				SmartDashboard.getNumber("Edit Shooter PID F value", 0.01));
+    			SmartDashboard.getNumber("Shooter PID P value", 0),
+				SmartDashboard.getNumber("Shooter PID I value", 0),
+				SmartDashboard.getNumber("Shooter PID D value", 0),
+				SmartDashboard.getNumber("Shooter PID F value", 0));
     	
-    	/////////////////
-    	/// TEST MODE ///
-    	/////////////////
-		final String LEFT_DRIVEPOD_SUBSYSTEM_NAME = "Left Drivepod";
-		LiveWindow.addSensor(LEFT_DRIVEPOD_SUBSYSTEM_NAME, "Encoder", RobotMap.leftEncoder);
-		LiveWindow.addActuator(LEFT_DRIVEPOD_SUBSYSTEM_NAME, "Speed controller", RobotMap.leftDrivepodSpeedController);
-		
-		final String RIGHT_DRIVEPOD_SUBSYSTEM_NAME = "Right Drivepod";
-		LiveWindow.addSensor(RIGHT_DRIVEPOD_SUBSYSTEM_NAME, "Encoder", RobotMap.rightEncoder);
-		LiveWindow.addActuator(RIGHT_DRIVEPOD_SUBSYSTEM_NAME, "Speed controller", RobotMap.rightDrivepodSpeedController);
-		
-		final String BALL_INTAKE_SUBSYSTEM_NAME = "Ball Intake";
-		LiveWindow.addActuator(BALL_INTAKE_SUBSYSTEM_NAME, "Speed controller", RobotMap.ballIntakeRollerSpeedController);
-		
-		final String GEAR_INTAKE_SUBSYSTEM_NAME = "Gear intake";
-		LiveWindow.addActuator(GEAR_INTAKE_SUBSYSTEM_NAME, "Left servo", RobotMap.leftIntakeFlapServo);
-		LiveWindow.addActuator(GEAR_INTAKE_SUBSYSTEM_NAME, "Right servo", RobotMap.rightIntakeFlapServo);
-		LiveWindow.addSensor(GEAR_INTAKE_SUBSYSTEM_NAME, "Breakbeam sensor", RobotMap.gearInputBreakbeamSensor);
-		
-		final String CONVEYOR_SUBSYSTEM_NAME = "Conveyor";
-		LiveWindow.addActuator(CONVEYOR_SUBSYSTEM_NAME, "Speed controller", RobotMap.conveyorSpeedController);
-		
-		final String ELEVATOR_SUBSYSTEM_NAME = "Elevator";
-		LiveWindow.addActuator(ELEVATOR_SUBSYSTEM_NAME, "Speed controller", RobotMap.elevatorSpeedController);
-		LiveWindow.addSensor(ELEVATOR_SUBSYSTEM_NAME, "Breakbeam sensor", RobotMap.elevatorBreakbeamSensor);
-		
-		final String SHOOTER_SUBSYSTEM_NAME = "Shooter";
-		LiveWindow.addActuator(SHOOTER_SUBSYSTEM_NAME, "Roller speed controller", RobotMap.shooterRollerSpeedController);
-		LiveWindow.addSensor(SHOOTER_SUBSYSTEM_NAME, "Touchless encoder", RobotMap.rollerEncoderCounter);
-		
-		final String GYRO_SUBSYSTEM_NAME = "Gyro";
-		LiveWindow.addSensor(GYRO_SUBSYSTEM_NAME, "Gyro", RobotMap.gyro);
 	}
   
 	/**
@@ -356,6 +332,7 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void disabledInit() {
+		//Robot.ledSubsystem.cylon(56);
 	}
 
 	@Override
@@ -376,6 +353,8 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void autonomousInit() {
+		flapToGear.start();
+
 		autonomousCommand = autonomousChooser.getSelected();
 		if(autonomousCommand != null) {
 			autonomousCommand.start();
@@ -396,16 +375,36 @@ public class Robot extends IterativeRobot {
 			autonomousCommand.cancel();
 		}
 
+		drivetrain.leftPodPID.disable();
+		drivetrain.rightPodPID.disable();
+
 		drive.start();
 		cylonCommand.start();
+		elevatorListener.start();
+		shooterListener.start();
+		//climberListener.start();
 	}
 
+	//private boolean lightsEnabled = false;
 	/**
 	 * This function is called periodically during operator control
 	 */
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
+
+		/*if (RobotMap.gearInputBreakbeamSensor.get() && !lightsEnabled) {
+			Robot.ledSubsystem.cylon(2);
+			lightsEnabled = true;
+		} else if (!RobotMap.gearInputBreakbeamSensor.get() && lightsEnabled) {
+			Robot.ledSubsystem.cylon(56);
+			lightsEnabled = false;
+		}*/
+
+		if (RobotMap.gearInputBreakbeamSensor.get()) {
+			Robot.ledSubsystem.cylon(56);
+		}
+
 	}
 
 	/**
@@ -416,4 +415,47 @@ public class Robot extends IterativeRobot {
 		LiveWindow.run();
 	}
 
+	private void initSubsystems() {
+		ballIntake = new BallIntake();
+		elevator = new Elevator();
+		conveyor = new Conveyor();
+		climber = new Climber();
+		drivetrain = new Drivetrain();
+		shooter = new Shooter();
+		gearIntake = new GearIntake();
+		intakeFlap = new IntakeFlap(1);
+		ledSubsystem = new LED();
+		cylonCommand = new Cylon();
+		elevatorListener = new ElevatorDPadListener();
+		shooterListener = new ShooterListener();
+		climberListener = new ClimberListener();
+	}
+
+	private void initAutoThings() {
+		autoTest = new AutoTest();
+		easyAuto1 = new EasyAuto(1);
+		easyAuto2 = new EasyAuto(2);
+		easyAuto3 = new EasyAuto(3);
+		midAuto1 = new MidAuto(1);
+		midAuto2 = new MidAuto(2);
+		midAuto3 = new MidAuto(3);
+		maxAuto1 = new MaxAuto(1);
+		maxAuto2 = new MaxAuto(2);
+		maxAuto3 = new MaxAuto(3);
+
+		autonomousChooser = new SendableChooser<>(); // new SendableChooser<Command>(); is BAD!!!! Extra characters are unneeded!!!
+		autonomousChooser.addDefault("AutoTest", autoTest);
+		autonomousChooser.addObject("EasyAutoStart1", easyAuto1);
+		autonomousChooser.addObject("EasyAutoStart2", easyAuto2);
+		autonomousChooser.addObject("EasyAutoStart3", easyAuto3);
+		autonomousChooser.addObject("MidAutoStart1", midAuto1);
+		autonomousChooser.addObject("MidAutoStart2", midAuto2);
+		autonomousChooser.addObject("MidAutoStart3", midAuto3);
+		autonomousChooser.addObject("MaxAutoStart1", maxAuto1);
+		autonomousChooser.addObject("MaxAutoStart2", maxAuto2);
+		autonomousChooser.addObject("MaxAutoStart3", maxAuto3);
+
+		SmartDashboard.putData("Autonomous selector", autonomousChooser);
+	}
 }
+

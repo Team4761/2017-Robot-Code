@@ -38,7 +38,7 @@ public class Climb extends Command {
 		if (speed > 0) { // Make sure it is going the right direction
 			speed *= -1;
 		}
-		//Robot.ledSubsystem.cylon(2);
+		Robot.ledSubsystem.cylon(1);
 	}
 
 	@Override
@@ -50,7 +50,7 @@ public class Climb extends Command {
 		if (climbWithTime && time != 0) { // The case that the command runs within a certain time.
 			return isTimedOut(); 
 		} else if (!climbWithTime) { // The case that the command runs until the motor stalls.
-			return Robot.climber.readCurrent() > Robot.climber.STALLING_THRESHOLD;
+			return Robot.climber.isStalling();
 		}									
 		return false; // The case that the command runs indefinitely.
 	}
@@ -61,7 +61,7 @@ public class Climb extends Command {
 	
 	protected void end() {
 		Robot.climber.stop(); // Brake the motor.
-		//Robot.ledSubsystem.cylon(56);
+		Robot.ledSubsystem.cylon(56);
 	}
 
 }

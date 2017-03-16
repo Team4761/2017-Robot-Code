@@ -17,9 +17,17 @@ public class Turn extends Command {
 	private double distance;
 	private double speed;
 	private LinearSetpointGenerator leftLsg, rightLsg;
+
+	private double currentLeftP;
+	private double currentLeftI;
+	private double currentLeftD;
+
+	private double currentRightP;
+	private double currentRightI;
+	private double currentRightD;
 	
 	
-	public Turn(TurnType type, double angle, TurnControllerType turnControllerType) {
+	public Turn(TurnType type, double angle) {
 		this.angle = angle * (Math.PI / 180); // convert to radians
 		this.distance = (DIAMETER / 2) * angle; // s = r * theta
 		this.speed = 8;
@@ -31,7 +39,25 @@ public class Turn extends Command {
 		this.speed = (DIAMETER * (Math.PI / 360.0)) * speed;
 	}
 
+	public Turn(TurnType type, double angle, double speed, double P, double I, double D) {
+
+		currentLeftP = Robot.drivetrain.leftPodPID.getP();
+		currentLeftI = Robot.drivetrain.leftPodPID.getI();
+		currentLeftD = Robot.drivetrain.leftPodPID.getD();
+
+		currentRightP = Robot.drivetrain.rightPodPID.getP();
+		currentRightI = Robot.drivetrain.rightPodPID.getI();
+		currentRightD = Robot.drivetrain.rightPodPID.getD();
+
+		Robot.drivetrain.leftPodPID.setPID(P, I, D);
+		Robot.drivetrain.rightPodPID.setPID(-P, -I, -D);
+
+		new Turn(type, angle, speed);
+	}
+
 	protected void initialize() {
+		// Could alter PID if needed
+		Robot.drivetrain.resetEncoders();
 		Robot.drivetrain.enableEncoderPID();
 		leftLsg = new LinearSetpointGenerator(distance, speed, RobotMap.leftEncoder.getDistance());
 		rightLsg = new LinearSetpointGenerator(-distance, -speed, RobotMap.rightEncoder.getDistance());
@@ -43,20 +69,16 @@ public class Turn extends Command {
 	}
 
 	protected boolean isFinished() {
-		return !leftLsg.hasNext() || !rightLsg.hasNext();
+		return Robot.drivetrain.encodersOnTarget() && (!leftLsg.hasNext() && !rightLsg.hasNext());
 	}
 
 	protected void end() {
 		Robot.drivetrain.disableEncoderPID();
 		Robot.drivetrain.stop();
+
 	}
 
 	protected void interrupted() {
 		end();
-	}
-
-  public enum TurnControllerType{
-		ENCODER,
-		GYRO;
 	}
 }

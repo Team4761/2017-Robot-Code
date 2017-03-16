@@ -28,7 +28,12 @@ public class Joyride extends Command {
 
     protected void execute() {  	
     	if(ToggleDriveMode.isArcade) {
-        	RobotMap.robotDrive.arcadeDrive(OI.joystick);
+        	//RobotMap.robotDrive.arcadeDrive(OI.joystick); // "Cleaner" but its javadocs says its one-joystick arcade drive
+        	
+        	translate = OI.joystick.getRawAxis(1);
+        	rotate = OI.joystick.getRawAxis(4);
+        	        	
+        	RobotMap.robotDrive.arcadeDrive(-translate, -rotate);
     	} else {
     		leftStick = OI.attack3Left.getRawAxis(1);
     		rightStick = OI.attack3Right.getRawAxis(1);
@@ -37,8 +42,6 @@ public class Joyride extends Command {
     		leftStick *= 1 - OI.attack3Left.getRawAxis(2);
     		rightStick *= 1 - OI.attack3Right.getRawAxis(2);
 
-    		SmartDashboard.putNumber("LeftStickVal", leftStick);
-    		SmartDashboard.putNumber("RightStickVal", rightStick);
     		RobotMap.robotDrive.tankDrive(leftStick, rightStick);
     	}
     }
