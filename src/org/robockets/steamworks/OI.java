@@ -16,6 +16,7 @@ import org.robockets.steamworks.lights.ButtonPress;
 import org.robockets.steamworks.lights.KillLights;
 import org.robockets.steamworks.lights.LightsColors;
 import org.robockets.steamworks.shooter.Shoot;
+import org.robockets.steamworks.shooter.ShootWithPID;
 import org.robockets.steamworks.shooter.SpinSpinners;
 
 /**
@@ -157,10 +158,14 @@ public class OI {
         aButton.whenPressed(new IntakeToPos(IntakeFlap.IntakeState.FUEL));
         aButton.whenReleased(new KillLights());
 
+        xButton.whileHeld(new ShootWithPID(50));
+        bButton.whileHeld(new ShootWithPID(55));
+
         rightBumperButton.whileHeld(new SpinBallIntakeRollers(-1));
         leftBumperButton.whileHeld(new SpinBallIntakeRollers(1));
 
         driverRightBumper.whileHeld(new Climb(1));
+
 
         //xButton.whileHeld(new ButtonPress(LightsColors.BLUE));
         //bButton.whileHeld(new ButtonPress(LightsColors.WHITE));
