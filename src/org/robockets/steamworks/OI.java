@@ -159,8 +159,8 @@ public class OI {
         aButton.whenPressed(new IntakeToPos(IntakeFlap.IntakeState.FUEL));
         aButton.whenReleased(new KillLights());
 
-        xButton.whileHeld(new ShootWithPID(50));
-        bButton.whileHeld(new ShootWithPID(55));
+        xButton.whileHeld(new ShootWithPID(63));
+        bButton.whileHeld(new ShootWithPID(80));
 
         rightBumperButton.whileHeld(new SpinBallIntakeRollers(-1));
         leftBumperButton.whileHeld(new SpinBallIntakeRollers(1));
