@@ -22,7 +22,7 @@ public class ImageProcessor implements VisionPipeline {
 	@Override
 	public void process(Mat image) {
 		Mat binarized = VisionUtils.binarize(image);
-		ArrayList<MatOfPoint> contours = filterContours(VisionUtils.getContours(binarized));
+		ArrayList<MatOfPoint> contours = filterContours( VisionUtils.getContours(binarized));
 		if(contours.size() != 2) {
 			angleOffset = 4761;
 			return;

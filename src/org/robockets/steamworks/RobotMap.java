@@ -103,13 +103,6 @@ public class RobotMap {
      */
     public static ADXRS450_Gyro gyro = new ADXRS450_Gyro(SPI.Port.kOnboardCS0);
 
-    ///////////////
-    /// Cameras ///
-	///////////////
-    
-	public static UsbCamera drivingCamera = new UsbCamera("Driving camera", 0);
-	public static UsbCamera visionCamera  = new UsbCamera("Vision camera",  1);
-
     /////////////////////
     /// Miscellaneous ///
     /////////////////////

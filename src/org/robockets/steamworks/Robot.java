@@ -110,8 +110,7 @@ public class Robot extends IterativeRobot {
 		//NetworkTable.flush();
 
 		NetworkTable.globalDeleteAll();
-
-
+		
 		////////////////
 		// SUBSYSTEMS //
 		////////////////
@@ -146,8 +145,9 @@ public class Robot extends IterativeRobot {
 		//////////
 		// INIT //
 		//////////
-		CameraServer.getInstance().startAutomaticCapture(RobotMap.drivingCamera);
-		visionManager = new VisionManager();
+
+		CameraServer.getInstance().startAutomaticCapture("DRIVING CAMERA", 0);
+		visionManager = VisionManager.getInstance();
 		visionManager.startProcessing();
 
 		//RobotMap.gyro.calibrate();
