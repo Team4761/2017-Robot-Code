@@ -197,7 +197,7 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putData("Drive 60 at 10 per second with encoders", new DriveWithMP(60, 10));
 		SmartDashboard.putData("Drive 100 at 30 per second with encoders", new DriveWithMP(100, 30));
 
-		SmartDashboard.putData("Turn Test", new Turn(TurnType.RELATIVE, 90, 90));
+		SmartDashboard.putData("Turn Test", new Turn(TurnType.RELATIVE, 90, 60));
 
 		/*SmartDashboard.putNumber("Left drivepod PID P value", Robot.drivetrain.leftPodPID.getP());
 		SmartDashboard.putNumber("Left drivepod PID I value", Robot.drivetrain.leftPodPID.getI());

@@ -6,13 +6,14 @@ import org.robockets.steamworks.Robot;
 import org.robockets.steamworks.RobotMap;
 import org.robockets.steamworks.TurnType;
 import org.robockets.steamworks.LinearSetpointGenerator;
+import org.robockets.steamworks.camera.CVConstants;
 
 /**
  * @author Jake Backer & some Brian
  */
 public class Turn extends Command {
 	
-	private final double DIAMETER = 29;
+	private final double DIAMETER = 29.0;
 	private double angle;
 	private double distance;
 	private double speed;
@@ -25,17 +26,19 @@ public class Turn extends Command {
 	private double currentRightP;
 	private double currentRightI;
 	private double currentRightD;
-	
-	
-	public Turn(TurnType type, double angle) {
-		this.angle = angle * (Math.PI / 180); // convert to radians
-		this.distance = (DIAMETER / 2) * angle; // s = r * theta
-		this.speed = 8;
-	}
+
+	private boolean resetPidWhenDone = false;
 	
 	public Turn(TurnType type, double angle, double speed) {
+		requires(Robot.drivetrain);
+
+		if (type == TurnType.CAMERA) {
+			// Get angle from camera
+			angle = CVConstants.getOffset();
+		}
+
 		this.angle = angle * (Math.PI / 180); // convert to radians
-		this.distance = (DIAMETER / 2) * angle; // s = r * theta
+		this.distance = (DIAMETER / 2.0) * this.angle; // s = r * theta
 		this.speed = (DIAMETER * (Math.PI / 360.0)) * speed;
 	}
 
@@ -52,13 +55,24 @@ public class Turn extends Command {
 		Robot.drivetrain.leftPodPID.setPID(P, I, D);
 		Robot.drivetrain.rightPodPID.setPID(-P, -I, -D);
 
-		new Turn(type, angle, speed);
+		resetPidWhenDone = true;
+
+		// This is awful...
+		if (type == TurnType.CAMERA) {
+			// Get angle from camera
+			angle = CVConstants.getOffset();
+		}
+
+		this.angle = angle * (Math.PI / 180); // convert to radians
+		this.distance = (DIAMETER / 2.0) * this.angle; // s = r * theta
+		this.speed = (DIAMETER * (Math.PI / 360.0)) * speed;
 	}
 
 	protected void initialize() {
 		// Could alter PID if needed
 		Robot.drivetrain.resetEncoders();
 		Robot.drivetrain.enableEncoderPID();
+
 		leftLsg = new LinearSetpointGenerator(distance, speed, RobotMap.leftEncoder.getDistance());
 		rightLsg = new LinearSetpointGenerator(-distance, -speed, RobotMap.rightEncoder.getDistance());
 	}
@@ -75,6 +89,11 @@ public class Turn extends Command {
 	protected void end() {
 		Robot.drivetrain.disableEncoderPID();
 		Robot.drivetrain.stop();
+
+		if (resetPidWhenDone) {
+			Robot.drivetrain.leftPodPID.setPID(currentLeftP, currentLeftI, currentLeftD);
+			Robot.drivetrain.rightPodPID.setPID(currentRightP, currentRightI, currentRightD);
+		}
 
 	}
 

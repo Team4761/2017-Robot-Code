@@ -24,27 +24,25 @@ public class EasyAuto extends CommandGroup {
 	public EasyAuto(int startingPos) {
 
 		if (startingPos == 1) {
-			//turnAngle = 60; // FIXME: Change this
-			forwardDistance1 = 200;
-			//forwardDistance2 = 76.291; // Unused
+			turnAngle = 55; // FIXME: Change this
+			forwardDistance1 = 75;
+			forwardDistance2 = 75; // Unused
 		} else if (startingPos == 3) {
-			//turnAngle = -60;
-			forwardDistance1 = 200;
-			//forwardDistance2 = 74.575; // Unused
+			turnAngle = -55;
+			forwardDistance1 = 75;
+			forwardDistance2 = 75;
 		} else {
 			forwardDistance1 = 80;
 		}
 
-
 		// FIXME: Values will be changed
-		addSequential(new DriveStraight(36, forwardDistance1));
-		/*if(turnAngle != 0 && forwardDistance2 != 0) {
-			//addSequential(new Turn(TurnType.RELATIVE, turnAngle));
+		addSequential(new DriveStraight(24, forwardDistance1));
+		addSequential(new WaitCommand(1));
+		if(turnAngle != 0 && forwardDistance2 != 0) {
+			addSequential(new Turn(TurnType.RELATIVE, turnAngle, -60));
+			addSequential(new WaitCommand(1));
 			//addSequential(new Turn(TurnType.RELATIVE, CVConstants.getOffset()));
-			//addSequential(new DriveStraight(12, 40)); // FIXME: Change this
-		}*/
-		//addSequential(new Turn(TurnType.RELATIVE, 45, 25));
-
-		// Align
+			addSequential(new DriveStraight(24, forwardDistance2)); // FIXME: Change this
+		}
 	}
 }

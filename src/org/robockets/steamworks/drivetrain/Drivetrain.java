@@ -32,13 +32,13 @@ public class Drivetrain extends Subsystem {
         gyroPID.setPercentTolerance(5.0); // Set tolerance of 5%
         
         leftPodPIDSource = new EncoderPIDSource(RobotMap.leftEncoder, 1); // This should be 1
-		leftPodPID = new PIDController(0.015, 0.001, 0.005, leftPodPIDSource, RobotMap.leftDrivePodOutput); //NOTE: Even with 0.1 P it is still going VERY fast and uneven relative to the right
+		leftPodPID = new PIDController(0.06, 0.01, 0.25, leftPodPIDSource, RobotMap.leftDrivePodOutput); //NOTE: Even with 0.1 P it is still going VERY fast and uneven relative to the right
         leftPodPID.disable();
         leftPodPID.setOutputRange(-1.0, 1.0);
         leftPodPID.setAbsoluteTolerance(0.5);
         
         rightPodPIDSource = new EncoderPIDSource(RobotMap.rightEncoder, 1);
-        rightPodPID = new PIDController(-0.015, -0.001, -0.005, rightPodPIDSource, RobotMap.rightDrivePodOutput);
+        rightPodPID = new PIDController(-0.06, -0.01, -0.25, rightPodPIDSource, RobotMap.rightDrivePodOutput);
         rightPodPID.disable();
         rightPodPID.setOutputRange(-1.0, 1.0);
         rightPodPID.setAbsoluteTolerance(0.5);
