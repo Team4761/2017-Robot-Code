@@ -34,14 +34,7 @@ public class VisionUtils {
 		ArrayList<MatOfPoint> contours = new ArrayList<MatOfPoint>();
 		Imgproc.findContours(binaryImage, contours, new Mat(), Imgproc.RETR_TREE, Imgproc.CHAIN_APPROX_SIMPLE);
 		Collections.sort(contours, new ContourAreaComparator());
-		ArrayList<MatOfPoint> ret = new ArrayList<>();
-		for(int i = 0; i < contours.size(); i++) {
-			MatOfPoint firstContour = contours.get(i);
-			if(!contoursAreEqual(firstContour, contours.get(i + 1))) {
-				ret.add(firstContour);
-			}
-		}
-		return ret;
+		return contours;
 	}
 
 	public static double getRectangleRatio(double width, double height) {
