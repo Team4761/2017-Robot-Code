@@ -22,6 +22,7 @@ public class VisionManager implements VisionRunner.Listener<ImageProcessor> {
 	
 	private VisionManager() {
 		visionCamera = CameraServer.getInstance().startAutomaticCapture("VISION CAMERA", 1);
+		visionCamera.setExposureManual(0);
 		
 		imageProcessor = new ImageProcessor();
 		visionThread = new VisionThread(visionCamera, imageProcessor, this);
