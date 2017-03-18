@@ -17,6 +17,7 @@ public class DriveStraight extends Command {
     private LinearSetpointGenerator leftLsg, rightLsg;
     
     public DriveStraight(double speed, double distance) {
+        requires(Robot.drivetrain);
         this.speed = speed;
         this.distance = distance;
     }

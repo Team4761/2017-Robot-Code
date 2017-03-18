@@ -69,7 +69,7 @@ public class ImageProcessor implements VisionPipeline {
 		Rect rightRect = (rect0.br().x > rect1.br().x) ? rect0 : rect1;
 
 		double farLeft  = leftRect.tl().x;
-		double farRight = rightRect.tl().x;
+		double farRight = rightRect.br().x;
 		double midpoint = (farLeft + farRight) / 2d;
 
 		double pixelOffset = midpoint - (image.width() / 2d);
@@ -79,7 +79,7 @@ public class ImageProcessor implements VisionPipeline {
 		//Imgproc.rectangle(binarized, rightRect.tl(), rightRect.br(), new Scalar(0, 255, 0), 2);
 		Imgproc.rectangle(binarized, leftRect.tl(), rightRect.br(), new Scalar(255, 255, 0), 3);
 
-		angleOffset = pixelOffset * pixelToAngleFactor  *10;
+		angleOffset = pixelOffset * pixelToAngleFactor;
 		
 		output = binarized;
 	}

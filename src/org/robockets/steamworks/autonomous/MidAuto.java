@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 
 import org.robockets.steamworks.TurnType;
 import org.robockets.steamworks.commands.WaitForGearOut;
+import org.robockets.steamworks.drivetrain.DriveStraight;
 import org.robockets.steamworks.drivetrain.DriveWithMP;
 import org.robockets.steamworks.drivetrain.Turn;
 import org.robockets.steamworks.shooter.Shoot;
@@ -13,6 +14,10 @@ import org.robockets.steamworks.shooter.Shoot;
  * @author Jake Backer
  */
 public class MidAuto extends CommandGroup {
+
+	private double turnAngle = 0;
+	private double forwardDistance1 = 0;
+	private double forwardDistance2 = 0;
 
 	public MidAuto(int startingPos) {
 
@@ -24,6 +29,7 @@ public class MidAuto extends CommandGroup {
 			angleMultiplier = -1;
 		} else {
 			angleMultiplier = 0;
+			forwardDistance1 = 80;
 		}
 
 		int horizontalDirectionMultiplier;
@@ -35,11 +41,11 @@ public class MidAuto extends CommandGroup {
 		}
 
 		// FIXME: Values will be changed
-		addSequential(new DriveWithMP(60, 20));
-		addSequential(new Turn(TurnType.RELATIVE, 45* angleMultiplier, 60));
+		addSequential(new DriveStraight(24, forwardDistance1));
 		// Align
-		addSequential(new WaitForGearOut()); // This needs to enable lights
-		addSequential(new DriveWithMP(-20, -10));
+		addSequential(new WaitForGearOut());
+		addSequential(new DriveStraight(24, -15)); // Make this a variable
+
 		// Turn to boiler
 		addSequential(new Turn(TurnType.RELATIVE, 90 * horizontalDirectionMultiplier, 60));
 		addSequential(new DriveWithMP(55, 20));

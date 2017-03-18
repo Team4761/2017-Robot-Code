@@ -1,5 +1,6 @@
 package org.robockets.steamworks.camera;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.robockets.steamworks.RobotMap;
 
 import edu.wpi.cscore.CvSource;
@@ -22,7 +23,8 @@ public class VisionManager implements VisionRunner.Listener<ImageProcessor> {
 	
 	private VisionManager() {
 		visionCamera = CameraServer.getInstance().startAutomaticCapture("VISION CAMERA", 1);
-		visionCamera.setExposureManual(0);
+		SmartDashboard.putNumber("Exposure", 5);
+		visionCamera.setExposureManual((int) SmartDashboard.getNumber("Exposure", 5));
 		
 		imageProcessor = new ImageProcessor();
 		visionThread = new VisionThread(visionCamera, imageProcessor, this);
@@ -50,6 +52,8 @@ public class VisionManager implements VisionRunner.Listener<ImageProcessor> {
 				System.out.println("Oh snap! There were not enough reasonable contours!");
 			}
 			CVConstants.setOffset(pipeline.angleOffset);
+			SmartDashboard.putNumber("Vision angle offset", CVConstants.getOffset());
+			visionCamera.setExposureManual((int) SmartDashboard.getNumber("Exposure", 5));
 		}
 	}
 

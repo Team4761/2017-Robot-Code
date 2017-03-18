@@ -19,6 +19,7 @@ public class Turn extends Command {
 	private double speed;
 	private LinearSetpointGenerator leftLsg, rightLsg;
 
+	private TurnType type;
 	private double currentLeftP;
 	private double currentLeftI;
 	private double currentLeftD;
@@ -28,7 +29,22 @@ public class Turn extends Command {
 	private double currentRightD;
 
 	private boolean resetPidWhenDone = false;
-	
+
+	public Turn(TurnType type, double speed) {
+		requires(Robot.drivetrain);
+
+		double angle = 0;
+
+		this.type = type;
+		/*if (type == TurnType.CAMERA) {
+			angle = CVConstants.getOffset();
+		}*/
+
+		this.angle = angle * (Math.PI / 180); // convert to radians
+		this.distance = (DIAMETER / 2.0) * this.angle; // s = r * theta
+		this.speed = (DIAMETER * (Math.PI / 360.0)) * speed;
+	}
+
 	public Turn(TurnType type, double angle, double speed) {
 		requires(Robot.drivetrain);
 
@@ -69,6 +85,14 @@ public class Turn extends Command {
 	}
 
 	protected void initialize() {
+
+		if (type == TurnType.CAMERA) { // No other way to do this
+			angle = CVConstants.getOffset();
+			this.angle = angle * (Math.PI / 180); // convert to radians
+			this.distance = (DIAMETER / 2.0) * this.angle; // s = r * theta
+			this.speed = (DIAMETER * (Math.PI / 360.0)) * speed;
+		}
+
 		// Could alter PID if needed
 		Robot.drivetrain.resetEncoders();
 		Robot.drivetrain.enableEncoderPID();

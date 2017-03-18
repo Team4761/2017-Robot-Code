@@ -44,7 +44,9 @@ public class Drivetrain extends Subsystem {
         rightPodPID.setAbsoluteTolerance(0.5);
     }
 
-    public void initDefaultCommand() {}
+    public void initDefaultCommand() {
+    	setDefaultCommand(new Joyride()); // Just in case...
+	}
 
     /**
      * Basic method to control the movement of the robot 'arcade' style
