@@ -78,7 +78,6 @@ public class Robot extends IterativeRobot {
 	public static Command easyAuto1;
 	public static Command easyAuto2;
 	public static Command easyAuto3;
-	public static Command baselineAuto;
 	public static Command midAuto1;
 	public static Command midAuto2;
 	public static Command midAuto3;
@@ -109,6 +108,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void robotInit() {
 
+		System.out.println("Robot initializing...");
 		//NetworkTable.flush();
 
 		NetworkTable.globalDeleteAll();
@@ -182,6 +182,7 @@ public class Robot extends IterativeRobot {
 
 		oi = new OI();
 		Robot.ledSubsystem.cylon(56);
+		System.out.println("Robot done initializing");
 	}
 	
 	private void initSmartDashboard() {
@@ -438,7 +439,7 @@ public class Robot extends IterativeRobot {
 		easyAuto1 = new EasyAuto(1);
 		easyAuto2 = new EasyAuto(2);
 		easyAuto3 = new EasyAuto(3);
-		baselineAuto = new BaselineAuto();
+
 		midAuto1 = new MidAuto(1);
 		midAuto2 = new MidAuto(2);
 		midAuto3 = new MidAuto(3);
@@ -446,12 +447,13 @@ public class Robot extends IterativeRobot {
 		maxAuto2 = new MaxAuto(2);
 		maxAuto3 = new MaxAuto(3);
 
-		autonomousChooser = new SendableChooser<>(); // new SendableChooser<Command>(); is BAD!!!! Extra characters are unneeded!!!
-		autonomousChooser.addDefault("AutoTest", autoTest);
-		autonomousChooser.addObject("EasyAutoLeft", easyAuto1);
-		autonomousChooser.addObject("EasyAutoMiddle", easyAuto2);
-		autonomousChooser.addObject("EasyAutoRight", easyAuto3);
-		autonomousChooser.addObject("Baseline Auto", baselineAuto);
+		System.out.println("Autonomous Chooser Initializing...");
+		autonomousChooser = new SendableChooser<Command>(); // new SendableChooser<Command>(); is BAD!!!! Extra characters are unneeded!!!
+		autonomousChooser.addObject("EasyAutoTurnRight", easyAuto1);
+		autonomousChooser.addObject("EasyAutoTurnLeft", easyAuto3);
+		autonomousChooser.addDefault("EasyAutoStraight", easyAuto2);
+
+		//autonomousChooser.addObject("EasyAutoTurnRight", easyAuto1);
 		/*autonomousChooser.addObject("MidAutoStart1", midAuto1);
 		autonomousChooser.addObject("MidAutoStart2", midAuto2);
 		autonomousChooser.addObject("MidAutoStart3", midAuto3);
@@ -460,6 +462,7 @@ public class Robot extends IterativeRobot {
 		autonomousChooser.addObject("MaxAutoStart3", maxAuto3);
 		*/
 		SmartDashboard.putData("Autonomous selector", autonomousChooser);
+		System.out.println("Autonomous Choosing Finished Initializing");
 	}
 }
 

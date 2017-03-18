@@ -14,6 +14,9 @@ import org.robockets.steamworks.camera.CVConstants;
 public class Turn extends Command {
 	
 	private final double DIAMETER = 27.0;
+
+	private final double VISION_TIMEOUT = 3.0;
+
 	private double angle;
 	private double distance;
 	private double speed;
@@ -115,6 +118,8 @@ public class Turn extends Command {
 			System.out.println("Offset: " + visionAngle);
 			this.angle = visionAngle * (Math.PI / 180.0); // convert to radians
 			this.distance = (DIAMETER / 2.0) * this.angle; // s = r * theta
+
+			setTimeout(VISION_TIMEOUT);
 		}
 
 		// Could alter PID if needed
@@ -131,6 +136,9 @@ public class Turn extends Command {
 	}
 
 	protected boolean isFinished() {
+		if (type == TurnType.CAMERA) {
+			return (Robot.drivetrain.encodersOnTarget() && (!leftLsg.hasNext() && !rightLsg.hasNext())) || isTimedOut();
+		}
 		return Robot.drivetrain.encodersOnTarget() && (!leftLsg.hasNext() && !rightLsg.hasNext());
 	}
 
