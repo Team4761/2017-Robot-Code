@@ -45,7 +45,7 @@ public class Drivetrain extends Subsystem {
     }
 
     public void initDefaultCommand() {
-    	setDefaultCommand(new Joyride()); // Just in case...
+    	//setDefaultCommand(new Joyride()); // Just in case...
 	}
 
     /**

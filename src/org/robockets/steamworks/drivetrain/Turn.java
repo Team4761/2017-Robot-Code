@@ -13,7 +13,7 @@ import org.robockets.steamworks.camera.CVConstants;
  */
 public class Turn extends Command {
 	
-	private final double DIAMETER = 29.0;
+	private final double DIAMETER = 27.0;
 	private double angle;
 	private double distance;
 	private double speed;
@@ -36,8 +36,12 @@ public class Turn extends Command {
 		double angle = 0;
 
 		this.type = type;
-		/*if (type == TurnType.CAMERA) {
+		/*
+		if (type == TurnType.CAMERA) {
 			angle = CVConstants.getOffset();
+			if (angle >= 1000) {
+				angle = 0;
+			}
 		}*/
 
 		this.angle = angle * (Math.PI / 180); // convert to radians
@@ -48,10 +52,14 @@ public class Turn extends Command {
 	public Turn(TurnType type, double angle, double speed) {
 		requires(Robot.drivetrain);
 
+		/*
 		if (type == TurnType.CAMERA) {
 			// Get angle from camera
 			angle = CVConstants.getOffset();
-		}
+			if (angle >= 1000) {
+				angle = 0;
+			}
+		}*/
 
 		this.angle = angle * (Math.PI / 180); // convert to radians
 		this.distance = (DIAMETER / 2.0) * this.angle; // s = r * theta
@@ -74,23 +82,39 @@ public class Turn extends Command {
 		resetPidWhenDone = true;
 
 		// This is awful...
+		/*
 		if (type == TurnType.CAMERA) {
 			// Get angle from camera
 			angle = CVConstants.getOffset();
-		}
 
-		this.angle = angle * (Math.PI / 180); // convert to radians
+			if (angle >= 1000) {
+				angle = 0;
+			}
+		}*/
+
+		this.angle = angle * (Math.PI / 180.0); // convert to radians
 		this.distance = (DIAMETER / 2.0) * this.angle; // s = r * theta
 		this.speed = (DIAMETER * (Math.PI / 360.0)) * speed;
 	}
 
 	protected void initialize() {
 
+		System.out.println("Turning...");
 		if (type == TurnType.CAMERA) { // No other way to do this
-			angle = CVConstants.getOffset();
-			this.angle = angle * (Math.PI / 180); // convert to radians
+			System.out.println("Turning With Vision");
+			double visionAngle = CVConstants.getOffset();
+			if (visionAngle >= 1000) {
+				System.out.println("Vision angle too large!! Setting to 0...");
+				visionAngle = 0;
+			}
+
+			if (visionAngle < 0) {
+				speed *= -1;
+			}
+
+			System.out.println("Offset: " + visionAngle);
+			this.angle = visionAngle * (Math.PI / 180.0); // convert to radians
 			this.distance = (DIAMETER / 2.0) * this.angle; // s = r * theta
-			this.speed = (DIAMETER * (Math.PI / 360.0)) * speed;
 		}
 
 		// Could alter PID if needed

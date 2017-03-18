@@ -57,30 +57,31 @@ public class ImageProcessor implements VisionPipeline {
 	@Override
 	public void process(Mat image) {
 		Mat binarized = VisionUtils.binarize(image);
-		ArrayList<MatOfPoint> contours = filterContours( VisionUtils.getContours(binarized));
-		if(contours.size() != 2) {
-			angleOffset = 4761;
-			return;
+		if(CVConstants.SHOULD_RUN_VISION) {
+			ArrayList<MatOfPoint> contours = filterContours(VisionUtils.getContours(binarized));
+			if (contours.size() != 2) {
+				angleOffset = 4761;
+				return;
+			}
+
+			Rect rect0 = Imgproc.boundingRect(contours.get(0));
+			Rect rect1 = Imgproc.boundingRect(contours.get(1));
+			Rect leftRect = (rect0.tl().x < rect1.tl().x) ? rect0 : rect1;
+			Rect rightRect = (rect0.br().x > rect1.br().x) ? rect0 : rect1;
+
+			double farLeft = leftRect.tl().x;
+			double farRight = rightRect.br().x;
+			double midpoint = (farLeft + farRight) / 2d;
+
+			double pixelOffset = midpoint - (image.width() / 2d);
+			double pixelToAngleFactor = CVConstants.LOGITECH_C270_FOV / image.width();
+
+			//Imgproc.rectangle(binarized, leftRect.tl(), leftRect.br(), new Scalar(0, 255, 0), 2);
+			//Imgproc.rectangle(binarized, rightRect.tl(), rightRect.br(), new Scalar(0, 255, 0), 2);
+			Imgproc.rectangle(binarized, leftRect.tl(), rightRect.br(), new Scalar(255, 255, 0), 3);
+
+			angleOffset = pixelOffset * pixelToAngleFactor - CVConstants.LOGITECH_C270_ANGLE_OFFSET;
 		}
-
-		Rect rect0 = Imgproc.boundingRect(contours.get(0));
-		Rect rect1 = Imgproc.boundingRect(contours.get(1));
-		Rect leftRect = (rect0.tl().x < rect1.tl().x) ? rect0 : rect1;
-		Rect rightRect = (rect0.br().x > rect1.br().x) ? rect0 : rect1;
-
-		double farLeft  = leftRect.tl().x;
-		double farRight = rightRect.br().x;
-		double midpoint = (farLeft + farRight) / 2d;
-
-		double pixelOffset = midpoint - (image.width() / 2d);
-		double pixelToAngleFactor = CVConstants.LOGITECH_C270_FOV / image.width();
-
-		//Imgproc.rectangle(binarized, leftRect.tl(), leftRect.br(), new Scalar(0, 255, 0), 2);
-		//Imgproc.rectangle(binarized, rightRect.tl(), rightRect.br(), new Scalar(0, 255, 0), 2);
-		Imgproc.rectangle(binarized, leftRect.tl(), rightRect.br(), new Scalar(255, 255, 0), 3);
-
-		angleOffset = pixelOffset * pixelToAngleFactor;
-		
 		output = binarized;
 	}
 	

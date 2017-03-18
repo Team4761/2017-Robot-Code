@@ -448,13 +448,13 @@ public class Robot extends IterativeRobot {
 		autonomousChooser.addObject("EasyAutoStart1", easyAuto1);
 		autonomousChooser.addObject("EasyAutoStart2", easyAuto2);
 		autonomousChooser.addObject("EasyAutoStart3", easyAuto3);
-		autonomousChooser.addObject("MidAutoStart1", midAuto1);
+		/*autonomousChooser.addObject("MidAutoStart1", midAuto1);
 		autonomousChooser.addObject("MidAutoStart2", midAuto2);
 		autonomousChooser.addObject("MidAutoStart3", midAuto3);
 		autonomousChooser.addObject("MaxAutoStart1", maxAuto1);
 		autonomousChooser.addObject("MaxAutoStart2", maxAuto2);
 		autonomousChooser.addObject("MaxAutoStart3", maxAuto3);
-
+		*/
 		SmartDashboard.putData("Autonomous selector", autonomousChooser);
 	}
 }
