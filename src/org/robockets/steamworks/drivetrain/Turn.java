@@ -106,6 +106,7 @@ public class Turn extends Command {
 		if (type == TurnType.CAMERA) { // No other way to do this
 			System.out.println("Turning With Vision");
 			double visionAngle = CVConstants.getOffset();
+			System.out.println("Vision Angle: " + visionAngle);
 			if (visionAngle >= 1000) {
 				System.out.println("Vision angle too large!! Setting to 0...");
 				visionAngle = 0;
