@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj.vision.VisionThread;
 
 import org.robockets.commons.RelativeDirection;
 import org.robockets.steamworks.autonomous.AutoTest;
+import org.robockets.steamworks.autonomous.BaselineAuto;
 import org.robockets.steamworks.autonomous.EasyAuto;
 import org.robockets.steamworks.autonomous.MaxAuto;
 import org.robockets.steamworks.autonomous.MidAuto;
@@ -77,6 +78,7 @@ public class Robot extends IterativeRobot {
 	public static Command easyAuto1;
 	public static Command easyAuto2;
 	public static Command easyAuto3;
+	public static Command baselineAuto;
 	public static Command midAuto1;
 	public static Command midAuto2;
 	public static Command midAuto3;
@@ -436,6 +438,7 @@ public class Robot extends IterativeRobot {
 		easyAuto1 = new EasyAuto(1);
 		easyAuto2 = new EasyAuto(2);
 		easyAuto3 = new EasyAuto(3);
+		baselineAuto = new BaselineAuto();
 		midAuto1 = new MidAuto(1);
 		midAuto2 = new MidAuto(2);
 		midAuto3 = new MidAuto(3);
@@ -445,9 +448,10 @@ public class Robot extends IterativeRobot {
 
 		autonomousChooser = new SendableChooser<>(); // new SendableChooser<Command>(); is BAD!!!! Extra characters are unneeded!!!
 		autonomousChooser.addDefault("AutoTest", autoTest);
-		autonomousChooser.addObject("EasyAutoStart1", easyAuto1);
-		autonomousChooser.addObject("EasyAutoStart2", easyAuto2);
-		autonomousChooser.addObject("EasyAutoStart3", easyAuto3);
+		autonomousChooser.addObject("EasyAutoLeft", easyAuto1);
+		autonomousChooser.addObject("EasyAutoMiddle", easyAuto2);
+		autonomousChooser.addObject("EasyAutoRight", easyAuto3);
+		autonomousChooser.addObject("Baseline Auto", baselineAuto);
 		/*autonomousChooser.addObject("MidAutoStart1", midAuto1);
 		autonomousChooser.addObject("MidAutoStart2", midAuto2);
 		autonomousChooser.addObject("MidAutoStart3", midAuto3);

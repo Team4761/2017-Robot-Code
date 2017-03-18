@@ -23,8 +23,8 @@ public class VisionManager implements VisionRunner.Listener<ImageProcessor> {
 	
 	private VisionManager() {
 		visionCamera = CameraServer.getInstance().startAutomaticCapture("VISION CAMERA", 1);
-		SmartDashboard.putNumber("Exposure", 1);
-		visionCamera.setExposureManual((int) SmartDashboard.getNumber("Exposure", 1));
+		SmartDashboard.putNumber("Exposure", 5);
+		visionCamera.setExposureManual((int) SmartDashboard.getNumber("Exposure", 5));
 		
 		imageProcessor = new ImageProcessor();
 		visionThread = new VisionThread(visionCamera, imageProcessor, this);
@@ -45,6 +45,10 @@ public class VisionManager implements VisionRunner.Listener<ImageProcessor> {
 	@Override
 	public void copyPipelineOutputs(ImageProcessor pipeline) {
 		synchronized(visionLock) {
+			if(CVConstants.SHOULD_RUN_VISION) {
+				SmartDashboard.putNumber("Exposure", 1);
+				visionCamera.setExposureManual((int) SmartDashboard.getNumber("Exposure", 1));
+			}
 			if(pipeline.output != null) {
 				processedVideoStream.putFrame(pipeline.output);
 			}
