@@ -11,6 +11,7 @@ import org.opencv.core.MatOfPoint2f;
 import org.opencv.core.Rect;
 import org.opencv.core.RotatedRect;
 import org.opencv.core.Scalar;
+import org.opencv.core.Size;
 import org.opencv.imgproc.Imgproc;
 import org.robockets.steamworks.RobotMap;
 
@@ -18,22 +19,7 @@ public class ImageProcessor implements VisionPipeline {
 
 	public double angleOffset;
 
-	public static Mat binarize(Mat image) {
-
-		/// Convert to grayscale
-		Mat grayed = new Mat();
-		Imgproc.cvtColor(image, grayed, Imgproc.COLOR_BGR2GRAY);
-		
-		/// Binarize with Otsu's method
-		Mat thresholded = new Mat();
-		Imgproc.threshold(grayed, thresholded, 0, 255, Imgproc.THRESH_BINARY + Imgproc.THRESH_OTSU);
-
-		/// Open (erode, followed by a dilate)
-		Mat opened = new Mat();
-		Imgproc.morphologyEx(thresholded, opened, Imgproc.MORPH_OPEN, new Mat());
-		
-		return opened;
-	}
+	public boolean isOk;
 	
 	public static ArrayList<MatOfPoint> getContours(Mat binaryImage) {
 
@@ -54,10 +40,26 @@ public class ImageProcessor implements VisionPipeline {
 		return Math.floor(Imgproc.contourArea(c1)) == Math.floor(Imgproc.contourArea(c2));
 	}
 
+	private boolean isImageValid(Mat image) {
+		double area = image.size().area();
+		if(area <= 0 || area > (720 * 540)) return false;
+
+		// put more checks here
+
+		return true;
+	}
+
 	@Override
 	public void process(Mat image) {
-		Mat binarized = VisionUtils.binarize(image);
-		if(true /*CVConstants.SHOULD_RUN_VISION */) {
+		if(CVConstants.SHOULD_RUN_VISION) {
+			if(!isImageValid(image)) {
+				System.out.println("Corrupt image!");
+				System.out.println("This is VERY bad! PANIC!");
+				this.isOk = false;
+				return;
+			}
+
+			Mat binarized = VisionUtils.binarize(image);
 			ArrayList<MatOfPoint> contours = filterContours(VisionUtils.getContours(binarized));
 			if (contours.size() != 2) {
 				angleOffset = 4761;
@@ -81,14 +83,18 @@ public class ImageProcessor implements VisionPipeline {
 			Imgproc.rectangle(binarized, leftRect.tl(), rightRect.br(), new Scalar(255, 255, 0), 3);
 
 			angleOffset = pixelOffset * pixelToAngleFactor - CVConstants.LOGITECH_C270_ANGLE_OFFSET;
+
+			output = binarized;
+			this.isOk = true;
+			return;
 		}
-		output = binarized;
+		this.isOk = true;
+		output = image;
 	}
 	
 	public static ArrayList<MatOfPoint> filterContours(ArrayList<MatOfPoint> contours) {
 		ArrayList<MatOfPoint> tapeContours = new ArrayList<MatOfPoint>();
-		for(int i = 0; i < contours.size(); i++) {
-			MatOfPoint contour = contours.get(i);
+		for(MatOfPoint contour : contours) {
 			if(isPegTape(contour)) tapeContours.add(contour);
 			if(tapeContours.size() >= 2) break;
 		}

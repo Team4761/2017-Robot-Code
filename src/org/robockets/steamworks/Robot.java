@@ -2,6 +2,7 @@ package org.robockets.steamworks;
 
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.SampleRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
@@ -23,6 +24,7 @@ import org.robockets.steamworks.ballintake.SpinBallIntakeRollers;
 import org.robockets.steamworks.ballintake.IntakeBalls;
 import org.robockets.steamworks.camera.CVConstants;
 import org.robockets.steamworks.camera.ImageProcessor;
+import org.robockets.steamworks.camera.SetVisionEnabled;
 import org.robockets.steamworks.camera.VisionManager;
 import org.robockets.steamworks.climber.Climb;
 import org.robockets.steamworks.climber.Climber;
@@ -255,11 +257,14 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putData(new ShootWithPID());
 		
 		OI.initTestMode();
+
+		SmartDashboard.putData("Enable vision", new SetVisionEnabled(true));
+		SmartDashboard.putData("Disable vision", new SetVisionEnabled(false));
 	}
 
 	@Override
 	public void robotPeriodic() {
-
+		SmartDashboard.putBoolean("Is vision enabled?", CVConstants.SHOULD_RUN_VISION);
 		/////////////
 		// CLIMBER //
 		/////////////

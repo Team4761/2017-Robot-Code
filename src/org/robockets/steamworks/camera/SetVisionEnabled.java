@@ -8,6 +8,7 @@ public class SetVisionEnabled extends Command {
 
 	public SetVisionEnabled(boolean value) {
 		this.value = value;
+		setRunWhenDisabled(true);
 	}
 	@Override
 	protected void execute() {

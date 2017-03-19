@@ -47,20 +47,21 @@ public class VisionManager implements VisionRunner.Listener<ImageProcessor> {
 	@Override
 	public void copyPipelineOutputs(ImageProcessor pipeline) {
 		synchronized(visionLock) {
-			if(CVConstants.SHOULD_RUN_VISION) {
-				SmartDashboard.putNumber("Exposure", 1);
-				visionCamera.setExposureManual((int) SmartDashboard.getNumber("Exposure", 1));
-				visionCamera.setBrightness((int) SmartDashboard.getNumber("Brightness", 0));
+			if(pipeline.isOk) {
+				if (CVConstants.SHOULD_RUN_VISION) {
+					SmartDashboard.putNumber("Exposure", 1);
+					visionCamera.setExposureManual((int) SmartDashboard.getNumber("Exposure", 1));
+					visionCamera.setBrightness((int) SmartDashboard.getNumber("Brightness", 0));
+				}
+				if (pipeline.output != null) {
+					processedVideoStream.putFrame(pipeline.output);
+				} else {
+					System.out.println("Oh snap! There were not enough reasonable contours!");
+				}
+				CVConstants.setOffset(pipeline.angleOffset);
+				SmartDashboard.putNumber("Vision angle offset", CVConstants.getOffset());
+				visionCamera.setExposureManual((int) SmartDashboard.getNumber("Exposure", 5));
 			}
-			if(pipeline.output != null) {
-				processedVideoStream.putFrame(pipeline.output);
-			}
-			else {
-				System.out.println("Oh snap! There were not enough reasonable contours!");
-			}
-			CVConstants.setOffset(pipeline.angleOffset);
-			SmartDashboard.putNumber("Vision angle offset", CVConstants.getOffset());
-			visionCamera.setExposureManual((int) SmartDashboard.getNumber("Exposure", 5));
 		}
 	}
 
