@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj.command.Command;
 
 import org.robockets.commons.RelativeDirection;
 import org.robockets.steamworks.Robot;
+import org.robockets.steamworks.RobotMap;
 
 /**
  * @author Jake Backer
@@ -12,43 +13,42 @@ import org.robockets.steamworks.Robot;
 public class MoveElevator extends Command {
 
 	private RelativeDirection.ZAxis elevatorDirection;
-	//private RelativeDirection.YAxis conveyorDirection;
 
 	private double time;
 	private boolean forever;
 	private double speed;
-	//private boolean isConveyorRandom;
-	
+
+	private boolean waitUntilBreakbeam = false;
+
 	private Timer timer;
 
-	//private final int CONVEYOR_DIRECTION_MAX_TIME = 3; // In seconds
-	
+	public MoveElevator(double speed, boolean waitUntilBreakbeam) {
+		elevatorDirection = RelativeDirection.ZAxis.UP;
+		this.speed = speed;
+		waitUntilBreakbeam = true;
+	}
+
 	public MoveElevator(RelativeDirection.ZAxis elevatorDirection, double speed) {
 		this.elevatorDirection = elevatorDirection;
 		//conveyorDirection = (this.elevatorDirection == RelativeDirection.ZAxis.UP) ? RelativeDirection.YAxis.FORWARD : RelativeDirection.YAxis.BACKWARD;
 		forever = true;
 		this.speed = speed;
-		//this.isConveyorRandom = false;
 	}
 
-	public MoveElevator(RelativeDirection.ZAxis elevatorDirection, double time, double speed) {
+	public MoveElevator(RelativeDirection.ZAxis elevatorDirection, double speed, double time) {
 		// This cannot require the shooter because it would kill the SpinSpinners command
 		// requires(Robot.shooter);
 		this.elevatorDirection = elevatorDirection;
 		this.time = time;
-		//conveyorDirection = (this.elevatorDirection == RelativeDirection.ZAxis.UP) ? RelativeDirection.YAxis.FORWARD : RelativeDirection.YAxis.BACKWARD;
 		forever = false;
 		this.speed = speed;
-		//this.isConveyorRandom = false;
 	}
 
 	@Deprecated
 	public MoveElevator(RelativeDirection.ZAxis elevatorDirection, double speed, boolean isConveyorRandom) {
 		this.elevatorDirection = elevatorDirection;
-		//conveyorDirection = (this.elevatorDirection == RelativeDirection.ZAxis.UP) ? RelativeDirection.YAxis.FORWARD : RelativeDirection.YAxis.BACKWARD;
 		forever = true;
 		this.speed = speed;
-		//this.isConveyorRandom = isConveyorRandom;
 	}
 
 	protected void initialize() {
@@ -61,28 +61,12 @@ public class MoveElevator extends Command {
 
 	protected void execute() {
 		Robot.elevator.moveElevator(elevatorDirection, speed);
-
-		/*if (isConveyorRandom) {
-			if (conveyorDirection == RelativeDirection.YAxis.FORWARD) {
-				if (timer.get() >= CONVEYOR_DIRECTION_MAX_TIME) {
-					switchConveyorDirection();
-					timer.stop();
-					timer.start();
-				}
-			} else {
-				if (timer.get() >= CONVEYOR_DIRECTION_MAX_TIME/3) {
-					switchConveyorDirection();
-					timer.stop();
-					timer.start();
-				}
-			}
-		}
-		System.out.println(conveyorDirection.toString());
-
-		Robot.conveyor.moveConveyor(conveyorDirection, speed);*/
 	}
 
 	protected boolean isFinished() {
+		if (waitUntilBreakbeam) {
+			return !RobotMap.elevatorBreakbeamSensor.get();
+		}
 		return !forever && isTimedOut();
 	}
 
@@ -95,12 +79,4 @@ public class MoveElevator extends Command {
 		end();
 	}
 
-	@Deprecated
-	private void switchConveyorDirection() {
-		/*if (conveyorDirection == RelativeDirection.YAxis.FORWARD) {
-			conveyorDirection = RelativeDirection.YAxis.BACKWARD;
-		} else {
-			conveyorDirection = RelativeDirection.YAxis.FORWARD;
-		}*/
-	}
 }

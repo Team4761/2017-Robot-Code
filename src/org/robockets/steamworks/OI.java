@@ -26,12 +26,12 @@ import org.robockets.steamworks.shooter.SpinSpinners;
  */
 public class OI {
     public static Joystick joystick = new Joystick(0); // XBox Controller
-    public static Joystick attack3Left = new Joystick(1); // Left attack joystick
-    public static Joystick attack3Right = new Joystick(2); // Right attack joystick
+    //public static Joystick attack3Left = new Joystick(1); // Left attack joystick
+    //public static Joystick attack3Right = new Joystick(2); // Right attack joystick
 
-    public static Joystick launchpad1 = new Joystick(3); // The left launchpad for the button board
+    //public static Joystick launchpad1 = new Joystick(3); // The left launchpad for the button board
 
-    public static Joystick launchpad2 = new Joystick(4); // The right launchpad for the button board
+   // public static Joystick launchpad2 = new Joystick(4); // The right launchpad for the button board
 
     public static Joystick backupJoystick = new Joystick(5);
 
@@ -46,57 +46,59 @@ public class OI {
     Button selectButton = new JoystickButton(backupJoystick, 7);
     Button startButton = new JoystickButton(backupJoystick, 8);
 
+
+
     /////////////////////
     /// Miscellaneous ///
     /////////////////////
-
+	/*
     Button misc1 = new JoystickButton(launchpad2, 7); // Done
     Button misc2 = new JoystickButton(launchpad2, 14); // Done
     Button misc3 = new JoystickButton(launchpad2, 9); // Done
     Button misc4 = new JoystickButton(launchpad2, 5); // Does not work
     Button misc5 = new JoystickButton(launchpad2, 15); // Done
-
+*/
     ///////////////
     /// Climber ///
     ///////////////
-
+/*
     Button climber1 = new JoystickButton(launchpad2, 10); // Done
     Button climber2 = new JoystickButton(launchpad2, 16); // Done
-
+*/
     ///////////////
     /// Lifter? ///
     ///////////////
-
+/*
     Button lifter1 = new JoystickButton(launchpad1, 4); // Done
     Button lifterMan1 = new JoystickButton(launchpad1, 5); // Done
     Button lifterMan2 = new JoystickButton(launchpad1, 6); // Done
-
+*/
     /////////////
     /// Shoot ///
     /////////////
-
+/*
     Button shooter1 = new JoystickButton(launchpad1, 2); // Done
     Button shooter2 = new JoystickButton(launchpad1, 3); // Done
     Button shooterMan1 = new JoystickButton(launchpad1, 8); // Done
-
+*/
     ///////////////////
     /// Gear Intake ///
     ///////////////////
-
+/*
     Button gearIntake1 = new JoystickButton(launchpad2, 15); // Done
     Button gearIntake2 = new JoystickButton(launchpad1, 11); // Done
     Button gearIntakeMan1 = new JoystickButton(launchpad1, 14); // No
     Button gearIntakeMan2 = new JoystickButton(launchpad2, 6); // No
-
+*/
     ///////////////////
     /// Ball Intake ///
     ///////////////////
-
+/*
     Button ballIntake1 = new JoystickButton(launchpad1, 12); // Done
     Button ballIntake2 = new JoystickButton(launchpad1, 14); // Done
     Button ballIntakeMan1 = new JoystickButton(launchpad1, 10);
     Button ballIntakeMan2 = new JoystickButton(launchpad1, 10); // Does not work
-
+*/
     public OI() {
     	//yButton.whenPressed(Robot.toggleDriveMode);
         bindButtons();
@@ -107,6 +109,7 @@ public class OI {
         /////////////////
         // Gear Intake //
         /////////////////
+		/*
     	gearIntake1.whenPressed(new IntakeToPos(IntakeFlap.IntakeState.FUEL));
         gearIntake2.whenPressed(new IntakeToPos(IntakeFlap.IntakeState.GEARS));
         //gearIntakeMan1.whileHeld(new MoveIntakeFlap(RelativeDirection.YAxis.FORWARD));
@@ -117,14 +120,14 @@ public class OI {
         /////////////
         shooterMan1.toggleWhenPressed(new SpinSpinners());
         shooter1.whileHeld(new Shoot(true));
-        shooter2.whileHeld(new Shoot(false));
+        shooter2.whileHeld(new Shoot(false));*/
 
         /////////////////
         // Ball Intake //
         /////////////////
         /*ballIntake1.toggleWhenPressed(new SpinBallIntakeRollers(-1));
         ballIntake2.toggleWhenPressed(new IntakeBalls());*/
-        
+        /*
         SpinBallIntakeRollers spinBallIntakeRollers = new SpinBallIntakeRollers(-1);
         
         ballIntake1.cancelWhenPressed(spinBallIntakeRollers);
@@ -140,11 +143,12 @@ public class OI {
         //lifterMan1.whileHeld(new MoveElevator(RelativeDirection.ZAxis.UP, 0.75, true));
         lifterMan1.whileHeld(new MoveElevator(RelativeDirection.ZAxis.DOWN, 0.75));
 
-        /////////////
+        /////////////*/
         // Climber //
         /////////////
+		/*
         climber1.whileHeld(new Climb(0.5));
-        climber2.whileHeld(new Climb(1));  
+        climber2.whileHeld(new Climb(1));*/
         /*
         shooterMan1.whenPressed(new KillEverything()); */
         //misc2.whenPressed(new Climb(1));*/
