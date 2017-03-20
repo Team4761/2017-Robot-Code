@@ -1,8 +1,6 @@
 package org.robockets.steamworks.camera;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import org.robockets.steamworks.RobotMap;
-
 import edu.wpi.cscore.CvSource;
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.wpilibj.CameraServer;

@@ -459,7 +459,7 @@ public class Robot extends IterativeRobot {
 		dumbAuto = new DumbAuto();
 
 		System.out.println("Autonomous Chooser Initializing...");
-		autonomousChooser = new SendableChooser<Command>(); // new SendableChooser<Command>(); is BAD!!!! Extra characters are unneeded!!!
+		autonomousChooser = new SendableChooser<>();
 		autonomousChooser.addObject("EasyAutoTurnRight", easyAuto1);
 		autonomousChooser.addObject("EasyAutoTurnLeft", easyAuto3);
 		autonomousChooser.addDefault("EasyAutoStraight", easyAuto2);

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 import edu.wpi.first.wpilibj.vision.VisionPipeline;
+
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
 import org.opencv.core.MatOfPoint;
@@ -11,9 +12,7 @@ import org.opencv.core.MatOfPoint2f;
 import org.opencv.core.Rect;
 import org.opencv.core.RotatedRect;
 import org.opencv.core.Scalar;
-import org.opencv.core.Size;
 import org.opencv.imgproc.Imgproc;
-import org.robockets.steamworks.RobotMap;
 
 public class ImageProcessor implements VisionPipeline {
 
@@ -28,7 +27,7 @@ public class ImageProcessor implements VisionPipeline {
 		Imgproc.Canny(binaryImage, cannyOut, 100, 200);
 		
 		/// Find contours
-		ArrayList<MatOfPoint> contours = new ArrayList<MatOfPoint>();
+		ArrayList<MatOfPoint> contours = new ArrayList<>();
 		Imgproc.findContours(cannyOut, contours, new Mat(), Imgproc.RETR_TREE, Imgproc.CHAIN_APPROX_SIMPLE);
 		Collections.sort(contours, new ContourAreaComparator());
 		return contours;
