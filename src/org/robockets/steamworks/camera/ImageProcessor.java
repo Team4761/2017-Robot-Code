@@ -75,6 +75,8 @@ public class ImageProcessor implements VisionPipeline {
 			double farRight = rightRect.br().x;
 			double midpoint = (farLeft + farRight) / 2d;
 
+			// TODO: Verify ratio of "big" rectangle is correct
+
 			double pixelOffset = midpoint - (image.width() / 2d);
 			double pixelToAngleFactor = CVConstants.LOGITECH_C270_FOV / image.width();
 

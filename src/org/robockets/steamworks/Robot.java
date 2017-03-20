@@ -16,9 +16,11 @@ import edu.wpi.first.wpilibj.vision.VisionThread;
 import org.robockets.commons.RelativeDirection;
 import org.robockets.steamworks.autonomous.AutoTest;
 import org.robockets.steamworks.autonomous.BaselineAuto;
+import org.robockets.steamworks.autonomous.DumbAuto;
 import org.robockets.steamworks.autonomous.EasyAuto;
 import org.robockets.steamworks.autonomous.MaxAuto;
 import org.robockets.steamworks.autonomous.MidAuto;
+import org.robockets.steamworks.autonomous.SecretWeaponAuto;
 import org.robockets.steamworks.ballintake.BallIntake;
 import org.robockets.steamworks.ballintake.SpinBallIntakeRollers;
 import org.robockets.steamworks.ballintake.IntakeBalls;
@@ -86,6 +88,8 @@ public class Robot extends IterativeRobot {
 	public static Command maxAuto1;
 	public static Command maxAuto2;
 	public static Command maxAuto3;
+	public static Command secretWeaponAuto;
+	public static Command dumbAuto;
 
 	public static Command drive;
 	public static Command climb;
@@ -451,12 +455,16 @@ public class Robot extends IterativeRobot {
 		maxAuto1 = new MaxAuto(1);
 		maxAuto2 = new MaxAuto(2);
 		maxAuto3 = new MaxAuto(3);
+		secretWeaponAuto = new SecretWeaponAuto();
+		dumbAuto = new DumbAuto();
 
 		System.out.println("Autonomous Chooser Initializing...");
 		autonomousChooser = new SendableChooser<Command>(); // new SendableChooser<Command>(); is BAD!!!! Extra characters are unneeded!!!
 		autonomousChooser.addObject("EasyAutoTurnRight", easyAuto1);
 		autonomousChooser.addObject("EasyAutoTurnLeft", easyAuto3);
 		autonomousChooser.addDefault("EasyAutoStraight", easyAuto2);
+		autonomousChooser.addObject("Secret Weapon Auto", secretWeaponAuto);
+		autonomousChooser.addObject("Dumb Auto", dumbAuto);
 
 		//autonomousChooser.addObject("EasyAutoTurnRight", easyAuto1);
 		/*autonomousChooser.addObject("MidAutoStart1", midAuto1);

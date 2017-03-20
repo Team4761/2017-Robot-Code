@@ -3,6 +3,7 @@ package org.robockets.steamworks.autonomous;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
+import edu.wpi.first.wpilibj.command.WaitCommand;
 import org.robockets.commons.RelativeDirection;
 import org.robockets.steamworks.commands.MoveElevator;
 import org.robockets.steamworks.drivetrain.DriveArbitrary;
@@ -26,10 +27,11 @@ public class SecretWeaponAuto extends CommandGroup {
 			turnMultiplier = -1;
 		}
 
-		addParallel(new ShootWithPID());
+		addParallel(new ShootWithPID(68));
 		addSequential(new WaitUntilSpeed());
-		addSequential(new MoveElevator(RelativeDirection.ZAxis.UP, 0.6, 1.5)); // TODO: Change this to be with breakbeam later
+		addSequential(new WaitCommand(2.5));
+		addSequential(new MoveElevator(RelativeDirection.ZAxis.UP, 0.5, 6)); // TODO: Change this to be with breakbeam later
 		addSequential(new KillShooter());
-		addSequential(new DriveArbitrary(0, 0, 0 ,0)); // FIXME: Change these values. This also needs to take into account the angleMultiplier
+		addSequential(new DriveArbitrary(0,0, RelativeDirection.XAxis.RIGHT)); // FIXME: Change these values. This also needs to take into account the angleMultiplier
 	}
 }
