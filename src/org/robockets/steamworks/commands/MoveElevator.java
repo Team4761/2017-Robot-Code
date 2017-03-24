@@ -44,13 +44,6 @@ public class MoveElevator extends Command {
 		this.speed = speed;
 	}
 
-	@Deprecated
-	public MoveElevator(RelativeDirection.ZAxis elevatorDirection, double speed, boolean isConveyorRandom) {
-		this.elevatorDirection = elevatorDirection;
-		forever = true;
-		this.speed = speed;
-	}
-
 	protected void initialize() {
 		if (!forever) {
 			setTimeout(time);

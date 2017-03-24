@@ -1,11 +1,10 @@
 package org.robockets.steamworks.shooter;
 
-import org.robockets.steamworks.Robot;
-import org.robockets.steamworks.commands.MoveElevator;
-
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.WaitCommand;
 
+import org.robockets.steamworks.Robot;
+import org.robockets.steamworks.commands.MoveElevator;
 import org.robockets.commons.RelativeDirection;
 
 /**

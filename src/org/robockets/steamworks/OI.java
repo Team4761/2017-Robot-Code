@@ -5,20 +5,12 @@ import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
-import org.robockets.commons.RelativeDirection;
 import org.robockets.steamworks.ballintake.SpinBallIntakeRollers;
 import org.robockets.steamworks.climber.Climb;
-import org.robockets.steamworks.climber.ClimberListener;
-import org.robockets.steamworks.commands.MakeExtraSpace;
-import org.robockets.steamworks.commands.MoveElevator;
 import org.robockets.steamworks.intakeflap.IntakeFlap;
 import org.robockets.steamworks.intakeflap.IntakeToPos;
-import org.robockets.steamworks.lights.ButtonPress;
 import org.robockets.steamworks.lights.KillLights;
-import org.robockets.steamworks.lights.LightsColors;
-import org.robockets.steamworks.shooter.Shoot;
 import org.robockets.steamworks.shooter.ShootWithPID;
-import org.robockets.steamworks.shooter.SpinSpinners;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -31,7 +23,7 @@ public class OI {
 
     //public static Joystick launchpad1 = new Joystick(3); // The left launchpad for the button board
 
-   // public static Joystick launchpad2 = new Joystick(4); // The right launchpad for the button board
+    //public static Joystick launchpad2 = new Joystick(4); // The right launchpad for the button board
 
     public static Joystick backupJoystick = new Joystick(5);
 

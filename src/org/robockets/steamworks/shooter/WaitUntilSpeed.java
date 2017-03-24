@@ -1,9 +1,9 @@
 package org.robockets.steamworks.shooter;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import org.robockets.steamworks.Robot;
-
 import edu.wpi.first.wpilibj.command.Command;
+
+import org.robockets.steamworks.Robot;
 import org.robockets.steamworks.RobotMap;
 
 /**

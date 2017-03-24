@@ -2,7 +2,6 @@ package org.robockets.steamworks;
 
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.IterativeRobot;
-import edu.wpi.first.wpilibj.SampleRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
@@ -10,28 +9,20 @@ import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-import edu.wpi.first.wpilibj.vision.VisionRunner;
-import edu.wpi.first.wpilibj.vision.VisionThread;
-
 import org.robockets.commons.RelativeDirection;
 import org.robockets.steamworks.autonomous.AutoTest;
 import org.robockets.steamworks.autonomous.BaselineAuto;
 import org.robockets.steamworks.autonomous.DumbAuto;
 import org.robockets.steamworks.autonomous.EasyAuto;
-import org.robockets.steamworks.autonomous.MaxAuto;
-import org.robockets.steamworks.autonomous.MidAuto;
 import org.robockets.steamworks.autonomous.SecretWeaponAuto;
 import org.robockets.steamworks.ballintake.BallIntake;
 import org.robockets.steamworks.ballintake.SpinBallIntakeRollers;
 import org.robockets.steamworks.ballintake.IntakeBalls;
 import org.robockets.steamworks.camera.CVConstants;
-import org.robockets.steamworks.camera.ImageProcessor;
 import org.robockets.steamworks.camera.SetVisionEnabled;
 import org.robockets.steamworks.camera.VisionManager;
 import org.robockets.steamworks.climber.Climb;
 import org.robockets.steamworks.climber.Climber;
-import org.robockets.steamworks.climber.ClimberListener;
-import org.robockets.steamworks.commands.MakeExtraSpace;
 import org.robockets.steamworks.commands.MoveElevator;
 import org.robockets.steamworks.drivetrain.DriveWithMP;
 import org.robockets.steamworks.drivetrain.Drivetrain;
@@ -46,13 +37,11 @@ import org.robockets.steamworks.shooter.ShootWithPID;
 import org.robockets.steamworks.shooter.Shooter;
 import org.robockets.steamworks.shooter.ShooterListener;
 import org.robockets.steamworks.shooter.SpinSpinners;
-import org.robockets.steamworks.subsystems.Conveyor;
 import org.robockets.steamworks.subsystems.Elevator;
 import org.robockets.steamworks.subsystems.GearIntake;
 import org.robockets.steamworks.lights.LED;
 import org.robockets.steamworks.intakeflap.IntakeFlap;
 import org.robockets.steamworks.intakeflap.ToggleIntakeFlap;
-import org.robockets.steamworks.lights.Cylon;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -68,7 +57,6 @@ public class Robot extends IterativeRobot {
 
 	public static BallIntake ballIntake;
 	public static Climber climber;
-	public static Conveyor conveyor;
 	public static Drivetrain drivetrain;
 	public static Shooter shooter;
 	public static Elevator elevator;
@@ -88,6 +76,7 @@ public class Robot extends IterativeRobot {
 	public static Command maxAuto1;
 	public static Command maxAuto2;
 	public static Command maxAuto3;
+	public static Command baselineAuto;
 	public static Command secretWeaponAuto;
 	public static Command dumbAuto;
 
@@ -98,8 +87,7 @@ public class Robot extends IterativeRobot {
 	public static Command flapToGear;
 	public static Command elevatorListener;
 	public static Command shooterListener;
-	public static Command climberListener;
-	
+
 	public static VisionManager visionManager;
 
 	private SendableChooser<Command> autonomousChooser;
@@ -251,7 +239,6 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("elevator Speed", 0.5);
 		SmartDashboard.putData("MoveElevatorUp", new MoveElevator(RelativeDirection.ZAxis.UP, 1));
 		SmartDashboard.putData("Fluff", new MoveElevator(RelativeDirection.ZAxis.DOWN,  SmartDashboard.getNumber("elevator Speed", 1)));
-		SmartDashboard.putData("MakeExtraSpace", new MakeExtraSpace());
 
 		/////////////
 		// SHOOTER //
@@ -430,17 +417,14 @@ public class Robot extends IterativeRobot {
 	private void initSubsystems() {
 		ballIntake = new BallIntake();
 		elevator = new Elevator();
-		conveyor = new Conveyor();
 		climber = new Climber();
 		drivetrain = new Drivetrain();
 		shooter = new Shooter();
 		gearIntake = new GearIntake();
 		intakeFlap = new IntakeFlap(1);
 		ledSubsystem = new LED();
-		cylonCommand = new Cylon();
 		elevatorListener = new ElevatorDPadListener();
 		shooterListener = new ShooterListener();
-		climberListener = new ClimberListener();
 	}
 
 	private void initAutoThings() {
@@ -449,12 +433,15 @@ public class Robot extends IterativeRobot {
 		easyAuto2 = new EasyAuto(2);
 		easyAuto3 = new EasyAuto(3);
 
-		midAuto1 = new MidAuto(1);
+		/*midAuto1 = new MidAuto(1);
 		midAuto2 = new MidAuto(2);
 		midAuto3 = new MidAuto(3);
+
 		maxAuto1 = new MaxAuto(1);
 		maxAuto2 = new MaxAuto(2);
-		maxAuto3 = new MaxAuto(3);
+		maxAuto3 = new MaxAuto(3);*/
+
+		baselineAuto = new BaselineAuto();
 		secretWeaponAuto = new SecretWeaponAuto();
 		dumbAuto = new DumbAuto();
 
@@ -464,6 +451,7 @@ public class Robot extends IterativeRobot {
 		autonomousChooser.addObject("EasyAutoTurnLeft", easyAuto3);
 		autonomousChooser.addDefault("EasyAutoStraight", easyAuto2);
 		autonomousChooser.addObject("Secret Weapon Auto", secretWeaponAuto);
+		autonomousChooser.addObject("Baseline Auto", baselineAuto);
 		autonomousChooser.addObject("Dumb Auto", dumbAuto);
 
 		//autonomousChooser.addObject("EasyAutoTurnRight", easyAuto1);

@@ -26,7 +26,7 @@ public class Drivetrain extends Subsystem {
 
     public Drivetrain() {
         gyroPIDSource = new GyroPIDSource();
-        gyroPID = new PIDController(0, 0, 0, new GyroPIDSource(), new DummyPIDOutput());
+        gyroPID = new PIDController(0, 0, 0, new GyroPIDSource(), new DummyPIDOutput()); // FIXME: This should not use a DummyPIDOutput
         gyroPID.disable();
         gyroPID.setOutputRange(-1.0, 1.0); // Set turning speed range
         gyroPID.setPercentTolerance(5.0); // Set tolerance of 5%
