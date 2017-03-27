@@ -62,7 +62,7 @@ public class LinearSetpointGenerator implements Iterator<Double> {
 		this.time = (this.totalDisplacement / this.velocity);
 		this.stepCount = this.time / this.stepLength;
 		this.stepHeight = this.totalDisplacement / this.stepCount;
-		System.out.println(this.stepCount);
+		//System.out.println(this.stepCount);
 		this.getNextCount = 0;
 	}
 
