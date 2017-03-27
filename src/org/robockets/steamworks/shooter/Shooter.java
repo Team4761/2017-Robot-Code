@@ -3,8 +3,7 @@ package org.robockets.steamworks.shooter;
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import org.robockets.steamworks.CounterRatePIDSource;
+import org.robockets.steamworks.pidsources.CounterRatePIDSource;
 import org.robockets.steamworks.RobotMap;
 
 /**

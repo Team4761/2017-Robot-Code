@@ -35,6 +35,7 @@ public class Joyride extends Command {
         	        	
         	RobotMap.robotDrive.arcadeDrive(-translate, -rotate);
     	} else {
+    		/*
     		leftStick = OI.attack3Left.getRawAxis(1);
     		rightStick = OI.attack3Right.getRawAxis(1);
     		leftStick /= -2;
@@ -42,7 +43,7 @@ public class Joyride extends Command {
     		leftStick *= 1 - OI.attack3Left.getRawAxis(2);
     		rightStick *= 1 - OI.attack3Right.getRawAxis(2);
 
-    		RobotMap.robotDrive.tankDrive(leftStick, rightStick);
+    		RobotMap.robotDrive.tankDrive(leftStick, rightStick);*/
     	}
     }
 

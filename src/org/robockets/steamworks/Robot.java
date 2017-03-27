@@ -9,24 +9,20 @@ import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-import edu.wpi.first.wpilibj.vision.VisionRunner;
-import edu.wpi.first.wpilibj.vision.VisionThread;
-
 import org.robockets.commons.RelativeDirection;
 import org.robockets.steamworks.autonomous.AutoTest;
+import org.robockets.steamworks.autonomous.BaselineAuto;
+import org.robockets.steamworks.autonomous.DumbAuto;
 import org.robockets.steamworks.autonomous.EasyAuto;
-import org.robockets.steamworks.autonomous.MaxAuto;
-import org.robockets.steamworks.autonomous.MidAuto;
+import org.robockets.steamworks.autonomous.SecretWeaponAuto;
 import org.robockets.steamworks.ballintake.BallIntake;
 import org.robockets.steamworks.ballintake.SpinBallIntakeRollers;
 import org.robockets.steamworks.ballintake.IntakeBalls;
 import org.robockets.steamworks.camera.CVConstants;
-import org.robockets.steamworks.camera.ImageProcessor;
+import org.robockets.steamworks.camera.SetVisionEnabled;
 import org.robockets.steamworks.camera.VisionManager;
 import org.robockets.steamworks.climber.Climb;
 import org.robockets.steamworks.climber.Climber;
-import org.robockets.steamworks.climber.ClimberListener;
-import org.robockets.steamworks.commands.MakeExtraSpace;
 import org.robockets.steamworks.commands.MoveElevator;
 import org.robockets.steamworks.drivetrain.DriveWithMP;
 import org.robockets.steamworks.drivetrain.Drivetrain;
@@ -41,13 +37,11 @@ import org.robockets.steamworks.shooter.ShootWithPID;
 import org.robockets.steamworks.shooter.Shooter;
 import org.robockets.steamworks.shooter.ShooterListener;
 import org.robockets.steamworks.shooter.SpinSpinners;
-import org.robockets.steamworks.subsystems.Conveyor;
 import org.robockets.steamworks.subsystems.Elevator;
 import org.robockets.steamworks.subsystems.GearIntake;
 import org.robockets.steamworks.lights.LED;
 import org.robockets.steamworks.intakeflap.IntakeFlap;
 import org.robockets.steamworks.intakeflap.ToggleIntakeFlap;
-import org.robockets.steamworks.lights.Cylon;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -63,7 +57,6 @@ public class Robot extends IterativeRobot {
 
 	public static BallIntake ballIntake;
 	public static Climber climber;
-	public static Conveyor conveyor;
 	public static Drivetrain drivetrain;
 	public static Shooter shooter;
 	public static Elevator elevator;
@@ -83,6 +76,9 @@ public class Robot extends IterativeRobot {
 	public static Command maxAuto1;
 	public static Command maxAuto2;
 	public static Command maxAuto3;
+	public static Command baselineAuto;
+	public static Command secretWeaponAuto;
+	public static Command dumbAuto;
 
 	public static Command drive;
 	public static Command climb;
@@ -91,8 +87,7 @@ public class Robot extends IterativeRobot {
 	public static Command flapToGear;
 	public static Command elevatorListener;
 	public static Command shooterListener;
-	public static Command climberListener;
-	
+
 	public static VisionManager visionManager;
 
 	private SendableChooser<Command> autonomousChooser;
@@ -107,11 +102,11 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void robotInit() {
 
+		System.out.println("Robot initializing...");
 		//NetworkTable.flush();
 
 		NetworkTable.globalDeleteAll();
-
-
+		
 		////////////////
 		// SUBSYSTEMS //
 		////////////////
@@ -146,8 +141,9 @@ public class Robot extends IterativeRobot {
 		//////////
 		// INIT //
 		//////////
-		CameraServer.getInstance().startAutomaticCapture(RobotMap.drivingCamera);
-		visionManager = new VisionManager();
+
+		CameraServer.getInstance().startAutomaticCapture("DRIVING CAMERA", 0);
+		visionManager = VisionManager.getInstance();
 		visionManager.startProcessing();
 		
 		//RobotMap.gyro.calibrate();
@@ -180,6 +176,7 @@ public class Robot extends IterativeRobot {
 
 		oi = new OI();
 		Robot.ledSubsystem.cylon(56);
+		System.out.println("Robot done initializing");
 	}
 	
 	private void initSmartDashboard() {
@@ -197,7 +194,7 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putData("Drive 60 at 10 per second with encoders", new DriveWithMP(60, 10));
 		SmartDashboard.putData("Drive 100 at 30 per second with encoders", new DriveWithMP(100, 30));
 
-		SmartDashboard.putData("Turn Test", new Turn(TurnType.RELATIVE, 90, 90));
+		SmartDashboard.putData("Turn Test", new Turn(TurnType.RELATIVE, 90, 60));
 
 		/*SmartDashboard.putNumber("Left drivepod PID P value", Robot.drivetrain.leftPodPID.getP());
 		SmartDashboard.putNumber("Left drivepod PID I value", Robot.drivetrain.leftPodPID.getI());
@@ -242,7 +239,6 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("elevator Speed", 0.5);
 		SmartDashboard.putData("MoveElevatorUp", new MoveElevator(RelativeDirection.ZAxis.UP, 1));
 		SmartDashboard.putData("Fluff", new MoveElevator(RelativeDirection.ZAxis.DOWN,  SmartDashboard.getNumber("elevator Speed", 1)));
-		SmartDashboard.putData("MakeExtraSpace", new MakeExtraSpace());
 
 		/////////////
 		// SHOOTER //
@@ -252,11 +248,14 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putData(new ShootWithPID());
 		
 		OI.initTestMode();
+
+		SmartDashboard.putData("Enable vision", new SetVisionEnabled(true));
+		SmartDashboard.putData("Disable vision", new SetVisionEnabled(false));
 	}
 
 	@Override
 	public void robotPeriodic() {
-
+		SmartDashboard.putBoolean("Is vision enabled?", CVConstants.SHOULD_RUN_VISION);
 		/////////////
 		// CLIMBER //
 		/////////////
@@ -418,17 +417,14 @@ public class Robot extends IterativeRobot {
 	private void initSubsystems() {
 		ballIntake = new BallIntake();
 		elevator = new Elevator();
-		conveyor = new Conveyor();
 		climber = new Climber();
 		drivetrain = new Drivetrain();
 		shooter = new Shooter();
 		gearIntake = new GearIntake();
 		intakeFlap = new IntakeFlap(1);
 		ledSubsystem = new LED();
-		cylonCommand = new Cylon();
 		elevatorListener = new ElevatorDPadListener();
 		shooterListener = new ShooterListener();
-		climberListener = new ClimberListener();
 	}
 
 	private void initAutoThings() {
@@ -436,26 +432,38 @@ public class Robot extends IterativeRobot {
 		easyAuto1 = new EasyAuto(1);
 		easyAuto2 = new EasyAuto(2);
 		easyAuto3 = new EasyAuto(3);
-		midAuto1 = new MidAuto(1);
+
+		/*midAuto1 = new MidAuto(1);
 		midAuto2 = new MidAuto(2);
 		midAuto3 = new MidAuto(3);
+
 		maxAuto1 = new MaxAuto(1);
 		maxAuto2 = new MaxAuto(2);
-		maxAuto3 = new MaxAuto(3);
+		maxAuto3 = new MaxAuto(3);*/
 
-		autonomousChooser = new SendableChooser<>(); // new SendableChooser<Command>(); is BAD!!!! Extra characters are unneeded!!!
-		autonomousChooser.addDefault("AutoTest", autoTest);
-		autonomousChooser.addObject("EasyAutoStart1", easyAuto1);
-		autonomousChooser.addObject("EasyAutoStart2", easyAuto2);
-		autonomousChooser.addObject("EasyAutoStart3", easyAuto3);
-		autonomousChooser.addObject("MidAutoStart1", midAuto1);
+		baselineAuto = new BaselineAuto();
+		secretWeaponAuto = new SecretWeaponAuto();
+		dumbAuto = new DumbAuto();
+
+		System.out.println("Autonomous Chooser Initializing...");
+		autonomousChooser = new SendableChooser<>();
+		autonomousChooser.addObject("EasyAutoTurnRight", easyAuto1);
+		autonomousChooser.addObject("EasyAutoTurnLeft", easyAuto3);
+		autonomousChooser.addDefault("EasyAutoStraight", easyAuto2);
+		autonomousChooser.addObject("Secret Weapon Auto", secretWeaponAuto);
+		autonomousChooser.addObject("Baseline Auto", baselineAuto);
+		autonomousChooser.addObject("Dumb Auto", dumbAuto);
+
+		//autonomousChooser.addObject("EasyAutoTurnRight", easyAuto1);
+		/*autonomousChooser.addObject("MidAutoStart1", midAuto1);
 		autonomousChooser.addObject("MidAutoStart2", midAuto2);
 		autonomousChooser.addObject("MidAutoStart3", midAuto3);
 		autonomousChooser.addObject("MaxAutoStart1", maxAuto1);
 		autonomousChooser.addObject("MaxAutoStart2", maxAuto2);
 		autonomousChooser.addObject("MaxAutoStart3", maxAuto3);
-
+		*/
 		SmartDashboard.putData("Autonomous selector", autonomousChooser);
+		System.out.println("Autonomous Choosing Finished Initializing");
 	}
 }
 

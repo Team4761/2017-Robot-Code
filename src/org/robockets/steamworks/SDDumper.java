@@ -17,8 +17,6 @@ public class SDDumper {
 	public static void dumpEncoder(String prefix, Encoder encoder) {
 		SmartDashboard.putNumber(prefix + " distance",    encoder.getDistance());
 		SmartDashboard.putNumber(prefix + " raw",         encoder.get());
-		SmartDashboard.putNumber(prefix + " rate",        encoder.getRate());
-		SmartDashboard.putBoolean(prefix + " is stopped", encoder.getStopped());
 	}
 
 	public static void dumpMisc() {
@@ -26,8 +24,6 @@ public class SDDumper {
 	}
 	
 	public static void dumpPidController(String prefix, PIDController controller) {
-		SmartDashboard.putNumber(prefix + " average error", controller.getAvgError());
-		SmartDashboard.putNumber(prefix + " current result", controller.get());
 		SmartDashboard.putNumber(prefix + " D value", controller.getD());
 		SmartDashboard.putNumber(prefix + " error", controller.getError());
 		SmartDashboard.putNumber(prefix + " F value", controller.getF());
@@ -35,6 +31,5 @@ public class SDDumper {
 		SmartDashboard.putNumber(prefix + " P value", controller.getP());
 		SmartDashboard.putNumber(prefix + " setpoint", controller.getSetpoint());
 		SmartDashboard.putBoolean(prefix + " is enabled", controller.isEnabled());
-		SmartDashboard.putBoolean(prefix + " is on target", controller.onTarget());
 	}
 }

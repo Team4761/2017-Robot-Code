@@ -5,7 +5,7 @@ import org.robockets.steamworks.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- *
+ * Spins the shooter spinner using PID
  */
 public class ShootWithPID extends Command {
 

@@ -1,6 +1,5 @@
 package org.robockets.steamworks.lights;
 
-//import org.robockets.steamworks.LightsColors;
 import org.robockets.steamworks.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
