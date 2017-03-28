@@ -37,6 +37,8 @@ public class OI {
     Button rightBumperButton = new JoystickButton(backupJoystick, 6);
     Button selectButton = new JoystickButton(backupJoystick, 7);
     Button startButton = new JoystickButton(backupJoystick, 8);
+    Button leftStickDown = new JoystickButton(backupJoystick, 9);
+    Button rightStickDown = new JoystickButton(backupJoystick, 10);
 
 
 
@@ -150,10 +152,12 @@ public class OI {
         // Backup //
         ////////////
 
-        yButton.whenPressed(new IntakeToPos(IntakeFlap.IntakeState.GEARS));
+        /*yButton.whenPressed(new IntakeToPos(IntakeFlap.IntakeState.GEARS));
         yButton.whenReleased(new KillLights());
         aButton.whenPressed(new IntakeToPos(IntakeFlap.IntakeState.FUEL));
-        aButton.whenReleased(new KillLights());
+        aButton.whenReleased(new KillLights());*/
+
+
 
         xButton.whileHeld(new ShootWithPID(63));
         bButton.whileHeld(new ShootWithPID(80));
@@ -163,9 +167,6 @@ public class OI {
 
         driverRightBumper.whileHeld(new Climb(1));
 
-
-        //xButton.whileHeld(new ButtonPress(LightsColors.BLUE));
-        //bButton.whileHeld(new ButtonPress(LightsColors.WHITE));
     }
     
     protected static void initTestMode() {
