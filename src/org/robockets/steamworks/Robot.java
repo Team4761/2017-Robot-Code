@@ -15,9 +15,6 @@ import org.robockets.steamworks.autonomous.BaselineAuto;
 import org.robockets.steamworks.autonomous.DumbAuto;
 import org.robockets.steamworks.autonomous.EasyAuto;
 import org.robockets.steamworks.autonomous.SecretWeaponAuto;
-import org.robockets.steamworks.ballintake.BallIntake;
-import org.robockets.steamworks.ballintake.SpinBallIntakeRollers;
-import org.robockets.steamworks.ballintake.IntakeBalls;
 import org.robockets.steamworks.camera.CVConstants;
 import org.robockets.steamworks.camera.SetVisionEnabled;
 import org.robockets.steamworks.camera.VisionManager;
@@ -55,7 +52,6 @@ public class Robot extends IterativeRobot {
 	
 	public static OI oi;
 
-	public static BallIntake ballIntake;
 	public static Climber climber;
 	public static Drivetrain drivetrain;
 	public static Shooter shooter;
@@ -218,13 +214,6 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("GyroI", drivetrain.gyroPID.getI());
 		SmartDashboard.putNumber("GyroD", drivetrain.gyroPID.getD());
 		SmartDashboard.putNumber("GyroSetpoint", drivetrain.gyroPID.getSetpoint());*/
-
-		/////////////////
-		// BALL INTAKE //
-		/////////////////
-		SmartDashboard.putData("IntakeRollersForward", new SpinBallIntakeRollers(1));
-		SmartDashboard.putData("IntakeRollersBackward", new SpinBallIntakeRollers(-1));
-		SmartDashboard.putData("Intake Balls", new IntakeBalls());
 
 		/////////////////
 		// GEAR INTAKE //
@@ -415,7 +404,6 @@ public class Robot extends IterativeRobot {
 	}
 
 	private void initSubsystems() {
-		ballIntake = new BallIntake();
 		elevator = new Elevator();
 		climber = new Climber();
 		drivetrain = new Drivetrain();

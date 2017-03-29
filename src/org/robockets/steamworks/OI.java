@@ -5,11 +5,7 @@ import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
-import org.robockets.steamworks.ballintake.SpinBallIntakeRollers;
 import org.robockets.steamworks.climber.Climb;
-import org.robockets.steamworks.intakeflap.IntakeFlap;
-import org.robockets.steamworks.intakeflap.IntakeToPos;
-import org.robockets.steamworks.lights.KillLights;
 import org.robockets.steamworks.shooter.ShootWithPID;
 
 /**
@@ -162,9 +158,6 @@ public class OI {
         xButton.whileHeld(new ShootWithPID(63));
         bButton.whileHeld(new ShootWithPID(80));
 
-        rightBumperButton.whileHeld(new SpinBallIntakeRollers(-1));
-        leftBumperButton.whileHeld(new SpinBallIntakeRollers(1));
-
         driverRightBumper.whileHeld(new Climb(1));
 
     }
@@ -178,16 +171,10 @@ public class OI {
 		LiveWindow.addSensor(RIGHT_DRIVEPOD_SUBSYSTEM_NAME, "Encoder", RobotMap.rightEncoder);
 		LiveWindow.addActuator(RIGHT_DRIVEPOD_SUBSYSTEM_NAME, "Speed controller", RobotMap.rightDrivepodSpeedController);
 		
-		final String BALL_INTAKE_SUBSYSTEM_NAME = "Ball Intake";
-		LiveWindow.addActuator(BALL_INTAKE_SUBSYSTEM_NAME, "Speed controller", RobotMap.ballIntakeRollerSpeedController);
-		
 		final String GEAR_INTAKE_SUBSYSTEM_NAME = "Gear intake";
 		LiveWindow.addActuator(GEAR_INTAKE_SUBSYSTEM_NAME, "Left servo", RobotMap.leftIntakeFlapServo);
 		LiveWindow.addActuator(GEAR_INTAKE_SUBSYSTEM_NAME, "Right servo", RobotMap.rightIntakeFlapServo);
 		LiveWindow.addSensor(GEAR_INTAKE_SUBSYSTEM_NAME, "Breakbeam sensor", RobotMap.gearInputBreakbeamSensor);
-		
-		final String CONVEYOR_SUBSYSTEM_NAME = "Conveyor";
-		LiveWindow.addActuator(CONVEYOR_SUBSYSTEM_NAME, "Speed controller", RobotMap.conveyorSpeedController);
 		
 		final String ELEVATOR_SUBSYSTEM_NAME = "Elevator";
 		LiveWindow.addActuator(ELEVATOR_SUBSYSTEM_NAME, "Speed controller", RobotMap.elevatorSpeedController);

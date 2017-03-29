@@ -28,14 +28,14 @@ public class RobotMap {
 	
     public static Victor elevatorSpeedController = new Victor(0);
 
-    public static Victor shooterRollerSpeedController = new Victor(1);
+	public static Victor shooterRollerSpeedController = new Victor(1);
     /**
      * Speed controller for the motor that is used to climb up rope. This might
      * control two motors someday.
      */
     public static Victor climberSpeedController = new Victor(2);
 
-    public static Victor conveyorSpeedController = new Victor(3);
+	public static Victor gearIntakeWheels = new Victor(3);
 
     /**
      * Speed controller for right side of the robot.
@@ -48,12 +48,8 @@ public class RobotMap {
     public static Victor leftDrivepodSpeedController = new Victor(5);
     
     public static Victor climberSpeedController2 = new Victor(6);
-    
-    /**
-     * Speed controller for the roller at the bottom of the robot that sucks
-     * fuel balls in.
-     */
-    public static Victor ballIntakeRollerSpeedController = new Victor(7);
+
+    public static Victor gearIntakeArm = new Victor(7);
   
     public static Servo leftIntakeFlapServo = new Servo(8);
     

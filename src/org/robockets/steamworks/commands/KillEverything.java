@@ -10,7 +10,6 @@ import edu.wpi.first.wpilibj.command.Command;
 public class KillEverything extends Command {
 
     public KillEverything() {
-		requires(Robot.ballIntake);
 		requires(Robot.elevator);
 		//requires(Robot.conveyor);
 		requires(Robot.climber);
@@ -22,7 +21,6 @@ public class KillEverything extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-		Robot.ballIntake.stopRollers();
 		Robot.elevator.stop();
 		//Robot.conveyor.stop();
 		Robot.climber.stop();
