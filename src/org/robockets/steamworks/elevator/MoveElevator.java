@@ -1,4 +1,4 @@
-package org.robockets.steamworks.commands;
+package org.robockets.steamworks.elevator;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;

@@ -5,7 +5,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.WaitCommand;
 
 import org.robockets.steamworks.TurnType;
-import org.robockets.steamworks.commands.WaitForGearOut;
+import org.robockets.steamworks.gearintake.WaitForGearOut;
 import org.robockets.steamworks.drivetrain.DriveWithMP;
 import org.robockets.steamworks.drivetrain.Turn;
 import org.robockets.steamworks.shooter.Shoot;

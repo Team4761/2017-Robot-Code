@@ -1,4 +1,4 @@
-package org.robockets.steamworks.commands;
+package org.robockets.steamworks.gearintake;
 
 import edu.wpi.first.wpilibj.command.Command;
 

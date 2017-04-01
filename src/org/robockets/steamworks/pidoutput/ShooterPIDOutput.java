@@ -1,4 +1,4 @@
-package org.robockets.steamworks;
+package org.robockets.steamworks.pidoutput;
 
 import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.SpeedController;

@@ -4,7 +4,7 @@ import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 import org.robockets.commons.RelativeDirection;
-import org.robockets.steamworks.DummyPIDOutput;
+import org.robockets.steamworks.pidoutput.DummyPIDOutput;
 import org.robockets.steamworks.RobotMap;
 import org.robockets.steamworks.pidsources.EncoderPIDSource;
 import org.robockets.steamworks.pidsources.GyroPIDSource;

@@ -4,7 +4,7 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 import org.robockets.steamworks.TurnType;
-import org.robockets.steamworks.commands.WaitForGearOut;
+import org.robockets.steamworks.gearintake.WaitForGearOut;
 import org.robockets.steamworks.drivetrain.DriveStraight;
 import org.robockets.steamworks.drivetrain.DriveWithMP;
 import org.robockets.steamworks.drivetrain.Turn;
