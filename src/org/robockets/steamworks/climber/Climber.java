@@ -61,7 +61,6 @@ public class Climber extends Subsystem{
 	/**
 	 * Method to run to update data on the SmartDashboard.
 	 */
-	
 	public void periodicSmartDashboard() {
 		SmartDashboard.putNumber("Climber Current", readCurrent(RelativeDirection.XAxis.LEFT));
 	}
