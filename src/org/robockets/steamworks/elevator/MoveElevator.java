@@ -18,26 +18,13 @@ public class MoveElevator extends Command {
 	private boolean forever;
 	private double speed;
 
-	private boolean waitUntilBreakbeam = false;
-
-	private Timer timer;
-
-	public MoveElevator(double speed, boolean waitUntilBreakbeam) {
-		elevatorDirection = RelativeDirection.ZAxis.UP;
-		this.speed = speed;
-		waitUntilBreakbeam = true;
-	}
-
 	public MoveElevator(RelativeDirection.ZAxis elevatorDirection, double speed) {
 		this.elevatorDirection = elevatorDirection;
-		//conveyorDirection = (this.elevatorDirection == RelativeDirection.ZAxis.UP) ? RelativeDirection.YAxis.FORWARD : RelativeDirection.YAxis.BACKWARD;
 		forever = true;
 		this.speed = speed;
 	}
 
 	public MoveElevator(RelativeDirection.ZAxis elevatorDirection, double speed, double time) {
-		// This cannot require the shooter because it would kill the SpinSpinners command
-		// requires(Robot.shooter);
 		this.elevatorDirection = elevatorDirection;
 		this.time = time;
 		forever = false;
@@ -48,8 +35,6 @@ public class MoveElevator extends Command {
 		if (!forever) {
 			setTimeout(time);
 		}
-		timer = new Timer();
-		timer.start();
 	}
 
 	protected void execute() {
@@ -57,15 +42,11 @@ public class MoveElevator extends Command {
 	}
 
 	protected boolean isFinished() {
-		if (waitUntilBreakbeam) {
-			return !RobotMap.elevatorBreakbeamSensor.get();
-		}
 		return !forever && isTimedOut();
 	}
 
 	protected void end() {
 		Robot.elevator.stop();
-		//Robot.conveyor.stop();
 	}
 
 	protected void interrupted() {

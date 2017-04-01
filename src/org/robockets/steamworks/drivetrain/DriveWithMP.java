@@ -10,7 +10,8 @@ import edu.wpi.first.wpilibj.command.Command;
  * Motion profiled driving
  * @author Brian Shin
  */
-public class DriveWithMP extends Command {
+@Deprecated
+public class DriveWithMP extends Command { // FIXME: This Command should never be used but there are a lot of places that use it
 	
 	private LinearSetpointGenerator mp;
 	private double targetPosition;

@@ -8,14 +8,17 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  *
  */
 public class IntakeFlap extends Subsystem {
-    public void initDefaultCommand() {}
-    private double speed;
-    private IntakeState lastState;
+
+	private double speed;
+	private IntakeState lastState;
+
+    public void initDefaultCommand() {
+	}
     
     public IntakeFlap(double speed) {
     	super();
     	setSpeed(speed);
-    	this.lastState = IntakeState.GEARS; //Confirmed as starting position by Jake K
+    	this.lastState = IntakeState.GEARS;
     }
 
     public void setState(IntakeState state) {
@@ -37,15 +40,6 @@ public class IntakeFlap extends Subsystem {
     	RobotMap.rightIntakeFlapServo.set(rightPos);
     }
 
-    @Deprecated
-    public void start() {
-    	RobotMap.leftIntakeFlapServo.set(1 + (speed * lastState.factor));
-    }
-
-    public void move(double speed) {
-		RobotMap.leftIntakeFlapServo.set(speed);
-		RobotMap.leftIntakeFlapServo.set(180 - speed);
-	}
 
 	public void toggle() {
     	if (lastState == IntakeState.GEARS) {
@@ -56,21 +50,12 @@ public class IntakeFlap extends Subsystem {
     		setState(IntakeState.GEARS);
 		}
 	}
-
-	@Deprecated
-    public void stop() {
-    	RobotMap.leftIntakeFlapServo.set(0);
-    	if(lastState == IntakeState.FUEL) {
-    		lastState = IntakeState.GEARS;
-		} else {
-			lastState = IntakeState.FUEL;
-		}
-    }
     
     public enum IntakeState {
     	GEARS(1),
     	FUEL(-1);
     	public final int factor;
+
     	IntakeState(int factor) {
     		this.factor = factor;
     	}

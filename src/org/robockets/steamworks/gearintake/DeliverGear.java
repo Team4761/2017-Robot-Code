@@ -1,6 +1,7 @@
 package org.robockets.steamworks.gearintake;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
+
 import org.robockets.commons.RelativeDirection;
 
 /**

@@ -18,7 +18,6 @@ public class IntakeToPos extends Command {
 
 	protected void initialize() {
 		Robot.intakeFlap.setState(state);
-		//setTimeout(2);// Time to move
 		if(state == IntakeFlap.IntakeState.GEARS) {
 			System.out.println("Fuel!!!!");
 			Robot.ledSubsystem.cylon(4); // Green

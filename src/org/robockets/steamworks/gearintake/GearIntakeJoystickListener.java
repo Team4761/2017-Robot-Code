@@ -1,6 +1,7 @@
 package org.robockets.steamworks.gearintake;
 
 import edu.wpi.first.wpilibj.command.Command;
+
 import org.robockets.commons.RelativeDirection;
 import org.robockets.steamworks.OI;
 import org.robockets.steamworks.Robot;
@@ -25,8 +26,6 @@ public class GearIntakeJoystickListener extends Command {
 
 	protected void execute() {
 		double value = -OI.operatorJoystick.getRawAxis(1)*CONTROLLER_WEIGHT;
-		System.out.println("Upper: " + RobotMap.gearIntakeUpperLimitSwitch.get());
-		System.out.println("Lower: " + RobotMap.gearIntakeLowerLimitSwitch.get());
 
 		if (value < 0) {
 			direction = RelativeDirection.ZAxis.DOWN;
@@ -35,17 +34,21 @@ public class GearIntakeJoystickListener extends Command {
 		}
 
 		if (direction == RelativeDirection.ZAxis.UP) {
+
 			if (!RobotMap.gearIntakeUpperLimitSwitch.get()) {
 				Robot.gearIntake.moveGearIntakeArm(RelativeDirection.ZAxis.UP, value);
 			} else {
 				Robot.gearIntake.moveGearIntakeArm(RelativeDirection.ZAxis.UP, 0.1);
 			}
+
 		} else {
+
 			if (!RobotMap.gearIntakeLowerLimitSwitch.get()) {
-				Robot.gearIntake.moveGearIntakeArm(RelativeDirection.ZAxis.UP, value); // Ignore this...
+				Robot.gearIntake.moveGearIntakeArm(RelativeDirection.ZAxis.UP, value);
 			} else {
 				Robot.gearIntake.moveGearIntakeArm(RelativeDirection.ZAxis.UP, -0.1);
 			}
+
 		}
 	}
 
@@ -54,7 +57,6 @@ public class GearIntakeJoystickListener extends Command {
 	}
 
 	protected void end() {
-
 	}
 
 	protected void interrupted() {

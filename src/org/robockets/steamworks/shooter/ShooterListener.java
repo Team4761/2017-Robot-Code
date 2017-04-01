@@ -1,6 +1,7 @@
 package org.robockets.steamworks.shooter;
 
 import edu.wpi.first.wpilibj.command.Command;
+
 import org.robockets.steamworks.OI;
 import org.robockets.steamworks.Robot;
 
@@ -10,7 +11,7 @@ import org.robockets.steamworks.Robot;
 public class ShooterListener extends Command {
 
 	public ShooterListener() {
-		requires(Robot.shooter); // Prevent things from breaking
+		requires(Robot.shooter);
 	}
 
 	protected void initialize() {

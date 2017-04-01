@@ -5,6 +5,6 @@ public enum LightsColors {
 	BLUE,   // send 3
 	GREEN,  // send 4
 	PURPLE, // send 1
-	WHITE, // send 6
-	BROWN; // send 5
+	WHITE,  // send 6
+	BROWN   // send 5
 }

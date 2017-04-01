@@ -55,7 +55,6 @@ public class EasyAuto extends CommandGroup {
 			addSequential(new WaitCommand(0.1));
 			addSequential(new DriveStraight(12, forwardDistance3));
 		}
-		//addSequential(new Turn(TurnType.RELATIVE, 10));
 
 		addSequential(new SetVisionEnabled(false));
 	}

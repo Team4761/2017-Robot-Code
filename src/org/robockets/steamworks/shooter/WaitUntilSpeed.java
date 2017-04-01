@@ -12,8 +12,6 @@ import org.robockets.steamworks.RobotMap;
 public class WaitUntilSpeed extends Command {
 
     public WaitUntilSpeed() {
-        // Use requires() here to declare subsystem dependencies
-        // eg. requires(chassis);
     }
 
     // Called just before this Command runs the first time
@@ -26,10 +24,13 @@ public class WaitUntilSpeed extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	//System.out.println(Robot.shooter.shooterPIDController.onTarget());
+
         final double ABSOLUTE_TOLERANCE = 1.0;
+
         boolean isOnTarget = Math.abs((Robot.shooter.shooterPIDController.getSetpoint() - RobotMap.rollerEncoderCounter.getRate())) <= ABSOLUTE_TOLERANCE;
+
         SmartDashboard.putBoolean("Is shooter PID on target?", isOnTarget);
+
         return isOnTarget;
     }
 

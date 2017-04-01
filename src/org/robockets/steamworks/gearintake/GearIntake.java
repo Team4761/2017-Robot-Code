@@ -1,8 +1,8 @@
 package org.robockets.steamworks.gearintake;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
-
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 import org.robockets.commons.RelativeDirection;
 import org.robockets.steamworks.RobotMap;
 
@@ -12,7 +12,6 @@ import org.robockets.steamworks.RobotMap;
 public class GearIntake extends Subsystem {
 
 	public void initDefaultCommand() {
-
 	}
 
 	public void spinIntakeWheels(RelativeDirection.Malone direction, double speed) {
@@ -35,14 +34,8 @@ public class GearIntake extends Subsystem {
 		RobotMap.gearIntakeWheels.stopMotor();
 	}
 
-	public void stopArm() {
-		RobotMap.gearIntakeArm.stopMotor();
-	}
-
-
 	public boolean isGearInRobot() {
 		return RobotMap.gearInputBreakbeamSensor.get();
-		//return false;
 	}
 
 	public void periodicSmartDashboard() {

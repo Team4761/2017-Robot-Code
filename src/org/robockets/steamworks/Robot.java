@@ -26,7 +26,6 @@ import org.robockets.steamworks.drivetrain.Drivetrain;
 import org.robockets.steamworks.elevator.ElevatorDPadListener;
 import org.robockets.steamworks.drivetrain.Joyride;
 import org.robockets.steamworks.drivetrain.ResetDriveEncoders;
-import org.robockets.steamworks.drivetrain.ToggleDriveMode;
 import org.robockets.steamworks.drivetrain.Turn;
 import org.robockets.steamworks.gearintake.GearIntake;
 import org.robockets.steamworks.gearintake.GearIntakeJoystickListener;
@@ -115,7 +114,6 @@ public class Robot extends IterativeRobot {
 
 		climb = new Climb(0.5);
 		drive = new Joyride();
-		toggleDriveMode = new ToggleDriveMode();
 		flapToGear = new IntakeToPos(IntakeFlap.IntakeState.GEARS);
 		gearIntakeListener = new GearIntakeJoystickListener();
 
