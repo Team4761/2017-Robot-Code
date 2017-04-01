@@ -25,10 +25,18 @@ public class GearIntake extends Subsystem {
 
 	public void moveGearIntakeArm(RelativeDirection.ZAxis direction, double speed) {
 		if (direction == RelativeDirection.ZAxis.UP) {
-			RobotMap.gearIntakeWheels.set(speed);
+			RobotMap.gearIntakeArm.set(speed);
 		} else {
-			RobotMap.gearIntakeWheels.set(-speed);
+			RobotMap.gearIntakeArm.set(-speed);
 		}
+	}
+
+	public void stopWheels() {
+		RobotMap.gearIntakeWheels.stopMotor();
+	}
+
+	public void stopArm() {
+		RobotMap.gearIntakeArm.stopMotor();
 	}
 
 

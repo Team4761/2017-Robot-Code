@@ -29,6 +29,7 @@ import org.robockets.steamworks.drivetrain.ResetDriveEncoders;
 import org.robockets.steamworks.drivetrain.ToggleDriveMode;
 import org.robockets.steamworks.drivetrain.Turn;
 import org.robockets.steamworks.gearintake.GearIntake;
+import org.robockets.steamworks.gearintake.GearIntakeJoystickListener;
 import org.robockets.steamworks.intakeflap.IntakeToPos;
 import org.robockets.steamworks.shooter.Shoot;
 import org.robockets.steamworks.shooter.ShootWithPID;
@@ -83,6 +84,7 @@ public class Robot extends IterativeRobot {
 	public static Command flapToGear;
 	public static Command elevatorListener;
 	public static Command shooterListener;
+	public static Command gearIntakeListener;
 
 	public static VisionManager visionManager;
 
@@ -116,6 +118,7 @@ public class Robot extends IterativeRobot {
 		drive = new Joyride();
 		toggleDriveMode = new ToggleDriveMode();
 		flapToGear = new IntakeToPos(IntakeFlap.IntakeState.GEARS);
+		gearIntakeListener = new GearIntakeJoystickListener();
 
 		////////////////////
 		// SMARTDASHBOARD //
@@ -367,9 +370,10 @@ public class Robot extends IterativeRobot {
 		drivetrain.rightPodPID.disable();
 
 		drive.start();
-		cylonCommand.start();
+		//cylonCommand.start();
 		elevatorListener.start();
 		shooterListener.start();
+		gearIntakeListener.start();
 		//climberListener.start();
 	}
 

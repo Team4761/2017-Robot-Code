@@ -157,13 +157,13 @@ public class OI {
         aButton.whenReleased(new KillLights());*/
 
         xButton.whileHeld(new ShootWithPID(63));
-        bButton.whileHeld(new ShootWithPID(80));
+        //bButton.whileHeld(new ShootWithPID(80));
 
-        yButton.whileHeld(new SpinGearIntake(RelativeDirection.Malone.IN, 1));
-        aButton.whileHeld(new SpinGearIntake(RelativeDirection.Malone.OUT, 1));
+        bButton.whileHeld(new SpinGearIntake(RelativeDirection.Malone.OUT, 0.75));
+        aButton.whileHeld(new SpinGearIntake(RelativeDirection.Malone.IN, 0.75));
 
-        leftStickDown.whileHeld(new MoveGearIntakeArm(RelativeDirection.ZAxis.UP, 1));
-        rightStickDown.whileHeld(new MoveGearIntakeArm(RelativeDirection.ZAxis.DOWN, 1));
+        leftStickDown.whileHeld(new MoveGearIntakeArm(RelativeDirection.ZAxis.UP, 1, false));
+        rightStickDown.whileHeld(new MoveGearIntakeArm(RelativeDirection.ZAxis.DOWN, 1, false));
 
         driverRightBumper.whileHeld(new Climb(1));
 

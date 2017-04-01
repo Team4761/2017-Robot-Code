@@ -29,6 +29,7 @@ public class SpinGearIntake extends Command {
 	}
 
 	protected void end() {
+		Robot.gearIntake.stopWheels();
 	}
 
 	protected void interrupted() {

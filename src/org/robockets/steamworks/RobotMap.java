@@ -69,9 +69,9 @@ public class RobotMap {
 	 */
     public static DigitalInput rollerEncoder = new DigitalInput(2);
 
-    // 3
+	public static DigitalInput gearIntakeUpperLimitSwitch = new DigitalInput(3);
 
-	// 4
+	public static DigitalInput gearIntakeLowerLimitSwitch = new DigitalInput(4);
 
 	// 5
 
