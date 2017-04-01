@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
 import org.robockets.commons.RelativeDirection;
 import org.robockets.steamworks.climber.Climb;
+import org.robockets.steamworks.gearintake.DeliverGear;
 import org.robockets.steamworks.gearintake.MoveGearIntakeArm;
 import org.robockets.steamworks.gearintake.SpinGearIntake;
 import org.robockets.steamworks.shooter.ShootWithPID;
@@ -157,13 +158,15 @@ public class OI {
         aButton.whenReleased(new KillLights());*/
 
         xButton.whileHeld(new ShootWithPID(63));
-        //bButton.whileHeld(new ShootWithPID(80));
+        yButton.whileHeld(new ShootWithPID(80));
 
         bButton.whileHeld(new SpinGearIntake(RelativeDirection.Malone.OUT, 0.75));
         aButton.whileHeld(new SpinGearIntake(RelativeDirection.Malone.IN, 0.75));
 
         leftStickDown.whileHeld(new MoveGearIntakeArm(RelativeDirection.ZAxis.UP, 1, false));
         rightStickDown.whileHeld(new MoveGearIntakeArm(RelativeDirection.ZAxis.DOWN, 1, false));
+
+        rightBumperButton.whileHeld(new DeliverGear());
 
         driverRightBumper.whileHeld(new Climb(1));
 
