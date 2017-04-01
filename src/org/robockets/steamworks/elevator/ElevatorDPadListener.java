@@ -19,7 +19,7 @@ public class ElevatorDPadListener extends Command {
 	}
 
 	protected void execute() {
-		int povVal = OI.backupJoystick.getPOV(); // Read in degrees
+		int povVal = OI.operatorJoystick.getPOV(); // Read in degrees
 
 		if (povVal == 0) {
 			Robot.elevator.moveElevator(RelativeDirection.ZAxis.UP, 0.6);
@@ -27,7 +27,7 @@ public class ElevatorDPadListener extends Command {
 			Robot.elevator.moveElevator(RelativeDirection.ZAxis.DOWN, 0.6);
 		} else {
 			// Left trigger
-			double leftTriggerVal = OI.backupJoystick.getRawAxis(2);
+			double leftTriggerVal = OI.operatorJoystick.getRawAxis(2);
 
 			if (leftTriggerVal != 0) {
 				Robot.elevator.moveElevator(RelativeDirection.ZAxis.UP, leftTriggerVal);

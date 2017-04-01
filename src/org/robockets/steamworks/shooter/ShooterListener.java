@@ -18,7 +18,7 @@ public class ShooterListener extends Command {
 	}
 
 	protected void execute() {
-		double rightTriggerVal = OI.backupJoystick.getRawAxis(3);
+		double rightTriggerVal = OI.operatorJoystick.getRawAxis(3);
 
 		if (rightTriggerVal != 0) {
 			Robot.shooter.spinUp(1);

@@ -29,6 +29,7 @@ public class RobotMap {
     public static Victor elevatorSpeedController = new Victor(0);
 
 	public static Victor shooterRollerSpeedController = new Victor(1);
+
     /**
      * Speed controller for the motor that is used to climb up rope. This might
      * control two motors someday.
@@ -92,7 +93,7 @@ public class RobotMap {
     ///////////
     
     /**
-     * The gyro. Needs to be mounted horizontally.
+     * The gyro. Needs to be mounted parallel with the ground
      */
     public static ADXRS450_Gyro gyro = new ADXRS450_Gyro(SPI.Port.kOnboardCS0);
 
@@ -100,7 +101,7 @@ public class RobotMap {
     /// Miscellaneous ///
     /////////////////////
     
-    public static I2C arduino = new I2C(Port.kOnboard, 8 );
+    public static I2C arduino = new I2C(Port.kOnboard, 8);
     
     /**
      * {@link edu.wpi.first.wpilibj.RobotDrive RobotDrive} for controlling the

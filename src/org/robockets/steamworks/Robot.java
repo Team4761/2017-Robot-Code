@@ -80,7 +80,6 @@ public class Robot extends IterativeRobot {
 	public static Command drive;
 	public static Command climb;
 	public static Command toggleDriveMode;
-	public static Command cylonCommand;
 	public static Command flapToGear;
 	public static Command elevatorListener;
 	public static Command shooterListener;
@@ -101,7 +100,6 @@ public class Robot extends IterativeRobot {
 	public void robotInit() {
 
 		System.out.println("Robot initializing...");
-		//NetworkTable.flush();
 
 		NetworkTable.globalDeleteAll();
 		
@@ -114,6 +112,7 @@ public class Robot extends IterativeRobot {
 		//////////////
 		// COMMANDS //
 		//////////////
+
 		climb = new Climb(0.5);
 		drive = new Joyride();
 		toggleDriveMode = new ToggleDriveMode();
@@ -123,9 +122,8 @@ public class Robot extends IterativeRobot {
 		////////////////////
 		// SMARTDASHBOARD //
 		////////////////////
-		initSmartDashboard();
 
-		//SmartDashboard.putData("GyroPIDGo", new TunePID());
+		initSmartDashboard();
 		
 		// SmartDashboard
 		Robot.climber.initSmartDashboard();
@@ -144,8 +142,6 @@ public class Robot extends IterativeRobot {
 		CameraServer.getInstance().startAutomaticCapture("DRIVING CAMERA", 0);
 		visionManager = VisionManager.getInstance();
 		visionManager.startProcessing();
-		
-		//RobotMap.gyro.calibrate();
 
 		RobotMap.rollerEncoderCounter.setUpSource(RobotMap.rollerEncoder);
 		RobotMap.rollerEncoderCounter.setUpDownCounterMode();
@@ -183,12 +179,14 @@ public class Robot extends IterativeRobot {
 		/////////////
 		// CLIMBER //
 		/////////////
+
 		Robot.climber.initSmartDashboard();
 		SmartDashboard.putData("Climb", new Climb(-1));
 
 		////////////////
 		// DRIVETRAIN //
 		////////////////
+
 		SmartDashboard.putData(new ResetDriveEncoders());
 		SmartDashboard.putData("Drive 60 at 10 per second with encoders", new DriveWithMP(60, 10));
 		SmartDashboard.putData("Drive 100 at 30 per second with encoders", new DriveWithMP(100, 30));
@@ -212,7 +210,6 @@ public class Robot extends IterativeRobot {
 
 		/*SmartDashboard.putData("GyroTurn Absolute", new Turn(TurnType.ABSOLUTE, 90)); // Angle will be on SmartDashboard from the Turn command
 		SmartDashboard.putData("GyroTurn Relative", new Turn(TurnType.RELATIVE, 90));
-		SmartDashboard.putData("GyroPIDGo", new TunePID());
 		SmartDashboard.putNumber("GyroP", drivetrain.gyroPID.getP());
 		SmartDashboard.putNumber("GyroI", drivetrain.gyroPID.getI());
 		SmartDashboard.putNumber("GyroD", drivetrain.gyroPID.getD());
@@ -224,13 +221,9 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putData("Toggle Intake Flap", new ToggleIntakeFlap());
 
 		///////////////
-		// CONVEYORS // The Conveyor, "Magic Carpet," is moved when `MoveElevator` is called
+		// Elevator ///
 		///////////////
-		//SmartDashboard.putData("MoveMagicCarpetForward", new MoveConveyor(RelativeDirection.YAxis.FORWARD));
-		//SmartDashboard.putData("MoveMagicCarpetBackward", new MoveConveyor(RelativeDirection.YAxis.BACKWARD));
-		SmartDashboard.putNumber("elevator Speed", 0.5);
 		SmartDashboard.putData("MoveElevatorUp", new MoveElevator(RelativeDirection.ZAxis.UP, 1));
-		SmartDashboard.putData("Fluff", new MoveElevator(RelativeDirection.ZAxis.DOWN,  SmartDashboard.getNumber("elevator Speed", 1)));
 
 		/////////////
 		// SHOOTER //
@@ -247,7 +240,9 @@ public class Robot extends IterativeRobot {
 
 	@Override
 	public void robotPeriodic() {
+
 		SmartDashboard.putBoolean("Is vision enabled?", CVConstants.SHOULD_RUN_VISION);
+
 		/////////////
 		// CLIMBER //
 		/////////////
@@ -259,7 +254,7 @@ public class Robot extends IterativeRobot {
 		//////////
 
 		//SDDumper.dumpPidController("Gyro", Robot.drivetrain.gyroPID);
-		SmartDashboard.putNumber("Gyro Angle", RobotMap.gyro.getAngle());
+		//SmartDashboard.putNumber("Gyro Angle", RobotMap.gyro.getAngle());
 		//drivetrain.gyroPID.setPID(SmartDashboard.getNumber("GyroP", 0),SmartDashboard.getNumber("GyroI", 0),SmartDashboard.getNumber("GyroD", 0));
 		//drivetrain.gyroPID.setSetpoint(SmartDashboard.getNumber("GyroSetpoint", 0));
 
@@ -270,9 +265,6 @@ public class Robot extends IterativeRobot {
 
 		SDDumper.dumpEncoder("Left encoder", RobotMap.leftEncoder);
 		SDDumper.dumpEncoder("Right encoder", RobotMap.rightEncoder);
-
-		//SDDumper.dumpPidController("Left drivepod PID", drivetrain.leftPodPID);
-		//SDDumper.dumpPidController("Right drivepod PID", drivetrain.rightPodPID);
 
 		// Use the SmartDashboard PID Values
 		Robot.drivetrain.leftPodPID.setPID(SmartDashboard.getNumber("Left drivepod PID P value", 0),
@@ -307,7 +299,6 @@ public class Robot extends IterativeRobot {
 		// SHOOTER //
 		/////////////
 
-		//System.out.println(RobotMap.rollerEncoderCounter.getRate());
     	Robot.shooter.shooterPIDController.setPID(
     			SmartDashboard.getNumber("Shooter PID P value", 0),
 				SmartDashboard.getNumber("Shooter PID I value", 0),
@@ -344,12 +335,15 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void autonomousInit() {
+
 		flapToGear.start();
 
 		autonomousCommand = autonomousChooser.getSelected();
+
 		if(autonomousCommand != null) {
 			autonomousCommand.start();
 		}
+
 	}
 
 	/**
@@ -362,6 +356,7 @@ public class Robot extends IterativeRobot {
 
 	@Override
 	public void teleopInit() {
+
 		if (autonomousCommand != null) {
 			autonomousCommand.cancel();
 		}
@@ -370,14 +365,12 @@ public class Robot extends IterativeRobot {
 		drivetrain.rightPodPID.disable();
 
 		drive.start();
-		//cylonCommand.start();
 		elevatorListener.start();
 		shooterListener.start();
 		gearIntakeListener.start();
-		//climberListener.start();
+
 	}
 
-	//private boolean lightsEnabled = false;
 	/**
 	 * This function is called periodically during operator control
 	 */
@@ -421,9 +414,12 @@ public class Robot extends IterativeRobot {
 
 	private void initAutoThings() {
 		autoTest = new AutoTest();
+		dumbAuto = new DumbAuto();
+		baselineAuto = new BaselineAuto();
 		easyAuto1 = new EasyAuto(1);
 		easyAuto2 = new EasyAuto(2);
 		easyAuto3 = new EasyAuto(3);
+		secretWeaponAuto = new SecretWeaponAuto();
 
 		/*midAuto1 = new MidAuto(1);
 		midAuto2 = new MidAuto(2);
@@ -433,12 +429,10 @@ public class Robot extends IterativeRobot {
 		maxAuto2 = new MaxAuto(2);
 		maxAuto3 = new MaxAuto(3);*/
 
-		baselineAuto = new BaselineAuto();
-		secretWeaponAuto = new SecretWeaponAuto();
-		dumbAuto = new DumbAuto();
-
 		System.out.println("Autonomous Chooser Initializing...");
+
 		autonomousChooser = new SendableChooser<>();
+
 		autonomousChooser.addObject("EasyAutoTurnRight", easyAuto1);
 		autonomousChooser.addObject("EasyAutoTurnLeft", easyAuto3);
 		autonomousChooser.addDefault("EasyAutoStraight", easyAuto2);
@@ -446,7 +440,6 @@ public class Robot extends IterativeRobot {
 		autonomousChooser.addObject("Baseline Auto", baselineAuto);
 		autonomousChooser.addObject("Dumb Auto", dumbAuto);
 
-		//autonomousChooser.addObject("EasyAutoTurnRight", easyAuto1);
 		/*autonomousChooser.addObject("MidAutoStart1", midAuto1);
 		autonomousChooser.addObject("MidAutoStart2", midAuto2);
 		autonomousChooser.addObject("MidAutoStart3", midAuto3);
@@ -454,7 +447,9 @@ public class Robot extends IterativeRobot {
 		autonomousChooser.addObject("MaxAutoStart2", maxAuto2);
 		autonomousChooser.addObject("MaxAutoStart3", maxAuto3);
 		*/
+
 		SmartDashboard.putData("Autonomous selector", autonomousChooser);
+
 		System.out.println("Autonomous Choosing Finished Initializing");
 	}
 }
