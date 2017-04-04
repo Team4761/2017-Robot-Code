@@ -1,0 +1,60 @@
+package org.robockets.steamworks.mystery;
+
+import edu.wpi.first.wpilibj.command.Command;
+
+/**
+ *
+ */
+public class MysteryCommand extends Command {
+
+	private F mF;
+	private T t;
+	private TM tm;
+	private EF lEF, rEF;
+	
+    public MysteryCommand() {
+    	mF = new File("~/t.csv");
+    	t = Pf.rFC(mF);
+    	tm = new TM(t).m(29.5);
+    	
+    	lEF = new EF(tankModifier.gLT());
+    	rEF = new EF(tankModifier.gRT());	
+    }
+
+    // Called just before this Command runs the first time
+    protected void initialize() {
+    	lEF.cE(RM.lE.get(), 360, 0.102);
+    	rEF.cE(RM.rE.get(), 360, 0.102);
+    	
+    	lEF.cP(0.06, 0.01, 0.25, 1 / 3.658, 0);
+    	rEF.cP(-0.06, -0.01, -0.25, 1 / 3.658, 0);
+
+    }
+
+    // Called repeatedly when this Command is scheduled to run
+    protected void execute() {
+    	double l = lEF.c(RM.lE.g());
+    	double r = rEF.c(RM.rE.g());
+    	
+    	RM.lDSC.s(l);
+    	RM.rDSC.s(r);
+    }
+
+    // Make this return true when this Command no longer needs to run execute()
+    protected boolean isFinished() {
+    	// TODO: Implement me
+        return false;
+    }
+
+    // Called once after isFinished returns true
+    protected void end() {
+    	RM.lDSC.s(0);
+    	RM.rDSC.s(0);
+    }
+
+    // Called when another command which requires one or more of the same
+    // subsystems is scheduled to run
+    protected void interrupted() {
+    	end();
+    }
+}
