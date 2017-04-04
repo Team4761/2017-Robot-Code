@@ -239,6 +239,9 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void robotPeriodic() {
 
+		SmartDashboard.putNumber("Gear Intake Current", Robot.gearIntake.readCurrent());
+		SmartDashboard.putBoolean("Is Gear Intake Stalling?", Robot.gearIntake.isStalling());
+
 		SmartDashboard.putBoolean("Is vision enabled?", CVConstants.SHOULD_RUN_VISION);
 
 		/////////////

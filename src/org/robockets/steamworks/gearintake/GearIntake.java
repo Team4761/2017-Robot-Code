@@ -11,7 +11,17 @@ import org.robockets.steamworks.RobotMap;
  */
 public class GearIntake extends Subsystem {
 
+	public static final double STALLING_THRESHOLD = 0;
+
 	public void initDefaultCommand() {
+	}
+
+	public double readCurrent() {
+		return RobotMap.powerDistPanel.getCurrent(RobotMap.GEAR_INTAKE_PDP_PORT);
+	}
+
+	public boolean isStalling() {
+		return readCurrent() >= STALLING_THRESHOLD;
 	}
 
 	public void spinIntakeWheels(RelativeDirection.Malone direction, double speed) {
