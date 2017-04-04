@@ -20,6 +20,10 @@ public class GearIntake extends Subsystem {
 		return RobotMap.powerDistPanel.getCurrent(RobotMap.GEAR_INTAKE_PDP_PORT);
 	}
 
+	/**
+	 * Is it Stalin?
+	 * @return Is it Stalin?
+	 */
 	public boolean isStalling() {
 		return readCurrent() >= STALLING_THRESHOLD;
 	}
