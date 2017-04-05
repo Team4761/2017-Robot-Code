@@ -10,6 +10,7 @@ import org.robockets.steamworks.climber.Climb;
 import org.robockets.steamworks.gearintake.DeliverGear;
 import org.robockets.steamworks.gearintake.MoveGearIntakeArm;
 import org.robockets.steamworks.gearintake.SpinGearIntake;
+import org.robockets.steamworks.gearintake.SpitItOut;
 import org.robockets.steamworks.shooter.ShootWithPID;
 
 /**
@@ -31,7 +32,7 @@ public class OI {
     private Button rightBumperButton = new JoystickButton(operatorJoystick, 6);
     private Button selectButton = new JoystickButton(operatorJoystick, 7);
     private Button startButton = new JoystickButton(operatorJoystick, 8);
-    private Button leftStickDown = new JoystickButton(operatorJoystick, 9);
+    //private Button leftStickDown = new JoystickButton(operatorJoystick, 9);
     private Button rightStickDown = new JoystickButton(operatorJoystick, 10);
 
     public OI() {
@@ -40,20 +41,22 @@ public class OI {
 
     private void bindButtons() {
 
-		//yButton.whenPressed(Robot.toggleDriveMode);
+        //xButton.whileHeld(new ShootWithPID(63));
+        //yButton.whileHeld(new ShootWithPID(80));
 
-        xButton.whileHeld(new ShootWithPID(63));
-        yButton.whileHeld(new ShootWithPID(80));
+		xButton.whileHeld(new SpinGearIntake(RelativeDirection.Malone.IN, 0.2));
+		yButton.whileHeld(new SpinGearIntake(RelativeDirection.Malone.OUT, 0.2));
 
-        bButton.whileHeld(new SpinGearIntake(RelativeDirection.Malone.OUT, 0.75));
-        aButton.whileHeld(new SpinGearIntake(RelativeDirection.Malone.IN, 0.75));
+		bButton.whileHeld(new SpinGearIntake(RelativeDirection.Malone.OUT, 0.60));
+		aButton.whileHeld(new SpinGearIntake(RelativeDirection.Malone.IN, 0.60));
 
-        leftStickDown.whileHeld(new MoveGearIntakeArm(RelativeDirection.ZAxis.UP, 1, false));
-        rightStickDown.whileHeld(new MoveGearIntakeArm(RelativeDirection.ZAxis.DOWN, 1, false));
+        leftBumperButton.whileHeld(new MoveGearIntakeArm(RelativeDirection.ZAxis.UP, 0.12, false));
 
         rightBumperButton.whileHeld(new DeliverGear());
 
         driverRightBumper.whileHeld(new Climb(1));
+
+        startButton.whenPressed(new SpitItOut());
 
     }
     

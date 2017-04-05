@@ -169,6 +169,9 @@ public class Robot extends IterativeRobot {
 
 		oi = new OI();
 		Robot.ledSubsystem.cylon(56);
+
+		RobotMap.gearIntakeArm.setInverted(true);
+
 		System.out.println("Robot done initializing");
 	}
 	

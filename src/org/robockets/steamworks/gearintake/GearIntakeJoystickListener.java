@@ -25,30 +25,36 @@ public class GearIntakeJoystickListener extends Command {
 
 
 	protected void execute() {
-		double value = -OI.operatorJoystick.getRawAxis(1)*CONTROLLER_WEIGHT;
+		double value = -OI.operatorJoystick.getRawAxis(1)*CONTROLLER_WEIGHT*0.5; // Left Stick
+
+		if (OI.operatorJoystick.getRawButton(9)) {
+			value *= 2;
+		}
 
 		if (value < 0) {
 			direction = RelativeDirection.ZAxis.DOWN;
+		} else if (value > 0){
+			direction = RelativeDirection.ZAxis.UP;
 		} else {
 			direction = RelativeDirection.ZAxis.UP;
+			value = 0.12;
 		}
 
 		if (direction == RelativeDirection.ZAxis.UP) {
 
-			if (!RobotMap.gearIntakeUpperLimitSwitch.get()) {
-				Robot.gearIntake.moveGearIntakeArm(RelativeDirection.ZAxis.UP, value);
-			} else {
-				Robot.gearIntake.moveGearIntakeArm(RelativeDirection.ZAxis.UP, 0.1);
+			if (RobotMap.gearIntakeUpperLimitSwitch.get()) {
+				value = 0.12;
 			}
 
+			Robot.gearIntake.moveGearIntakeArm(RelativeDirection.ZAxis.UP, value);
 		} else {
 
-			if (!RobotMap.gearIntakeLowerLimitSwitch.get()) {
-				Robot.gearIntake.moveGearIntakeArm(RelativeDirection.ZAxis.UP, value);
-			} else {
-				Robot.gearIntake.moveGearIntakeArm(RelativeDirection.ZAxis.UP, -0.1);
+			System.out.println("Lower Limit: " + RobotMap.gearIntakeLowerLimitSwitch.get());
+			if (RobotMap.gearIntakeLowerLimitSwitch.get()) {
+				value = 0;
 			}
 
+			Robot.gearIntake.moveGearIntakeArm(RelativeDirection.ZAxis.UP, value);
 		}
 	}
 
