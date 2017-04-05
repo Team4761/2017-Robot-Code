@@ -45,6 +45,7 @@ public class Drivetrain extends Subsystem {
     }
 
     public void initDefaultCommand() {
+    	setDefaultCommand(new Joyride());
 	}
 
     /**
@@ -71,7 +72,6 @@ public class Drivetrain extends Subsystem {
      * @param direction Direction of the turn, left or right
      * @param chordLength Length of the hypotenuse of the triangle formed by two radii
      * @param radius Distance between the robot and a point directly below the target
-     * @param scalar Speed scalar
      */
     public void driveArc(RelativeDirection.XAxis direction, double chordLength, double radius) {
     	double arcLengthLeft;

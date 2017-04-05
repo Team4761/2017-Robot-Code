@@ -11,7 +11,6 @@ import org.robockets.steamworks.gearintake.DeliverGear;
 import org.robockets.steamworks.gearintake.MoveGearIntakeArm;
 import org.robockets.steamworks.gearintake.SpinGearIntake;
 import org.robockets.steamworks.gearintake.SpitItOut;
-import org.robockets.steamworks.shooter.ShootWithPID;
 
 /**
  * This class is the glue that binds the controls on the physical operator
