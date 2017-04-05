@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.robockets.commons.RelativeDirection;
+import org.robockets.steamworks.Robot;
 import org.robockets.steamworks.RobotMap;
 
 /**
@@ -14,6 +15,7 @@ public class GearIntake extends Subsystem {
 	public static final double STALLING_THRESHOLD = 0;
 
 	public void initDefaultCommand() {
+		setDefaultCommand(Robot.gearIntakeListener);
 	}
 
 	public double readCurrent() {
