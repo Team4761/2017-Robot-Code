@@ -26,8 +26,6 @@ public class GearIntakeJoystickListener extends Command {
 
 
 	protected void execute() {
-		System.out.println("Lower Limit: " + RobotMap.gearIntakeLowerLimitSwitch.get());
-		System.out.println("Upper Limit: " + RobotMap.gearIntakeUpperLimitSwitch.get());
 
 		double value = -OI.operatorJoystick.getRawAxis(1)*CONTROLLER_WEIGHT*0.5; // Left Stick
 

@@ -14,8 +14,7 @@ public class SpitItOut extends CommandGroup {
 
 	public SpitItOut() {
 		requires(Robot.gearIntake);
-		addParallel(new MoveGearIntakeArm(RelativeDirection.ZAxis.DOWN, 0.6, true, 0.5));
-		addParallel(new SpinGearIntake(RelativeDirection.Malone.OUT, 0.3, 0.5));
-		addParallel(new WaitCommand(0.4));
+		addParallel(new MoveGearIntakeArm(RelativeDirection.ZAxis.DOWN, 0.6, true, 1.5));
+		addParallel(new SpinGearIntake(RelativeDirection.Malone.OUT, 0.3, 1.5));
 	}
 }
