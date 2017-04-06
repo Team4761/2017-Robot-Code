@@ -10,7 +10,6 @@ import org.robockets.steamworks.Robot;
 public class WaitForGearOut extends Command {
 
 	public WaitForGearOut() {
-
 	}
 
 	protected void initialize() {
@@ -24,7 +23,6 @@ public class WaitForGearOut extends Command {
 	}
 
 	protected void end() {
-
 	}
 
 	protected void interrupted() {

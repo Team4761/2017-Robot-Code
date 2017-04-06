@@ -25,10 +25,8 @@ import org.robockets.steamworks.drivetrain.Drivetrain;
 import org.robockets.steamworks.elevator.ElevatorDPadListener;
 import org.robockets.steamworks.drivetrain.Joyride;
 import org.robockets.steamworks.drivetrain.ResetDriveEncoders;
-import org.robockets.steamworks.drivetrain.Turn;
 import org.robockets.steamworks.gearintake.GearIntake;
 import org.robockets.steamworks.gearintake.GearIntakeJoystickListener;
-import org.robockets.steamworks.intakeflap.IntakeToPos;
 import org.robockets.steamworks.shooter.Shoot;
 import org.robockets.steamworks.shooter.ShootWithPID;
 import org.robockets.steamworks.shooter.Shooter;
@@ -36,9 +34,6 @@ import org.robockets.steamworks.shooter.ShooterListener;
 import org.robockets.steamworks.shooter.SpinSpinners;
 import org.robockets.steamworks.elevator.Elevator;
 import org.robockets.steamworks.lights.LED;
-import org.robockets.steamworks.intakeflap.IntakeFlap;
-import org.robockets.steamworks.intakeflap.ToggleIntakeFlap;
-
 /**
  * The VM is configured to automatically run this class, and to call the
  * functions corresponding to each mode, as described in the IterativeRobot
@@ -56,7 +51,6 @@ public class Robot extends IterativeRobot {
 	public static Shooter shooter;
 	public static Elevator elevator;
 	public static GearIntake gearIntake;
-	public static IntakeFlap intakeFlap;
 	public static LED ledSubsystem;
 
 	public static Command autonomousCommand;
@@ -112,7 +106,6 @@ public class Robot extends IterativeRobot {
 
 		climb = new Climb(0.5);
 		drive = new Joyride();
-		flapToGear = new IntakeToPos(IntakeFlap.IntakeState.GEARS);
 		gearIntakeListener = new GearIntakeJoystickListener();
 
 		////////////////////
@@ -194,11 +187,6 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("GyroI", drivetrain.gyroPID.getI());
 		SmartDashboard.putNumber("GyroD", drivetrain.gyroPID.getD());
 		SmartDashboard.putNumber("GyroSetpoint", drivetrain.gyroPID.getSetpoint());*/
-
-		/////////////////
-		// GEAR INTAKE //
-		/////////////////
-		SmartDashboard.putData("Toggle Intake Flap", new ToggleIntakeFlap());
 
 		///////////////
 		// ELEVATOR ///
@@ -385,7 +373,6 @@ public class Robot extends IterativeRobot {
 		drivetrain = new Drivetrain();
 		shooter = new Shooter();
 		gearIntake = new GearIntake();
-		intakeFlap = new IntakeFlap(1);
 		ledSubsystem = new LED();
 		elevatorListener = new ElevatorDPadListener();
 		shooterListener = new ShooterListener();

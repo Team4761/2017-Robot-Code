@@ -33,7 +33,7 @@ public class GearIntakeJoystickListener extends Command {
 
 		if (value < 0) {
 			direction = RelativeDirection.ZAxis.DOWN;
-		} else if (value > 0){
+		} else if (value > 0) {
 			direction = RelativeDirection.ZAxis.UP;
 		} else {
 			direction = RelativeDirection.ZAxis.UP;
@@ -43,7 +43,7 @@ public class GearIntakeJoystickListener extends Command {
 		if (direction == RelativeDirection.ZAxis.UP) {
 
 			if (RobotMap.gearIntakeUpperLimitSwitch.get()) {
-				value = 0.12;
+				value = 0.11;
 			}
 
 			Robot.gearIntake.moveGearIntakeArm(RelativeDirection.ZAxis.UP, value);
