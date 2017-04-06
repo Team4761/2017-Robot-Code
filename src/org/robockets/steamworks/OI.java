@@ -49,7 +49,7 @@ public class OI {
 		bButton.whileHeld(new SpinGearIntake(RelativeDirection.Malone.OUT, 0.60));
 		aButton.whileHeld(new SpinGearIntake(RelativeDirection.Malone.IN, 0.60));
 
-        leftBumperButton.whileHeld(new MoveGearIntakeArm(RelativeDirection.ZAxis.UP, 0.12, false));
+        leftBumperButton.whileHeld(new MoveGearIntakeArm(RelativeDirection.ZAxis.UP, 0.12, true));
 
         rightBumperButton.whileHeld(new DeliverGear());
 
