@@ -83,5 +83,12 @@ public class OI {
 		
 		final String GYRO_SUBSYSTEM_NAME = "Gyro";
 		LiveWindow.addSensor(GYRO_SUBSYSTEM_NAME, "Gyro", RobotMap.gyro);
+		
+		final String FANCY_GEAR_INTAKE_SUBSYSTEM_NAME = "Fancy gear intake";
+		LiveWindow.addActuator(FANCY_GEAR_INTAKE_SUBSYSTEM_NAME, "Wheels", RobotMap.gearIntakeWheels);
+		LiveWindow.addActuator(FANCY_GEAR_INTAKE_SUBSYSTEM_NAME, "Arm", RobotMap.gearIntakeArm);
+		LiveWindow.addSensor(FANCY_GEAR_INTAKE_SUBSYSTEM_NAME, "Lower limit switch", RobotMap.gearIntakeLowerLimitSwitch);
+		LiveWindow.addSensor(FANCY_GEAR_INTAKE_SUBSYSTEM_NAME, "Upper limit switch", RobotMap.gearIntakeUpperLimitSwitch);
+		LiveWindow.addSensor(FANCY_GEAR_INTAKE_SUBSYSTEM_NAME, "Breakbeam sensor", RobotMap.gearInputBreakbeamSensor);
     }
 }
