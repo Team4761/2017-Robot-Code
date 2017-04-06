@@ -61,7 +61,7 @@ public class DeliverGearPlusPlus extends Command {
     protected void end() {
     	Robot.drivetrain.leftPodPID.disable();
     	Robot.drivetrain.rightPodPID.disable();
-    	new SetVisionEnabled(false).start();
+    	new SetVisionEnabled(false).start(); // This should not be like this
     }
 
     protected void interrupted() {

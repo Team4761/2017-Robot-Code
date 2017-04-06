@@ -21,7 +21,6 @@ import org.robockets.steamworks.camera.VisionManager;
 import org.robockets.steamworks.climber.Climb;
 import org.robockets.steamworks.climber.Climber;
 import org.robockets.steamworks.elevator.MoveElevator;
-import org.robockets.steamworks.drivetrain.DriveWithMP;
 import org.robockets.steamworks.drivetrain.Drivetrain;
 import org.robockets.steamworks.elevator.ElevatorDPadListener;
 import org.robockets.steamworks.drivetrain.Joyride;
@@ -189,8 +188,6 @@ public class Robot extends IterativeRobot {
 		////////////////
 
 		SmartDashboard.putData(new ResetDriveEncoders());
-		SmartDashboard.putData("Drive 60 at 10 per second with encoders", new DriveWithMP(60, 10));
-		SmartDashboard.putData("Drive 100 at 30 per second with encoders", new DriveWithMP(100, 30));
 
 		SmartDashboard.putData("Turn Test", new Turn(TurnType.RELATIVE, 90, 60));
 
