@@ -15,7 +15,7 @@ import org.robockets.steamworks.pidsources.GyroPIDSource;
  */
 public class Drivetrain extends Subsystem {
 
-    private final double CENTERPOINT_TO_WHEEL = 14.5; // In inches, of course
+    public static final double CENTERPOINT_TO_WHEEL = 14.5; // In inches, of course
     private final GyroPIDSource gyroPIDSource;
     private final EncoderPIDSource leftPodPIDSource;
     private final EncoderPIDSource rightPodPIDSource;
