@@ -7,7 +7,6 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
 import org.robockets.commons.RelativeDirection;
 import org.robockets.steamworks.climber.Climb;
-import org.robockets.steamworks.gearintake.DeliverGear;
 import org.robockets.steamworks.gearintake.MoveGearIntakeArm;
 import org.robockets.steamworks.gearintake.SpinGearIntake;
 import org.robockets.steamworks.gearintake.SpitItOut;
@@ -31,7 +30,7 @@ public class OI {
     private Button rightBumperButton = new JoystickButton(operatorJoystick, 6);
     private Button selectButton = new JoystickButton(operatorJoystick, 7);
     private Button startButton = new JoystickButton(operatorJoystick, 8);
-    //private Button leftStickDown = new JoystickButton(operatorJoystick, 9);
+    //private Button leftStickDown = new JoystickButton(operatorJoystick, 9); // Don't use me!!!
     private Button rightStickDown = new JoystickButton(operatorJoystick, 10);
 
     public OI() {
@@ -51,11 +50,9 @@ public class OI {
 
         leftBumperButton.whileHeld(new MoveGearIntakeArm(RelativeDirection.ZAxis.UP, 0.12, true));
 
-        rightBumperButton.whileHeld(new DeliverGear());
+        rightBumperButton.whileHeld(new SpitItOut());
 
         driverRightBumper.whileHeld(new Climb(1));
-
-        startButton.whenPressed(new SpitItOut());
 
     }
     
