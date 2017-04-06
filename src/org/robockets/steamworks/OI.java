@@ -50,7 +50,7 @@ public class OI {
 
         leftBumperButton.whileHeld(new MoveGearIntakeArm(RelativeDirection.ZAxis.UP, 0.12, true));
 
-        rightBumperButton.whileHeld(new SpitItOut());
+        rightBumperButton.whenPressed(new SpitItOut());
 
         driverRightBumper.whileHeld(new Climb(1));
 
