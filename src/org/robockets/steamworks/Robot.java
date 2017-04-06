@@ -135,6 +135,7 @@ public class Robot extends IterativeRobot {
 		RobotMap.climberSpeedController.setInverted(true);
 		RobotMap.climberSpeedController2.setInverted(true);
 		RobotMap.gearIntakeArm.setInverted(true);
+		RobotMap.gearIntakeWheels.setInverted(true);
 
 		RobotMap.leftEncoder.setDistancePerPulse(4 * Math.PI / 360);
 		RobotMap.rightEncoder.setDistancePerPulse(4 * Math.PI / 360);

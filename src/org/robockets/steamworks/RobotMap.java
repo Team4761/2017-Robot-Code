@@ -36,7 +36,7 @@ public class RobotMap {
      */
     public static Victor climberSpeedController = new Victor(2);
 
-	public static Victor gearIntakeWheels = new Victor(3);
+	public static Victor gearIntakeArm = new Victor(3);
 
     /**
      * Speed controller for right side of the robot.
@@ -50,7 +50,7 @@ public class RobotMap {
     
     public static Victor climberSpeedController2 = new Victor(6);
 
-    public static Victor gearIntakeArm = new Victor(7);
+	public static Victor gearIntakeWheels = new Victor(7);
   
     public static Servo leftIntakeFlapServo = new Servo(8);
     
@@ -70,9 +70,9 @@ public class RobotMap {
 	 */
     public static DigitalInput rollerEncoder = new DigitalInput(2);
 
-	public static DigitalInput gearIntakeUpperLimitSwitch = new DigitalInput(3);
+	public static DigitalInput gearIntakeLowerLimitSwitch = new DigitalInput(3);
 
-	public static DigitalInput gearIntakeLowerLimitSwitch = new DigitalInput(4);
+	public static DigitalInput gearIntakeUpperLimitSwitch = new DigitalInput(4);
 
 	// 5
 
