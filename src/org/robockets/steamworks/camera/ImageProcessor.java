@@ -86,12 +86,14 @@ public class ImageProcessor implements VisionPipeline {
 
 			angleOffset = pixelOffset * pixelToAngleFactor - CVConstants.LOGITECH_C270_ANGLE_OFFSET;
 
-			output = binarized;
+			binarized.copyTo(output);
+			binarized.release();
 			this.isOk = true;
 			return;
 		}
 		this.isOk = true;
-		output = image;
+		image.copyTo(output);
+		image.release();
 	}
 	
 	public static ArrayList<MatOfPoint> filterContours(ArrayList<MatOfPoint> contours) {
