@@ -340,7 +340,7 @@ public class Robot extends IterativeRobot {
 		drive.start();
 		elevatorListener.start();
 		shooterListener.start();
-		gearIntakeListener.start();
+		//gearIntakeListener.start();
 
 	}
 

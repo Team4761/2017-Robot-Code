@@ -35,17 +35,17 @@ public class EasyAuto extends CommandGroup {
 			forwardSpeed3 = 24;
 			turnAngle = 53;
 			turnSpeed = 90;
-			forwardDistance1 = 85;
+			forwardDistance1 = 97;
 			forwardDistance2 = 0;
-			forwardDistance3 = 45;
+			forwardDistance3 = 37;
 		} else if (startingPos == 3) {
 			forwardSpeed1 = 36;
 			forwardSpeed3 = 24;
 			turnAngle = -52;
 			turnSpeed = -90;
-			forwardDistance1 = 85;
+			forwardDistance1 = 97;
 			forwardDistance2 = 0;
-			forwardDistance3 = 45;
+			forwardDistance3 = 37;
 		} else {
 			forwardDistance1 = 24;
 			forwardDistance1 = 80;

@@ -10,6 +10,7 @@ import org.robockets.steamworks.climber.Climb;
 import org.robockets.steamworks.gearintake.MoveGearIntakeArm;
 import org.robockets.steamworks.gearintake.SpinGearIntake;
 import org.robockets.steamworks.gearintake.SpitItOut;
+import org.robockets.steamworks.lights.SendLight;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -42,7 +43,7 @@ public class OI {
         //xButton.whileHeld(new ShootWithPID(63));
         //yButton.whileHeld(new ShootWithPID(80));
 
-		xButton.whileHeld(new SpinGearIntake(RelativeDirection.Malone.IN, 0.2));
+		/*Button.whileHeld(new SpinGearIntake(RelativeDirection.Malone.IN, 0.2));
 		yButton.whileHeld(new SpinGearIntake(RelativeDirection.Malone.OUT, 0.2));
 
 		bButton.whileHeld(new SpinGearIntake(RelativeDirection.Malone.OUT, 0.60));
@@ -50,7 +51,14 @@ public class OI {
 
         leftBumperButton.whileHeld(new MoveGearIntakeArm(RelativeDirection.ZAxis.UP, 0.12, true));
 
-        rightBumperButton.whenPressed(new SpitItOut());
+        rightBumperButton.whenPressed(new SpitItOut());*/
+
+		aButton.whenPressed(new SendLight(4));
+		xButton.whenPressed(new SendLight(3));
+		yButton.whenPressed(new SendLight(2));
+		startButton.whenPressed(new SendLight(56));
+		rightBumperButton.whenPressed(new SendLight(1));
+		leftBumperButton.whenPressed(new SendLight(6));
 
         driverRightBumper.whileHeld(new Climb(1));
 

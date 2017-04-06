@@ -14,7 +14,7 @@ public class GearIntake extends Subsystem {
 	public static final double STALLING_THRESHOLD = 0;
 
 	public void initDefaultCommand() {
-		setDefaultCommand(new GearIntakeJoystickListener());
+		//setDefaultCommand(new GearIntakeJoystickListener());
 	}
 
 	public double readCurrent() {
