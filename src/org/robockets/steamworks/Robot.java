@@ -71,7 +71,6 @@ public class Robot extends IterativeRobot {
 
 	public static Command drive;
 	public static Command climb;
-	public static Command flapToGear;
 	public static Command elevatorListener;
 	public static Command shooterListener;
 	public static Command gearIntakeListener;
@@ -311,8 +310,6 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void autonomousInit() {
-
-		flapToGear.start();
 
 		autonomousCommand = autonomousChooser.getSelected();
 
