@@ -49,6 +49,10 @@ public class GearIntake extends Subsystem {
 		RobotMap.gearIntakeWheels.stopMotor();
 	}
 
+	public void stopArm() {
+		RobotMap.gearIntakeArm.stopMotor();
+	}
+
 	public boolean isGearInRobot() {
 		return RobotMap.gearInputBreakbeamSensor.get();
 	}
