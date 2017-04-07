@@ -12,6 +12,7 @@ import org.opencv.core.MatOfPoint2f;
 import org.opencv.core.Rect;
 import org.opencv.core.RotatedRect;
 import org.opencv.core.Scalar;
+import org.opencv.core.Size;
 import org.opencv.imgproc.Imgproc;
 
 public class ImageProcessor implements VisionPipeline {
@@ -20,11 +21,19 @@ public class ImageProcessor implements VisionPipeline {
 
 	public boolean isOk;
 	
+	static int openAmount = 5;
+	static Size openSize = new Size(2 * openAmount + 1, 2 * openAmount + 1);
+	static Mat kernel = Imgproc.getStructuringElement(Imgproc.MORPH_RECT, openSize);
+	
 	public static ArrayList<MatOfPoint> getContours(Mat binaryImage) {
 
 		/// Canny
 		Mat cannyOut = new Mat();
 		Imgproc.Canny(binaryImage, cannyOut, 100, 200);
+		
+		/// Erode + Dilate
+		Mat morphOut = new Mat();
+		Imgproc.morphologyEx(cannyOut, morphOut, Imgproc.MORPH_OPEN, kernel);
 		
 		/// Find contours
 		ArrayList<MatOfPoint> contours = new ArrayList<>();

@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.robockets.commons.RelativeDirection;
 import org.robockets.steamworks.autonomous.AutoTest;
 import org.robockets.steamworks.autonomous.BaselineAuto;
+import org.robockets.steamworks.autonomous.DeliverGearPlusPlus;
 import org.robockets.steamworks.autonomous.DumbAuto;
 import org.robockets.steamworks.autonomous.EasyAuto;
 import org.robockets.steamworks.autonomous.SecretWeaponAuto;
@@ -68,6 +69,7 @@ public class Robot extends IterativeRobot {
 	public static Command baselineAuto;
 	public static Command secretWeaponAuto;
 	public static Command dumbAuto;
+	public static Command currentAuto;
 
 	public static Command drive;
 	public static Command climb;
@@ -384,6 +386,7 @@ public class Robot extends IterativeRobot {
 		easyAuto2 = new EasyAuto(2);
 		easyAuto3 = new EasyAuto(3);
 		secretWeaponAuto = new SecretWeaponAuto();
+		currentAuto = new DeliverGearPlusPlus(80);
 
 		/*midAuto1 = new MidAuto(1);
 		midAuto2 = new MidAuto(2);
@@ -403,6 +406,7 @@ public class Robot extends IterativeRobot {
 		autonomousChooser.addObject("Secret Weapon Auto", secretWeaponAuto);
 		autonomousChooser.addObject("Baseline Auto", baselineAuto);
 		autonomousChooser.addObject("Dumb Auto", dumbAuto);
+		autonomousChooser.addObject("Fancy current auto", currentAuto);
 
 		/*autonomousChooser.addObject("MidAutoStart1", midAuto1);
 		autonomousChooser.addObject("MidAutoStart2", midAuto2);
