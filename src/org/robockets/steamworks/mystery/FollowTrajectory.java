@@ -11,14 +11,14 @@ import org.robockets.steamworks.RobotMap;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class MysteryCommand extends Command {
+public class FollowTrajectory extends Command {
 
 	private File myFile;
 	private Trajectory trajectory;
 	private TankModifier tankModifier;
 	private EncoderFollower leftEncoderFollower, rightEncoderFollower;
 	
-    public MysteryCommand() {
+    public FollowTrajectory() {
     	myFile = new File("~/trajectory.csv");
     	trajectory = Pathfinder.readFromCSV(myFile);
     	tankModifier = new TankModifier(trajectory).modify(29.5);
