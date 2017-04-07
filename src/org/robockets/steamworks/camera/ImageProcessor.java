@@ -40,6 +40,7 @@ public class ImageProcessor implements VisionPipeline {
 		Imgproc.findContours(cannyOut, contours, new Mat(), Imgproc.RETR_TREE, Imgproc.CHAIN_APPROX_SIMPLE);
 		Collections.sort(contours, new ContourAreaComparator());
 		cannyOut.release();
+		morphOut.release();
 		return contours;
 	}
 	
