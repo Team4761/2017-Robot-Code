@@ -7,10 +7,10 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
 import org.robockets.commons.RelativeDirection;
 import org.robockets.steamworks.climber.Climb;
-import org.robockets.steamworks.gearintake.DeliverGear;
 import org.robockets.steamworks.gearintake.MoveGearIntakeArm;
 import org.robockets.steamworks.gearintake.SpinGearIntake;
-import org.robockets.steamworks.shooter.ShootWithPID;
+import org.robockets.steamworks.gearintake.SpitItOut;
+import org.robockets.steamworks.lights.SendLight;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -31,7 +31,7 @@ public class OI {
     private Button rightBumperButton = new JoystickButton(operatorJoystick, 6);
     private Button selectButton = new JoystickButton(operatorJoystick, 7);
     private Button startButton = new JoystickButton(operatorJoystick, 8);
-    private Button leftStickDown = new JoystickButton(operatorJoystick, 9);
+    //private Button leftStickDown = new JoystickButton(operatorJoystick, 9); // Don't use me!!!
     private Button rightStickDown = new JoystickButton(operatorJoystick, 10);
 
     public OI() {
@@ -40,18 +40,25 @@ public class OI {
 
     private void bindButtons() {
 
-		//yButton.whenPressed(Robot.toggleDriveMode);
+        //xButton.whileHeld(new ShootWithPID(63));
+        //yButton.whileHeld(new ShootWithPID(80));
 
-        xButton.whileHeld(new ShootWithPID(63));
-        yButton.whileHeld(new ShootWithPID(80));
+		/*Button.whileHeld(new SpinGearIntake(RelativeDirection.Malone.IN, 0.2));
+		yButton.whileHeld(new SpinGearIntake(RelativeDirection.Malone.OUT, 0.2));
 
-        bButton.whileHeld(new SpinGearIntake(RelativeDirection.Malone.OUT, 0.75));
-        aButton.whileHeld(new SpinGearIntake(RelativeDirection.Malone.IN, 0.75));
+		bButton.whileHeld(new SpinGearIntake(RelativeDirection.Malone.OUT, 0.60));
+		aButton.whileHeld(new SpinGearIntake(RelativeDirection.Malone.IN, 0.60));
 
-        leftStickDown.whileHeld(new MoveGearIntakeArm(RelativeDirection.ZAxis.UP, 1, false));
-        rightStickDown.whileHeld(new MoveGearIntakeArm(RelativeDirection.ZAxis.DOWN, 1, false));
+        leftBumperButton.whileHeld(new MoveGearIntakeArm(RelativeDirection.ZAxis.UP, 0.12, true));
 
-        rightBumperButton.whileHeld(new DeliverGear());
+        rightBumperButton.whenPressed(new SpitItOut());*/
+
+		aButton.whenPressed(new SendLight(4));
+		xButton.whenPressed(new SendLight(3));
+		yButton.whenPressed(new SendLight(2));
+		startButton.whenPressed(new SendLight(56));
+		rightBumperButton.whenPressed(new SendLight(1));
+		leftBumperButton.whenPressed(new SendLight(6));
 
         driverRightBumper.whileHeld(new Climb(1));
 
@@ -81,5 +88,12 @@ public class OI {
 		
 		final String GYRO_SUBSYSTEM_NAME = "Gyro";
 		LiveWindow.addSensor(GYRO_SUBSYSTEM_NAME, "Gyro", RobotMap.gyro);
+		
+		final String FANCY_GEAR_INTAKE_SUBSYSTEM_NAME = "Fancy gear intake";
+		LiveWindow.addActuator(FANCY_GEAR_INTAKE_SUBSYSTEM_NAME, "Wheels", RobotMap.gearIntakeWheels);
+		LiveWindow.addActuator(FANCY_GEAR_INTAKE_SUBSYSTEM_NAME, "Arm", RobotMap.gearIntakeArm);
+		LiveWindow.addSensor(FANCY_GEAR_INTAKE_SUBSYSTEM_NAME, "Lower limit switch", RobotMap.gearIntakeLowerLimitSwitch);
+		LiveWindow.addSensor(FANCY_GEAR_INTAKE_SUBSYSTEM_NAME, "Upper limit switch", RobotMap.gearIntakeUpperLimitSwitch);
+		LiveWindow.addSensor(FANCY_GEAR_INTAKE_SUBSYSTEM_NAME, "Breakbeam sensor", RobotMap.gearInputBreakbeamSensor);
     }
 }

@@ -6,7 +6,6 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 import org.robockets.steamworks.TurnType;
 import org.robockets.steamworks.gearintake.WaitForGearOut;
 import org.robockets.steamworks.drivetrain.DriveStraight;
-import org.robockets.steamworks.drivetrain.DriveWithMP;
 import org.robockets.steamworks.drivetrain.Turn;
 import org.robockets.steamworks.shooter.Shoot;
 
@@ -48,7 +47,7 @@ public class MidAuto extends CommandGroup {
 
 		// Turn to boiler
 		addSequential(new Turn(TurnType.RELATIVE, 90 * horizontalDirectionMultiplier, 60));
-		addSequential(new DriveWithMP(55, 20));
+		addSequential(new DriveStraight(20, 55));
 		// Align
 		addSequential(new Shoot(true));
 	}

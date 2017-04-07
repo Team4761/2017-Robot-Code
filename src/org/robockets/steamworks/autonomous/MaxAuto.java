@@ -5,8 +5,8 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.WaitCommand;
 
 import org.robockets.steamworks.TurnType;
+import org.robockets.steamworks.drivetrain.DriveStraight;
 import org.robockets.steamworks.gearintake.WaitForGearOut;
-import org.robockets.steamworks.drivetrain.DriveWithMP;
 import org.robockets.steamworks.drivetrain.Turn;
 import org.robockets.steamworks.shooter.Shoot;
 
@@ -36,19 +36,19 @@ public class MaxAuto extends CommandGroup {
 		}
 
 		// FIXME: Values will be changed
-		addSequential(new DriveWithMP(60, 20));
+		addSequential(new DriveStraight(20	, 60));
 		addSequential(new Turn(TurnType.RELATIVE, 45*angleMultiplier, 60));
 		// Align
 		addSequential(new WaitForGearOut()); // This needs to enable lights
-		addSequential(new DriveWithMP(-20, -10));
+		addSequential(new DriveStraight(-10, -20));
 		// Turn to hopper
 		addSequential(new Turn(TurnType.RELATIVE, 90 * (-horizontalDirectionMultiplier), 60));
-		addSequential(new DriveWithMP(60, 20));
+		addSequential(new DriveStraight(20, 60));
 		addSequential(new WaitCommand(5));
-		addSequential(new DriveWithMP(-30, -15));
+		addSequential(new DriveStraight(-15, -30));
 		// Turn to boiler
 		addSequential(new Turn(TurnType.RELATIVE, 90 * horizontalDirectionMultiplier, 60));
-		addSequential(new DriveWithMP(60, 20));
+		addSequential(new DriveStraight(20, 60));
 		// Align
 		addSequential(new Shoot(true));
 	}

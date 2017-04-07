@@ -16,7 +16,6 @@ public class KillEverything extends Command {
 		requires(Robot.drivetrain);
 		requires(Robot.shooter);
 		requires(Robot.gearIntake);
-		requires(Robot.intakeFlap);
     }
 
     // Called just before this Command runs the first time
@@ -26,7 +25,6 @@ public class KillEverything extends Command {
 		Robot.climber.stop();
 		Robot.drivetrain.stop();
 		Robot.shooter.stop();
-		//Robot.intakeFlap.stop();
     }
 
     // Called repeatedly when this Command is scheduled to run

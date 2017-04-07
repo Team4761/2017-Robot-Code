@@ -12,13 +12,25 @@ public class SpinGearIntake extends Command {
 
 	private RelativeDirection.Malone direction;
 	private double speed;
+	private boolean isForever = true;
+	private double timeout;
 
 	public SpinGearIntake(RelativeDirection.Malone direction, double speed) {
 		this.direction = direction;
 		this.speed = speed;
 	}
 
+	public SpinGearIntake(RelativeDirection.Malone direction, double speed, double timeout) {
+		this.direction = direction;
+		this.speed = speed;
+		isForever = false;
+		this.timeout = timeout;
+	}
+
 	protected void initialize() {
+		if (!isForever) {
+			setTimeout(timeout);
+		}
 	}
 
 	protected void execute() {
@@ -26,6 +38,9 @@ public class SpinGearIntake extends Command {
 	}
 
 	protected boolean isFinished() {
+		if (!isForever) {
+			return isTimedOut();
+		}
 		return false;
 	}
 

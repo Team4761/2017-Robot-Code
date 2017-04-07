@@ -14,6 +14,8 @@ public class MoveGearIntakeArm extends Command {
 	private RelativeDirection.ZAxis direction;
 	private double speed;
 	private boolean useLimitSwitch = false;
+	private boolean isForever = true;
+	private double timeout;
 
 	public MoveGearIntakeArm(RelativeDirection.ZAxis direction, double speed, boolean useLimitSwitch) {
 		this.direction = direction;
@@ -25,7 +27,18 @@ public class MoveGearIntakeArm extends Command {
 		new MoveGearIntakeArm(direction, speed, true);
 	}
 
+	public MoveGearIntakeArm(RelativeDirection.ZAxis direction, double speed, boolean useLimitSwitch, double timeout) {
+		this.direction = direction;
+		this.speed = speed;
+		this.useLimitSwitch = useLimitSwitch;
+		isForever = false;
+		this.timeout = timeout;
+	}
+
 	protected void initialize() {
+		if (!isForever) {
+			setTimeout(timeout);
+		}
 	}
 
 	protected void execute() {
@@ -33,11 +46,15 @@ public class MoveGearIntakeArm extends Command {
 	}
 
 	protected boolean isFinished() {
+		/*if (!isForever) {
+			return isTimedOut();
+		}*/
+
 		if (useLimitSwitch) {
 			if (direction == RelativeDirection.ZAxis.UP) {
-				return RobotMap.gearIntakeUpperLimitSwitch.get();
+				return RobotMap.gearIntakeUpperLimitSwitch.get() || (!isForever && isTimedOut());
 			} else {
-				return RobotMap.gearIntakeLowerLimitSwitch.get();
+				return RobotMap.gearIntakeLowerLimitSwitch.get() || (!isForever && isTimedOut());
 			}
 		}
 
@@ -45,6 +62,7 @@ public class MoveGearIntakeArm extends Command {
 	}
 
 	protected void end() {
+		Robot.gearIntake.stopArm();
 	}
 
 	protected void interrupted() {
