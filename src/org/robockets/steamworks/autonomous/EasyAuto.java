@@ -24,6 +24,8 @@ public class EasyAuto extends CommandGroup {
 	private double forwardSpeed2 = 0;
 	private double forwardSpeed3 = 0;
 
+	private double visionSpeed = 0;
+
 	/**
 	 * @param startingPos Robot's starting position (1, 2, or 3)
 	 */
@@ -31,18 +33,20 @@ public class EasyAuto extends CommandGroup {
 
 		addSequential(new SetVisionEnabled(true));
 		if (startingPos == 1) {
-			forwardSpeed1 = 36;
+			forwardSpeed1 = 42;
 			forwardSpeed3 = 24;
 			turnAngle = 53;
 			turnSpeed = 90;
+			visionSpeed = 90;
 			forwardDistance1 = 97;
 			forwardDistance2 = 0;
 			forwardDistance3 = 37;
 		} else if (startingPos == 3) {
-			forwardSpeed1 = 36;
+			forwardSpeed1 = 42;
 			forwardSpeed3 = 24;
 			turnAngle = -52;
 			turnSpeed = -90;
+			visionSpeed = -90;
 			forwardDistance1 = 97;
 			forwardDistance2 = 0;
 			forwardDistance3 = 37;
@@ -60,7 +64,7 @@ public class EasyAuto extends CommandGroup {
 				addSequential(new DriveStraight(24, forwardDistance2));
 				addSequential(new WaitCommand(1));
 			}
-			addSequential(new Turn(TurnType.CAMERA, 90));
+			addSequential(new Turn(TurnType.CAMERA, visionSpeed));
 			addSequential(new WaitCommand(0.1));
 			addSequential(new DriveStraight(forwardSpeed3, forwardDistance3));
 		}
