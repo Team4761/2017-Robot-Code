@@ -47,7 +47,7 @@ public class EasyAuto extends CommandGroup {
 			forwardDistance2 = 0;
 			forwardDistance3 = 37;
 		} else {
-			forwardDistance1 = 24;
+			forwardSpeed1 = 24;
 			forwardDistance1 = 80;
 		}
 
@@ -60,7 +60,7 @@ public class EasyAuto extends CommandGroup {
 				addSequential(new DriveStraight(24, forwardDistance2));
 				addSequential(new WaitCommand(1));
 			}
-			addSequential(new Turn(TurnType.CAMERA, 20));
+			addSequential(new Turn(TurnType.CAMERA, 90));
 			addSequential(new WaitCommand(0.1));
 			addSequential(new DriveStraight(forwardSpeed3, forwardDistance3));
 		}
