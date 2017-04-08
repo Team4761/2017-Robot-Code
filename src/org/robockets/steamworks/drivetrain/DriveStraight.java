@@ -40,7 +40,7 @@ public class DriveStraight extends Command {
 
     protected boolean isFinished() {
         SmartDashboard.putBoolean("Encoders on Target", Robot.drivetrain.encodersOnTarget());
-        return Robot.drivetrain.encodersOnTarget() && (!leftLsg.hasNext() && !rightLsg.hasNext());
+        return (Robot.drivetrain.encodersOnTarget() && (!leftLsg.hasNext() && !rightLsg.hasNext())) || Robot.drivetrain.getAverageCurrent() > 40;
     }
 
     protected void end() {

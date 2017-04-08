@@ -163,5 +163,11 @@ public class Drivetrain extends Subsystem {
 		RobotMap.leftEncoder.reset();
 		RobotMap.rightEncoder.reset();
 	}
+
+	public double getAverageCurrent() {
+		double drivetrainCurrentSum = RobotMap.powerDistPanel.getCurrent(12) + RobotMap.powerDistPanel.getCurrent(3) + RobotMap.powerDistPanel.getCurrent(13) + RobotMap.powerDistPanel.getCurrent(0);
+		double drivetrainCurrentAvg = drivetrainCurrentSum / 4;
+		return drivetrainCurrentAvg;
+	}
 }
 

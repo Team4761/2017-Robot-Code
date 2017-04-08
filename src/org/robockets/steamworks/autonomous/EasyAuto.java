@@ -33,21 +33,21 @@ public class EasyAuto extends CommandGroup {
 
 		addSequential(new SetVisionEnabled(true));
 		if (startingPos == 1) {
-			forwardSpeed1 = 42;
+			forwardSpeed1 = 40;
 			forwardSpeed3 = 24;
-			turnAngle = 57;
-			turnSpeed = 90;
+			turnAngle = 64;
+			turnSpeed = 110;
 			visionSpeed = 90;
-			forwardDistance1 = 93;
+			forwardDistance1 = 89;
 			forwardDistance2 = 0;
 			forwardDistance3 = 37;
 		} else if (startingPos == 3) {
-			forwardSpeed1 = 42;
+			forwardSpeed1 = 40;
 			forwardSpeed3 = 24;
-			turnAngle = -56;
-			turnSpeed = -90;
+			turnAngle = -62;
+			turnSpeed = -110;
 			visionSpeed = -90;
-			forwardDistance1 = 93;
+			forwardDistance1 = 86;
 			forwardDistance2 = 0;
 			forwardDistance3 = 37;
 		} else {
@@ -64,7 +64,7 @@ public class EasyAuto extends CommandGroup {
 				addSequential(new DriveStraight(24, forwardDistance2));
 				addSequential(new WaitCommand(1));
 			}
-			addSequential(new Turn(TurnType.CAMERA, visionSpeed));
+			//addSequential(new Turn(TurnType.CAMERA, visionSpeed));
 			addSequential(new WaitCommand(0.1));
 			addSequential(new DriveStraight(forwardSpeed3, forwardDistance3));
 		}

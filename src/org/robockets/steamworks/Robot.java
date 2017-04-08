@@ -283,6 +283,9 @@ public class Robot extends IterativeRobot {
 		// VISION //
 		////////////
 		SmartDashboard.putBoolean("Is vision enabled?", CVConstants.SHOULD_RUN_VISION);
+
+
+		SmartDashboard.putNumber("Drivetrain average current", drivetrain.getAverageCurrent());
     	
 	}
   
@@ -407,7 +410,7 @@ public class Robot extends IterativeRobot {
 		autonomousChooser.addObject("Secret Weapon Auto", secretWeaponAuto);
 		autonomousChooser.addObject("Baseline Auto", baselineAuto);
 		autonomousChooser.addObject("Dumb Auto", dumbAuto);
-		autonomousChooser.addObject("Stalling Center", deliverGearPlusPlus);
+		autonomousChooser.addObject("Center gear with current monitoring", deliverGearPlusPlus);
 
 		/*autonomousChooser.addObject("MidAutoStart1", midAuto1);
 		autonomousChooser.addObject("MidAutoStart2", midAuto2);

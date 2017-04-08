@@ -3,6 +3,7 @@ package org.robockets.steamworks.camera;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.vision.VisionPipeline;
 
 import org.opencv.core.CvType;
@@ -53,8 +54,7 @@ public class ImageProcessor implements VisionPipeline {
 	public void process(Mat image) {
 		if(CVConstants.SHOULD_RUN_VISION) {
 			if(!isImageValid(image)) {
-				System.out.println("Corrupt image!");
-				System.out.println("This is VERY bad! PANIC!");
+				DriverStation.reportWarning("Corrput image! This is VERY bad! PANIC!", true);
 				this.isOk = false;
 				return;
 			}
@@ -62,6 +62,7 @@ public class ImageProcessor implements VisionPipeline {
 			Mat binarized = VisionUtils.binarize(image);
 			ArrayList<MatOfPoint> contours = filterContours(VisionUtils.getContours(binarized));
 			if (contours.size() != 2) {
+				DriverStation.reportWarning("Was not able to find two contours", false);
 				angleOffset = 4761;
 				return;
 			}
@@ -75,7 +76,16 @@ public class ImageProcessor implements VisionPipeline {
 			double farRight = rightRect.br().x;
 			double midpoint = (farLeft + farRight) / 2d;
 
-			// TODO: Verify ratio of "big" rectangle is correct
+			/*
+			double bigRectWidth = rightRect.br().x - leftRect.tl().x;
+			double bigRectHeight = rightRect.br().y - leftRect.br().y;
+			double bigRectRatio = bigRectWidth / bigRectHeight;
+
+			if(bigRectRatio < 1.5 || bigRectHeight > 2.5) {
+				DriverStation.reportWarning("Found two contours but they didn't make sense", false);
+				angleOffset = 4762;
+				return;
+			} */
 
 			double pixelOffset = midpoint - (image.width() / 2d);
 			double pixelToAngleFactor = CVConstants.LOGITECH_C270_FOV / image.width();
