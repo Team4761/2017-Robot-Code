@@ -1,5 +1,6 @@
 package org.robockets.steamworks.drivetrain;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -44,6 +45,7 @@ public class DriveStraight extends Command {
 
     protected void end() {
         System.out.println("Finished Driving Straight");
+        DriverStation.reportWarning("Encoders after driving straight L: " + RobotMap.leftEncoder.get() + " R: " + RobotMap.rightEncoder.get(), false);
         Robot.drivetrain.disableEncoderPID();
         Robot.drivetrain.stop();
     }
