@@ -47,7 +47,6 @@ public class VisionManager implements VisionRunner.Listener<ImageProcessor> {
 		synchronized(visionLock) {
 			if(pipeline.isOk) {
 				if (CVConstants.SHOULD_RUN_VISION) {
-					SmartDashboard.putNumber("Exposure", 1);
 					visionCamera.setExposureManual((int) SmartDashboard.getNumber("Exposure", 1));
 					visionCamera.setBrightness((int) SmartDashboard.getNumber("Brightness", 0));
 				}

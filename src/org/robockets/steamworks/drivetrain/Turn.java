@@ -1,5 +1,6 @@
 package org.robockets.steamworks.drivetrain;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.command.Command;
 
 import org.robockets.steamworks.Robot;
@@ -117,6 +118,7 @@ public class Turn extends Command {
 	}
 
 	protected void end() {
+		DriverStation.reportWarning("Encoders after turning L: " + RobotMap.leftEncoder.get() + " R: " + RobotMap.rightEncoder.get(), false);
 		Robot.drivetrain.disableEncoderPID();
 		Robot.drivetrain.stop();
 
