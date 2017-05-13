@@ -2,10 +2,10 @@ package org.robockets.steamworks.autonomous;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.command.CommandGroup;
-
 import edu.wpi.first.wpilibj.command.WaitCommand;
+
 import org.robockets.commons.RelativeDirection;
-import org.robockets.steamworks.commands.MoveElevator;
+import org.robockets.steamworks.elevator.MoveElevator;
 import org.robockets.steamworks.drivetrain.DriveArbitrary;
 import org.robockets.steamworks.shooter.KillShooter;
 import org.robockets.steamworks.shooter.ShootWithPID;

@@ -28,14 +28,15 @@ public class RobotMap {
 	
     public static Victor elevatorSpeedController = new Victor(0);
 
-    public static Victor shooterRollerSpeedController = new Victor(1);
+	public static Victor shooterRollerSpeedController = new Victor(1);
+
     /**
      * Speed controller for the motor that is used to climb up rope. This might
      * control two motors someday.
      */
     public static Victor climberSpeedController = new Victor(2);
 
-    public static Victor conveyorSpeedController = new Victor(3);
+	public static Victor gearIntakeArm = new Victor(3);
 
     /**
      * Speed controller for right side of the robot.
@@ -48,12 +49,8 @@ public class RobotMap {
     public static Victor leftDrivepodSpeedController = new Victor(5);
     
     public static Victor climberSpeedController2 = new Victor(6);
-    
-    /**
-     * Speed controller for the roller at the bottom of the robot that sucks
-     * fuel balls in.
-     */
-    public static Victor ballIntakeRollerSpeedController = new Victor(7);
+
+	public static Victor gearIntakeWheels = new Victor(7);
   
     public static Servo leftIntakeFlapServo = new Servo(8);
     
@@ -73,9 +70,9 @@ public class RobotMap {
 	 */
     public static DigitalInput rollerEncoder = new DigitalInput(2);
 
-    // 3
+	public static DigitalInput gearIntakeLowerLimitSwitch = new DigitalInput(3);
 
-	// 4
+	public static DigitalInput gearIntakeUpperLimitSwitch = new DigitalInput(4);
 
 	// 5
 
@@ -96,7 +93,7 @@ public class RobotMap {
     ///////////
     
     /**
-     * The gyro. Needs to be mounted horizontally.
+     * The gyro. Needs to be mounted parallel with the ground
      */
     public static ADXRS450_Gyro gyro = new ADXRS450_Gyro(SPI.Port.kOnboardCS0);
 
@@ -104,7 +101,7 @@ public class RobotMap {
     /// Miscellaneous ///
     /////////////////////
     
-    public static I2C arduino = new I2C(Port.kOnboard, 8 );
+    public static I2C arduino = new I2C(Port.kOnboard, 8);
     
     /**
      * {@link edu.wpi.first.wpilibj.RobotDrive RobotDrive} for controlling the
@@ -136,6 +133,8 @@ public class RobotMap {
      */
     public static final int climberPdpPortRight = 14;
     public static final int climberPdpPortLeft = 7;
+
+    public static final int GEAR_INTAKE_PDP_PORT = 10;
     
     public static final double INTAKE_FLAP_FUEL_LEFT_POS = 1;
     public static final double INTAKE_FLAP_FUEL_RIGHT_POS = 0;

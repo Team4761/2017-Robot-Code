@@ -1,5 +1,6 @@
 package org.robockets.steamworks.drivetrain;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.command.Command;
 
 import org.robockets.steamworks.Robot;
@@ -39,13 +40,6 @@ public class Turn extends Command {
 		double angle = 0;
 
 		this.type = type;
-		/*
-		if (type == TurnType.CAMERA) {
-			angle = CVConstants.getOffset();
-			if (angle >= 1000) {
-				angle = 0;
-			}
-		}*/
 
 		this.angle = angle * (Math.PI / 180); // convert to radians
 		this.distance = (DIAMETER / 2.0) * this.angle; // s = r * theta
@@ -54,15 +48,6 @@ public class Turn extends Command {
 
 	public Turn(TurnType type, double angle, double speed) {
 		requires(Robot.drivetrain);
-
-		/*
-		if (type == TurnType.CAMERA) {
-			// Get angle from camera
-			angle = CVConstants.getOffset();
-			if (angle >= 1000) {
-				angle = 0;
-			}
-		}*/
 
 		this.angle = angle * (Math.PI / 180); // convert to radians
 		this.distance = (DIAMETER / 2.0) * this.angle; // s = r * theta
@@ -83,17 +68,6 @@ public class Turn extends Command {
 		Robot.drivetrain.rightPodPID.setPID(-P, -I, -D);
 
 		resetPidWhenDone = true;
-
-		// This is awful...
-		/*
-		if (type == TurnType.CAMERA) {
-			// Get angle from camera
-			angle = CVConstants.getOffset();
-
-			if (angle >= 1000) {
-				angle = 0;
-			}
-		}*/
 
 		this.angle = angle * (Math.PI / 180.0); // convert to radians
 		this.distance = (DIAMETER / 2.0) * this.angle; // s = r * theta
@@ -144,6 +118,7 @@ public class Turn extends Command {
 	}
 
 	protected void end() {
+		DriverStation.reportWarning("Encoders after turning L: " + RobotMap.leftEncoder.get() + " R: " + RobotMap.rightEncoder.get(), false);
 		Robot.drivetrain.disableEncoderPID();
 		Robot.drivetrain.stop();
 

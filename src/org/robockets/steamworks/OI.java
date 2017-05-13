@@ -5,12 +5,12 @@ import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
-import org.robockets.steamworks.ballintake.SpinBallIntakeRollers;
+import org.robockets.commons.RelativeDirection;
 import org.robockets.steamworks.climber.Climb;
-import org.robockets.steamworks.intakeflap.IntakeFlap;
-import org.robockets.steamworks.intakeflap.IntakeToPos;
-import org.robockets.steamworks.lights.KillLights;
-import org.robockets.steamworks.shooter.ShootWithPID;
+import org.robockets.steamworks.gearintake.MoveGearIntakeArm;
+import org.robockets.steamworks.gearintake.SpinGearIntake;
+import org.robockets.steamworks.gearintake.SpitItOut;
+import org.robockets.steamworks.lights.SendLight;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -18,154 +18,50 @@ import org.robockets.steamworks.shooter.ShootWithPID;
  */
 public class OI {
     public static Joystick joystick = new Joystick(0); // XBox Controller
-    //public static Joystick attack3Left = new Joystick(1); // Left attack joystick
-    //public static Joystick attack3Right = new Joystick(2); // Right attack joystick
 
-    //public static Joystick launchpad1 = new Joystick(3); // The left launchpad for the button board
+    public static Joystick operatorJoystick = new Joystick(5);
 
-    //public static Joystick launchpad2 = new Joystick(4); // The right launchpad for the button board
+    private Button driverRightBumper = new JoystickButton(joystick, 6);
 
-    public static Joystick backupJoystick = new Joystick(5);
+    private Button aButton = new JoystickButton(operatorJoystick, 1);
+    private Button bButton = new JoystickButton(operatorJoystick, 2);
+    private Button xButton = new JoystickButton(operatorJoystick, 3);
+    private Button yButton = new JoystickButton(operatorJoystick, 4);
+    private Button leftBumperButton = new JoystickButton(operatorJoystick, 5);
+    private Button rightBumperButton = new JoystickButton(operatorJoystick, 6);
+    private Button selectButton = new JoystickButton(operatorJoystick, 7);
+    private Button startButton = new JoystickButton(operatorJoystick, 8);
+    //private Button leftStickDown = new JoystickButton(operatorJoystick, 9); // Don't use me!!!
+    private Button rightStickDown = new JoystickButton(operatorJoystick, 10);
 
-    Button driverRightBumper = new JoystickButton(joystick, 6);
-
-    Button aButton = new JoystickButton(backupJoystick, 1);
-    Button bButton = new JoystickButton(backupJoystick, 2);
-    Button xButton = new JoystickButton(backupJoystick, 3);
-    Button yButton = new JoystickButton(backupJoystick, 4);
-    Button leftBumperButton = new JoystickButton(backupJoystick, 5);
-    Button rightBumperButton = new JoystickButton(backupJoystick, 6);
-    Button selectButton = new JoystickButton(backupJoystick, 7);
-    Button startButton = new JoystickButton(backupJoystick, 8);
-
-
-
-    /////////////////////
-    /// Miscellaneous ///
-    /////////////////////
-	/*
-    Button misc1 = new JoystickButton(launchpad2, 7); // Done
-    Button misc2 = new JoystickButton(launchpad2, 14); // Done
-    Button misc3 = new JoystickButton(launchpad2, 9); // Done
-    Button misc4 = new JoystickButton(launchpad2, 5); // Does not work
-    Button misc5 = new JoystickButton(launchpad2, 15); // Done
-*/
-    ///////////////
-    /// Climber ///
-    ///////////////
-/*
-    Button climber1 = new JoystickButton(launchpad2, 10); // Done
-    Button climber2 = new JoystickButton(launchpad2, 16); // Done
-*/
-    ///////////////
-    /// Lifter? ///
-    ///////////////
-/*
-    Button lifter1 = new JoystickButton(launchpad1, 4); // Done
-    Button lifterMan1 = new JoystickButton(launchpad1, 5); // Done
-    Button lifterMan2 = new JoystickButton(launchpad1, 6); // Done
-*/
-    /////////////
-    /// Shoot ///
-    /////////////
-/*
-    Button shooter1 = new JoystickButton(launchpad1, 2); // Done
-    Button shooter2 = new JoystickButton(launchpad1, 3); // Done
-    Button shooterMan1 = new JoystickButton(launchpad1, 8); // Done
-*/
-    ///////////////////
-    /// Gear Intake ///
-    ///////////////////
-/*
-    Button gearIntake1 = new JoystickButton(launchpad2, 15); // Done
-    Button gearIntake2 = new JoystickButton(launchpad1, 11); // Done
-    Button gearIntakeMan1 = new JoystickButton(launchpad1, 14); // No
-    Button gearIntakeMan2 = new JoystickButton(launchpad2, 6); // No
-*/
-    ///////////////////
-    /// Ball Intake ///
-    ///////////////////
-/*
-    Button ballIntake1 = new JoystickButton(launchpad1, 12); // Done
-    Button ballIntake2 = new JoystickButton(launchpad1, 14); // Done
-    Button ballIntakeMan1 = new JoystickButton(launchpad1, 10);
-    Button ballIntakeMan2 = new JoystickButton(launchpad1, 10); // Does not work
-*/
     public OI() {
-    	//yButton.whenPressed(Robot.toggleDriveMode);
         bindButtons();
     }
 
     private void bindButtons() {
 
-        /////////////////
-        // Gear Intake //
-        /////////////////
-		/*
-    	gearIntake1.whenPressed(new IntakeToPos(IntakeFlap.IntakeState.FUEL));
-        gearIntake2.whenPressed(new IntakeToPos(IntakeFlap.IntakeState.GEARS));
-        //gearIntakeMan1.whileHeld(new MoveIntakeFlap(RelativeDirection.YAxis.FORWARD));
-        //gearIntakeMan2.whileHeld(new MoveIntakeFlap(RelativeDirection.YAxis.BACKWARD));
+        //xButton.whileHeld(new ShootWithPID(63));
+        //yButton.whileHeld(new ShootWithPID(80));
 
-        /////////////
-        // Shooter //
-        /////////////
-        shooterMan1.toggleWhenPressed(new SpinSpinners());
-        shooter1.whileHeld(new Shoot(true));
-        shooter2.whileHeld(new Shoot(false));*/
+		/*Button.whileHeld(new SpinGearIntake(RelativeDirection.Malone.IN, 0.2));
+		yButton.whileHeld(new SpinGearIntake(RelativeDirection.Malone.OUT, 0.2));
 
-        /////////////////
-        // Ball Intake //
-        /////////////////
-        /*ballIntake1.toggleWhenPressed(new SpinBallIntakeRollers(-1));
-        ballIntake2.toggleWhenPressed(new IntakeBalls());*/
-        /*
-        SpinBallIntakeRollers spinBallIntakeRollers = new SpinBallIntakeRollers(-1);
-        
-        ballIntake1.cancelWhenPressed(spinBallIntakeRollers);
-        ballIntake2.whenPressed(spinBallIntakeRollers);
-        ballIntakeMan1.whileHeld(new SpinBallIntakeRollers(-1));
-        ballIntakeMan2.whileHeld(new SpinBallIntakeRollers(1)); // FIXME: Make this a relative direction thing
+		bButton.whileHeld(new SpinGearIntake(RelativeDirection.Malone.OUT, 0.60));
+		aButton.whileHeld(new SpinGearIntake(RelativeDirection.Malone.IN, 0.60));
 
-        //////////////////
-        // Magic Carpet //
-        //////////////////
-        // The horizontal conveyor, "Magic Carpet," is moved when `MoveElevator` is called
-        lifter1.whileHeld(new MakeExtraSpace());
-        //lifterMan1.whileHeld(new MoveElevator(RelativeDirection.ZAxis.UP, 0.75, true));
-        lifterMan1.whileHeld(new MoveElevator(RelativeDirection.ZAxis.DOWN, 0.75));
+        leftBumperButton.whileHeld(new MoveGearIntakeArm(RelativeDirection.ZAxis.UP, 0.12, true));
 
-        /////////////*/
-        // Climber //
-        /////////////
-		/*
-        climber1.whileHeld(new Climb(0.5));
-        climber2.whileHeld(new Climb(1));*/
-        /*
-        shooterMan1.whenPressed(new KillEverything()); */
-        //misc2.whenPressed(new Climb(1));*/
+        rightBumperButton.whenPressed(new SpitItOut());*/
 
-
-        ////////////
-        // Backup //
-        ////////////
-
-        yButton.whenPressed(new IntakeToPos(IntakeFlap.IntakeState.GEARS));
-        yButton.whenReleased(new KillLights());
-        aButton.whenPressed(new IntakeToPos(IntakeFlap.IntakeState.FUEL));
-        aButton.whenReleased(new KillLights());
-
-        xButton.whileHeld(new ShootWithPID(63));
-        bButton.whileHeld(new ShootWithPID(80));
-
-        rightBumperButton.whileHeld(new SpinBallIntakeRollers(-1));
-        leftBumperButton.whileHeld(new SpinBallIntakeRollers(1));
+		aButton.whenPressed(new SendLight(4));
+		xButton.whenPressed(new SendLight(3));
+		yButton.whenPressed(new SendLight(2));
+		startButton.whenPressed(new SendLight(56));
+		rightBumperButton.whenPressed(new SendLight(1));
+		leftBumperButton.whenPressed(new SendLight(6));
 
         driverRightBumper.whileHeld(new Climb(1));
 
-
-        //xButton.whileHeld(new ButtonPress(LightsColors.BLUE));
-        //bButton.whileHeld(new ButtonPress(LightsColors.WHITE));
     }
     
     protected static void initTestMode() {
@@ -177,16 +73,10 @@ public class OI {
 		LiveWindow.addSensor(RIGHT_DRIVEPOD_SUBSYSTEM_NAME, "Encoder", RobotMap.rightEncoder);
 		LiveWindow.addActuator(RIGHT_DRIVEPOD_SUBSYSTEM_NAME, "Speed controller", RobotMap.rightDrivepodSpeedController);
 		
-		final String BALL_INTAKE_SUBSYSTEM_NAME = "Ball Intake";
-		LiveWindow.addActuator(BALL_INTAKE_SUBSYSTEM_NAME, "Speed controller", RobotMap.ballIntakeRollerSpeedController);
-		
 		final String GEAR_INTAKE_SUBSYSTEM_NAME = "Gear intake";
 		LiveWindow.addActuator(GEAR_INTAKE_SUBSYSTEM_NAME, "Left servo", RobotMap.leftIntakeFlapServo);
 		LiveWindow.addActuator(GEAR_INTAKE_SUBSYSTEM_NAME, "Right servo", RobotMap.rightIntakeFlapServo);
 		LiveWindow.addSensor(GEAR_INTAKE_SUBSYSTEM_NAME, "Breakbeam sensor", RobotMap.gearInputBreakbeamSensor);
-		
-		final String CONVEYOR_SUBSYSTEM_NAME = "Conveyor";
-		LiveWindow.addActuator(CONVEYOR_SUBSYSTEM_NAME, "Speed controller", RobotMap.conveyorSpeedController);
 		
 		final String ELEVATOR_SUBSYSTEM_NAME = "Elevator";
 		LiveWindow.addActuator(ELEVATOR_SUBSYSTEM_NAME, "Speed controller", RobotMap.elevatorSpeedController);
@@ -198,5 +88,12 @@ public class OI {
 		
 		final String GYRO_SUBSYSTEM_NAME = "Gyro";
 		LiveWindow.addSensor(GYRO_SUBSYSTEM_NAME, "Gyro", RobotMap.gyro);
+		
+		final String FANCY_GEAR_INTAKE_SUBSYSTEM_NAME = "Fancy gear intake";
+		LiveWindow.addActuator(FANCY_GEAR_INTAKE_SUBSYSTEM_NAME, "Wheels", RobotMap.gearIntakeWheels);
+		LiveWindow.addActuator(FANCY_GEAR_INTAKE_SUBSYSTEM_NAME, "Arm", RobotMap.gearIntakeArm);
+		LiveWindow.addSensor(FANCY_GEAR_INTAKE_SUBSYSTEM_NAME, "Lower limit switch", RobotMap.gearIntakeLowerLimitSwitch);
+		LiveWindow.addSensor(FANCY_GEAR_INTAKE_SUBSYSTEM_NAME, "Upper limit switch", RobotMap.gearIntakeUpperLimitSwitch);
+		LiveWindow.addSensor(FANCY_GEAR_INTAKE_SUBSYSTEM_NAME, "Breakbeam sensor", RobotMap.gearInputBreakbeamSensor);
     }
 }

@@ -23,7 +23,7 @@ public class DriveOnArc extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.drivetrain.driveArc(direction, chordLength, radius, 1);
+    	Robot.drivetrain.driveArc(direction, chordLength, radius);
     	Robot.drivetrain.enableEncoderPID();
     }
 

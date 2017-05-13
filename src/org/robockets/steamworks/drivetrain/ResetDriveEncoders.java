@@ -1,6 +1,7 @@
 package org.robockets.steamworks.drivetrain;
 
 import edu.wpi.first.wpilibj.command.Command;
+
 import org.robockets.steamworks.Robot;
 
 /**
@@ -24,7 +25,6 @@ public class ResetDriveEncoders extends Command {
 	}
 
 	protected void end() {
-
 	}
 
 	protected void interrupted() {

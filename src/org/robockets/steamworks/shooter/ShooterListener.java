@@ -1,6 +1,7 @@
 package org.robockets.steamworks.shooter;
 
 import edu.wpi.first.wpilibj.command.Command;
+
 import org.robockets.steamworks.OI;
 import org.robockets.steamworks.Robot;
 
@@ -10,7 +11,7 @@ import org.robockets.steamworks.Robot;
 public class ShooterListener extends Command {
 
 	public ShooterListener() {
-		requires(Robot.shooter); // Prevent things from breaking
+		requires(Robot.shooter);
 	}
 
 	protected void initialize() {
@@ -18,7 +19,7 @@ public class ShooterListener extends Command {
 	}
 
 	protected void execute() {
-		double rightTriggerVal = OI.backupJoystick.getRawAxis(3);
+		double rightTriggerVal = OI.operatorJoystick.getRawAxis(3);
 
 		if (rightTriggerVal != 0) {
 			Robot.shooter.spinUp(1);

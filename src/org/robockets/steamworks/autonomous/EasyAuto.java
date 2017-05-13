@@ -20,6 +20,12 @@ public class EasyAuto extends CommandGroup {
 	private double forwardDistance2 = 0;
 	private double forwardDistance3 = 0;
 
+	private double forwardSpeed1 = 0;
+	private double forwardSpeed2 = 0;
+	private double forwardSpeed3 = 0;
+
+	private double visionSpeed = 0;
+
 	/**
 	 * @param startingPos Robot's starting position (1, 2, or 3)
 	 */
@@ -27,22 +33,29 @@ public class EasyAuto extends CommandGroup {
 
 		addSequential(new SetVisionEnabled(true));
 		if (startingPos == 1) {
-			turnAngle = 55;
-			turnSpeed = 90;
-			forwardDistance1 = 77;
+			forwardSpeed1 = 40;
+			forwardSpeed3 = 24;
+			turnAngle = 64;
+			turnSpeed = 110;
+			visionSpeed = 90;
+			forwardDistance1 = 89;
 			forwardDistance2 = 0;
-			forwardDistance3 = 45;
+			forwardDistance3 = 37;
 		} else if (startingPos == 3) {
-			turnAngle = -55;
-			turnSpeed = -90;
-			forwardDistance1 = 77;
+			forwardSpeed1 = 40;
+			forwardSpeed3 = 24;
+			turnAngle = -62;
+			turnSpeed = -110;
+			visionSpeed = -90;
+			forwardDistance1 = 86;
 			forwardDistance2 = 0;
-			forwardDistance3 = 45;
+			forwardDistance3 = 37;
 		} else {
+			forwardSpeed1 = 30;
 			forwardDistance1 = 80;
 		}
 
-		addSequential(new DriveStraight(24, forwardDistance1));
+		addSequential(new DriveStraight(forwardSpeed1, forwardDistance1));
 		addSequential(new WaitCommand(0.1));
 		if(turnAngle != 0 && (forwardDistance2+forwardDistance3) != 0) {
 			addSequential(new Turn(TurnType.RELATIVE, turnAngle, turnSpeed));
@@ -51,11 +64,10 @@ public class EasyAuto extends CommandGroup {
 				addSequential(new DriveStraight(24, forwardDistance2));
 				addSequential(new WaitCommand(1));
 			}
-			addSequential(new Turn(TurnType.CAMERA, 20));
+			//addSequential(new Turn(TurnType.CAMERA, visionSpeed));
 			addSequential(new WaitCommand(0.1));
-			addSequential(new DriveStraight(12, forwardDistance3));
+			addSequential(new DriveStraight(forwardSpeed3, forwardDistance3));
 		}
-		//addSequential(new Turn(TurnType.RELATIVE, 10));
 
 		addSequential(new SetVisionEnabled(false));
 	}

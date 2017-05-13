@@ -14,7 +14,6 @@ public class EncoderPIDSource implements PIDSource {
 	 * @param encoder The encoder that you wish to read values from.
 	 * @param factor A multiplier to manipulate the encoder output.
 	 */
-	
 	public EncoderPIDSource(Encoder encoder, double factor) {
 		this.encoder = encoder;
 		this.factor = factor;

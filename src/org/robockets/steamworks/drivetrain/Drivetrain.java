@@ -4,8 +4,8 @@ import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 import org.robockets.commons.RelativeDirection;
-import org.robockets.steamworks.DummyPIDOutput;
 import org.robockets.steamworks.RobotMap;
+import org.robockets.steamworks.pidoutput.GyroPIDOutput;
 import org.robockets.steamworks.pidsources.EncoderPIDSource;
 import org.robockets.steamworks.pidsources.GyroPIDSource;
 
@@ -15,7 +15,7 @@ import org.robockets.steamworks.pidsources.GyroPIDSource;
  */
 public class Drivetrain extends Subsystem {
 
-    private final double CENTERPOINT_TO_WHEEL = 14.5; // In inches, of course
+    public static final double CENTERPOINT_TO_WHEEL = 14.5; // In inches, of course
     private final GyroPIDSource gyroPIDSource;
     private final EncoderPIDSource leftPodPIDSource;
     private final EncoderPIDSource rightPodPIDSource;
@@ -26,7 +26,7 @@ public class Drivetrain extends Subsystem {
 
     public Drivetrain() {
         gyroPIDSource = new GyroPIDSource();
-        gyroPID = new PIDController(0, 0, 0, new GyroPIDSource(), new DummyPIDOutput()); // FIXME: This should not use a DummyPIDOutput
+        gyroPID = new PIDController(0, 0, 0, new GyroPIDSource(), new GyroPIDOutput()); // FIXME: This should be initialized in RobotMap
         gyroPID.disable();
         gyroPID.setOutputRange(-1.0, 1.0); // Set turning speed range
         gyroPID.setPercentTolerance(5.0); // Set tolerance of 5%
@@ -45,7 +45,7 @@ public class Drivetrain extends Subsystem {
     }
 
     public void initDefaultCommand() {
-    	//setDefaultCommand(new Joyride()); // Just in case...
+    	setDefaultCommand(new Joyride());
 	}
 
     /**
@@ -65,21 +65,6 @@ public class Drivetrain extends Subsystem {
      */
     public void driveTank(double leftValue, double rightValue) {
         RobotMap.robotDrive.tankDrive(leftValue, rightValue);
-        //disableEncoderPID();
-    }
-    
-    /**
-     * Method to control the driving of the robot through gyro or encoder PID; does not set setpoint of any PID; use the other methods.
-     * @param moveValue Constant speed to be driving the robot; input 0 if using encoderPID
-     * @param gyro Whether or not to use gyroPID or not
-     * @param encoder Whether or not to use encoderPID or not
-     */
-    public void driveAssisted(double moveValue, boolean gyro, boolean encoder) {
-    	if(gyro && !encoder) {
-    		driveArcade(moveValue, gyroPID.get());
-    	} else if(encoder && !gyro) {
-    		driveTank(leftPodPID.get(), rightPodPID.get());
-    	}
     }
     
     /**
@@ -87,9 +72,8 @@ public class Drivetrain extends Subsystem {
      * @param direction Direction of the turn, left or right
      * @param chordLength Length of the hypotenuse of the triangle formed by two radii
      * @param radius Distance between the robot and a point directly below the target
-     * @param scalar Speed scalar
      */
-    public void driveArc(RelativeDirection.XAxis direction, double chordLength, double radius, double scalar) {
+    public void driveArc(RelativeDirection.XAxis direction, double chordLength, double radius) {
     	double arcLengthLeft;
     	double arcLengthRight;
     	if(direction == RelativeDirection.XAxis.RIGHT) {
@@ -101,7 +85,6 @@ public class Drivetrain extends Subsystem {
     	}
     	
     	setDistance(arcLengthLeft, arcLengthRight);
-    	//driveTank(leftPodPID.get() * scalar, rightPodPID.get() * scalar); // This may not be necessary now that we have a real PIDOutput
     }
     
     /**
@@ -121,27 +104,6 @@ public class Drivetrain extends Subsystem {
     public void setDistance(double leftDistance, double rightDistance) {
     	leftPodPID.setSetpoint(leftDistance);
     	rightPodPID.setSetpoint(rightDistance);
-    }
-    
-    /**
-     * Method to turn the robot in place relative to where 0 degrees is
-     * @param angle Desired angle in degrees
-     */
-    public void absoluteTurn(double angle) {
-        gyroPID.setSetpoint(angle);
-        gyroPID.enable();
-        driveTank(gyroPID.get(), -gyroPID.get());
-    }
-
-    /**
-     * A method to turn the robot in place relative to current position
-     * @param angle Desired angle in degrees
-     */
-    public void relativeTurn(double angle) {
-        double newAngle = gyroPIDSource.pidGet() + angle;
-        gyroPID.setSetpoint(newAngle);
-        gyroPID.enable();
-        driveTank(gyroPID.get(), -gyroPID.get());
     }
     
     /**
@@ -174,27 +136,12 @@ public class Drivetrain extends Subsystem {
     }
     
     /**
-     * Turn on PID turning (THIS IS ONLY FOR TESTING!)
-     */
-    public void pidGo() {
-        leftPodPID.enable();
-    }
-    
-    /**
      * Method to enable both drive pod PIDs
      */
     public void enableEncoderPID() {
     	leftPodPID.enable();
     	rightPodPID.enable();
     }
-    
-    /**
-     * Method that checks whether the encoder PIDs are enabled or not
-     * @return Returns true or false
-     */
-    public boolean isEncoderPIDEnabled() {
-		return leftPodPID.isEnabled() && rightPodPID.isEnabled();
-	}
     
     /**
      * A method to disable the encoder PIDs
@@ -215,6 +162,12 @@ public class Drivetrain extends Subsystem {
 	public void resetEncoders() {
 		RobotMap.leftEncoder.reset();
 		RobotMap.rightEncoder.reset();
+	}
+
+	public double getAverageCurrent() {
+		double drivetrainCurrentSum = RobotMap.powerDistPanel.getCurrent(12) + RobotMap.powerDistPanel.getCurrent(3) + RobotMap.powerDistPanel.getCurrent(13) + RobotMap.powerDistPanel.getCurrent(0);
+		double drivetrainCurrentAvg = drivetrainCurrentSum / 4;
+		return drivetrainCurrentAvg;
 	}
 }
 

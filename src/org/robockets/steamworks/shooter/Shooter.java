@@ -42,7 +42,6 @@ public class Shooter extends Subsystem {
     }
 
     public void enablePID() {
-    	//shooterPIDController.setSetpoint(SmartDashboard.getNumber("Shooter PID setpoint", 0));
     	shooterPIDController.enable();
 	}
 

@@ -1,8 +1,8 @@
 package org.robockets.steamworks.drivetrain;
 
 import edu.wpi.first.wpilibj.command.Command;
-
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 import org.robockets.commons.RelativeDirection;
 import org.robockets.steamworks.LinearSetpointGenerator;
 import org.robockets.steamworks.Robot;
@@ -25,15 +25,6 @@ public class DriveArbitrary extends Command {
 	private double innerSpeed;
 	private double outerSpeed;
 	private RelativeDirection.XAxis direction;
-
-	@Deprecated
-	public DriveArbitrary(double leftSpeed, double leftDistance, double rightSpeed, double rightDistance) {
-		requires(Robot.drivetrain);
-		this.leftSpeed = leftSpeed;
-		this.leftDistance = leftDistance;
-		this.rightSpeed = rightSpeed;
-		this.rightDistance = rightDistance;
-	}
 
 	public DriveArbitrary(double radius1, double theta, RelativeDirection.XAxis direction) {
 		requires(Robot.drivetrain);
