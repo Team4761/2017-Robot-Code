@@ -3,6 +3,7 @@ package org.robockets.steamworks.drivetrain;
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.robockets.commons.RelativeDirection;
 import org.robockets.steamworks.RobotMap;
 import org.robockets.steamworks.pidoutput.GyroPIDOutput;
@@ -168,6 +169,13 @@ public class Drivetrain extends Subsystem {
 		double drivetrainCurrentSum = RobotMap.powerDistPanel.getCurrent(12) + RobotMap.powerDistPanel.getCurrent(3) + RobotMap.powerDistPanel.getCurrent(13) + RobotMap.powerDistPanel.getCurrent(0);
 		double drivetrainCurrentAvg = drivetrainCurrentSum / 4;
 		return drivetrainCurrentAvg;
+	}
+
+	public void smartdashboardCurrent() {
+		SmartDashboard.putNumber("Front Left PDP", RobotMap.powerDistPanel.getCurrent(RobotMap.FRONT_LEFT_PDP));
+		SmartDashboard.putNumber("Front Right PDP", RobotMap.powerDistPanel.getCurrent(RobotMap.FRONT_RIGHT_PDP));
+		SmartDashboard.putNumber("Back Left PDP", RobotMap.powerDistPanel.getCurrent(RobotMap.BACK_LEFT_PDP));
+		SmartDashboard.putNumber("Back Right PDP", RobotMap.powerDistPanel.getCurrent(RobotMap.BACK_RIGHT_PDP));
 	}
 }
 

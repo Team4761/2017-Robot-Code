@@ -135,8 +135,13 @@ public class RobotMap {
     public static final int climberPdpPortLeft = 7;
 
     public static final int GEAR_INTAKE_PDP_PORT = 10;
-    
-    public static final double INTAKE_FLAP_FUEL_LEFT_POS = 1;
+
+	public static final int FRONT_LEFT_PDP = 13;
+	public static final int BACK_LEFT_PDP = 0;
+	public static final int FRONT_RIGHT_PDP = 3;
+	public static final int BACK_RIGHT_PDP = 12;
+
+	public static final double INTAKE_FLAP_FUEL_LEFT_POS = 1;
     public static final double INTAKE_FLAP_FUEL_RIGHT_POS = 0;
     public static final double INTAKE_FLAP_GEARS_LEFT_POS = 0.5;
     public static final double INTAKE_FLAP_GEARS_RIGHT_POS = 0.5;

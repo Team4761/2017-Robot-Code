@@ -253,6 +253,8 @@ public class Robot extends IterativeRobot {
 
 		SDDumper.dumpMisc();
 
+		drivetrain.smartdashboardCurrent();
+
 		/////////////////
 		// GEAR INTAKE //
 		/////////////////
