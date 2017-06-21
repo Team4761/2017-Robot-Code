@@ -3,6 +3,7 @@ package org.robockets.steamworks.drivetrain;
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.robockets.commons.RelativeDirection;
 import org.robockets.steamworks.RobotMap;
 import org.robockets.steamworks.pidoutput.GyroPIDOutput;
@@ -14,6 +15,8 @@ import org.robockets.steamworks.pidsources.GyroPIDSource;
  * Drivetrain subsystem
  */
 public class Drivetrain extends Subsystem {
+
+	public static final double DEFAULT_SPEED = 0.75;
 
     public static final double CENTERPOINT_TO_WHEEL = 14.5; // In inches, of course
     private final GyroPIDSource gyroPIDSource;
@@ -54,7 +57,9 @@ public class Drivetrain extends Subsystem {
      * @param rotate Rotation speed: -1 to 1
      */
     public void driveArcade(double translate, double rotate) {
-        RobotMap.robotDrive.arcadeDrive(translate, rotate);
+		double speedMultiplier = SmartDashboard.getNumber("Driving Speed", DEFAULT_SPEED);
+
+        RobotMap.robotDrive.arcadeDrive(translate*speedMultiplier, rotate*speedMultiplier);
         disableEncoderPID();
     }
 

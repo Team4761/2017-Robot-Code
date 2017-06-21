@@ -26,7 +26,7 @@ public class Joyride extends Command {
 		translate = OI.joystick.getRawAxis(1);
 		rotate = OI.joystick.getRawAxis(4);
         	        	
-		RobotMap.robotDrive.arcadeDrive(-translate, -rotate);
+		Robot.drivetrain.driveArcade(-translate, -rotate);
     }
 
     protected boolean isFinished() {

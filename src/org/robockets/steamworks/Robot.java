@@ -95,7 +95,10 @@ public class Robot extends IterativeRobot {
 		System.out.println("Robot initializing...");
 
 		NetworkTable.globalDeleteAll();
-		
+		NetworkTable.flush();
+
+		SmartDashboard.putNumber("Driving Speed", Drivetrain.DEFAULT_SPEED);
+
 		////////////////
 		// SUBSYSTEMS //
 		////////////////
@@ -142,10 +145,10 @@ public class Robot extends IterativeRobot {
 		RobotMap.leftEncoder.setDistancePerPulse(4 * Math.PI / 360);
 		RobotMap.rightEncoder.setDistancePerPulse(4 * Math.PI / 360);
 
-		SmartDashboard.putNumber("Shooter PID P value", shooter.shooterPIDController.getP());
+		/*SmartDashboard.putNumber("Shooter PID P value", shooter.shooterPIDController.getP());
 		SmartDashboard.putNumber("Shooter PID I value", shooter.shooterPIDController.getI());
 		SmartDashboard.putNumber("Shooter PID D value", shooter.shooterPIDController.getD());
-		SmartDashboard.putNumber("Shooter PID F value", shooter.shooterPIDController.getF());
+		SmartDashboard.putNumber("Shooter PID F value", shooter.shooterPIDController.getF());*/
 
 		Robot.ledSubsystem.cylon(56);
 
@@ -156,7 +159,7 @@ public class Robot extends IterativeRobot {
 	
 	private void initSmartDashboard() {
 
-		/////////////
+		/*/////////////
 		// CLIMBER //
 		/////////////
 
@@ -184,12 +187,12 @@ public class Robot extends IterativeRobot {
 		// GYRO //
 		//////////
 
-		/*SmartDashboard.putData("GyroTurn Absolute", new Turn(TurnType.ABSOLUTE, 90)); // Angle will be on SmartDashboard from the Turn command
+		SmartDashboard.putData("GyroTurn Absolute", new Turn(TurnType.ABSOLUTE, 90)); // Angle will be on SmartDashboard from the Turn command
 		SmartDashboard.putData("GyroTurn Relative", new Turn(TurnType.RELATIVE, 90));
 		SmartDashboard.putNumber("GyroP", drivetrain.gyroPID.getP());
 		SmartDashboard.putNumber("GyroI", drivetrain.gyroPID.getI());
 		SmartDashboard.putNumber("GyroD", drivetrain.gyroPID.getD());
-		SmartDashboard.putNumber("GyroSetpoint", drivetrain.gyroPID.getSetpoint());*/
+		SmartDashboard.putNumber("GyroSetpoint", drivetrain.gyroPID.getSetpoint());
 
 		///////////////
 		// ELEVATOR ///
@@ -207,7 +210,7 @@ public class Robot extends IterativeRobot {
 		// VISION //
 		////////////
 		SmartDashboard.putData("Enable vision", new SetVisionEnabled(true));
-		SmartDashboard.putData("Disable vision", new SetVisionEnabled(false));
+		SmartDashboard.putData("Disable vision", new SetVisionEnabled(false));*/
 
 		OI.initTestMode();
 	}
@@ -219,7 +222,7 @@ public class Robot extends IterativeRobot {
 		// CLIMBER //
 		/////////////
 
-		Robot.climber.periodicSmartDashboard();
+		//Robot.climber.periodicSmartDashboard();
 
 		//////////
 		// GYRO //
@@ -238,7 +241,7 @@ public class Robot extends IterativeRobot {
 		SDDumper.dumpEncoder("Left encoder", RobotMap.leftEncoder);
 		SDDumper.dumpEncoder("Right encoder", RobotMap.rightEncoder);
 
-		// Use the SmartDashboard PID Values
+		/*// Use the SmartDashboard PID Values
 		Robot.drivetrain.leftPodPID.setPID(SmartDashboard.getNumber("Left drivepod PID P value", 0),
 				SmartDashboard.getNumber("Left drivepod PID I value", 0),
 				SmartDashboard.getNumber("Left drivepod PID D value", 0));
@@ -249,7 +252,7 @@ public class Robot extends IterativeRobot {
 				SmartDashboard.getNumber("Right drivepod PID D value", 0));
 
 		SmartDashboard.putNumber("Left drivepod PID Setpoint", drivetrain.leftPodPID.getSetpoint());
-		SmartDashboard.putNumber("Right drivepod PID Setpoint", drivetrain.rightPodPID.getSetpoint());
+		SmartDashboard.putNumber("Right drivepod PID Setpoint", drivetrain.rightPodPID.getSetpoint());*/
 
 		SDDumper.dumpMisc();
 
@@ -257,23 +260,23 @@ public class Robot extends IterativeRobot {
 		// GEAR INTAKE //
 		/////////////////
 
-		SmartDashboard.putNumber("Gear Intake Current", Robot.gearIntake.readCurrent());
+		/*SmartDashboard.putNumber("Gear Intake Current", Robot.gearIntake.readCurrent());
 		SmartDashboard.putBoolean("Is Gear Intake Stalling?", Robot.gearIntake.isStalling());
 		SmartDashboard.putNumber("Intake flap encoder1 position", RobotMap.leftIntakeFlapServo.get());
-		gearIntake.periodicSmartDashboard();
+		gearIntake.periodicSmartDashboard();*/
 
 		///////////////////////
 		// TOUCHLESS ENCODER //
 		///////////////////////
 
-		SmartDashboard.putNumber("Touchless encoder count", RobotMap.rollerEncoderCounter.get());
-		SmartDashboard.putNumber("Touchless encoder rate", RobotMap.rollerEncoderCounter.getRate());
+		/*SmartDashboard.putNumber("Touchless encoder count", RobotMap.rollerEncoderCounter.get());
+		SmartDashboard.putNumber("Touchless encoder rate", RobotMap.rollerEncoderCounter.getRate());*/
 
 		/////////////
 		// SHOOTER //
 		/////////////
 
-    	Robot.shooter.shooterPIDController.setPID(
+    	/*Robot.shooter.shooterPIDController.setPID(
     			SmartDashboard.getNumber("Shooter PID P value", 0),
 				SmartDashboard.getNumber("Shooter PID I value", 0),
 				SmartDashboard.getNumber("Shooter PID D value", 0),
@@ -285,7 +288,7 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putBoolean("Is vision enabled?", CVConstants.SHOULD_RUN_VISION);
 
 
-		SmartDashboard.putNumber("Drivetrain average current", drivetrain.getAverageCurrent());
+		SmartDashboard.putNumber("Drivetrain average current", drivetrain.getAverageCurrent());*/
     	
 	}
   
