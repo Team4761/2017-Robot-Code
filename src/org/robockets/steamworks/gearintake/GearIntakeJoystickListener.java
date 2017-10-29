@@ -10,6 +10,7 @@ import org.robockets.steamworks.RobotMap;
 /**
  * @author Jake Backer
  */
+@Deprecated
 public class GearIntakeJoystickListener extends Command {
 
 	private final double CONTROLLER_WEIGHT = 0.5;
@@ -27,7 +28,7 @@ public class GearIntakeJoystickListener extends Command {
 
 	protected void execute() {
 
-		double value = -OI.operatorJoystick.getRawAxis(1)*CONTROLLER_WEIGHT*0.5; // Left Stick
+		/*double value = -OI.operatorJoystick.getRawAxis(1)*CONTROLLER_WEIGHT*0.5; // Left Stick
 
 		if (OI.operatorJoystick.getRawButton(9)) {
 			value *= 2;
@@ -56,7 +57,7 @@ public class GearIntakeJoystickListener extends Command {
 			}
 
 			Robot.gearIntake.moveGearIntakeArm(RelativeDirection.ZAxis.UP, value);
-		}
+		}*/
 	}
 
 	protected boolean isFinished() {

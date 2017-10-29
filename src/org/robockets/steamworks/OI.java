@@ -19,11 +19,11 @@ import org.robockets.steamworks.lights.SendLight;
 public class OI {
     public static Joystick joystick = new Joystick(0); // XBox Controller
 
-    public static Joystick operatorJoystick = new Joystick(5);
+   //public static Joystick operatorJoystick = new Joystick(5);
 
     private Button driverRightBumper = new JoystickButton(joystick, 6);
 
-    private Button aButton = new JoystickButton(operatorJoystick, 1);
+   /* private Button aButton = new JoystickButton(operatorJoystick, 1);
     private Button bButton = new JoystickButton(operatorJoystick, 2);
     private Button xButton = new JoystickButton(operatorJoystick, 3);
     private Button yButton = new JoystickButton(operatorJoystick, 4);
@@ -32,7 +32,7 @@ public class OI {
     private Button selectButton = new JoystickButton(operatorJoystick, 7);
     private Button startButton = new JoystickButton(operatorJoystick, 8);
     //private Button leftStickDown = new JoystickButton(operatorJoystick, 9); // Don't use me!!!
-    private Button rightStickDown = new JoystickButton(operatorJoystick, 10);
+    private Button rightStickDown = new JoystickButton(operatorJoystick, 10);*/
 
     public OI() {
         bindButtons();
@@ -53,12 +53,12 @@ public class OI {
 
         rightBumperButton.whenPressed(new SpitItOut());*/
 
-		aButton.whenPressed(new SendLight(4));
+		/*aButton.whenPressed(new SendLight(4));
 		xButton.whenPressed(new SendLight(3));
 		yButton.whenPressed(new SendLight(2));
 		startButton.whenPressed(new SendLight(56));
 		rightBumperButton.whenPressed(new SendLight(1));
-		leftBumperButton.whenPressed(new SendLight(6));
+		leftBumperButton.whenPressed(new SendLight(6));*/
 
         driverRightBumper.whileHeld(new Climb(1));
 

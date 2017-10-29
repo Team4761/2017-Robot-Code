@@ -8,6 +8,7 @@ import org.robockets.steamworks.Robot;
 /**
  * @author Jake Backer
  */
+@Deprecated
 public class ShooterListener extends Command {
 
 	public ShooterListener() {
@@ -19,13 +20,13 @@ public class ShooterListener extends Command {
 	}
 
 	protected void execute() {
-		double rightTriggerVal = OI.operatorJoystick.getRawAxis(3);
+		/*double rightTriggerVal = OI.operatorJoystick.getRawAxis(3);
 
 		if (rightTriggerVal != 0) {
 			Robot.shooter.spinUp(1);
 		} else {
 			Robot.shooter.stop();
-		}
+		}*/
 	}
 
 	protected boolean isFinished() {

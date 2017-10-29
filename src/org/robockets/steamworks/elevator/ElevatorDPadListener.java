@@ -9,6 +9,7 @@ import org.robockets.steamworks.Robot;
 /**
  * @author Jake Backer
  */
+@Deprecated
 public class ElevatorDPadListener extends Command {
 
 	public ElevatorDPadListener() {
@@ -19,7 +20,7 @@ public class ElevatorDPadListener extends Command {
 	}
 
 	protected void execute() {
-		int povVal = OI.operatorJoystick.getPOV(); // Read in degrees
+		/*int povVal = OI.operatorJoystick.getPOV(); // Read in degrees
 
 		if (povVal == 0) {
 			Robot.elevator.moveElevator(RelativeDirection.ZAxis.UP, 0.6);
@@ -34,7 +35,7 @@ public class ElevatorDPadListener extends Command {
 			} else {
 				Robot.elevator.stop();
 			}
-		}
+		}*/
 
 	}
 

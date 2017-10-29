@@ -1,9 +1,11 @@
 package org.robockets.steamworks.drivetrain;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 import org.robockets.commons.RelativeDirection;
+import org.robockets.steamworks.LinearSetpointGenerator;
 import org.robockets.steamworks.RobotMap;
 import org.robockets.steamworks.pidoutput.GyroPIDOutput;
 import org.robockets.steamworks.pidsources.EncoderPIDSource;
@@ -54,9 +56,28 @@ public class Drivetrain extends Subsystem {
      * @param rotate Rotation speed: -1 to 1
      */
     public void driveArcade(double translate, double rotate) {
-        RobotMap.robotDrive.arcadeDrive(translate, rotate);
+    	if (!DriverStation.getInstance().isBrownedOut()) {
+			RobotMap.robotDrive.arcadeDrive(translate, rotate);
+		}
         disableEncoderPID();
     }
+
+	/**
+	 * Drive with PID assistance to avoid browning out
+	 * This only works with driveTank(for now)
+	 * @param leftValue
+	 * @param rightValue
+	 */
+	public void driveWithPID(double leftValue, double rightValue) {
+		// The velocity is a constant that should be tuned appropriately
+		// Inital Position should be calculated with an accelerometer
+		LinearSetpointGenerator leftSetpointGen = new LinearSetpointGenerator(leftValue, 0.25, 0);
+		LinearSetpointGenerator rightSetpointGen = new LinearSetpointGenerator(rightValue, 0.25, 0);
+
+		if (leftSetpointGen.hasNext() || rightSetpointGen.hasNext()) {
+
+		}
+	}
 
     /**
      * Basic method to control the movement of the robot 'tank' style

@@ -125,9 +125,9 @@ public class Robot extends IterativeRobot {
 		// INIT //
 		//////////
 
-		CameraServer.getInstance().startAutomaticCapture("DRIVING CAMERA", 0);
-		visionManager = VisionManager.getInstance();
-		visionManager.startProcessing();
+		//CameraServer.getInstance().startAutomaticCapture("DRIVING CAMERA", 0);
+		//visionManager = VisionManager.getInstance();
+		//visionManager.startProcessing();
 
 		RobotMap.rollerEncoderCounter.setUpSource(RobotMap.rollerEncoder);
 		RobotMap.rollerEncoderCounter.setUpDownCounterMode();
