@@ -1,7 +1,5 @@
 package org.robockets.steamworks;
 
-import edu.wpi.first.wpilibj.CameraServer;
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -22,6 +20,7 @@ import org.robockets.steamworks.camera.SetVisionEnabled;
 import org.robockets.steamworks.camera.VisionManager;
 import org.robockets.steamworks.climber.Climb;
 import org.robockets.steamworks.climber.Climber;
+import org.robockets.steamworks.drivetrain.DriveAssisted;
 import org.robockets.steamworks.elevator.MoveElevator;
 import org.robockets.steamworks.drivetrain.Drivetrain;
 import org.robockets.steamworks.elevator.ElevatorDPadListener;
@@ -169,15 +168,15 @@ public class Robot extends IterativeRobot {
 
 		SmartDashboard.putData(new ResetDriveEncoders());
 
-		SmartDashboard.putNumber("Left drivepod PID P value", Robot.drivetrain.leftPodPID.getP());
-		SmartDashboard.putNumber("Left drivepod PID I value", Robot.drivetrain.leftPodPID.getI());
-		SmartDashboard.putNumber("Left drivepod PID D value", Robot.drivetrain.leftPodPID.getD());
-		SmartDashboard.putNumber("Left drivepod PID F value", Robot.drivetrain.leftPodPID.getF());
+		SmartDashboard.putNumber("Left drivepod PID P value", Robot.drivetrain.leftPodDistancePID.getP());
+		SmartDashboard.putNumber("Left drivepod PID I value", Robot.drivetrain.leftPodDistancePID.getI());
+		SmartDashboard.putNumber("Left drivepod PID D value", Robot.drivetrain.leftPodDistancePID.getD());
+		SmartDashboard.putNumber("Left drivepod PID F value", Robot.drivetrain.leftPodDistancePID.getF());
 
-		SmartDashboard.putNumber("Right drivepod PID P value", Robot.drivetrain.rightPodPID.getP());
-		SmartDashboard.putNumber("Right drivepod PID I value", Robot.drivetrain.rightPodPID.getI());
-		SmartDashboard.putNumber("Right drivepod PID D value", Robot.drivetrain.rightPodPID.getD());
-		SmartDashboard.putNumber("Right drivepod PID F value", Robot.drivetrain.rightPodPID.getF());
+		SmartDashboard.putNumber("Right drivepod PID P value", Robot.drivetrain.rightPodDistancePID.getP());
+		SmartDashboard.putNumber("Right drivepod PID I value", Robot.drivetrain.rightPodDistancePID.getI());
+		SmartDashboard.putNumber("Right drivepod PID D value", Robot.drivetrain.rightPodDistancePID.getD());
+		SmartDashboard.putNumber("Right drivepod PID F value", Robot.drivetrain.rightPodDistancePID.getF());
 
 
 		//////////
@@ -239,17 +238,19 @@ public class Robot extends IterativeRobot {
 		SDDumper.dumpEncoder("Right encoder", RobotMap.rightEncoder);
 
 		// Use the SmartDashboard PID Values
-		Robot.drivetrain.leftPodPID.setPID(SmartDashboard.getNumber("Left drivepod PID P value", 0),
+		Robot.drivetrain.leftPodDistancePID.setPID(SmartDashboard.getNumber("Left drivepod PID P value", 0),
 				SmartDashboard.getNumber("Left drivepod PID I value", 0),
 				SmartDashboard.getNumber("Left drivepod PID D value", 0));
 
 		// Possibly?
-		Robot.drivetrain.rightPodPID.setPID(SmartDashboard.getNumber("Right drivepod PID P value", 0),
+		Robot.drivetrain.rightPodDistancePID.setPID(SmartDashboard.getNumber("Right drivepod PID P value", 0),
 				SmartDashboard.getNumber("Right drivepod PID I value", 0),
 				SmartDashboard.getNumber("Right drivepod PID D value", 0));
 
-		SmartDashboard.putNumber("Left drivepod PID Setpoint", drivetrain.leftPodPID.getSetpoint());
-		SmartDashboard.putNumber("Right drivepod PID Setpoint", drivetrain.rightPodPID.getSetpoint());
+		SmartDashboard.putNumber("Left drivepod PID Setpoint", drivetrain.leftPodDistancePID.getSetpoint());
+		SmartDashboard.putNumber("Right drivepod PID Setpoint", drivetrain.rightPodDistancePID.getSetpoint());
+
+		SmartDashboard.putData("Drive Assisted", new DriveAssisted());
 
 		SDDumper.dumpMisc();
 
@@ -340,8 +341,8 @@ public class Robot extends IterativeRobot {
 			autonomousCommand.cancel();
 		}
 
-		drivetrain.leftPodPID.disable();
-		drivetrain.rightPodPID.disable();
+		drivetrain.leftPodDistancePID.disable();
+		drivetrain.rightPodDistancePID.disable();
 
 		drive.start();
 		elevatorListener.start();

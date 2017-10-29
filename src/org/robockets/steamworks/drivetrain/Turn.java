@@ -56,16 +56,16 @@ public class Turn extends Command {
 
 	public Turn(TurnType type, double angle, double speed, double P, double I, double D) {
 
-		currentLeftP = Robot.drivetrain.leftPodPID.getP();
-		currentLeftI = Robot.drivetrain.leftPodPID.getI();
-		currentLeftD = Robot.drivetrain.leftPodPID.getD();
+		currentLeftP = Robot.drivetrain.leftPodDistancePID.getP();
+		currentLeftI = Robot.drivetrain.leftPodDistancePID.getI();
+		currentLeftD = Robot.drivetrain.leftPodDistancePID.getD();
 
-		currentRightP = Robot.drivetrain.rightPodPID.getP();
-		currentRightI = Robot.drivetrain.rightPodPID.getI();
-		currentRightD = Robot.drivetrain.rightPodPID.getD();
+		currentRightP = Robot.drivetrain.rightPodDistancePID.getP();
+		currentRightI = Robot.drivetrain.rightPodDistancePID.getI();
+		currentRightD = Robot.drivetrain.rightPodDistancePID.getD();
 
-		Robot.drivetrain.leftPodPID.setPID(P, I, D);
-		Robot.drivetrain.rightPodPID.setPID(-P, -I, -D);
+		Robot.drivetrain.leftPodDistancePID.setPID(P, I, D);
+		Robot.drivetrain.rightPodDistancePID.setPID(-P, -I, -D);
 
 		resetPidWhenDone = true;
 
@@ -99,32 +99,32 @@ public class Turn extends Command {
 
 		// Could alter PID if needed
 		Robot.drivetrain.resetEncoders();
-		Robot.drivetrain.enableEncoderPID();
+		Robot.drivetrain.enableEncoderDistancePID();
 
 		leftLsg = new LinearSetpointGenerator(distance, speed, RobotMap.leftEncoder.getDistance());
 		rightLsg = new LinearSetpointGenerator(-distance, -speed, RobotMap.rightEncoder.getDistance());
 	}
 
 	protected void execute() {
-		Robot.drivetrain.leftPodPID.setSetpoint(leftLsg.next());
-		Robot.drivetrain.rightPodPID.setSetpoint(rightLsg.next());
+		Robot.drivetrain.leftPodDistancePID.setSetpoint(leftLsg.next());
+		Robot.drivetrain.rightPodDistancePID.setSetpoint(rightLsg.next());
 	}
 
 	protected boolean isFinished() {
 		if (type == TurnType.CAMERA) {
-			return (Robot.drivetrain.encodersOnTarget() && (!leftLsg.hasNext() && !rightLsg.hasNext())) || isTimedOut();
+			return (Robot.drivetrain.distanceEncodersOnTarget() && (!leftLsg.hasNext() && !rightLsg.hasNext())) || isTimedOut();
 		}
-		return Robot.drivetrain.encodersOnTarget() && (!leftLsg.hasNext() && !rightLsg.hasNext());
+		return Robot.drivetrain.distanceEncodersOnTarget() && (!leftLsg.hasNext() && !rightLsg.hasNext());
 	}
 
 	protected void end() {
 		DriverStation.reportWarning("Encoders after turning L: " + RobotMap.leftEncoder.get() + " R: " + RobotMap.rightEncoder.get(), false);
-		Robot.drivetrain.disableEncoderPID();
+		Robot.drivetrain.disableEncoderDistancePID();
 		Robot.drivetrain.stop();
 
 		if (resetPidWhenDone) {
-			Robot.drivetrain.leftPodPID.setPID(currentLeftP, currentLeftI, currentLeftD);
-			Robot.drivetrain.rightPodPID.setPID(currentRightP, currentRightI, currentRightD);
+			Robot.drivetrain.leftPodDistancePID.setPID(currentLeftP, currentLeftI, currentLeftD);
+			Robot.drivetrain.rightPodDistancePID.setPID(currentRightP, currentRightI, currentRightD);
 		}
 
 	}

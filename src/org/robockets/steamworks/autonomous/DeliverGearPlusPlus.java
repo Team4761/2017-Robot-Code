@@ -1,12 +1,9 @@
 package org.robockets.steamworks.autonomous;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.robockets.steamworks.LinearSetpointGenerator;
 import org.robockets.steamworks.Robot;
 import org.robockets.steamworks.RobotMap;
-import org.robockets.steamworks.camera.CVConstants;
 import org.robockets.steamworks.camera.SetVisionEnabled;
-import org.robockets.steamworks.drivetrain.Drivetrain;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -27,8 +24,8 @@ public class DeliverGearPlusPlus extends Command {
     	new SetVisionEnabled(true).start();
     	leftLsg = new LinearSetpointGenerator(expectedInitialDistance, 24, RobotMap.leftEncoder.getDistance());
     	rightLsg = new LinearSetpointGenerator(expectedInitialDistance, 24, RobotMap.rightEncoder.getDistance());
-		Robot.drivetrain.leftPodPID.enable();
-		Robot.drivetrain.rightPodPID.enable();
+		Robot.drivetrain.leftPodDistancePID.enable();
+		Robot.drivetrain.rightPodDistancePID.enable();
     }
 
     // PDP ports: 12 & 3 for one side of the robot
@@ -44,17 +41,17 @@ public class DeliverGearPlusPlus extends Command {
     		rightLsg = new LinearSetpointGenerator(24, 24, RobotMap.rightEncoder.getDistance());
     	}
     	
-    	Robot.drivetrain.leftPodPID.setSetpoint(leftLsg.next());
-    	Robot.drivetrain.rightPodPID.setSetpoint(rightLsg.next());
+    	Robot.drivetrain.leftPodDistancePID.setSetpoint(leftLsg.next());
+    	Robot.drivetrain.rightPodDistancePID.setSetpoint(rightLsg.next());
     }
 
     protected boolean isFinished() {
-        return Robot.drivetrain.encodersOnTarget();
+        return Robot.drivetrain.distanceEncodersOnTarget();
     }
 
     protected void end() {
-    	Robot.drivetrain.leftPodPID.disable();
-    	Robot.drivetrain.rightPodPID.disable();
+    	Robot.drivetrain.leftPodDistancePID.disable();
+    	Robot.drivetrain.rightPodDistancePID.disable();
     	new SetVisionEnabled(false).start();
     }
 

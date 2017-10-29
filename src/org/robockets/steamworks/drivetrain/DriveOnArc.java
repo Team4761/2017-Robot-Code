@@ -24,7 +24,7 @@ public class DriveOnArc extends Command {
     // Called just before this Command runs the first time
     protected void initialize() {
     	Robot.drivetrain.driveArc(direction, chordLength, radius);
-    	Robot.drivetrain.enableEncoderPID();
+    	Robot.drivetrain.enableEncoderDistancePID();
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -33,13 +33,13 @@ public class DriveOnArc extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return Robot.drivetrain.encodersOnTarget();
+        return Robot.drivetrain.distanceEncodersOnTarget();
     }
 
     // Called once after isFinished returns true
     protected void end() {
     	Robot.drivetrain.stop();
-    	Robot.drivetrain.disableEncoderPID();
+    	Robot.drivetrain.disableEncoderDistancePID();
     }
 
     // Called when another command which requires one or more of the same

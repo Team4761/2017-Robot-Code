@@ -25,7 +25,7 @@ public class DriveStraight extends Command {
 
     protected void initialize() {
         System.out.println("Driving Straight...");
-        Robot.drivetrain.enableEncoderPID();
+        Robot.drivetrain.enableEncoderDistancePID();
     	Robot.drivetrain.resetEncoders();
     	leftLsg = new LinearSetpointGenerator(distance, speed, RobotMap.leftEncoder.getDistance());
     	rightLsg = new LinearSetpointGenerator(distance, speed, RobotMap.rightEncoder.getDistance());
@@ -33,20 +33,20 @@ public class DriveStraight extends Command {
 
     protected void execute() {
         if (leftLsg.hasNext() || rightLsg.hasNext()) {
-            Robot.drivetrain.leftPodPID.setSetpoint(leftLsg.next());
-            Robot.drivetrain.rightPodPID.setSetpoint(rightLsg.next());
+            Robot.drivetrain.leftPodDistancePID.setSetpoint(leftLsg.next());
+            Robot.drivetrain.rightPodDistancePID.setSetpoint(rightLsg.next());
         }
     }
 
     protected boolean isFinished() {
-        SmartDashboard.putBoolean("Encoders on Target", Robot.drivetrain.encodersOnTarget());
-        return (Robot.drivetrain.encodersOnTarget() && (!leftLsg.hasNext() && !rightLsg.hasNext())) || Robot.drivetrain.getAverageCurrent() > 40;
+        SmartDashboard.putBoolean("Encoders on Target", Robot.drivetrain.distanceEncodersOnTarget());
+        return (Robot.drivetrain.distanceEncodersOnTarget() && (!leftLsg.hasNext() && !rightLsg.hasNext())) || Robot.drivetrain.getAverageCurrent() > 40;
     }
 
     protected void end() {
         System.out.println("Finished Driving Straight");
         DriverStation.reportWarning("Encoders after driving straight L: " + RobotMap.leftEncoder.get() + " R: " + RobotMap.rightEncoder.get(), false);
-        Robot.drivetrain.disableEncoderPID();
+        Robot.drivetrain.disableEncoderDistancePID();
         Robot.drivetrain.stop();
     }
 

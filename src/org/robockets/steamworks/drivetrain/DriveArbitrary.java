@@ -35,7 +35,7 @@ public class DriveArbitrary extends Command {
 
 	protected void initialize() {
 		System.out.println("Driving Arbitrarily...");
-		Robot.drivetrain.enableEncoderPID();
+		Robot.drivetrain.enableEncoderDistancePID();
 		Robot.drivetrain.resetEncoders();
 		innerDist = ((2 * Math.PI) / 360) * (radius1 * theta);
 		outerDist = ((2 * Math.PI) / 360) * (radius1 + 29) * theta;
@@ -60,19 +60,19 @@ public class DriveArbitrary extends Command {
 
 	protected void execute() {
 		if (leftLsg.hasNext() || rightLsg.hasNext()) {
-			Robot.drivetrain.leftPodPID.setSetpoint(leftLsg.next());
-			Robot.drivetrain.rightPodPID.setSetpoint(rightLsg.next());
+			Robot.drivetrain.leftPodDistancePID.setSetpoint(leftLsg.next());
+			Robot.drivetrain.rightPodDistancePID.setSetpoint(rightLsg.next());
 		}
 	}
 
 	protected boolean isFinished() {
-		SmartDashboard.putBoolean("Encoders on Target", Robot.drivetrain.encodersOnTarget());
-		return Robot.drivetrain.encodersOnTarget() && (!leftLsg.hasNext() && !rightLsg.hasNext());
+		SmartDashboard.putBoolean("Encoders on Target", Robot.drivetrain.distanceEncodersOnTarget());
+		return Robot.drivetrain.distanceEncodersOnTarget() && (!leftLsg.hasNext() && !rightLsg.hasNext());
 	}
 
 	protected void end() {
 		System.out.println("Finished Driving Arbitrarily");
-		Robot.drivetrain.disableEncoderPID();
+		Robot.drivetrain.disableEncoderDistancePID();
 		Robot.drivetrain.stop();
 	}
 
