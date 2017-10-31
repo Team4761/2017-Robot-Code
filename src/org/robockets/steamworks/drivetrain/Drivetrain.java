@@ -79,10 +79,11 @@ public class Drivetrain extends Subsystem {
 	 * @param rotate    Rotation speed: -1 to 1
 	 */
 	public void driveArcade(double translate, double rotate) {
-		if (!DriverStation.getInstance().isBrownedOut()) {
+		//if (!DriverStation.getInstance().isBrownedOut()) {
 			RobotMap.robotDrive.arcadeDrive(translate, rotate);
-		}
+		//}
 		disableEncoderDistancePID();
+		disableEncoderSpeedPID();
 	}
 
 	/**
@@ -113,6 +114,8 @@ public class Drivetrain extends Subsystem {
 	 */
 	public void driveTank(double leftValue, double rightValue) {
 		RobotMap.robotDrive.tankDrive(leftValue, rightValue);
+		disableEncoderDistancePID();
+		disableEncoderSpeedPID();
 	}
 
 	/**

@@ -21,6 +21,7 @@ import org.robockets.steamworks.camera.VisionManager;
 import org.robockets.steamworks.climber.Climb;
 import org.robockets.steamworks.climber.Climber;
 import org.robockets.steamworks.drivetrain.DriveAssisted;
+import org.robockets.steamworks.drivetrain.FakeDriveAssisted;
 import org.robockets.steamworks.elevator.MoveElevator;
 import org.robockets.steamworks.drivetrain.Drivetrain;
 import org.robockets.steamworks.elevator.ElevatorDPadListener;
@@ -251,6 +252,7 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("Right drivepod PID Setpoint", drivetrain.rightPodDistancePID.getSetpoint());
 
 		SmartDashboard.putData("Drive Assisted", new DriveAssisted());
+		SmartDashboard.putData("Fake Drive Assisted", new FakeDriveAssisted());
 
 		SDDumper.dumpMisc();
 
