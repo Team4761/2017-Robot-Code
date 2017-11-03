@@ -179,6 +179,9 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("Right drivepod PID D value", Robot.drivetrain.rightPodDistancePID.getD());
 		SmartDashboard.putNumber("Right drivepod PID F value", Robot.drivetrain.rightPodDistancePID.getF());
 
+		SmartDashboard.putData("Drive Assisted", new DriveAssisted());
+		SmartDashboard.putData("Fake Drive Assisted", new FakeDriveAssisted());
+
 
 		//////////
 		// GYRO //
@@ -250,9 +253,6 @@ public class Robot extends IterativeRobot {
 
 		SmartDashboard.putNumber("Left drivepod PID Setpoint", drivetrain.leftPodDistancePID.getSetpoint());
 		SmartDashboard.putNumber("Right drivepod PID Setpoint", drivetrain.rightPodDistancePID.getSetpoint());
-
-		SmartDashboard.putData("Drive Assisted", new DriveAssisted());
-		SmartDashboard.putData("Fake Drive Assisted", new FakeDriveAssisted());
 
 		SDDumper.dumpMisc();
 

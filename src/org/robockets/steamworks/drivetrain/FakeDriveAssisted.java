@@ -23,11 +23,30 @@ public class FakeDriveAssisted extends Command {
 		double leftValue = -OI.joystick.getRawAxis(1);
 		double rightValue = -OI.joystick.getRawAxis(5);
 
+		leftValue = Math.floor(leftValue * 100) / 100;
+		rightValue = Math.floor(rightValue * 100) / 100;
+
+		leftValue = Math.round(leftValue);
+		rightValue = Math.round(rightValue);
+
 		// This could cause memory issues
-		leftLsg = new LinearSetpointGenerator(leftValue, 0.2, 0); // Assuming 0
-		rightLsg = new LinearSetpointGenerator(rightValue, 0.2, 0);
+
+		double leftLsgVelocity = leftValue < 0 ? -0.2 : 0.2;
+		double rightLsgVelocity = rightValue < 0 ? -0.2 : 0.2;
+
+		leftLsg = new LinearSetpointGenerator(leftValue, leftLsgVelocity, 0); // Assuming 0
+		rightLsg = new LinearSetpointGenerator(rightValue, rightLsgVelocity, 0);
+
+		System.out.println(leftLsg.hasNext());
+		System.out.println(rightLsg.hasNext());
 		if (leftLsg.hasNext() || rightLsg.hasNext()) {
-			Robot.drivetrain.driveTank(leftLsg.next(), rightLsg.next());
+			double newLeftValue = leftLsg.next();
+			double newRightValue = rightLsg.next();
+
+			System.out.println("Left: " + (Double.isNaN(newLeftValue) ? 0 : newLeftValue));
+			System.out.println("Right: " + (Double.isNaN(newRightValue) ? 0 : newRightValue));
+
+			Robot.drivetrain.driveTank(newLeftValue , newRightValue);
 		}
 	}
 

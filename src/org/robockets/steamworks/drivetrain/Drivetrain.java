@@ -95,14 +95,24 @@ public class Drivetrain extends Subsystem {
 	 * @param rightValue
 	 */
 	public void driveWithPID(double leftValue, double rightValue) {
+
+		double leftLsgVelocity = leftValue < 0 ? -0.2 : 0.2;
+		double rightLsgVelocity = rightValue < 0 ? -0.2 : 0.2;
+
 		// The velocity is a constant that should be tuned appropriately
-		// Inital Position should be calculated with an accelerometer
-		LinearSetpointGenerator leftSetpointGen = new LinearSetpointGenerator(leftValue, 0.25, leftPodSpeedPID.get());
-		LinearSetpointGenerator rightSetpointGen = new LinearSetpointGenerator(rightValue, 0.25, rightPodSpeedPID.get());
+		// Initial Position should be calculated with an accelerometer
+		LinearSetpointGenerator leftSetpointGen = new LinearSetpointGenerator(leftValue, leftLsgVelocity, leftPodSpeedPID.get());
+		LinearSetpointGenerator rightSetpointGen = new LinearSetpointGenerator(rightValue, rightLsgVelocity, rightPodSpeedPID.get());
 
 		if (leftSetpointGen.hasNext() || rightSetpointGen.hasNext()) {
-			leftPodSpeedPID.setSetpoint(leftSetpointGen.next());
-			rightPodSpeedPID.setSetpoint(rightSetpointGen.next());
+			double newLeftValue = leftSetpointGen.next();
+			double newRightValue = rightSetpointGen.next();
+
+			System.out.println("Left: " + (Double.isNaN(newLeftValue) ? 0 : newLeftValue));
+			System.out.println("Right: " + (Double.isNaN(newRightValue) ? 0 : newRightValue));
+			
+			leftPodSpeedPID.setSetpoint(Double.isNaN(newLeftValue) ? 0 : newLeftValue);
+			rightPodSpeedPID.setSetpoint(Double.isNaN(newRightValue) ? 0 : newRightValue);
 		}
 	}
 

@@ -22,6 +22,13 @@ public class DriveAssisted extends Command {
 		double leftValue = -OI.joystick.getRawAxis(1);
 		double rightValue = -OI.joystick.getRawAxis(5);
 
+		leftValue = Math.floor(leftValue * 100) / 100;
+		rightValue = Math.floor(rightValue * 100) / 100;
+
+		leftValue = Math.round(leftValue);
+		rightValue = Math.round(rightValue);
+
+
 		Robot.drivetrain.driveWithPID(leftValue, rightValue);
 	}
 
