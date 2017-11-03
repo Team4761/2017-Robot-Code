@@ -7,7 +7,9 @@ import org.robockets.steamworks.Robot;
 
 /**
  * @author Jake Backer
+ * @deprecated 
  */
+@Deprecated
 public class FakeDriveAssisted extends Command {
 
 	private LinearSetpointGenerator leftLsg, rightLsg;
