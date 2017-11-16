@@ -23,10 +23,14 @@ public class Joyride extends Command {
     }
 
     protected void execute() {
-		translate = OI.joystick.getRawAxis(1);
+		/*translate = OI.joystick.getRawAxis(1);
 		rotate = OI.joystick.getRawAxis(4);
         	        	
-		RobotMap.robotDrive.arcadeDrive(-translate, -rotate);
+		RobotMap.robotDrive.arcadeDrive(-translate, -rotate);*/
+        double leftValue = -OI.joystick.getRawAxis(1);
+        double rightValue = -OI.joystick.getRawAxis(5);
+
+        Robot.drivetrain.driveTank(leftValue, rightValue);
     }
 
     protected boolean isFinished() {
